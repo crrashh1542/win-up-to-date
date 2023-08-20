@@ -4,6 +4,9 @@
 // 引入库
 import 'normalize.css/normalize.css'
 
+// 引入样式表
+import './assets/styles/reset.less'
+
 export default {
    name: 'App',
 }
