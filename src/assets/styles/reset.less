@@ -6,8 +6,73 @@
 @import url('https://s.cdn.crrashh.com/prod/font/PingFang-SC-CN/3d9318c6-548c-4982-a591-4a25c3f9d5d4/index.css');
 @import url('https://s.cdn.crrashh.com/prod/font/Google-Sans/16a171a7-267e-4e9a-a222-4a1b493ce28a/index.css');
 
-// 全局设定 -------- BEGIN
+/* 变量设定 -------- BEGIN */
+@import url('./global.less');
 body {
-    font-family: 'Google Sans', 'PingFang SC';
+    // 字体
+    font-family: @wu-font-family;
 }
-// 全局设定 -------- END
+/* 变量设定 -------- END */
+
+/* 初始化 -------- BEGIN */
+body {
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    height: 100%;
+    div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form,
+    label, legend,table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, 
+    hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        vertical-align: baseline;
+        text-decoration: none;
+    }
+    /* HTML5 display-role reset for older browsers */
+    article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+        display: block;
+    }
+    ol, ul {
+        list-style: none;
+    }
+    blockquote, q {
+        quotes: none;
+    }
+    blockquote:before, blockquote:after, q:before, q:after {
+        content: '';
+        content: none;
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    /* 清除浮动 */
+    .clearfix:before, .clearfix:after{
+        content: "";
+        display: block;
+        visibility: hidden;
+        clear: both;
+    }
+    /* 容器 */
+    .container {
+        margin: 10px auto 0px;
+        width: 95%;
+    }
+    /* 滚动条 */
+    ::-webkit-scrollbar, ::-webkit-scrollbar-button, 
+    ::-webkit-scrollbar-track, ::-webkit-scrollbar-track-piece, 
+    ::-webkit-scrollbar-thumb, ::-webkit-scrollbar-corner, 
+    ::-webkit-resizer {
+        display: none;
+    }
+
+}
+/* 初始化 -------- END */
+
+@font-face {
+    font-family: 'iconfont';  /* Project id 3626945 */
+    src: url('../fonts/iconfont.woff2') format('woff2'),
+         url('../fonts/iconfont.ttf') format('ttf')
+}
