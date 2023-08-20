@@ -1,21 +1,20 @@
 <script>
+const linkList =
+   [{
+      'name': '主站',
+      'link': 'https://www.crrashh.com/'
+   },
+   {
+      'name': 'GitHub',
+      'link': 'https://github.com/crrashh1542/win-uptime'
+   }]
 
 export default {
-   name: 'TopAppbar',
+   name: 'MainAppbar',
    data() {
       return {
          title: 'Windows Uptime',
-
-         link: [
-            {
-               'name': '主站',
-               'link': 'https://www.crrashh.com/'
-            },
-            {
-               'name': 'GitHub',
-               'link': 'https://github.com/crrashh1542/win-uptime'
-            }
-         ]
+         link: linkList
       }
    }
 }
@@ -154,4 +153,5 @@ export default {
    }
 }
 
-/* 不同设备适配 -------- END */</style>
+/* 不同设备适配 -------- END */
+</style>

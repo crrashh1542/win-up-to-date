@@ -9,25 +9,18 @@ import './assets/styles/reset.less'
 
 // 引入组件
 import Appbar from './components/Appbar.vue'
+import Container from './components/Container.vue'
+import Foo from './components/Footer.vue'
 
 export default {
    name: 'App',
-   components: { Appbar }
+   components: { Appbar, Container, Foo }
 }
 
 </script>
 
 <template>
-   <appbar></appbar>
-   <div class="container">
-      <!-- TODO -->
-   </div>
+   <Appbar></Appbar>
+   <Container></Container>
+   <Foo></Foo>
 </template>
-
-<style lang="less" scoped>
-@import url('./assets/styles/global.less');
-
-.container {
-   padding: @wu-layout-nav-height 0 0;
-}
-</style>
