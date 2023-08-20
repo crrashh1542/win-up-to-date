@@ -86,7 +86,7 @@ export default {
       text-align: center;
       margin-left: .4em;
       display: inline-block;
-      content: '\e605';
+      content: '\e622';
    }
 
    .link:hover {
