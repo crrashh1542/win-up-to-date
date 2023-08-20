@@ -6,20 +6,19 @@
 @import url('https://s.cdn.crrashh.com/prod/font/PingFang-SC-CN/3d9318c6-548c-4982-a591-4a25c3f9d5d4/index.css');
 @import url('https://s.cdn.crrashh.com/prod/font/Google-Sans/16a171a7-267e-4e9a-a222-4a1b493ce28a/index.css');
 
-/* 变量设定 -------- BEGIN */
 @import url('./global.less');
-body {
-    // 字体
-    font-family: @wu-font-family;
-}
-/* 变量设定 -------- END */
 
 /* 初始化 -------- BEGIN */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
     height: 100%;
+    font-family: @wu-font-family;
     div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code,
     del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form,
     label, legend,table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, 

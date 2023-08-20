@@ -19,9 +19,15 @@ export default {
 
 <template>
    <appbar></appbar>
-   <h1>Hello, world!</h1>
+   <div class="container">
+      <!-- TODO -->
+   </div>
 </template>
 
-<style scoped>
+<style lang="less" scoped>
+@import url('./assets/styles/global.less');
 
+.container {
+   padding: @wu-layout-nav-height 0 0;
+}
 </style>
