@@ -20,7 +20,18 @@ export default {
 </script>
 
 <template>
-   <Appbar></Appbar>
-   <Container></Container>
-   <Foo></Foo>
+   <div class="bg-shade fixed top-0 left-0"></div>
+   <Appbar class="z-50"></Appbar>
+   <Container class="z-20"></Container>
+   <Foo class="z-20"></Foo>
 </template>
+
+<style>
+.bg-shade {
+   width: 100%;
+   height: 100%;
+   z-index: -10;
+   background-color: rgba(255, 255, 255, .87);
+   backdrop-filter: blur(6px);
+}
+</style>
