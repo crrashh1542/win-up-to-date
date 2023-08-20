@@ -3,8 +3,7 @@ const linkList =
    [{
       'name': '主站',
       'link': 'https://www.crrashh.com/'
-   },
-   {
+   }, {
       'name': 'GitHub',
       'link': 'https://github.com/crrashh1542/win-uptime'
    }]
@@ -49,7 +48,7 @@ export default {
    height: @wu-layout-nav-height;
    line-height: @wu-layout-nav-height;
    background-color: @wu-color-nav;
-   padding: 20px;
+   padding: var(--appbar-padding);
    border-bottom: 1px solid #e2e2e2;
    backdrop-filter: blur(3px);
    display: flex;
@@ -76,6 +75,7 @@ export default {
       margin: 0 15px;
       font-size: 17px;
       color: @wu-color-nav-link;
+      display: var(--appbar-link);
    }
 
    .link::after {
@@ -119,39 +119,32 @@ export default {
 /* 暗色 -------- END */
 
 /* 不同设备适配 -------- BEGIN */
-@media screen and (max-width: 800px) {
-
-   /* <=800px */
-   .appbar .link {
-      display: none;
-   }
-}
-
-@media screen and (min-width: 800px) {
-
-   /* <=1024px && >800px */
+@media screen and (max-width: 800px) { /* <=800px */
    .appbar {
-      .icon {
-         display: none;
-      }
+      --appbar-padding: 0 20px;
+      --appbar-icon: inline-block;
+      --appbar-link: none;
    }
 }
 
-@media screen and (min-width: 1024px) {
-
-   /* >1024px && <=1366px */
+@media screen and (min-width: 800px) { /* <=1024px && >800px */
    .appbar {
-      padding: 0 10%;
+      --appbar-padding: 0 20px;
+      --appbar-icon: none;
+      --appbar-link: inline-block;
    }
 }
 
-@media screen and (min-width: 1366px) {
-
-   /* >1366px */
+@media screen and (min-width: 1024px) { /* >1024px && <=1366px */
    .appbar {
-      padding: 0 15%;
+      --appbar-padding: 0 10%;
    }
 }
 
+@media screen and (min-width: 1366px) { /* >1366px */
+   .appbar {
+      --appbar-padding: 0 15%;
+   }
+}
 /* 不同设备适配 -------- END */
 </style>
