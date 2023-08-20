@@ -3,12 +3,17 @@
 // 引入配置及插件
 const { defineConfig } = require('@vue/cli-service')
 const { resolve } = require('path')
+const fs = require('fs')
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 
 // 生产模式配置
 const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
 const IS_PROD = ['production', 'prod'].includes(process.env.NODE_ENV)
+
+// 获取 build 信息并写入
+const buildInfo = require('./prebuild.js')
+buildInfo()
 
 module.exports = defineConfig({
 
