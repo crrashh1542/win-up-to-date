@@ -1,270 +1,53 @@
 <script>
 import Catalog from './widgets/Catalog.vue'
-import Card from './widgets/Card.vue';
+import Card from './widgets/Card.vue'
+import data from '../data.json'
 
 export default {
     name: 'MainContainer',
-    components: { Catalog, Card }
+    components: { Catalog, Card },
+    data() {
+        return { data }
+    }
 }
 </script>
 
 <template>
-    <div class="container">
+    <div class="spacing"></div>
 
-        <!-- Block 1: 11 Can -->
+    <div class="container" v-for="d in data" :key="d.category">
+
         <div class="block">
             <catalog>
-                <span class="icon-win11"></span>Windows 11 Canary
+                <span :class=d.style[0]></span>{{ d.category }}
             </catalog>
 
-            <card class="color-amber">
+            <card :class=d.style[1]>
                 <div class="content flex flex-row flex-nowrap">
                     <div class="icon icon-codebase vertical-middle"></div>
                     <div class="info flex flex-col">
                         <div class="title">开发代号周期</div>
-                        <div class="value">Gallium / Germanium (24H1)</div>
+                        <div class="value">{{ d.codebase }}</div>
                     </div>
                 </div>
             </card>
 
-            <card class="color-amber">
+            <card :class=d.style[1]>
                 <div class="content flex flex-row flex-nowrap">
                     <div class="icon icon-branch vertical-middle"></div>
                     <div class="info flex flex-col">
                         <div class="title">当前分支</div>
-                        <div class="value">rs_prerelease</div>
+                        <div class="value">{{ d.branch }}</div>
                     </div>
                 </div>
             </card>
 
-            <card class="color-amber">
+            <card :class=d.style[1]>
                 <div class="content flex flex-row flex-nowrap">
                     <div class="icon icon-flight vertical-middle"></div>
                     <div class="info flex flex-col">
                         <div class="title">最新可用版本</div>
-                        <div class="value">25931.1000</div>
-                    </div>
-                </div>
-            </card>
-        </div>
-
-        <!-- Block 2: 11 Dev -->
-        <div class="block">
-            <catalog>
-                <span class="icon-win11"></span>Windows 11 Dev
-            </catalog>
-
-            <card class="color-cyan">
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-codebase vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">开发代号周期</div>
-                        <div class="value">Nickel (22H2)</div>
-                    </div>
-                </div>
-            </card>
-
-            <card class="color-cyan">
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-branch vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">当前分支</div>
-                        <div class="value">ni_prerelease</div>
-                    </div>
-                </div>
-            </card>
-
-            <card class="color-cyan">
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-flight vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">最新可用版本</div>
-                        <div class="value">23526.1000</div>
-                    </div>
-                </div>
-            </card>
-        </div>
-
-        <!-- Block 3: 11 Beta -->
-        <div class="block">
-            <catalog>
-                <span class="icon-win11"></span>Windows 11 Beta
-            </catalog>
-
-            <card class="color-green">
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-codebase vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">开发代号周期</div>
-                        <div class="value">Nickel (23H2)</div>
-                    </div>
-                </div>
-            </card>
-
-            <card class="color-green">
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-branch vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">当前分支</div>
-                        <div class="value">ni_release_svc_betaflt_prod1</div>
-                    </div>
-                </div>
-            </card>
-
-            <card class="color-green">
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-flight vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">最新可用版本</div>
-                        <div class="value">22631.2199</div>
-                    </div>
-                </div>
-            </card>
-        </div>
-
-        <!-- Block 4: 11 RP -->
-        <div class="block">
-            <catalog>
-                <span class="icon-win11"></span>Windows 11 RP
-            </catalog>
-
-            <card class="color-yellow">
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-codebase vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">开发代号周期</div>
-                        <div class="value">Nickel (23H2)</div>
-                    </div>
-                </div>
-            </card>
-
-            <card class="color-yellow">
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-branch vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">当前分支</div>
-                        <div class="value">ni_release_svc_betaflt_prod1</div>
-                    </div>
-                </div>
-            </card>
-
-            <card class="color-yellow">
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-flight vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">最新可用版本</div>
-                        <div class="value">22621.2213</div>
-                    </div>
-                </div>
-            </card>
-        </div>
-        
-        <!-- Block 5: 10 RP -->
-        <div class="block">
-            <catalog>
-                <span class="icon-win10"></span>Windows 10 RP
-            </catalog>
-
-            <card class="color-yellow">
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-codebase vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">开发代号周期</div>
-                        <div class="value">Vibranium (22H2)</div>
-                    </div>
-                </div>
-            </card>
-
-            <card class="color-yellow">
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-branch vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">当前分支</div>
-                        <div class="value">vb_release_svc_prod2</div>
-                    </div>
-                </div>
-            </card>
-
-            <card class="color-yellow">
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-flight vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">最新可用版本</div>
-                        <div class="value">19045.3391</div>
-                    </div>
-                </div>
-            </card>
-        </div>
-
-        <!-- Block 6: 11正式 -->
-        <div class="block">
-            <catalog>
-                <span class="icon-win11"></span>Windows 11 正式版
-            </catalog>
-
-            <card class="color-theme">
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-codebase vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">开发代号周期</div>
-                        <div class="value">Nickel (22H2)</div>
-                    </div>
-                </div>
-            </card>
-
-            <card class="color-theme">
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-branch vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">当前分支</div>
-                        <div class="value">ni_release_svc_prod1</div>
-                    </div>
-                </div>
-            </card>
-
-            <card class="color-theme">
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-flight vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">最新可用版本</div>
-                        <div class="value">22621.21??</div>
-                    </div>
-                </div>
-            </card>
-        </div>
-
-        <!-- Block 7: 10正式 -->
-        <div class="block">
-            <catalog>
-                <span class="icon-win10"></span>Windows 10 正式版
-            </catalog>
-
-            <card class="color-theme">
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-codebase vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">开发代号周期</div>
-                        <div class="value">Vibranium (22H2)</div>
-                    </div>
-                </div>
-            </card>
-
-            <card class="color-theme">
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-branch vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">当前分支</div>
-                        <div class="value">vb_release_svc_prod2</div>
-                    </div>
-                </div>
-            </card>
-
-            <card class="color-theme">
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-flight vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">最新可用版本</div>
-                        <div class="value">19045.3324</div>
+                        <div class="value">{{ d.version }}</div>
                     </div>
                 </div>
             </card>
@@ -274,10 +57,13 @@ export default {
 
 <style lang="less" scoped>
 @import url('../assets/styles/global.less');
+.spacing {
+    width: 100%;
+    padding: @wu-layout-nav-height 0 0;
+}
 
 .container {
     margin: var(--container-margin);
-    padding: @wu-layout-nav-height 0 0;
 
     .block {
         margin: 15px 0;
