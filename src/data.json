@@ -21,11 +21,32 @@
         "version": "22631.2199"
     },
     {
-        "category": "Windows 11 RP",
+        "category": "Windows 11 RP (22H2)",
         "style": ["icon-win11", "color-yellow"],
         "codebase": "Nickel (22H2)",
         "branch": "ni_release_svc_prod1",
         "version": "22621.2213"
+    },
+    {
+        "category": "Windows 11 正式版 (22H2)",
+        "style": ["icon-win11", "color-theme"],
+        "codebase": "Nickel (22H2)",
+        "branch": "ni_release_svc_prod1",
+        "version": "22621.21??"
+    },
+    {
+        "category": "Windows 11 RP (21H2)",
+        "style": ["icon-win11", "color-yellow"],
+        "codebase": "Cobalt (21H2)",
+        "branch": "ni_release_svc_prod1",
+        "version": "22000.2359"
+    },
+    {
+        "category": "Windows 11 正式版 (21H2)",
+        "style": ["icon-win11", "color-theme"],
+        "codebase": "Cobalt (21H2)",
+        "branch": "ni_release_svc_prod1",
+        "version": "22000.1757"
     },
     {
         "category": "Windows 10 RP",
@@ -33,13 +54,6 @@
         "codebase": "Vibranium (22H2)",
         "branch": "vb_release_svc_prod2",
         "version": "19045.3391"
-    },
-    {
-        "category": "Windows 11 正式版",
-        "style": ["icon-win11", "color-theme"],
-        "codebase": "Nickel (22H2)",
-        "branch": "ni_release_svc_prod1",
-        "version": "22621.21??"
     },
     {
         "category": "Windows 10 正式版",
