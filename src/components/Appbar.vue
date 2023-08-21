@@ -1,8 +1,11 @@
 <script>
 const linkList =
    [{
-      'name': '主站',
+      'name': '主页',
       'link': 'https://www.crrashh.com/'
+   }, {
+      'name': '下载站',
+      'link': 'https://disk.crrashh.com/%F0%9F%96%A5%EF%B8%8F%20%E6%95%B0%E7%A0%81%E8%B5%84%E6%BA%90/%E7%94%B5%E8%84%91%20%E2%86%92%20Windows'
    }, {
       'name': 'GitHub',
       'link': 'https://github.com/crrashh1542/win-uptime'
