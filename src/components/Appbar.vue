@@ -52,7 +52,7 @@ export default {
    line-height: @wu-layout-nav-height;
    background-color: @wu-color-nav;
    padding: var(--appbar-padding);
-   border-bottom: 1px solid #e2e2e2;
+   border-bottom: 1px solid @wu-color-split-line;
    backdrop-filter: blur(3px);
    display: flex;
    align-items: center;
@@ -67,6 +67,9 @@ export default {
       font-weight: 500;
       font-size: 24px;
    }
+   .title::after {
+      display: none;
+   }
 
    .spacer {
       /* 左右分隔 */
@@ -79,25 +82,6 @@ export default {
       font-size: 17px;
       color: @wu-color-nav-link;
       display: var(--appbar-link);
-   }
-
-   .link::after {
-      /* 链接图标 */
-      color: @wu-color-nav-link;
-      font-size: 15px;
-      vertical-align: middle;
-      text-align: center;
-      margin-left: .4em;
-      display: inline-block;
-      content: '\e622';
-   }
-
-   .link:hover {
-      color: @wu-color-theme-dark;
-   }
-
-   .link:hover::after {
-      color: @wu-color-theme;
    }
 }
 

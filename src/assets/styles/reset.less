@@ -30,7 +30,6 @@ body {
         padding: 0;
         border: 0;
         vertical-align: baseline;
-        text-decoration: none;
     }
     /* HTML5 display-role reset for older browsers */
     article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
@@ -53,6 +52,23 @@ body {
     .icon {
         color: #000;
     }
+
+    /* a标签图标及hover处理 */
+    .appbar a::after, .footer a::after {
+        color: @wu-color-nav-link;
+        font-size: 15px;
+        vertical-align: middle;
+        text-align: center;
+        margin-left: .3em;
+        display: inline-block;
+        content: '\e622';
+    }
+    .appbar a:hover, .footer a:hover {
+        color: @wu-color-theme !important;
+    }
+    .appbar a:hover::after, .footer a:hover::after {
+        color: @wu-color-theme;
+     }
     /* 滚动条 */
     ::-webkit-scrollbar, ::-webkit-scrollbar-button, 
     ::-webkit-scrollbar-track, ::-webkit-scrollbar-track-piece, 
