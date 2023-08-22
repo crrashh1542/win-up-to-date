@@ -15,9 +15,9 @@ export default {
 <template>
     <div class="spacing"></div>
 
-    <div class="container" v-for="d in data" :key="d.category">
+    <main>
 
-        <div class="block">
+        <div class="block" v-for="d in data" :key="d.category">
             <catalog>
                 <span :class=d.style[0]></span>{{ d.category }}
             </catalog>
@@ -52,7 +52,8 @@ export default {
                 </div>
             </card>
         </div>
-    </div>
+
+    </main>
 </template>
 
 <style lang="less" scoped>
@@ -62,8 +63,11 @@ export default {
     padding: @wu-layout-nav-height 0 0;
 }
 
-.container {
-    margin: var(--container-margin);
+main {
+    display: block;
+    width: 100%;
+    margin: 0 !important;
+    padding: var(--container-padding);
 
     .block {
         margin: 15px 0;
@@ -76,18 +80,18 @@ export default {
 
 /* 不同设备适配 -------- BEGIN */
 @media screen and (max-width: 800px) { /* <=800px */
-   .container { --container-margin: 0 20px; }
+   main { --container-padding: 0 20px; }
 }
 @media screen and (min-width: 800px) { /* <=1024px && >800px */
-   .container { --container-margin: 0 20px; }
+   main { --container-padding: 0 20px; }
 }
 
 @media screen and (min-width: 1024px) { /* >1024px && <=1366px */
-   .container { --container-margin: 0 10%; }
+   main { --container-padding: 0 10%; }
 }
 
 @media screen and (min-width: 1366px) { /* >1366px */
-   .container { --container-margin: 0 15%; }
+   main { --container-padding: 0 15%; }
 }
 /* 不同设备适配 -------- END */
 </style>

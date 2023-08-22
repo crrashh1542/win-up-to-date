@@ -1,63 +1,63 @@
 [
     {
         "category": "Windows 11 Canary",
-        "style": ["icon-win11", "color-amber"],
+        "style": ["icon-win11", "color-amber hover:color-amber"],
         "codebase": "Gallium / Germanium (24H1)",
         "branch": "rs_prerelease_flt",
         "version": "25931.1010"
     },
     {
         "category": "Windows 11 Dev",
-        "style": ["icon-win11", "color-cyan"],
+        "style": ["icon-win11", "color-cyan hover:color-cyan"],
         "codebase": "Nickel (22H2)",
         "branch": "ni_prerelease",
         "version": "23526.1000"
     },
     {
         "category": "Windows 11 Beta",
-        "style": ["icon-win11", "color-green"],
+        "style": ["icon-win11", "color-green hover:color-green"],
         "codebase": "Nickel (23H2)",
         "branch": "ni_release_svc_betaflt_prod1",
         "version": "22631.2199"
     },
     {
         "category": "Windows 11 RP (22H2)",
-        "style": ["icon-win11", "color-yellow"],
+        "style": ["icon-win11", "color-yellow hover:color-yellow"],
         "codebase": "Nickel (22H2)",
         "branch": "ni_release_svc_prod1",
         "version": "22621.2213"
     },
     {
         "category": "Windows 11 正式版 (22H2)",
-        "style": ["icon-win11", "color-theme"],
+        "style": ["icon-win11", "color-theme hover:color-theme"],
         "codebase": "Nickel (22H2)",
         "branch": "ni_release_svc_prod1",
         "version": "22621.21??"
     },
     {
         "category": "Windows 11 RP (21H2)",
-        "style": ["icon-win11", "color-yellow"],
+        "style": ["icon-win11", "color-yellow hover:color-yellow"],
         "codebase": "Cobalt (21H2)",
         "branch": "ni_release_svc_prod1",
         "version": "22000.2359"
     },
     {
         "category": "Windows 11 正式版 (21H2)",
-        "style": ["icon-win11", "color-theme"],
+        "style": ["icon-win11", "color-theme hover:color-theme"],
         "codebase": "Cobalt (21H2)",
         "branch": "ni_release_svc_prod1",
         "version": "22000.1757"
     },
     {
         "category": "Windows 10 RP",
-        "style": ["icon-win10", "color-yellow"],
+        "style": ["icon-win10", "color-yellow hover:color-yellow"],
         "codebase": "Vibranium (22H2)",
         "branch": "vb_release_svc_prod2",
         "version": "19045.3391"
     },
     {
         "category": "Windows 10 正式版",
-        "style": ["icon-win10", "color-theme"],
+        "style": ["icon-win10", "color-theme hover:color-theme"],
         "codebase": "Vibranium (22H2)",
         "branch": "vb_release_svc_prod2",
         "version": "19045.3324"
