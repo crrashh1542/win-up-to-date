@@ -13,8 +13,6 @@ export default {
 </script>
 
 <template>
-    <div class="spacing"></div>
-
     <main>
 
         <div class="block" v-for="d in data" :key="d.category">
@@ -58,16 +56,13 @@ export default {
 
 <style lang="less" scoped>
 @import url('../assets/styles/global.less');
-.spacing {
-    width: 100%;
-    padding: @wu-layout-nav-height 0 0;
-}
+@import url('../assets/styles/adaption.less');
 
 main {
     display: block;
     width: 100%;
-    margin: 0 !important;
     padding: var(--container-padding);
+    padding-top: @wu-layout-nav-height;
 
     .block {
         margin: 15px 0;
@@ -76,22 +71,6 @@ main {
             margin-right: .75em;
         }
     }
-}
-
-/* 不同设备适配 -------- BEGIN */
-@media screen and (max-width: 800px) { /* <=800px */
-   main { --container-padding: 0 20px; }
-}
-@media screen and (min-width: 800px) { /* <=1024px && >800px */
-   main { --container-padding: 0 20px; }
-}
-
-@media screen and (min-width: 1024px) { /* >1024px && <=1366px */
-   main { --container-padding: 0 10%; }
-}
-
-@media screen and (min-width: 1366px) { /* >1366px */
-   main { --container-padding: 0 15%; }
 }
 /* 不同设备适配 -------- END */
 </style>

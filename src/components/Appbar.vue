@@ -40,6 +40,7 @@ export default {
 
 <style lang="less" scoped>
 @import url('../assets/styles/global.less');
+@import url('../assets/styles/adaption.less');
 
 /* 初始化 -------- BEGIN */
 .appbar {
@@ -51,7 +52,9 @@ export default {
    height: @wu-layout-nav-height;
    line-height: @wu-layout-nav-height;
    background-color: @wu-color-nav;
-   padding: var(--appbar-padding);
+   padding: var(--container-padding);
+   padding-top: 0;
+   padding-bottom: 0;
    border-bottom: 1px solid @wu-color-split-line;
    backdrop-filter: blur(3px);
    display: flex;
@@ -105,33 +108,4 @@ export default {
 
 /* 暗色 -------- END */
 
-/* 不同设备适配 -------- BEGIN */
-@media screen and (max-width: 800px) { /* <=800px */
-   .appbar {
-      --appbar-padding: 0 20px;
-      --appbar-icon: inline-block;
-      --appbar-link: none;
-   }
-}
-
-@media screen and (min-width: 800px) { /* <=1024px && >800px */
-   .appbar {
-      --appbar-padding: 0 20px;
-      --appbar-icon: none;
-      --appbar-link: inline-block;
-   }
-}
-
-@media screen and (min-width: 1024px) { /* >1024px && <=1366px */
-   .appbar {
-      --appbar-padding: 0 10%;
-   }
-}
-
-@media screen and (min-width: 1366px) { /* >1366px */
-   .appbar {
-      --appbar-padding: 0 15%;
-   }
-}
-/* 不同设备适配 -------- END */
 </style>

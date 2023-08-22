@@ -20,11 +20,12 @@ export default {
 
 <style lang="less" scoped>
 @import url('../assets/styles/global.less');
+@import url('../assets/styles/adaption.less');
 
 .footer {
     background-color: @wu-color-theme-lighter;
     border-top: 1px solid @wu-color-split-line;
-    padding: var(--footer-padding);
+    padding: var(--container-padding);
     font-size: 16px;
     color: @wu-color-catalog;
 
@@ -32,21 +33,4 @@ export default {
         line-height: 1.7;
     }
 }
-
-/* 不同设备适配 -------- BEGIN */
-@media screen and (max-width: 800px) { /* <=800px */
-   .footer { --footer-padding: 20px 20px; }
-}
-@media screen and (min-width: 800px) { /* <=1024px && >800px */
-   .footer { --footer-padding: 20px 20px; }
-}
-
-@media screen and (min-width: 1024px) { /* >1024px && <=1366px */
-   .footer { --footer-padding: 20px 10%; }
-}
-
-@media screen and (min-width: 1366px) { /* >1366px */
-   .footer { --footer-padding: 20px 15%; }
-}
-/* 不同设备适配 -------- END */
 </style>

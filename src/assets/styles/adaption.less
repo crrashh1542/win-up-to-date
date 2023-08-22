@@ -1,0 +1,28 @@
+@charset 'utf-8';
+/* 此样式表用于全局的不同尺寸设备的适配
+ * Date: 2023-08-22 / Version: 1.0.0 / Author: crrashh1542
+ */
+
+@media screen and (max-width: 800px) { /* <=800px */
+    .appbar, .footer, main {
+        --container-padding: 20px;
+    }
+}
+
+@media screen and (min-width: 800px) { /* <=1024px && >800px */
+    .appbar, .footer, main {
+        --container-padding: 20px 50px;
+    }
+}
+
+@media screen and (min-width: 1024px) { /* >1024px && <=1366px */
+    .appbar, .footer, main {
+        --container-padding: 20px 10%;
+    }
+}
+
+@media screen and (min-width: 1366px) { /* >1366px */
+    .appbar, .footer, main {
+        --container-padding: 20px 15%;
+    }
+}
