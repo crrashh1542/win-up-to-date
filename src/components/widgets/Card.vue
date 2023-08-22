@@ -17,7 +17,7 @@ export default {
     margin: 8px 10px 15px 0;
     padding: 10px 20px;
     height: 85px;
-    width: 22%;
+    width: 32%;
     display: inline-block;
     border-radius: 8px;
 
@@ -45,7 +45,7 @@ export default {
     background-color: @wu-color-theme-lighter;
     border: 1px solid @wu-color-theme;
 }
-.color-theme:hover {
+.hover\:color-theme:hover {
     box-shadow: 0 0 6px 1px @wu-color-theme;
 }
 
@@ -53,7 +53,7 @@ export default {
     background-color: @wu-color-amber-lighter;
     border: 1px solid @wu-color-amber;
 }
-.color-amber:hover {
+.hover\:color-amber:hover {
     box-shadow: 0 0 3px 1px @wu-color-amber;
 }
 
@@ -61,7 +61,7 @@ export default {
     background-color: @wu-color-yellow-lighter;
     border: 1px solid @wu-color-yellow;
 }
-.color-yellow:hover {
+.hover\:color-yellow:hover {
     box-shadow: 0 0 3px 1px @wu-color-yellow;
 }
 
@@ -69,7 +69,7 @@ export default {
     background-color: @wu-color-green-lighter;
     border: 1px solid @wu-color-green;
 }
-.color-green:hover {
+.hover\:color-green:hover {
     box-shadow: 0 0 3px 1px @wu-color-green;
 }
 
@@ -77,7 +77,7 @@ export default {
     background-color: @wu-color-cyan-lighter;
     border: 1px solid @wu-color-cyan;
 }
-.color-cyan:hover {
+.hover\:color-cyan:hover {
     box-shadow: 0 0 3px 1px @wu-color-cyan;
 }
 </style>
