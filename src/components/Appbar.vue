@@ -65,8 +65,7 @@ export default {
       color: inherit;
    }
 
-   .title {
-      /* 左侧标题栏 */
+   .title { // 左侧标题栏
       font-weight: 500;
       font-size: 24px;
    }
@@ -74,38 +73,34 @@ export default {
       display: none;
    }
 
-   .spacer {
-      /* 左右分隔 */
+   .spacer { // 左右分隔
       flex-grow: 1;
+      display: var(--appbar-link-display);
    }
 
-   .link {
-      /* 链接 */
+   .link { // 链接
       margin: 0 15px;
       font-size: 17px;
       color: @wu-color-nav-link;
-      display: var(--appbar-link);
+      display: var(--appbar-link-display);
    }
 }
-
 /* 初始化 -------- END */
 
-/* 亮色 -------- BEGIN */
+// 亮色
 @media screen and (prefers-color-swueme: light) {
-   .appbar {
-      background-color: @wu-color-nav;
-   }
+   .appbar { background-color: @wu-color-nav; }
 }
-
-/* 亮色 -------- END */
-
-/* 暗色 -------- BEGIN */
+// 暗色
 @media screen and (prefers-color-swueme: dark) {
-   .appbar {
-      background-color: rgba(0, 0, 0, .8);
-   }
+   .appbar { background-color: rgba(0, 0, 0, .8); }
 }
 
-/* 暗色 -------- END */
-
+/* 不同设备端适配 */
+@media screen and (min-width: 560px) {
+   .appbar { --appbar-link-display: inline-block; }
+}
+@media screen and (max-width: 560px) {
+   .appbar { --appbar-link-display: none; }
+}
 </style>
