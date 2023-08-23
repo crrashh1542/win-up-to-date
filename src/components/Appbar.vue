@@ -11,9 +11,6 @@ const linkList =
       'link': 'https://github.com/crrashh1542/win-uptime'
    }]
 
-import { provideFluentDesignSystem, fluentSwitch } from "@fluentui/web-components"
-provideFluentDesignSystem().register(fluentSwitch())
-
 export default {
    name: 'MainAppbar',
    data() {
@@ -37,9 +34,6 @@ export default {
       <!-- 右侧链接 -->
       <div>
          <a v-for="i in link" :key="i.name" :href="i.link" class="link" target="_blank">{{ i.name }}</a>
-         <fluent-switch class="switch">
-            <label for="cap-switch">深色</label>
-         </fluent-switch>
       </div>
    </div>
 </template>
@@ -96,6 +90,7 @@ export default {
    }
 
    .switch {
+      font-size: 17px;
       display: var(--appbar-link-display);
    }
 }
