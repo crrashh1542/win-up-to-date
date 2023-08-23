@@ -12,20 +12,22 @@ import Appbar from './components/Appbar.vue'
 import Banner from './components/Banner.vue'
 import Container from './components/Container.vue'
 import Foo from './components/Footer.vue'
+import SettingDialog from './components/SettingDialog.vue'
 
 export default {
    name: 'App',
-   components: { Appbar, Banner, Container, Foo }
+   components: { Appbar, Banner, Container, Foo, SettingDialog }
 }
 
 </script>
 
 <template>
    <div class="bg-shade fixed top-0 left-0"></div>
-   <Appbar class="z-50"></Appbar>
-   <Banner class="z-20"></Banner>
-   <Container class="z-20"></Container>
-   <Foo class="z-20"></Foo>
+   <Appbar class="z-30" />
+   <Banner class="z-20" />
+   <Container class="z-20" />
+   <Foo class="z-20" />
+   <SettingDialog class="z-50" />
 </template>
 
 <style>

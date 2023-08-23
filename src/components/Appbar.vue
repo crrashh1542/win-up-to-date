@@ -18,6 +18,12 @@ export default {
          title: 'Windows Up-to-Date',
          link: linkList
       }
+   },
+   methods: {
+      dialogOpen(){
+         let dialogEl = document.getElementById('setting')
+         dialogEl.hidden = false
+      }
    }
 }
 </script>
@@ -29,11 +35,12 @@ export default {
       <a href="" class="title">{{ title }}</a>
 
       <!-- 左右分隔 -->
-      <div class="spacer"></div>
+      <div class="grow"></div>
 
       <!-- 右侧链接 -->
-      <div>
+      <div class="external">
          <a v-for="i in link" :key="i.name" :href="i.link" class="link" target="_blank">{{ i.name }}</a>
+         <a href="#" @click="dialogOpen">选项</a>
       </div>
    </div>
 </template>
@@ -75,22 +82,14 @@ export default {
       display: none;
    }
 
-   .spacer {
-      // 左右分隔
-      flex-grow: 1;
-      display: var(--appbar-link-display);
-   }
-
-   .link {
+   .external > * {
       // 链接
       margin: 0 15px;
       font-size: 17px;
       color: @wu-color-nav-link;
-      display: var(--appbar-link-display);
    }
 
-   .switch {
-      font-size: 17px;
+   .external .link {
       display: var(--appbar-link-display);
    }
 }
@@ -112,13 +111,13 @@ export default {
 }
 
 /* 不同设备端适配 */
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 650px) {
    .appbar {
       --appbar-link-display: inline-block;
    }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 650px) {
    .appbar {
       --appbar-link-display: none;
    }
