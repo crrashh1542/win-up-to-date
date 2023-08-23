@@ -24,11 +24,14 @@ export default {
                 <div class="info">
                     <div class="row">
                         <span class="category">{{ r.name }}</span>
-                        <span class="detail codename float-right">{{ r.codename }}</span>
+                        <span class="detail codename float-right">{{ r.codename }} {{ r.period }}</span>
                     </div>
                     <div class="version">{{ r.version }}</div>
-                    <div class="row">
+                    <div class="row" v-if="r.branch !== undefined">
                         <span class="detail branch">{{ r.branch }}</span>
+                    </div>
+                    <div class="row" v-else>
+                        <span class="detail"></span>
                     </div>
                 </div>
             </card>

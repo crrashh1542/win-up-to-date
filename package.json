@@ -1,6 +1,6 @@
 {
   "name": "win-uptime",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "A website project showing the uptime status of Windows Insider versions.",
   "main": "index.js",
   "repository": "https://github.com/crrashh1542/win-uptime",
