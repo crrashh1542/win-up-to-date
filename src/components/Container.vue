@@ -48,7 +48,6 @@ main {
     display: block;
     width: 100%;
     padding: var(--container-padding);
-    padding-top: @wu-layout-nav-height;
 
     .block {
         margin: 15px 0;

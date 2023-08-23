@@ -9,12 +9,13 @@ import './assets/styles/reset.less'
 
 // 引入组件
 import Appbar from './components/Appbar.vue'
+import Banner from './components/Banner.vue'
 import Container from './components/Container.vue'
 import Foo from './components/Footer.vue'
 
 export default {
    name: 'App',
-   components: { Appbar, Container, Foo }
+   components: { Appbar, Banner, Container, Foo }
 }
 
 </script>
@@ -22,6 +23,7 @@ export default {
 <template>
    <div class="bg-shade fixed top-0 left-0"></div>
    <Appbar class="z-50"></Appbar>
+   <Banner class="z-20"></Banner>
    <Container class="z-20"></Container>
    <Foo class="z-20"></Foo>
 </template>
