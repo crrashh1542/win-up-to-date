@@ -11,6 +11,9 @@ const linkList =
       'link': 'https://github.com/crrashh1542/win-uptime'
    }]
 
+import { provideFluentDesignSystem, fluentSwitch } from "@fluentui/web-components"
+provideFluentDesignSystem().register(fluentSwitch())
+
 export default {
    name: 'MainAppbar',
    data() {
@@ -34,6 +37,9 @@ export default {
       <!-- 右侧链接 -->
       <div>
          <a v-for="i in link" :key="i.name" :href="i.link" class="link" target="_blank">{{ i.name }}</a>
+         <fluent-switch class="switch">
+            <label for="cap-switch">深色</label>
+         </fluent-switch>
       </div>
    </div>
 </template>
@@ -65,42 +71,60 @@ export default {
       color: inherit;
    }
 
-   .title { // 左侧标题栏
+   .title {
+      // 左侧标题栏
       font-weight: 500;
       font-size: 24px;
    }
+
    .title::after {
       display: none;
    }
 
-   .spacer { // 左右分隔
+   .spacer {
+      // 左右分隔
       flex-grow: 1;
       display: var(--appbar-link-display);
    }
 
-   .link { // 链接
+   .link {
+      // 链接
       margin: 0 15px;
       font-size: 17px;
       color: @wu-color-nav-link;
       display: var(--appbar-link-display);
    }
+
+   .switch {
+      display: var(--appbar-link-display);
+   }
 }
+
 /* 初始化 -------- END */
 
 // 亮色
 @media screen and (prefers-color-swueme: light) {
-   .appbar { background-color: @wu-color-nav; }
+   .appbar {
+      background-color: @wu-color-nav;
+   }
 }
+
 // 暗色
 @media screen and (prefers-color-swueme: dark) {
-   .appbar { background-color: rgba(0, 0, 0, .8); }
+   .appbar {
+      background-color: rgba(0, 0, 0, .8);
+   }
 }
 
 /* 不同设备端适配 */
 @media screen and (min-width: 560px) {
-   .appbar { --appbar-link-display: inline-block; }
+   .appbar {
+      --appbar-link-display: inline-block;
+   }
 }
+
 @media screen and (max-width: 560px) {
-   .appbar { --appbar-link-display: none; }
-}
-</style>
+   .appbar {
+      --appbar-link-display: none;
+   }
+}</style>
