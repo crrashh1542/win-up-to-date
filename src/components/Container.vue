@@ -15,37 +15,20 @@ export default {
 <template>
     <main>
 
-        <div class="block" v-for="d in data" :key="d.category">
+        <div class="block" v-for="d in data" :key="d.category" :id="d.category">
             <catalog>
-                <span :class=d.style[0]></span>{{ d.category }}
+                <span :class=d.style></span>{{ d.category }}
             </catalog>
 
-            <card :class=d.style[1]>
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-codebase vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">开发代号周期</div>
-                        <div class="value">{{ d.codebase }}</div>
+            <card v-for="r in d.releases" :key="r.name" :class=r.style>
+                <div class="info">
+                    <div class="row">
+                        <span class="category">{{ r.name }}</span>
+                        <span class="detail codename float-right">{{ r.codename }}</span>
                     </div>
-                </div>
-            </card>
-
-            <card :class=d.style[1]>
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-branch vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">当前分支</div>
-                        <div class="value">{{ d.branch }}</div>
-                    </div>
-                </div>
-            </card>
-
-            <card :class=d.style[1]>
-                <div class="content flex flex-row flex-nowrap">
-                    <div class="icon icon-flight vertical-middle"></div>
-                    <div class="info flex flex-col">
-                        <div class="title">最新可用版本</div>
-                        <div class="value">{{ d.version }}</div>
+                    <div class="version">{{ r.version }}</div>
+                    <div class="row">
+                        <span class="detail branch">{{ r.branch }}</span>
                     </div>
                 </div>
             </card>
