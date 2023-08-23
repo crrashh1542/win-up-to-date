@@ -31,19 +31,19 @@ export default {
             <p class="flex">
                 <span>启用深色模式</span>
                 <span class="grow"></span>
-                <fluent-switch></fluent-switch>
+                <fluent-switch disabled="true"></fluent-switch>
             </p>
 
             <p class="flex">
                 <span>显示开发代号、周期</span>
                 <span class="grow"></span>
-                <fluent-switch></fluent-switch>
+                <fluent-switch checked="true" disabled="true"></fluent-switch>
             </p>
 
             <p class="flex">
                 <span>显示系统所在分支</span>
                 <span class="grow"></span>
-                <fluent-switch></fluent-switch>
+                <fluent-switch checked="true" disabled="true"></fluent-switch>
             </p>
 
             <div class="button">
