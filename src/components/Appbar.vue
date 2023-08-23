@@ -8,7 +8,7 @@ const linkList =
       'link': 'https://disk.crrashh.com/%F0%9F%96%A5%EF%B8%8F%20%E6%95%B0%E7%A0%81%E8%B5%84%E6%BA%90/%E7%94%B5%E8%84%91%20%E2%86%92%20Windows'
    }, {
       'name': 'GitHub',
-      'link': 'https://github.com/crrashh1542/win-uptime'
+      'link': 'https://github.com/crrashh1542/win-up-to-date'
    }]
 
 export default {
