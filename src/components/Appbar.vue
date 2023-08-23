@@ -15,7 +15,7 @@ export default {
    name: 'MainAppbar',
    data() {
       return {
-         title: 'Windows Uptime',
+         title: 'Windows Up-to-Date',
          link: linkList
       }
    }
@@ -112,13 +112,13 @@ export default {
 }
 
 /* 不同设备端适配 */
-@media screen and (min-width: 560px) {
+@media screen and (min-width: 600px) {
    .appbar {
       --appbar-link-display: inline-block;
    }
 }
 
-@media screen and (max-width: 560px) {
+@media screen and (max-width: 600px) {
    .appbar {
       --appbar-link-display: none;
    }

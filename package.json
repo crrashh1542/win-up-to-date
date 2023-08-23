@@ -1,9 +1,9 @@
 {
-  "name": "win-uptime",
-  "version": "0.6.1",
+  "name": "win-up-to-date",
+  "version": "0.6.2",
   "description": "A website project showing the uptime status of Windows Insider versions.",
   "main": "index.js",
-  "repository": "https://github.com/crrashh1542/win-uptime",
+  "repository": "https://github.com/crrashh1542/win-up-to-date",
   "author": "crrashh1542 <kotsuki@crrashh.com>",
   "license": "GPL-3.0",
   "private": true,
