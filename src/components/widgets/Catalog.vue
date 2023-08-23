@@ -17,5 +17,6 @@ export default {
     color: @wu-color-catalog;
     font-size: @wu-font-catalog-size;
     font-weight: @wu-font-catalog-weight;
+    margin-bottom: 5px;
 }
 </style>
