@@ -9439,9 +9439,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"win-uptime@workspace:.":
+"win-up-to-date@workspace:.":
   version: 0.0.0-use.local
-  resolution: "win-uptime@workspace:."
+  resolution: "win-up-to-date@workspace:."
   dependencies:
     "@babel/core": ^7.12.16
     "@babel/eslint-parser": ^7.12.16
