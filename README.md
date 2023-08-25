@@ -1,4 +1,4 @@
-# Windows Uptime
+# Windows Up-to-Date
 
 ![开源协议](https://img.shields.io/github/license/crrashh1542/win-uptime)
 ![当前版本](https://img.shields.io/github/package-json/v/crrashh1542/win-uptime)
@@ -13,9 +13,10 @@
 * UI 整体完工 (v0.3.0)
 * 从 JSON 文件中动态取得数据 (v0.4.0)
 * 适配移动端 (v0.5.0)
+* 使用 Fluent UI Web Components 重构 UI (v0.6.0)
+* 允许访客自行选择是否展示代号和分支 (v0.7.0)
 
 正在计划实现的功能：
-* 使用 Fluent UI Web Components 重构 UI (正在工作中，预计 v0.6.0)
 * 实时从 UUP 获取最新版本信息 ~~（这可能需要很长时间）~~ (正在计划中，预计 v1.0.0)
 * 增加“具体”页面 (正在计划中，由于需要使用 router，预计 v2.0.0)
 * 国际化，即 i18n
