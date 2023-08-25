@@ -1,23 +1,56 @@
 <script>
+// SEC 1 ------ 引入组件和库
 import Catalog from './widgets/Catalog.vue'
 import packageInfo from '/package.json'
+
 import {
     provideFluentDesignSystem, fluentDialog, fluentButton, fluentSwitch
-}
-    from '@fluentui/web-components'
+} from '@fluentui/web-components'
 provideFluentDesignSystem().register(
     fluentDialog(), fluentButton(), fluentSwitch())
 
+// SEC 2 ------- 导出组件
 export default {
     name: 'MainDialog',
     components: { Catalog },
     data() {
-        return { packageInfo }
+        return {
+            packageInfo,
+            // 设置初始值，避免出现 undefined
+            isShowFlight: true,
+            isShowBranch: true
+        }
     },
+    // 设置 emits 中的值
+    emits: ['isShowFlight', 'isShowBranch'],
     methods: {
         dialogClose() {
             let dialogEl = document.getElementById('setting')
             dialogEl.hidden = true
+        },
+
+        changeStatus(type, state) {
+            // STEP 1 ------ 将 0 1 对调
+            if (state === true) {
+                state = false
+            } else {
+                state = true
+            }
+
+            // STEP 2 ------ 判断要改变的内容
+            if (type === 0) {
+                // 如果是 flight
+                type = 'isShowFlight'
+                this.isShowFlight = state
+            } else {
+                type = 'isShowBranch'
+                this.isShowBranch = state
+            }
+
+            // 设置并改变值
+            let emitData = [type, state]
+            console.log('[Setting Dialog] Set ' + type + ' to ' + state + '.')
+            this.$emit(type, emitData)
         }
     }
 }
@@ -37,13 +70,13 @@ export default {
             <p class="flex">
                 <span>显示开发代号、周期</span>
                 <span class="grow"></span>
-                <fluent-switch checked="true" disabled="true"></fluent-switch>
+                <fluent-switch checked="true" v-model="isShowFlight" @click="changeStatus(0, isShowFlight)"></fluent-switch>
             </p>
 
             <p class="flex">
                 <span>显示系统所在分支</span>
                 <span class="grow"></span>
-                <fluent-switch checked="true" disabled="true"></fluent-switch>
+                <fluent-switch checked="true" v-model="isShowBranch" @click="changeStatus(1, isShowBranch)"></fluent-switch>
             </p>
 
             <div class="button">
@@ -62,6 +95,7 @@ export default {
 @import url('../assets/styles/adaption.less');
 
 @dialog-padding: 20px;
+
 .container {
     padding: @dialog-padding;
     height: 100%;
@@ -86,6 +120,7 @@ export default {
         position: absolute;
         bottom: @dialog-padding;
         right: @dialog-padding;
+
         fluent-button {
             font-size: 16px;
         }

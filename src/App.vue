@@ -3,6 +3,7 @@
 
 // 引入库
 import 'normalize.css/normalize.css'
+import { toRefs, reactive } from 'vue'
 
 // 引入样式
 import './assets/styles/reset.less'
@@ -16,7 +17,33 @@ import SettingDialog from './components/SettingDialog.vue'
 
 export default {
    name: 'App',
-   components: { Appbar, Banner, Container, Foo, SettingDialog }
+   components: { Appbar, Banner, Container, Foo, SettingDialog },
+   setup() {
+      // STEP1 ------ 设置初始值，避免出现 undefined
+      let [oriFlightVisibility, oriBranchVisibility] = [true, true]
+      let data = reactive({
+         isShowFlight: oriFlightVisibility,
+         isShowBranch: oriBranchVisibility
+      })
+      // 切换显示状态
+      function setState(emitData) {
+         // STEP2 ------ 获取子组件传递的信息 和 App 的 data 信息
+         let [stateType, stateValue] = [emitData[0], emitData[1]]
+         let [flightVisibility, branchVisibility] = [oriFlightVisibility, oriBranchVisibility]
+         // STEP3 ------ 判断类型并改变值
+         if (stateType === 'isShowFlight') {
+            flightVisibility = stateValue
+            console.log(flightVisibility)
+         } else if (stateType === 'isShowBranch') {
+            branchVisibility = stateValue
+            console.log(branchVisibility)
+         }
+         // STEP4 ------ 对 data 数据做出替换
+         data.isShowFlight = flightVisibility
+         data.isShowBranch = branchVisibility
+      }
+      return { ...toRefs(data), setState }
+   }
 }
 
 </script>
@@ -25,9 +52,9 @@ export default {
    <div class="bg-shade fixed top-0 left-0"></div>
    <Appbar class="z-30" />
    <Banner class="z-20" />
-   <Container class="z-20" />
+   <Container class="z-20" :isShowFlight="isShowFlight" :isShowBranch="isShowBranch" />
    <Foo class="z-20" />
-   <SettingDialog class="z-50" />
+   <SettingDialog class="z-50" @isShowFlight="setState" @isShowBranch="setState" />
 </template>
 
 <style>

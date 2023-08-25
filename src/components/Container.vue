@@ -8,6 +8,10 @@ export default {
     components: { Catalog, Card },
     data() {
         return { data }
+    },
+    props: {
+        isShowFlight: Boolean,
+        isShowBranch: Boolean
     }
 }
 </script>
@@ -24,13 +28,15 @@ export default {
                 <div class="info">
                     <div class="row">
                         <span class="category">{{ r.name }}</span>
-                        <span class="detail codename float-right">{{ r.codename }} {{ r.period }}</span>
+                        <span class="detail codename float-right" v-if="isShowFlight !== false">
+                            {{ r.codename }} {{ r.period }}
+                        </span>
                     </div>
                     <div class="version">{{ r.version }}</div>
-                    <div class="row" v-if="r.branch !== undefined">
+                    <div class="row" v-if="r.branch !== undefined && isShowBranch !== false">
                         <span class="detail branch">{{ r.branch }}</span>
                     </div>
-                    <div class="row" v-else>
+                    <div class="row" v-else-if="isShowBranch !== false">
                         <span class="detail"></span>
                     </div>
                 </div>
