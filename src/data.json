@@ -6,15 +6,15 @@
             {
                 "name": "Canary",
                 "style": "color-amber",
-                "version": "25931.1010",
-                "branch": "rs_prerelease_flt",
+                "version": "25936.1000",
+                "branch": "rs_prerelease",
                 "codename": "Gallium",
                 "period": "24H1"
             },
             {
                 "name": "Dev",
                 "style": "color-orange",
-                "version": "23526.1000",
+                "version": "23531.1001",
                 "branch": "ni_prerelease",
                 "codename": "Nickel",
                 "period": "22H2"
@@ -22,7 +22,7 @@
             {
                 "name": "Beta",
                 "style": "color-green",
-                "version": "22631.2199",
+                "version": "22631.2262",
                 "branch": "ni_release_svc_betaflt_prod1",
                 "codename": "Nickel",
                 "period": "23H2"
