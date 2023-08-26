@@ -31,8 +31,23 @@ export default {
     color: @wu-color-catalog;
 
     p {
-        line-height: 1.6;
-        margin: .9em 0;
+        line-height: var(--footer-line-height);
+        margin: var(--footer-margin);
+    }
+}
+
+/* 不同设备适配 */
+@media screen and (max-width: 800px) {
+    .footer {
+        --footer-line-height: 1.6;
+        --footer-margin: .9em 0;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .footer {
+        --footer-line-height: 1.4;
+        --footer-margin: .5em 0;
     }
 }
 </style>
