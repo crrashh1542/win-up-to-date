@@ -1,13 +1,34 @@
 <script>
+// 引入库
+import { reactive, toRefs } from 'vue'
+import axios from 'axios'
+// 引入组件
 import Catalog from './widgets/Catalog.vue'
 import Card from './widgets/Card.vue'
-import data from '../data.json'
 
 export default {
     name: 'MainContainer',
     components: { Catalog, Card },
-    data() {
-        return { data }
+    setup() {
+        // STEP1 ------ 设定初始值
+        let data = reactive({
+            data: []
+        })
+
+        // STEP2 ------ 获取数据
+        // 此处填写 Windows 最新数据的 API 地址，相关 API 方面，咕咕正在 TODO 状态中
+        // 目前仅仅对 github.com/crrashh1542/win-up-to-date@data/data.json 做了反代而已
+        axios.get('https://wutd.crrashh.com/api/getData')
+            // STEP3 ------ 处理并修改数据
+            .then(function(response) {
+                data.data = response.data
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
+
+        // STEP4 ------ 返回数据
+        return { ...toRefs(data) }
     },
     props: {
         isShowFlight: Boolean,
