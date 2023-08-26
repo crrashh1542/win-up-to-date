@@ -2,6 +2,9 @@
 // 引入库
 import { reactive, toRefs } from 'vue'
 import axios from 'axios'
+import { fluentProgressRing, provideFluentDesignSystem } from '@fluentui/web-components'
+provideFluentDesignSystem().register(fluentProgressRing())
+
 // 引入组件
 import Catalog from './widgets/Catalog.vue'
 import Card from './widgets/Card.vue'
@@ -12,16 +15,19 @@ export default {
     setup() {
         // STEP1 ------ 设定初始值
         let data = reactive({
-            data: []
+            data: [],
+            isLoading: true
         })
 
         // STEP2 ------ 获取数据
         // 此处填写 Windows 最新数据的 API 地址，相关 API 方面，咕咕正在 TODO 状态中
         // 目前仅仅对 github.com/crrashh1542/win-up-to-date@data/data.json 做了反代而已
         axios.get('https://wutd.crrashh.com/api/getData')
+
             // STEP3 ------ 处理并修改数据
             .then(function(response) {
                 data.data = response.data
+                data.isLoading = false
             })
             .catch(function(error) {
                 console.log(error)
@@ -31,6 +37,7 @@ export default {
         return { ...toRefs(data) }
     },
     props: {
+        // 接收 SettingDialog 传到父组件的数据
         isShowFlight: Boolean,
         isShowBranch: Boolean
     }
@@ -40,22 +47,31 @@ export default {
 <template>
     <main>
 
+        <!-- 加载动画 -->
+        <div class="load text-center align-middle" v-if="isLoading">
+            <fluent-progress-ring class="m-auto"></fluent-progress-ring>
+            <p>数据加载中，请稍候</p>
+        </div>
+
+        <!-- 内容块 -->
         <div class="block" v-for="d in data" :key="d.category" :id="d.category">
+            <!-- 标题 -->
             <catalog>
                 <span :class=d.style></span>{{ d.category }}
             </catalog>
 
+            <!-- 卡片 -->
             <card v-for="r in d.releases" :key="r.name" :class=r.style>
                 <div class="info">
                     <div class="row">
-                        <span class="category">{{ r.name }}</span>
+                        <span class="category">{{ r.name }}<!-- 类型 --></span>
                         <span class="detail codename float-right" v-if="isShowFlight !== false">
-                            {{ r.codename }} {{ r.period }}
+                            {{ r.codename }} {{ r.period }} <!-- 周期代号 -->
                         </span>
                     </div>
-                    <div class="version">{{ r.version }}</div>
+                    <div class="version">{{ r.version }}<!-- 版本 --></div>
                     <div class="row" v-if="r.branch !== undefined && isShowBranch !== false">
-                        <span class="detail branch">{{ r.branch }}</span>
+                        <span class="detail branch">{{ r.branch }}<!-- 分支 --></span>
                     </div>
                     <div class="row" v-else-if="isShowBranch !== false">
                         <span class="detail"></span>
@@ -76,6 +92,17 @@ main {
     width: 100%;
     padding: var(--container-padding);
 
+    .load {
+        margin: 15% 0;
+        fluent-progress-ring {
+            width: 64px;
+            height: 64px;
+        }
+        p {
+            font-size: 24px;
+            margin: 30px;
+        }
+    }
     .block {
         margin: 15px 0;
 
