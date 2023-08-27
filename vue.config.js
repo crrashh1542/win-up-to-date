@@ -45,17 +45,29 @@ module.exports = defineConfig({
 
    },
 
-   // chunk 拆分
    chainWebpack: config => {
+
+      // 自定义元素设定
+      config.module.rule('vue').use('vue-loader').tap(options => ({
+         ...options,
+         compilerOptions: {
+            // 不解析所有 fluent- 开头的元素
+            isCustomElement: tag => tag.startsWith('fluent-')
+         }
+      }))
+
+      // chunk 拆分
       config.optimization.splitChunks({
          chunks: 'all',
          cacheGroups: {
+            // GROUP1 ------ 第三方模块
             vendor: {
                name: 'vendors',
                test: /[\\/]node_modules[\\/]/,
                priority: 10,
                chunks: 'initial'
             },
+            // GROUP2 ------ 项目内组件
             commons: {
                name: 'common',
                test: resolve('src/components'),
@@ -64,6 +76,7 @@ module.exports = defineConfig({
             },
          },
       })
+      // GROUP3 ------ 运行时
       config.optimization.runtimeChunk({
          name: 'runtime'
       })
