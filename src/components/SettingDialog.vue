@@ -2,6 +2,7 @@
 // SEC 1 ------ 引入组件和库
 import Catalog from './widgets/Catalog.vue'
 import packageInfo from '/package.json'
+import buildInfo from '/temp/buildInfo.json'
 
 import {
     provideFluentDesignSystem, fluentDialog, fluentButton, fluentSwitch
@@ -16,6 +17,7 @@ export default {
     data() {
         return {
             packageInfo,
+            buildInfo,
             // 设置初始值，避免出现 undefined
             isShowFlight: true,
             isShowBranch: true
@@ -83,8 +85,12 @@ export default {
                 <fluent-button appearance="accent" @click="dialogClose()">关闭</fluent-button>
             </div>
 
-            <div class="version">
-                当前项目版本：v{{ packageInfo.version }}
+            <div class="description">
+                <div>项目版本：v{{ packageInfo.version }}@{{ buildInfo.hash }}</div>
+                <div>
+                    <a href="https://github.com/crrashh1542/win-up-to-date" target="_blank">GitHub 地址</a>
+                    <span class="icon-external"></span>
+                </div>
             </div>
         </div>
     </fluent-dialog>
@@ -110,10 +116,13 @@ export default {
         font-size: 20px;
     }
 
-    .version {
+    .description {
         position: absolute;
         bottom: @dialog-padding;
         left: @dialog-padding;
+        div {
+            line-height: 1.8;
+        }
     }
 
     .button {
