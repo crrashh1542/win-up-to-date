@@ -86,7 +86,7 @@ export default {
             </div>
 
             <div class="description">
-                <div>项目版本：v{{ packageInfo.version }}@{{ buildInfo.hash }}</div>
+                <div>项目版本：v{{ packageInfo.version }} (build {{ buildInfo.build }})</div>
                 <div>
                     <a href="https://github.com/crrashh1542/win-up-to-date" target="_blank">GitHub 地址</a>
                     <span class="icon-external"></span>

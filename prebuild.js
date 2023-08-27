@@ -2,7 +2,7 @@
 /**
  * 此脚本用于在开始打包前处理配置信息
  * @author crrashh1542
- * @version 1.4.1
+ * @version 1.4.2
  */
 
 // STEP1 -------- 导入依赖
@@ -24,12 +24,20 @@ function getHash(params) {
    return buildHash
 }
 
+// STEP4 -------- 获取构建次数
+function getBuild(params) {
+   const buildHash = childProcess.execSync('git rev-list HEAD --count', { 'encoding': 'utf8' }).split('\n')[0]
+   console.log('[buildInfo] 已获取构建数：' + buildHash)
+   return buildHash
+}
+
 // STEP4 -------- 组装并输出到文件
 function writeInfo() {
    // 组装要输出的内容
    const content = `   {
       "time": "` + getTime() + `",
-      "hash": "` + getHash() + `"
+      "hash": "` + getHash() + `",
+      "build": "` + getBuild() + `"
    }`
 
    // 新建 temp 文件夹
