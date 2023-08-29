@@ -5,18 +5,20 @@
 ![Release 版本](https://img.shields.io/github/v/release/crrashh1542/win-uptime?include_prereleases)
 ![框架](https://img.shields.io/badge/framework-Vue%203-3fb984)
 
+## 说明
 如你所见，这是一个用于反映 Windows 系统各版本情况实时进展的项目。  
   
-这是一个基于 Vue 3 的练手项目 ~~（为自己代码质量低找借口）~~ ，同时是个便民项目。由于目前在测试阶段，所以会有很多可能出现的 bug，敬请谅解~
+这是受到 [ChangeWindows](https://changewindows.org) 项目启发而制作的一个便民项目，也算作我的一个 Vue 3 练手项目 ~~（为自己代码质量低找借口）~~。由于目前在测试阶段，所以可能会出现较多的 bug，敬请谅解~  
   
-已经实现的功能：
-* UI 整体完工 (v0.3.0)
-* 从 JSON 文件中动态取得数据 (v0.4.0)
-* 适配移动端 (v0.5.0)
-* 使用 Fluent UI Web Components 重构 UI (v0.6.0)
-* 允许访客自行选择是否展示代号和分支 (v0.7.0)
-
-正在计划实现的功能：
-* 实时从 UUP 获取最新版本信息 ~~（这可能需要很长时间）~~ (正在计划中，预计 v1.0.0)
-* 增加“具体”页面 (正在计划中，由于需要使用 router，预计 v2.0.0)
-* 国际化，即 i18n
+关于版本详情，请见[更新日志](../data/CHANGELOG.md)。
+  
+## 部署
+若要下载已打包好的源代码，请移步 [Releases](https://github.com/crrashh1542/win-up-to-date/releases)。  
+  
+若要自行打包，需要注意以下几点：
+* 必须要将项目 clone 下来，使用 zip 源代码下载方式会导致 prebuild 环节出错。
+* 请将 Yarn 版本调整至 berry (v2+)。
+```bash
+yarn set version berry
+```
+* 启动开发、生产模式的命令请见 `package.json`。
