@@ -17,7 +17,7 @@
                 "version": "23531.1001",
                 "branch": "ni_prerelease",
                 "codename": "Nickel",
-                "period": "22H2"
+                "period": "23H2"
             },
             {
                 "name": "Beta",
@@ -208,11 +208,19 @@
         "style": "icon-code",
         "releases": [
             {
-                "name": "最新版",
+                "name": "非稳定版",
                 "style": "color-amber",
                 "version": "25936.1000",
                 "codename": "Gallium",
                 "period": "24H1"
+            },
+            {
+                "name": "非稳定版",
+                "style": "color-orange",
+                "version": "23531.1001",
+                "branch": "ni_prerelease",
+                "codename": "Nickel",
+                "period": "23H2"
             },
             {
                 "name": "稳定版",
