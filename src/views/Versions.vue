@@ -25,11 +25,11 @@ export default {
         axios.get('https://wutd.crrashh.com/api/getVersions')
 
             // STEP3 ------ 处理并修改数据
-            .then(function(response) {
+            .then(function (response) {
                 data.data = response.data
                 data.isLoading = false
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 console.log(error)
             })
 
@@ -94,22 +94,82 @@ main {
 
     .load {
         margin: 15% 0;
+
         fluent-progress-ring {
             width: 64px;
             height: 64px;
         }
+
         p {
             font-size: 24px;
             margin: 30px;
         }
     }
+
     .block {
         margin: 15px 0;
 
         span {
             margin-right: .75em;
         }
+
+        .info {
+            .category {
+                font-size: 18px;
+                font-weight: 500;
+            }
+
+            .version {
+                font-size: 24px;
+                padding: 4px 0 10px;
+                font-weight: 500;
+            }
+
+            .detail {
+                font-size: 16px;
+                line-height: 1.5;
+                word-break: break-word;
+            }
+
+            .detail::before {
+                font-size: 14px;
+                padding-right: 7px;
+            }
+
+            .detail.detail.branch {
+                color: #212121;
+            }
+
+            .detail.branch::before {
+                content: '\e993';
+            }
+
+            .detail.codename::before {
+                content: '\e9d7';
+            }
+        }
     }
 }
-/* 不同设备适配 -------- END */
-</style>
+
+
+/* 不同设备端适配 */
+
+// SEC 1 ------ 两列
+@media screen and (min-width: 1070px) {
+    .card {
+        --card-width: 32%;
+    }
+}
+
+@media screen and (max-width: 1070px) {
+    .card {
+        --card-width: 48%;
+    }
+}
+
+// SEC 2 ------ 一列
+@media screen and (max-width: 620px) {
+    .card {
+        --card-width: 100%;
+    }
+}</style>
