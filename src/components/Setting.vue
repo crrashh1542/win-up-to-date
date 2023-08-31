@@ -1,6 +1,6 @@
 <script>
 // SEC 1 ------ 引入组件和库
-import Catalog from './widgets/Catalog.vue'
+import Catalog from './Catalog.vue'
 import packageInfo from '/package.json'
 import buildInfo from '/temp/buildInfo.json'
 

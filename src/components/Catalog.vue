@@ -11,7 +11,7 @@ export default {
 </template>
 
 <style lang="less" scoped>
-@import url('../../assets/styles/global.less');
+@import url('../assets/styles/global.less');
 
 .title {
     color: @wu-color-catalog;

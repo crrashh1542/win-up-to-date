@@ -14,7 +14,7 @@ export default {
 </template>
 
 <style lang="less">
-@import url('../../assets/styles/theme.less');
+@import url('../assets/styles/theme.less');
 
 .card {
     margin-right: 5px;
