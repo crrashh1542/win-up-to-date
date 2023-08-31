@@ -14,9 +14,9 @@ export default {
 @import url('../assets/styles/global.less');
 
 .title {
-    color: @wu-color-catalog;
+    color: @wu-color-text-imp;
     font-size: @wu-font-catalog-size;
     font-weight: @wu-font-catalog-weight;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 </style>

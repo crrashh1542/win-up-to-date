@@ -60,8 +60,6 @@ export default {
    line-height: @wu-layout-nav-height;
    background-color: @wu-color-nav;
    padding: var(--container-padding);
-   padding-top: 0;
-   padding-bottom: 0;
    border-bottom: 1px solid @wu-color-split-line;
    backdrop-filter: blur(3px);
    display: flex;
@@ -86,7 +84,7 @@ export default {
       // 链接
       margin: 0 15px;
       font-size: 17px;
-      color: @wu-color-nav-link;
+      color: @wu-color-text-accent;
    }
 
    .external .link {

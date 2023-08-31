@@ -47,7 +47,7 @@ export default {
     <main>
 
         <!-- 加载动画 -->
-        <LoadAnim v-if="isLoading"></LoadAnim>
+        <LoadAnim v-if="isLoading" />
         
         <!-- 内容块 -->
         <div class="block" v-for="d in data" :key="d.category" :id="d.category">
@@ -59,19 +59,23 @@ export default {
             <!-- 卡片 -->
             <card v-for="r in d.releases" :key="r.name" :class=r.style>
                 <div class="info">
+
                     <div class="row">
                         <span class="category">{{ r.name }}<!-- 类型 --></span>
                         <span class="detail codename float-right" v-if="isShowFlight !== false">
                             {{ r.codename }} {{ r.period }} <!-- 周期代号 -->
                         </span>
                     </div>
+
                     <div class="version">{{ r.version }}<!-- 版本 --></div>
+
                     <div class="row" v-if="r.branch !== undefined && isShowBranch !== false">
                         <span class="detail branch">{{ r.branch }}<!-- 分支 --></span>
                     </div>
                     <div class="row" v-else-if="isShowBranch !== false">
                         <span class="detail"></span>
                     </div>
+                    
                 </div>
             </card>
         </div>
@@ -95,11 +99,9 @@ main {
             margin-right: .75em;
         }
 
-        .info {
-            .category {
-                font-size: 18px;
-                font-weight: 500;
-            }
+        .card {
+            margin-right: 5px;
+            padding: 10px 5px 10px 20px;
 
             .version {
                 font-size: 24px;
@@ -111,15 +113,12 @@ main {
                 font-size: 16px;
                 line-height: 1.5;
                 word-break: break-word;
+                color: @wu-color-text-accent;
             }
 
             .detail::before {
                 font-size: 14px;
                 padding-right: 7px;
-            }
-
-            .detail.detail.branch {
-                color: #212121;
             }
 
             .detail.branch::before {
@@ -138,20 +137,14 @@ main {
 
 // SEC 1 ------ 两列
 @media screen and (min-width: 1070px) {
-    .card {
-        --card-width: 32%;
-    }
+    .card { --card-width: 32%; }
 }
 
 @media screen and (max-width: 1070px) {
-    .card {
-        --card-width: 48%;
-    }
+    .card { --card-width: 48%; }
 }
 
 // SEC 2 ------ 一列
 @media screen and (max-width: 620px) {
-    .card {
-        --card-width: 100%;
-    }
+    .card { --card-width: 100%; }
 }</style>

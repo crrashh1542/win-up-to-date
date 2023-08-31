@@ -28,7 +28,7 @@ export default {
     border-top: 1px solid @wu-color-split-line;
     padding: var(--container-padding);
     font-size: 16px;
-    color: @wu-color-catalog;
+    color: @wu-color-text-accent;
 
     p {
         line-height: var(--footer-line-height);
