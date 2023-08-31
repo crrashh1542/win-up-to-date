@@ -2,16 +2,15 @@
 // 引入库
 import { reactive, toRefs } from 'vue'
 import axios from 'axios'
-import { fluentProgressRing, provideFluentDesignSystem } from '@fluentui/web-components'
-provideFluentDesignSystem().register(fluentProgressRing())
 
 // 引入组件
 import Catalog from '../components/Catalog.vue'
 import Card from '../components/Card.vue'
+import LoadAnim from '../components/LoadAnim.vue'
 
 export default {
     name: 'ViewVersion',
-    components: { Catalog, Card },
+    components: { Catalog, Card, LoadAnim },
     setup() {
         // STEP1 ------ 设定初始值
         let data = reactive({
@@ -48,11 +47,8 @@ export default {
     <main>
 
         <!-- 加载动画 -->
-        <div class="load text-center align-middle" v-if="isLoading">
-            <fluent-progress-ring class="m-auto"></fluent-progress-ring>
-            <p>数据加载中，请稍候</p>
-        </div>
-
+        <LoadAnim v-if="isLoading"></LoadAnim>
+        
         <!-- 内容块 -->
         <div class="block" v-for="d in data" :key="d.category" :id="d.category">
             <!-- 标题 -->
@@ -91,20 +87,6 @@ main {
     display: block;
     width: 100%;
     padding: var(--container-padding);
-
-    .load {
-        margin: 15% 0;
-
-        fluent-progress-ring {
-            width: 64px;
-            height: 64px;
-        }
-
-        p {
-            font-size: 24px;
-            margin: 30px;
-        }
-    }
 
     .block {
         margin: 15px 0;
