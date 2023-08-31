@@ -18,7 +18,8 @@
     "core-js": "^3.31.0",
     "moment": "^2.29.4",
     "normalize.css": "^8.0.1",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

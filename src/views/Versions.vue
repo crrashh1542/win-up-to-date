@@ -6,11 +6,11 @@ import { fluentProgressRing, provideFluentDesignSystem } from '@fluentui/web-com
 provideFluentDesignSystem().register(fluentProgressRing())
 
 // 引入组件
-import Catalog from './widgets/Catalog.vue'
-import Card from './widgets/Card.vue'
+import Catalog from '../components/Catalog.vue'
+import Card from '../components/Card.vue'
 
 export default {
-    name: 'MainContainer',
+    name: 'ViewVersion',
     components: { Catalog, Card },
     setup() {
         // STEP1 ------ 设定初始值

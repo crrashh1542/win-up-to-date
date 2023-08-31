@@ -11,13 +11,12 @@ import './assets/styles/reset.less'
 // 引入组件
 import Appbar from './components/Appbar.vue'
 import Banner from './components/Banner.vue'
-import Container from './components/Container.vue'
 import Foo from './components/Footer.vue'
-import SettingDialog from './components/SettingDialog.vue'
+import Setting from './components/Setting.vue'
 
 export default {
    name: 'App',
-   components: { Appbar, Banner, Container, Foo, SettingDialog },
+   components: { Appbar, Banner, Foo, Setting },
    setup() {
       // STEP1 ------ 设置初始值，避免出现 undefined
       let [oriFlightVisibility, oriBranchVisibility] = [true, true]
@@ -52,9 +51,9 @@ export default {
    <div class="bg-shade fixed top-0 left-0"></div>
    <Appbar class="z-30" />
    <Banner class="z-20" />
-   <Container class="z-20" :isShowFlight="isShowFlight" :isShowBranch="isShowBranch" />
+   <router-view :isShowFlight="isShowFlight" :isShowBranch="isShowBranch"></router-view>
    <Foo class="z-20" />
-   <SettingDialog class="z-50" @isShowFlight="setState" @isShowBranch="setState" />
+   <Setting class="z-50" @isShowFlight="setState" @isShowBranch="setState" />
 </template>
 
 <style>
