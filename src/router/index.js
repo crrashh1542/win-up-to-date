@@ -1,11 +1,13 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 import Versions from '../views/Versions.vue'
+import FeatureIds from '../views/FeatureIds.vue'
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes: [
-        { path: '/', component: Versions }
+        { path: '/', component: Versions },
+        { path: '/featureIds', component: FeatureIds }
     ]
 })
 

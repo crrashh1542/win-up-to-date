@@ -32,10 +32,8 @@ export default {
          // STEP3 ------ 判断类型并改变值
          if (stateType === 'isShowFlight') {
             flightVisibility = stateValue
-            console.log(flightVisibility)
          } else if (stateType === 'isShowBranch') {
             branchVisibility = stateValue
-            console.log(branchVisibility)
          }
          // STEP4 ------ 对 data 数据做出替换
          data.isShowFlight = flightVisibility

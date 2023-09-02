@@ -1,0 +1,695 @@
+[
+    {
+        "category": "Windows 11 Gallium",
+        "id": "Gallium",
+        "detail": {
+            "branch": "rs_prerelease",
+            "version": "25905 ~ ?",
+            "period": "24H1",
+            "channel": "Canary"
+        },
+        "ids": [
+            {
+                "id": "34878152",
+                "feature": "欢乐时光，即设置导航栏动画",
+                "description": "【谨慎启用，可能引发文件资源管理器反复重启】25352暂时移除，25905回归"
+            },
+            {
+                "id": "36390579",
+                "feature": "新UI前置",
+                "description": "若要启用下面新UI，必须启用该ID"
+            },
+            {
+                "id": "44357190",
+                "feature": "零售演示模式",
+                "description": "系统-激活-连点几下Windows版本，25905起默认禁用"
+            },
+            {
+                "id": "42739800",
+                "feature": "启用电话激活",
+                "description": "25905起默认禁用"
+            },
+            {
+                "id": "37356106",
+                "feature": "使用Rust重写Win32k GDI代码",
+                "description": "25905起开始a/b测"
+            },
+            {
+                "id": "37926450",
+                "feature": "搜索滚动条得到翻新",
+                "description": "23451及25905起默认禁用"
+            },
+            {
+                "id": "39484957",
+                "feature": "OOBE中隐私部分里新增存在感知选项",
+                "description": "25915起默认禁用"
+            },
+            {
+                "id": "41437381",
+                "feature": "隐藏任务栏的时间及日期",
+                "description": "25352暂时移除，25905回归"
+            },
+            {
+                "id": "42550315",
+                "feature": "设置中“恢复”界面将支持原地升级",
+                "description": "目前功能暂不起作用，25284默认禁用，25905起默认启用"
+            },
+            {
+                "id": "42592269",
+                "feature": "任务栏应用右键可选择结束进程",
+                "description": "（需在开发者选项中启用）25300及23419默认禁用，且该功能无法正常使用；23451起可正常使用，25905起默认启用"
+            },
+            {
+                "id": "42869801",
+                "feature": "ReFS格式的OneDrive",
+                "description": "25931起默认禁用"
+            },
+            {
+                "id": "43636169",
+                "feature": "小组件面板固定",
+                "description": "需要安装最新WWEP，25926起默认禁用"
+            },
+            {
+                "id": "38613007",
+                "feature": "新资源管理器文件夹导航窗格UI",
+                "description": "25352暂时移除，25905回归"
+            },
+            {
+                "id": "44702824",
+                "feature": "启用“设置>系统”中的“系统组件”标签",
+                "description": "25926起默认禁用"
+            },
+            {
+                "id": "39319758, 41091343",
+                "feature": "任务栏等组件从explorer进程分离",
+                "description": "【不推荐实体机启用，以免造成严重后果】25211默认禁用且损坏，25267可正常使用，23403默认禁用，25352暂时移除，25905回归"
+            },
+            {
+                "id": "40226628, 41683745",
+                "feature": "隐私权限问题警告",
+                "description": "25905起默认禁用"
+            },
+            {
+                "id": "39696859",
+                "feature": "资源管理器快捷键选中",
+                "description": "25352暂时移除，25905回归"
+            },{
+                "id": "42295138",
+                "feature": "启用新“图库”的视图",
+                "description": "25352暂时移除，25905回归(需先启用41040327)"
+            },
+            {
+                "id": "40950262, 42105254",
+                "feature": "WASDK的资源管理器导航栏翻新",
+                "description": "23466默认禁用，25905起开始a/b测"
+            },
+            {
+                "id": "40213648",
+                "feature": "Emoji 15",
+                "description": "25352暂时移除，25905回归"
+            },
+            {
+                "id": "41655236, 42105254, 44774629, 44776738, 44850061",
+                "feature": "任务栏显示Copilot图标",
+                "description": "25905起开始a/b测"
+            }
+        ]
+    },
+    {
+        "category": "Windows 11 Zinc",
+        "id": "Zinc",
+        "detail": {
+            "branch": "rs_prerelease & zn_release",
+            "version": "25246 ~ 25391",
+            "period": "23H2",
+            "channel": "Dev & Canary"
+        },
+        "ids": [
+            {
+                "id": "34878152",
+                "feature": "欢乐时光，即设置导航栏动画",
+                "description": "【谨慎启用，可能引发文件资源管理器反复重启】25188起默认禁用，25197起开始a/b测，25352暂时移除，25905回归"
+            },
+            {
+                "id": "34912776",
+                "feature": "更改键盘布局顺序",
+                "description": "25300起默认禁用"
+            },
+            {
+                "id": "36371531",
+                "feature": "自动颜色管理选项",
+                "description": "25309起开始a/b测"
+            },
+            {
+                "id": "38113452",
+                "feature": "网络连接虚拟网络平台显示图标",
+                "description": "25247起默认禁用，25252起默认启用"
+            },
+            {
+                "id": "38612934",
+                "feature": "新存在感知界面",
+                "description": "25300起默认禁用"
+            },
+            {
+                "id": "40112637",
+                "feature": "防火墙对话框标题改成Windows安全",
+                "description": "25324默认禁用，25346起默认启用"
+            },
+            {
+                "id": "38613007",
+                "feature": "新资源管理器文件夹导航窗格UI",
+                "description": "25276(此版本启用需切换成浅色模式)起默认禁用，25290移除，25346起回归但默认禁用，25352暂时移除"
+            },
+            {
+                "id": "40347509",
+                "feature": "启用可创建ReFS开发者分区",
+                "description": "25309起默认禁用，25357暂时移除"
+            },
+            {
+                "id": "40175629",
+                "feature": "设置中的启动应用可查看安装说明或者位置",
+                "description": "25247起默认禁用，25300起默认启用"
+            },
+            {
+                "id": "41540372",
+                "feature": "设置账户新版OneDrive界面",
+                "description": "25276起开始a/b测"
+            },
+            {
+                "id": "42106010",
+                "feature": "“快速设置”声音输出中有更多的操作",
+                "description": "25281起默认禁用，25309起开始a/b测"
+            },
+            {
+                "id": "40213648",
+                "feature": "Emoji 15",
+                "description": "25300起默认禁用(部分新图标无法正常显示)，25352暂时移除，25905回归"
+            },
+            {
+                "id": "39305332",
+                "feature": "蓝牙和其他设备-USB-USB4 Hubs and Devices",
+                "description": "25314起默认禁用，25324起默认启用)"
+            },
+            {
+                "id": "41437381",
+                "feature": "隐藏任务栏的时间及日期",
+                "description": "25346起默认禁用，25352暂时移除，25905回归"
+            },
+            {
+                "id": "42189933",
+                "feature": "允许将系统安装到ReFS分区",
+                "description": "25281起默认禁用，25357暂时移除"
+            },
+            {
+                "id": "42295138",
+                "feature": "新预览窗格UI",
+                "description": "暂时占位，现已废弃"
+            },
+            {
+                "id": "42401084",
+                "feature": "设置“磁盘与卷”中可以创建VHD",
+                "description": "25324起默认禁用，25357暂时移除"
+            },
+            {
+                "id": "38890980",
+                "feature": "“共享”UI轻微更新",
+                "description": "25309起默认禁用，25357移除"
+            },
+            {
+                "id": "42550315",
+                "feature": "设置中“恢复”界面将支持原地升级",
+                "description": "目前功能不起作用，25284起默认禁用，25905起默认启用"
+            },
+            {
+                "id": "42783107",
+                "feature": "Windows安装程序默认用ReFS格式化分区",
+                "description": "25284起默认禁用，25357暂时移除"
+            },
+            {
+                "id": "42934589",
+                "feature": "小组件图标动画",
+                "description": "25324起开始a/b测，现已正式下放"
+            },
+            {
+                "id": "42063280",
+                "feature": "启用截图工具的录制快捷键Win+Shift+R",
+                "description": "目前还是常规截图，后续应该会更改为录制，25324起默认禁用"
+            },
+            {
+                "id": "43214488",
+                "feature": "任务栏左对齐时小组件位于托盘旁",
+                "description": "25324起默认禁用，25330已移除"
+            },
+            {
+                "id": "43320599",
+                "feature": "任务栏左对齐时小组件不会折叠",
+                "description": "25336起默认禁用"
+            },
+            {
+                "id": "40581622",
+                "feature": "新版程序兼容窗口UI",
+                "description": "25276起默认启用"
+            },
+            {
+                "id": "41878171, 42866171",
+                "feature": "设置“开发者模式”中创建ReFS分区",
+                "description": "25324起默认禁用，若要启用该功能，需先启用40347509"
+            },
+            {
+                "id": "42533185",
+                "feature": "开始菜单中“推荐的项目”改为“发给您的”",
+                "description": "25295默认禁用，25330起默认启用，之后废弃（什么zh-ms）"
+            },
+            {
+                "id": "41076133",
+                "feature": "Xaml资源管理器主页",
+                "description": "25352暂时移除，25905回归"
+            },
+            {
+                "id": "42295138",
+                "feature": "启用新“图库”的视图",
+                "description": "25300起默认禁用,25352暂时移除,25905回归(需先启用41040327)"
+            },
+            {
+                "id": "39661369",
+                "feature": "资源管理器多标签支持分离跟合并",
+                "description": "25290起默认禁用"
+            },
+            {
+                "id": "39696859",
+                "feature": "资源管理器快捷键选中",
+                "description": "25314起开始a/b测，25346起默认启用，25352暂时移除，25905回归"
+            },
+            {
+                "id": "41040327",
+                "feature": "“图库”文件夹显示",
+                "description": "后需接参数：variant:0/1\r0：图库在侧栏主页面跟OneDrive之间\r1：图库在侧栏主页和OneDrive下方，资源管理器增加了图库项目\r25272起默认禁用，23471起推广所有预览人员"
+            },
+            {
+                "id": "40851068",
+                "feature": "Snap assist标题调整",
+                "description": "后需接参数：/variant:0/1/2/3\r0：仅显示snap this window\r1：不显示那个标题，但悬停时打开窗口速度更快\r2：显示新标题和应用程序图标\r3：变种1和2的结合\r25300开始随机样式测试，25309疑似仅测试一种样式，25352起默认禁用"
+            },
+            {
+                "id": "41861575",
+                "feature": "更改桌面聚焦图标的位置",
+                "description": "后需接参数：/variant:0/2/3\r0：桌面聚焦图标在右下角\r2:桌面聚焦图标在下面居中\r3：桌面聚焦在右上角\r25281起开始a/b测"
+            }
+        ]
+    },
+    {
+        "category": "Windows 11 Nickel (23H2)",
+        "id": "Nickel_23H2",
+        "detail": {
+            "branch": "ni_prerelease",
+            "version": "23403 ~ 23???",
+            "period": "23H2",
+            "channel": "Dev"
+        },
+        "ids": [
+            {
+                "id": "21785186",
+                "feature": "任务栏标签永不合并",
+                "description": "23466开始a/b测，23481起推广所有预览人员"
+            },
+            {
+                "id": "34878152",
+                "feature": "欢乐时光，即设置导航栏动画",
+                "description": "【谨慎启用，可能引发文件资源管理器反复重启】23403起默认禁用"
+            },
+            {
+                "id": "37926450",
+                "feature": "搜索滚动条翻新",
+                "description": "25905起默认禁用"
+            },
+            {
+                "id": "38613007",
+                "feature": "新资源管理器文件夹导航窗格UI",
+                "description": "23430起默认禁用，23451起开始a/b测"
+            },
+            {
+                "id": "41076133",
+                "feature": "Xaml资源管理器主页",
+                "description": "25314起开始a/b测，25352暂时移除，25905回归"
+            },
+            {
+                "id": "38811930",
+                "feature": "实时字幕支持多种语言识别",
+                "description": "23403起默认启用"
+            },
+            {
+                "id": "38890980",
+                "feature": "“共享”UI轻微更新",
+                "description": "23475起默认禁用"
+            },
+            {
+                "id": "39305332",
+                "feature": "蓝牙和其他设备-USB-USB4 Hubs and Devices",
+                "description": "23419起默认启用"
+            },
+            {
+                "id": "39339190",
+                "feature": "“设置”可启用登录前语音访问",
+                "description": "23466起默认禁用"
+            },
+            {
+                "id": "39661369",
+                "feature": "资源管理器多标签支持分离合并",
+                "description": "23471起默认禁用，23481起默认启用"
+            },
+            {
+                "id": "39696859",
+                "feature": "资源管理器快捷键选中",
+                "description": "23403起开始a/b测，23440起默认启用"
+            },
+            {
+                "id": "40213648",
+                "feature": "Emoji 15",
+                "description": "23466起默认禁用，23475起默认启用"
+            },
+            {
+                "id": "40581622",
+                "feature": "新版程序兼容窗口UI",
+                "description": "23506起默认启用"
+            },
+            {
+                "id": "40608813",
+                "feature": "移除部分“文件夹选项”中选项",
+                "description": "23481默认启用，现已回退，目前仍可通过注册表来更改"
+            },
+            {
+                "id": "41040327",
+                "feature": "“图库”文件夹显示",
+                "description": "后需接参数：variant:0/1\r0：图库在侧栏主页面跟OneDrive之间\r1：图库在侧栏主页和OneDrive下方，资源管理器增加了图库项目\r23403起默认禁用，23435起开始a/b测，23471起推广所有预览人员"
+            },
+            {
+                "id": "41076133",
+                "feature": "Xaml资源管理器主页",
+                "description": "23403起开始a/b测，25352暂时移除，25905回归，23466起默认启用"
+            },
+            {
+                "id": "41437381",
+                "feature": "隐藏任务栏的时间及日期",
+                "description": "23430起默认禁用，23440起默认启用"
+            },
+            {
+                "id": "41950597",
+                "feature": "任务栏搜索显示当天搜索聚焦的标题",
+                "description": "任务栏搜索显示当天搜索聚焦的标题，而不是仅“搜索”二字，23466起默认禁用"
+            },
+            {
+                "id": "42063280",
+                "feature": "启用截图工具的录制快捷键Win+Shift+R",
+                "description": "目前还是常规截图，后续应该会更改为录制，23419及25324默认禁用"
+            },
+            {
+                "id": "42295138",
+                "feature": "启用新“图库”的视图",
+                "description": "25300及23403默认禁用,25352暂时移除,25905回归(需先启用41040327),23435开始a/b测,23471推广所有预览人员"
+            },
+            {
+                "id": "42500395",
+                "feature": "启用snap窗口建议",
+                "description": "23493起默认禁用"
+            },
+            {
+                "id": "42533185",
+                "feature": "开始菜单中“推荐的项目”改为“发给您的”",
+                "description": "23424起默认启用，之后废弃（什么zh-ms）"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            }
+        ]
+    },
+    {
+        "category": "Windows 11 Copper",
+        "id": "Copper",
+        "detail": {
+            "branch": "rs_prerelease",
+            "version": "25115 ~ 25236",
+            "period": "23H1",
+            "channel": "Dev"
+        },
+        "ids": [
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            },
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            }
+        ]
+    },
+    {
+        "category": "Windows 11 Nickel (22H2)",
+        "id": "Nickel_22H2",
+        "detail": {
+            "branch": "rs_prerelease & ni_release",
+            "version": "22449 ~ 22621.382",
+            "period": "23H2",
+            "channel": "Dev"
+        },
+        "ids": [
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            }
+        ]
+    },
+    {
+        "category": "Windows 11 Nickel (Moment 1)",
+        "id": "Nickel_Moment_1",
+        "detail": {
+            "branch": "ni_release_svc_prod2",
+            "version": "22622.290 ~ 22622.601",
+            "period": "23H2",
+            "channel": "Beta"
+        },
+        "ids": [
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            }
+        ]
+    },
+    {
+        "category": "Windows 11 Nickel (Moment 2)",
+        "id": "Nickel_Moment_2",
+        "detail": {
+            "branch": "ni_release",
+            "version": "22623.730 ~ 22623.1325",
+            "period": "23H2",
+            "channel": "Beta"
+        },
+        "ids": [
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            }
+        ]
+    },
+    {
+        "category": "Windows 11 Nickel (Moment 3)",
+        "id": "Nickel_Moment_3",
+        "detail": {
+            "branch": "ni_release_svc_betaflt_prod1",
+            "version": "22624.1391 ~ 22624.1755",
+            "period": "23H2",
+            "channel": "Beta"
+        },
+        "ids": [
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            }
+        ]
+    },
+    {
+        "category": "Windows 11 Nickel (Moment 4)",
+        "id": "Nickel_Moment_4",
+        "detail": {
+            "branch": "ni_release_svc_betaflt_prod1",
+            "version": "22631.1825 ~ 22631.????",
+            "period": "23H2",
+            "channel": "Beta"
+        },
+        "ids": [
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            }
+        ]
+    },
+    {
+        "category": "Windows 11 Cobalt",
+        "id": "Cobalt_Wave_2",
+        "detail": {
+            "branch": "rs_prerelease & co_release",
+            "version": "21380 ~ 22000.????",
+            "period": "21H2",
+            "channel": "Dev"
+        },
+        "ids": [
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            }
+        ]
+    },
+    {
+        "category": "Windows 10 Cobalt",
+        "id": "Cobalt_Wave_1",
+        "detail": {
+            "branch": "rs_prerelease & co_release",
+            "version": "21262 ~ 21390.2025",
+            "period": "21H2",
+            "channel": "Dev"
+        },
+        "ids": [
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            }
+        ]
+    },
+    {
+        "category": "Windows 10 Iron",
+        "id": "Iron",
+        "detail": {
+            "branch": "rs_prerelease & fe_release",
+            "version": "20150 ~ 20279",
+            "period": "21H1",
+            "channel": "Dev"
+        },
+        "ids": [
+            {
+                "id": "2333",
+                "feature": "版本高于 22621",
+                "description": "test"
+            }
+        ]
+    }
+]

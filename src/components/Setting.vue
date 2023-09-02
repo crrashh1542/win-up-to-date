@@ -51,7 +51,6 @@ export default {
 
             // 设置并改变值
             let emitData = [type, state]
-            console.log('[Setting Dialog] Set ' + type + ' to ' + state + '.')
             this.$emit(type, emitData)
         }
     }
