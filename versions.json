@@ -14,7 +14,7 @@
             {
                 "name": "Dev",
                 "style": "color-orange",
-                "version": "23536.1000",
+                "version": "23541.1000",
                 "branch": "ni_prerelease",
                 "codename": "Nickel",
                 "period": "23H2"
@@ -217,7 +217,7 @@
             {
                 "name": "非稳定版",
                 "style": "color-orange",
-                "version": "23536.1000",
+                "version": "23541.1000",
                 "codename": "Nickel",
                 "period": "23H2"
             },
