@@ -6,15 +6,15 @@
             {
                 "name": "Canary",
                 "style": "color-amber",
-                "version": "25947.1000",
-                "branch": "rs_prerelease",
+                "version": "25951.1010",
+                "branch": "rs_prerelease_flt",
                 "codename": "Gallium",
                 "period": "24H1"
             },
             {
                 "name": "Dev",
                 "style": "color-orange",
-                "version": "23541.1000",
+                "version": "23545.1000",
                 "branch": "ni_prerelease",
                 "codename": "Nickel",
                 "period": "23H2"
@@ -22,7 +22,7 @@
             {
                 "name": "Beta",
                 "style": "color-green",
-                "version": "22631.2271",
+                "version": "22631.2338",
                 "branch": "ni_release_svc_betaflt_prod1",
                 "codename": "Nickel",
                 "period": "23H2"
@@ -30,7 +30,7 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "22621.2215",
+                "version": "22621.2359",
                 "branch": "ni_release_svc_prod1",
                 "codename": "Nickel",
                 "period": "22H2"
@@ -38,7 +38,7 @@
             {
                 "name": "正式版",
                 "style": "color-theme",
-                "version": "22621.2215",
+                "version": "22621.2283",
                 "branch": "ni_release_svc_prod1",
                 "codename": "Nickel",
                 "period": "22H2"
@@ -46,7 +46,7 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "22000.2360",
+                "version": "22000.2479",
                 "branch": "co_release_svc_prod2",
                 "codename": "Cobalt",
                 "period": "21H2"
@@ -54,7 +54,7 @@
             {
                 "name": "正式版",
                 "style": "color-theme",
-                "version": "22000.2360",
+                "version": "22000.2416",
                 "branch": "co_release_svc_prod2",
                 "codename": "Cobalt",
                 "period": "21H2"
@@ -68,7 +68,7 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "19045.3393",
+                "version": "19045.3448",
                 "branch": "vb_release_svc_prod2",
                 "codename": "Vibranium",
                 "period": "22H2"
@@ -76,7 +76,7 @@
             {
                 "name": "正式版",
                 "style": "color-theme",
-                "version": "19045.3393",
+                "version": "19045.3448",
                 "branch": "vb_release_svc_prod2",
                 "codename": "Vibranium",
                 "period": "22H2"
@@ -84,7 +84,7 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "19044.3208",
+                "version": "19044.3448",
                 "branch": "vb_release_svc_prod3",
                 "codename": "Vibranium",
                 "period": "21H2"
@@ -92,7 +92,7 @@
             {
                 "name": "正式版",
                 "style": "color-theme",
-                "version": "19044.3208",
+                "version": "19044.3448",
                 "branch": "vb_release_svc_prod3",
                 "codename": "Vibranium",
                 "period": "21H2"
@@ -100,7 +100,7 @@
             {
                 "name": "LTSC",
                 "style": "color-teal",
-                "version": "19044.3208",
+                "version": "19044.3448",
                 "branch": "vb_release_svc_prod3",
                 "codename": "Vibranium",
                 "period": "21H2"
@@ -114,8 +114,8 @@
             {
                 "name": "预览版 (2025)",
                 "style": "color-amber",
-                "version": "25941.1000",
-                "branch": "rs_prerelease_flt",
+                "version": "25951.1000",
+                "branch": "rs_prerelease",
                 "codename": "Gallium",
                 "period": "24H1"
             },
@@ -144,7 +144,7 @@
             {
                 "name": "Canary",
                 "style": "color-amber",
-                "version": "25931.1000",
+                "version": "25951.1000",
                 "branch": "rs_prerelease",
                 "codename": "Gallium",
                 "period": "24H1"
@@ -152,7 +152,7 @@
             {
                 "name": "Dev",
                 "style": "color-orange",
-                "version": "23526.1000",
+                "version": "23545.1000",
                 "branch": "ni_prerelease",
                 "codename": "Nickel",
                 "period": "23H2"
@@ -188,7 +188,7 @@
             {
                 "name": "Preview",
                 "style": "color-amber",
-                "version": "25398.345",
+                "version": "25398.408",
                 "branch": "zn_release_svc_prod1",
                 "codename": "Zinc",
                 "period": "23H2"
@@ -196,7 +196,7 @@
             {
                 "name": "Production",
                 "style": "color-theme",
-                "version": "20349.1906",
+                "version": "20349.1970",
                 "branch": "fe_release_svc_prod3",
                 "codename": "Iron",
                 "period": "21H2"
@@ -210,14 +210,14 @@
             {
                 "name": "非稳定版",
                 "style": "color-amber",
-                "version": "25947.1000",
+                "version": "25951.1000",
                 "codename": "Gallium",
                 "period": "24H1"
             },
             {
                 "name": "非稳定版",
                 "style": "color-orange",
-                "version": "23541.1000",
+                "version": "23545.1000",
                 "codename": "Nickel",
                 "period": "23H2"
             },
