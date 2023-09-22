@@ -68,8 +68,8 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "19045.3448",
-                "branch": "vb_release_svc_prod2",
+                "version": "19045.3513",
+                "branch": "22h2_release_svc_prod3",
                 "codename": "Vibranium",
                 "period": "22H2"
             },
@@ -77,23 +77,15 @@
                 "name": "正式版",
                 "style": "color-theme",
                 "version": "19045.3448",
-                "branch": "vb_release_svc_prod2",
+                "branch": "22h2_release_svc_prod1",
                 "codename": "Vibranium",
                 "period": "22H2"
-            },
-            {
-                "name": "发布预览",
-                "style": "color-purple",
-                "version": "19044.3448",
-                "branch": "vb_release_svc_prod3",
-                "codename": "Vibranium",
-                "period": "21H2"
             },
             {
                 "name": "正式版",
                 "style": "color-theme",
                 "version": "19044.3448",
-                "branch": "vb_release_svc_prod3",
+                "branch": "21h2_release_svc_prod1",
                 "codename": "Vibranium",
                 "period": "21H2"
             },
@@ -101,7 +93,7 @@
                 "name": "LTSC",
                 "style": "color-teal",
                 "version": "19044.3448",
-                "branch": "vb_release_svc_prod3",
+                "branch": "21h2_release_svc_prod1",
                 "codename": "Vibranium",
                 "period": "21H2"
             }
