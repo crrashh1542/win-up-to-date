@@ -59,7 +59,7 @@ export default {
    height: @wu-layout-nav-height;
    line-height: @wu-layout-nav-height;
    background-color: @wu-color-nav;
-   padding: var(--container-padding);
+   padding: 0 var(--container-padding);
    border-bottom: 1px solid @wu-color-split-line;
    backdrop-filter: blur(3px);
    display: flex;

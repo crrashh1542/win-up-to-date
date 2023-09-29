@@ -48,18 +48,25 @@ export default {
 <template>
    <div class="bg-shade fixed top-0 left-0"></div>
    <Appbar class="z-30" />
-   <Banner class="z-20" />
-   <router-view :isShowFlight="isShowFlight" :isShowBranch="isShowBranch"></router-view>
+   <main>
+      <Banner class="z-20" />
+      <router-view :isShowFlight="isShowFlight" :isShowBranch="isShowBranch" />
+   </main>
    <Foo class="z-20" />
    <Setting class="z-50" @isShowFlight="setState" @isShowBranch="setState" />
 </template>
 
-<style>
+<style scoped>
+@import url('./assets/styles/adaption.less');
 .bg-shade {
    width: 100%;
    height: 100%;
    z-index: -10;
    background-color: rgba(255, 255, 255, .87);
    backdrop-filter: blur(6px);
+}
+
+main {
+   padding: 0 var(--container-padding);
 }
 </style>

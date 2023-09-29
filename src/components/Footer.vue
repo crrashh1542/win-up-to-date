@@ -26,7 +26,7 @@ export default {
 .footer {
     background-color: @wu-color-theme-lighter;
     border-top: 1px solid @wu-color-split-line;
-    padding: var(--container-padding);
+    padding: 1.5em var(--container-padding);
     font-size: 16px;
     color: @wu-color-text-accent;
 

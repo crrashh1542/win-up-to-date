@@ -16,8 +16,7 @@ export default {
 @import url('../assets/styles/adaption.less');
 
 .banner {
-    padding: var(--container-padding);
-    padding-top: @wu-layout-nav-height;
+    padding: @wu-layout-nav-height 0 8%;
     margin: 30px 0 10px;
     line-height: 1.25;
     .title {
