@@ -1,13 +1,18 @@
 <script>
 export default {
-    name: 'MainBanner'
+    name: 'MainBanner',
+    props: {
+        description: String
+    }
 }
 </script>
 
 <template>
     <div class="banner">
-        <div class="title">Windows Up-to-Date</div>
-        <div class="subtitle">一个反映 Windows 系统各版本情况实时进展的统计站点</div>
+        <div class="title">
+            <slot></slot>
+        </div>
+        <div class="subtitle">{{ description }}</div>
     </div>
 </template>
 
@@ -16,7 +21,7 @@ export default {
 @import url('../assets/styles/adaption.less');
 
 .banner {
-    padding: @wu-layout-nav-height 0 8%;
+    padding: @wu-layout-nav-height 0 4%;
     margin: 30px 0 10px;
     line-height: 1.25;
     .title {
@@ -27,10 +32,6 @@ export default {
     .subtitle {
         font-size: var(--banner-subtitle);
         color: #444;
-    }
-
-    p {
-        line-height: 1.7;
     }
 }
 

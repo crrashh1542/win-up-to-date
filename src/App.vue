@@ -10,13 +10,12 @@ import './assets/styles/reset.less'
 
 // 引入组件
 import Appbar from './components/Appbar.vue'
-import Banner from './components/Banner.vue'
 import Foo from './components/Footer.vue'
 import Setting from './components/Setting.vue'
 
 export default {
    name: 'App',
-   components: { Appbar, Banner, Foo, Setting },
+   components: { Appbar, Foo, Setting },
    setup() {
       // STEP1 ------ 设置初始值，避免出现 undefined
       let [oriFlightVisibility, oriBranchVisibility] = [true, true]
@@ -49,7 +48,6 @@ export default {
    <div class="bg-shade fixed top-0 left-0"></div>
    <Appbar class="z-30" />
    <main>
-      <Banner class="z-20" />
       <router-view :isShowFlight="isShowFlight" :isShowBranch="isShowBranch" />
    </main>
    <Foo class="z-20" />

@@ -4,13 +4,14 @@ import { reactive, toRefs } from 'vue'
 import axios from 'axios'
 
 // 引入组件
+import Banner from '../components/Banner.vue'
 import Catalog from '../components/Catalog.vue'
 import Card from '../components/Card.vue'
 import LoadAnim from '../components/LoadAnim.vue'
 
 export default {
     name: 'ViewVersion',
-    components: { Catalog, Card, LoadAnim },
+    components: { Banner, Catalog, Card, LoadAnim },
     setup() {
         // STEP1 ------ 设定初始值
         let data = reactive({
@@ -46,6 +47,11 @@ export default {
 <template>
     <!-- 加载动画 -->
     <LoadAnim v-if="isLoading" />
+
+    <!-- 横幅 -->
+    <Banner class="z-20" :description="'一个反映 Windows 系统各版本情况实时进展的统计站点'">
+        <div class="title">Windows Up-to-Date</div>
+    </Banner>
 
     <!-- 内容块 -->
     <div class="block" v-for="d in data" :key="d.category" :id="d.category">
