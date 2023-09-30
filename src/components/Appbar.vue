@@ -2,13 +2,12 @@
 const linkList =
    [{
       'name': '主页',
-      'link': 'https://www.crrashh.com/'
+      'link': 'https://www.crrashh.com/',
+      'type': 'link'
    }, {
-      'name': '下载站',
-      'link': 'https://disk.crrashh.com/%F0%9F%96%A5%EF%B8%8F%20%E6%95%B0%E7%A0%81%E8%B5%84%E6%BA%90/%E7%94%B5%E8%84%91%20%E2%86%92%20Windows'
-   }, {
-      'name': 'GitHub',
-      'link': 'https://github.com/crrashh1542/win-up-to-date'
+      'name': '关于',
+      'link': '/about',
+      'type': 'route'
    }]
 
 export default {
@@ -32,15 +31,24 @@ export default {
    <div class="appbar">
 
       <!-- 左侧标题 -->
-      <a href="" class="title">{{ title }}</a>
+      <router-link to="/" class="title">{{ title }}</router-link>
 
       <!-- 左右分隔 -->
       <div class="grow"></div>
 
       <!-- 右侧链接 -->
       <div class="external">
-         <a v-for="i in link" :key="i.name" :href="i.link" class="link" target="_blank">{{ i.name }}</a>
-         <a href="#" @click="dialogOpen">选项</a>
+         <span v-for="i in link" :key="i.name">
+            <!-- 如果类型是外部链接 → <a> -->
+            <a v-if="i.type == 'link'" :href="i.link" 
+               class="link" target="_blank">{{ i.name }}</a>
+            <!-- 如果类型是项目内路由 → <router-link> -->
+            <router-link v-if="i.type == 'route'" :to="i.link">
+               {{ i.name }}</router-link>
+         </span>
+         <span><!-- 保留节目，你必须在！ -->
+            <a href="#" @click="dialogOpen">选项</a>
+         </span>
       </div>
    </div>
 </template>
@@ -80,14 +88,11 @@ export default {
       display: none;
    }
 
-   .external > * {
+   .external > span > a {
       // 链接
       margin: 0 15px;
       font-size: 17px;
       color: @wu-color-text-accent;
-   }
-
-   .external .link {
       display: var(--appbar-link-display);
    }
 }

@@ -45,43 +45,48 @@ export default {
 </script>
 
 <template>
-    <!-- 加载动画 -->
-    <LoadAnim v-if="isLoading" />
-
     <!-- 横幅 -->
     <Banner class="z-20" :description="'一个反映 Windows 系统各版本情况实时进展的统计站点'">
         <div class="title">Windows Up-to-Date</div>
     </Banner>
 
+    <!-- 加载动画 -->
+    <LoadAnim v-if="isLoading" />
+
     <!-- 内容块 -->
-    <div class="block" v-for="d in data" :key="d.category" :id="d.category">
-        <!-- 标题 -->
-        <catalog>
-            <span :class=d.style></span>{{ d.category }}
-        </catalog>
+    <div v-if="!isLoading">
+        <div class="block" v-for="d in data" :key="d.category" :id="d.category">
+            <!-- 标题 -->
+            <catalog>
+                <span :class=d.style></span>{{ d.category }}
+            </catalog>
 
-        <!-- 卡片 -->
-        <card v-for="r in d.releases" :key="r.name" :class=r.style>
-            <div class="info">
+            <!-- 卡片 -->
+            <card v-for="r in d.releases" :key="r.name" :class=r.style>
+                <div class="info">
 
-                <div class="row">
-                    <span class="category">{{ r.name }}<!-- 类型 --></span>
-                    <span class="detail codename float-right" v-if="isShowFlight !== false">
-                        {{ r.codename }} {{ r.period }} <!-- 周期代号 -->
-                    </span>
+                    <!-- 第一行 -->
+                    <div class="row">
+                        <span class="category">{{ r.name }}<!-- 类型 --></span>
+                        <span class="detail codename float-right" v-if="isShowFlight !== false">
+                            {{ r.codename }} {{ r.period }} <!-- 周期和代号 -->
+                        </span>
+                    </div>
+
+                    <!-- 第二行 -->
+                    <div class="version">{{ r.version }}<!-- 版本 --></div>
+
+                    <!-- 第三行 -->
+                    <div class="row" v-if="r.branch !== undefined && isShowBranch !== false">
+                        <span class="detail branch">{{ r.branch }}<!-- 分支 --></span>
+                    </div>
+                    <div class="row" v-else-if="isShowBranch !== false">
+                        <span class="detail"></span>
+                    </div>
+
                 </div>
-
-                <div class="version">{{ r.version }}<!-- 版本 --></div>
-
-                <div class="row" v-if="r.branch !== undefined && isShowBranch !== false">
-                    <span class="detail branch">{{ r.branch }}<!-- 分支 --></span>
-                </div>
-                <div class="row" v-else-if="isShowBranch !== false">
-                    <span class="detail"></span>
-                </div>
-
-            </div>
-        </card>
+            </card>
+        </div>
     </div>
 </template>
 
