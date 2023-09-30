@@ -17,7 +17,6 @@ export default {
 @import url('../assets/styles/theme.less');
 
 .card {
-    width: var(--card-width);
     line-height: 1.2;
     display: inline-block;
 }

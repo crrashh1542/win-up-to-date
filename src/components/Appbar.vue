@@ -39,13 +39,16 @@ export default {
       <!-- 右侧链接 -->
       <div class="external">
          <span v-for="i in link" :key="i.name">
+            
             <!-- 如果类型是外部链接 → <a> -->
             <a v-if="i.type == 'link'" :href="i.link" 
-               class="link" target="_blank">{{ i.name }}</a>
+               class="link item" target="_blank">{{ i.name }}</a>
+
             <!-- 如果类型是项目内路由 → <router-link> -->
-            <router-link v-if="i.type == 'route'" :to="i.link">
+            <router-link v-if="i.type == 'route'" :to="i.link" class="item">
                {{ i.name }}</router-link>
          </span>
+
          <span><!-- 保留节目，你必须在！ -->
             <a href="#" @click="dialogOpen">选项</a>
          </span>
@@ -88,7 +91,7 @@ export default {
       display: none;
    }
 
-   .external > span > a {
+   .external > span > a.item {
       // 链接
       margin: 0 15px;
       font-size: 17px;
