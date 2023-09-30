@@ -62,34 +62,26 @@ export default {
         <div class="container">
             <catalog class="title">页面选项</catalog>
 
-            <p class="flex">
+            <div class="flex section">
                 <span>启用深色模式</span>
                 <span class="grow"></span>
                 <fluent-switch disabled="true"></fluent-switch>
-            </p>
+            </div>
 
-            <p class="flex">
+            <div class="flex section">
                 <span>显示开发代号、周期</span>
                 <span class="grow"></span>
                 <fluent-switch checked="true" v-model="isShowFlight" @click="changeStatus(0, isShowFlight)"></fluent-switch>
-            </p>
+            </div>
 
-            <p class="flex">
+            <div class="flex section">
                 <span>显示系统所在分支</span>
                 <span class="grow"></span>
                 <fluent-switch checked="true" v-model="isShowBranch" @click="changeStatus(1, isShowBranch)"></fluent-switch>
-            </p>
+            </div>
 
             <div class="button">
                 <fluent-button appearance="accent" @click="dialogClose()">关闭</fluent-button>
-            </div>
-
-            <div class="description">
-                <div>项目版本：v{{ packageInfo.version }} (build {{ buildInfo.build }})</div>
-                <div>
-                    <a href="https://github.com/crrashh1542/win-up-to-date" target="_blank">GitHub 地址</a>
-                    <span class="icon-external"></span>
-                </div>
             </div>
         </div>
     </fluent-dialog>
@@ -110,18 +102,9 @@ export default {
         font-size: 28px;
     }
 
-    p {
+    .section {
         line-height: 2;
         font-size: 20px;
-    }
-
-    .description {
-        position: absolute;
-        bottom: @dialog-padding;
-        left: @dialog-padding;
-        div {
-            line-height: 1.8;
-        }
     }
 
     .button {
