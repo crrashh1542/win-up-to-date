@@ -67,14 +67,16 @@ export default {
 
                     <!-- 第一行 -->
                     <div class="row">
-                        <span class="category">{{ r.name }}<!-- 类型 --></span>
+                        <span class="font-medium text-base leading-none category">
+                            {{ r.name }}<!-- 类型 -->
+                        </span>
                         <span class="detail codename float-right" v-if="isShowFlight !== false">
                             {{ r.codename }} {{ r.period }} <!-- 周期和代号 -->
                         </span>
                     </div>
 
                     <!-- 第二行 -->
-                    <div class="version">{{ r.version }}<!-- 版本 --></div>
+                    <div class="font-medium text-2xl version">{{ r.version }}<!-- 版本 --></div>
 
                     <!-- 第三行 -->
                     <div class="row" v-if="r.branch !== undefined && isShowBranch !== false">
@@ -104,10 +106,12 @@ export default {
         margin-right: 5px;
         padding: 10px 5px 10px 20px;
 
+        .category {
+            font-size: 18px;
+        }
+
         .version {
-            font-size: 24px;
             padding: 4px 0 10px;
-            font-weight: 500;
         }
 
         .detail {

@@ -2,15 +2,11 @@
 /**
  * 此脚本用于在控制台中显示本项目相关信息
  * @author crrashh1542
- * @version 2.3
+ * @version 3.0
  */
 
-import repoInfo from '/package.json'
-import buildInfo from '/temp/buildInfo.json'
-
-// 获取项目版本和构建信息
-const repoVer = repoInfo.version
-const buildHash = buildInfo.hash
+import buildInfo from './parseInfo'
+const version = buildInfo[0][2].split(' (build')[0]
 
 export default function showInfo() {
     let styleName = `font-size: 14px;
@@ -27,5 +23,5 @@ export default function showInfo() {
                     border-radius: 0 3px 3px 0;
                     margin: 6px 0;
                     `
-    console.log('%c%s%c%s', styleName, 'wutd', styleVer, repoVer + '@' + buildHash)
+    console.log('%c%s%c%s', styleName, 'wutd', styleVer, version)
 }
