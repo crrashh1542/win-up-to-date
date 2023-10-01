@@ -75,35 +75,35 @@
             {
                 "name": "Server 23H2",
                 "style": "color-orange",
-                "version": "25398.467",
+                "version": "25398.468",
                 "codename": "Zinc",
                 "period": "23H2"
             },
             {
                 "name": "Windows 11 23H2",
                 "style": "color-green",
-                "version": "22631.2427",
+                "version": "22631.2428",
                 "codename": "Nickel",
                 "period": "23H2"
             },
             {
                 "name": "Windows 11 21H2",
                 "style": "color-purple",
-                "version": "22000.2536",
+                "version": "22000.2538",
                 "codename": "Cobalt",
                 "period": "21H2"
             },
             {
                 "name": "Windows 10 22H2",
                 "style": "color-purple",
-                "version": "19045.3568",
+                "version": "19045.3570",
                 "codename": "Vibranium",
                 "period": "22H2"
             },
             {
                 "name": "Windows 10 21H2",
                 "style": "color-purple",
-                "version": "19044.3568",
+                "version": "19044.3570",
                 "codename": "Vibranium",
                 "period": "21H2"
             }
