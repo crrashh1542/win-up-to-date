@@ -4,6 +4,7 @@
 const { defineConfig } = require('@vue/cli-service')
 const { resolve } = require('path')
 const fs = require('fs')
+const Webpack = require('webpack')
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 
@@ -24,6 +25,7 @@ module.exports = defineConfig({
    assetsDir: 'assets',
 
    configureWebpack: config => {
+
       // gzip 处理
       const plugins = [];
       if (IS_PROD) {
@@ -56,6 +58,12 @@ module.exports = defineConfig({
          }
       }))
 
+      // 打包忽略 moment/locales，避免打包文件体积过大
+      config.plugin('ignore')
+         .use(new Webpack.IgnorePlugin({
+            resourceRegExp: /^\.\/locale$/, // 要排除的目录
+            contextRegExp: /moment$/ // 要被处理的目录
+         }))
       // chunk 拆分
       config.optimization.splitChunks({
          chunks: 'all',

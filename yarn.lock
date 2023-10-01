@@ -9399,7 +9399,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.54.0":
+"webpack@npm:^5.54.0, webpack@npm:^5.88.2":
   version: 5.88.2
   resolution: "webpack@npm:5.88.2"
   dependencies:
@@ -9536,6 +9536,7 @@ __metadata:
     tailwindcss: ^3.3.3
     vue: ^3.3.4
     vue-router: ^4.2.4
+    webpack: ^5.88.2
   languageName: unknown
   linkType: soft
 
