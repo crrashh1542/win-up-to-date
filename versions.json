@@ -14,7 +14,7 @@
             {
                 "name": "Dev",
                 "style": "color-orange",
-                "version": "23555.1000",
+                "version": "23560.1000",
                 "branch": "ni_prerelease",
                 "codename": "Nickel",
                 "period": "23H2"
@@ -66,44 +66,66 @@
         "style": "icon-chemical",
         "releases": [
             {
-                "name": "Windows vNext",
+                "name": "vNext",
                 "style": "color-amber",
-                "version": "25956.1000",
+                "version": "25967.1000",
+                "branch": "rs_prerelease",
+                "codename": "Gallium",
+                "period": "24H1"
+            },
+            {
+                "name": "vNext",
+                "style": "color-amber",
+                "version": "25967.1010",
+                "branch": "rs_prerelease_flt",
                 "codename": "Gallium",
                 "period": "24H1"
             },
             {
                 "name": "Server 23H2",
                 "style": "color-orange",
-                "version": "25398.468",
+                "version": "25398.469",
+                "branch": "zn_release_svc_prod1",
                 "codename": "Zinc",
                 "period": "23H2"
             },
             {
-                "name": "Windows 11 23H2",
-                "style": "color-green",
+                "name": "11 23H2 发布预览",
+                "style": "color-purple",
                 "version": "22631.2428",
+                "branch": "ni_release_svc_prod1",
                 "codename": "Nickel",
                 "period": "23H2"
             },
             {
-                "name": "Windows 11 21H2",
+                "name": "11 23H2 Beta",
+                "style": "color-green",
+                "version": "22631.2340",
+                "branch": "ni_release_svc_betaflt_prod1",
+                "codename": "Nickel",
+                "period": "23H2"
+            },
+            {
+                "name": "11 21H2",
                 "style": "color-purple",
                 "version": "22000.2538",
+                "branch": "co_release_svc_prod1",
                 "codename": "Cobalt",
                 "period": "21H2"
             },
             {
-                "name": "Windows 10 22H2",
+                "name": "10 22H2",
                 "style": "color-purple",
                 "version": "19045.3570",
+                "branch": "22h2_release_svc_prod1",
                 "codename": "Vibranium",
                 "period": "22H2"
             },
             {
-                "name": "Windows 10 21H2",
+                "name": "10 21H2",
                 "style": "color-purple",
                 "version": "19044.3570",
+                "branch": "21h2_release_svc_prod1",
                 "codename": "Vibranium",
                 "period": "21H2"
             }
