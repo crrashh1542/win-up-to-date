@@ -22,7 +22,7 @@
             {
                 "name": "Beta",
                 "style": "color-green",
-                "version": "22635.2483",
+                "version": "22635.2486",
                 "branch": "ni_release_betaflt_svc_prod1",
                 "codename": "Nickel",
                 "period": "23H2"
@@ -66,9 +66,17 @@
         "style": "icon-chemical",
         "releases": [
             {
+                "name": "Canary",
+                "style": "color-amber",
+                "version": "25977.1010",
+                "branch": "rs_prerelease_flt",
+                "codename": "Gallium",
+                "period": "24H1"
+            },
+            {
                 "name": "vNext",
                 "style": "color-amber",
-                "version": "25979.1000",
+                "version": "25982.1000",
                 "branch": "rs_prerelease",
                 "codename": "Gallium",
                 "period": "24H1"
@@ -76,7 +84,7 @@
             {
                 "name": "Server 23H2",
                 "style": "color-orange",
-                "version": "25398.523",
+                "version": "25398.524",
                 "branch": "zn_release_svc_prod1",
                 "codename": "Zinc",
                 "period": "23H2"
@@ -92,7 +100,7 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "22631.2505",
+                "version": "22631.2506",
                 "branch": "ni_release_svc_prod2/3",
                 "codename": "Nickel",
                 "period": "23H2"
@@ -100,7 +108,7 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "22000.2592",
+                "version": "22000.2593",
                 "branch": "co_release_svc_prod2/3",
                 "codename": "Cobalt",
                 "period": "21H2"
@@ -171,7 +179,7 @@
                 "version": "20349.2031",
                 "branch": "fe_release_svc_prod1",
                 "codename": "Iron",
-                "period": "22H2"
+                "period": "22H1"
             },
             {
                 "name": "正式版 (2022)",
@@ -179,7 +187,7 @@
                 "version": "20348.2031",
                 "branch": "fe_release_svc_prod1",
                 "codename": "Iron",
-                "period": "21H2"
+                "period": "21H1"
             },
             {
                 "name": "LTSC (2022)",
@@ -187,7 +195,7 @@
                 "version": "20348.2031",
                 "branch": "fe_release_svc_prod1",
                 "codename": "Iron",
-                "period": "21H2"
+                "period": "21H1"
             }
         ]
     },
