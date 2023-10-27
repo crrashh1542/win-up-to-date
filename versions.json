@@ -6,7 +6,7 @@
             {
                 "name": "Canary",
                 "style": "color-amber",
-                "version": "25977.1000",
+                "version": "25982.1000",
                 "branch": "rs_prerelease",
                 "codename": "Gallium",
                 "period": "24H1"
@@ -22,7 +22,7 @@
             {
                 "name": "Beta",
                 "style": "color-green",
-                "version": "22635.2486",
+                "version": "22635.2552",
                 "branch": "ni_release_betaflt_svc_prod1",
                 "codename": "Nickel",
                 "period": "23H2"
@@ -30,16 +30,16 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "22631.2500",
-                "branch": "ni_release_svc_prod?",
+                "version": "22631.2506",
+                "branch": "ni_release_svc_prod3",
                 "codename": "Nickel",
                 "period": "23H2"
             },
             {
                 "name": "正式版",
                 "style": "color-theme",
-                "version": "22621.2428",
-                "branch": "ni_release_svc_prod1",
+                "version": "22621.2506",
+                "branch": "ni_release_svc_prod3",
                 "codename": "Nickel",
                 "period": "22H2"
             },
@@ -66,17 +66,9 @@
         "style": "icon-chemical",
         "releases": [
             {
-                "name": "Canary",
-                "style": "color-amber",
-                "version": "25977.1010",
-                "branch": "rs_prerelease_flt",
-                "codename": "Gallium",
-                "period": "24H1"
-            },
-            {
                 "name": "vNext",
                 "style": "color-amber",
-                "version": "25982.1000",
+                "version": "25984.1000",
                 "branch": "rs_prerelease",
                 "codename": "Gallium",
                 "period": "24H1"
@@ -84,7 +76,7 @@
             {
                 "name": "Server 23H2",
                 "style": "color-orange",
-                "version": "25398.524",
+                "version": "25398.525",
                 "branch": "zn_release_svc_prod1",
                 "codename": "Zinc",
                 "period": "23H2"
@@ -100,8 +92,8 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "22631.2506",
-                "branch": "ni_release_svc_prod2/3",
+                "version": "22631.2567",
+                "branch": "ni_release_svc_prod1",
                 "codename": "Nickel",
                 "period": "23H2"
             },
@@ -273,7 +265,7 @@
             {
                 "name": "非稳定版",
                 "style": "color-amber",
-                "version": "25977.1000",
+                "version": "25982.1000",
                 "codename": "Gallium",
                 "period": "24H1"
             },
