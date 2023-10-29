@@ -1,0 +1,8 @@
+# dependabot 配置文件，用于自动更新依赖
+
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
