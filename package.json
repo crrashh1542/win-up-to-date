@@ -23,7 +23,7 @@
     "webpack": "^5.88.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.16",
+    "@babel/core": "^7.23.2",
     "@babel/eslint-parser": "^7.12.16",
     "@typescript-eslint/eslint-plugin": "^5.46.1",
     "@typescript-eslint/parser": "^5.46.1",
