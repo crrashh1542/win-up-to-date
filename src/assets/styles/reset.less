@@ -31,23 +31,9 @@ body {
         border: 0;
         vertical-align: baseline;
     }
-    /* HTML5 display-role reset for older browsers */
-    article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
-        display: block;
-    }
-    ol, ul {
-        list-style: none;
-    }
-    blockquote, q {
-        quotes: none;
-    }
     blockquote:before, blockquote:after, q:before, q:after {
         content: '';
         content: none;
-    }
-    table {
-        border-collapse: collapse;
-        border-spacing: 0;
     }
     p {
         font-size: 18px;
@@ -56,7 +42,7 @@ body {
     }
 
     /* a标签图标及hover处理 */
-    .appbar a.link::after, p a::after {
+    a.link::after, p a::after {
         color: @wu-color-text-accent;
         font-size: 15px;
         vertical-align: middle;
