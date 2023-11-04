@@ -23,6 +23,7 @@ export default {
     border-top: 1px solid @wu-color-split-line;
     padding: .5em var(--container-padding);
     color: @wu-color-text-accent;
+    margin-bottom: var(--footer-bottom-spacing);
 
     p {
         line-height: var(--footer-line-height) !important;
@@ -32,10 +33,19 @@ export default {
 }
 
 /* 不同设备适配 */
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 650px) {
     .footer {
         --footer-line-height: 1.6;
         --footer-margin: .9em 0;
+        --footer-bottom-spacing: 72px;
+    }
+}
+
+@media screen and (min-width: 650px) {
+    .footer {
+        --footer-line-height: 1.6;
+        --footer-margin: .9em 0;
+        --footer-bottom-spacing: 0;
     }
 }
 
