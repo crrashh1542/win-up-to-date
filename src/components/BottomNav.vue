@@ -1,0 +1,66 @@
+<script>
+const navSections = [
+    // 由于伪类的居中问题，故直接放 ../assets/fonts/iconfont/iconfont.less 的 UTF-8 编码
+    {
+        "path": "/",
+        "icon": "icon-home",
+        "text": "主页"
+    },
+    {
+        "path": "/about",
+        "icon": "icon-about",
+        "text": "关于"
+    }
+]
+
+export default {
+    name: 'WidgetNav',
+    data() {
+        return { navSections }
+    }
+}
+</script>
+
+<template>
+    <div class="nav flex flex-row fixed bottom-0 left-0 w-full">
+
+        <router-link v-for="s in navSections" :to="s.path" 
+            :key="s.value" class="inline text-center basis-1/2 py-2">
+
+            <span class="icon block text-2xl p-1.5" :class="s.icon"></span>
+            <span class="block text-sm p-1">{{ s.text }}</span>
+
+        </router-link>
+
+    </div>
+</template>
+
+<style lang="less" scoped>
+@import url('../assets/styles/global.less');
+
+.nav {
+    display: var(--nav-display);
+    background-color: @wu-color-nav;
+    backdrop-filter: blur(3px);
+    border-top: 1px solid #999;
+    .path-active { // router 活跃状态（处于当前页时）的配置 class
+        color: @wu-color-theme;
+    }
+    .icon::before {
+        height: 40px;
+    }
+}
+
+// 适配
+@media screen and (min-width: 650px) {
+    .nav {
+        --nav-display: none;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .nav {
+        --nav-display: flex;
+    }
+}
+</style>
