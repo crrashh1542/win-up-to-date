@@ -1,9 +1,6 @@
 <script>
 // SEC 1 ------ 引入组件和库
 import Catalog from './Catalog.vue'
-import packageInfo from '/package.json'
-import buildInfo from '/temp/buildInfo.json'
-
 import {
     provideFluentDesignSystem, fluentDialog, fluentButton, fluentSwitch
 } from '@fluentui/web-components'
@@ -16,8 +13,6 @@ export default {
     components: { Catalog },
     data() {
         return {
-            packageInfo,
-            buildInfo,
             // 设置初始值，避免出现 undefined
             isShowFlight: true,
             isShowBranch: true
@@ -32,14 +27,9 @@ export default {
         },
 
         changeStatus(type, state) {
-            // STEP 1 ------ 将 0 1 对调
-            if (state === true) {
-                state = false
-            } else {
-                state = true
-            }
+            state = !state
 
-            // STEP 2 ------ 判断要改变的内容
+            // 判断要改变的内容
             if (type === 0) {
                 // 如果是 flight
                 type = 'isShowFlight'
