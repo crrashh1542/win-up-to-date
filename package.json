@@ -1,7 +1,7 @@
 {
   "name": "win-up-to-date",
-  "version": "0.11.0",
-  "description": "A website project showing the uptime status of Windows Insider versions.",
+  "version": "0.11.1",
+  "description": "A website project showing the latest status of Windows Insider versions.",
   "main": "index.js",
   "repository": "https://github.com/crrashh1542/win-up-to-date",
   "author": "crrashh1542 <kotsuki@crrashh.com>",
