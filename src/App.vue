@@ -11,11 +11,12 @@ import './assets/styles/reset.less'
 // 引入组件
 import Appbar from './components/Appbar.vue'
 import Foo from './components/Footer.vue'
+import BottomNav from './components/BottomNav.vue'
 import Setting from './components/Setting.vue'
 
 export default {
    name: 'App',
-   components: { Appbar, Foo, Setting },
+   components: { Appbar, Foo, Setting, BottomNav },
    setup() {
       // STEP1 ------ 设置初始值，避免出现 undefined
       let [oriFlightVisibility, oriBranchVisibility] = [true, true]
@@ -51,6 +52,7 @@ export default {
       <router-view :isShowFlight="isShowFlight" :isShowBranch="isShowBranch" />
    </main>
    <Foo class="z-20" />
+   <BottomNav class="z-40"></BottomNav>
    <Setting class="z-50" @isShowFlight="setState" @isShowBranch="setState" />
 </template>
 

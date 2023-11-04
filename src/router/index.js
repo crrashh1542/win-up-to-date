@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
+    linkActiveClass: 'path-active',
     history: createWebHistory(),
     routes: [
         { path: '/', component: () => import('../../src/views/Versions.vue') },
