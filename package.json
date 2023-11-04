@@ -20,7 +20,7 @@
     "normalize.css": "^8.0.1",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4",
-    "webpack": "^5.88.2"
+    "webpack": "^5.89.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
