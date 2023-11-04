@@ -5,17 +5,19 @@ import buildInfo from '../scripts/parseInfo'
 import Banner from '../components/Banner.vue'
 import Card from '../components/Card.vue'
 
+const sources = [
+    ['https://msbuilds.rg-adguard.net', 'MSFT BUFFET DATABASE'],
+    ['https://changewindows.org', 'ChangeWindows'],
+    ['https://bbs.pcbeta.com/viewthread-1941423-1-1.html', '远景论坛 - 2262x(2263x).2506/2552更新包和修复包下载 & 内部版本进度 & .NET CU'],
+    ['https://community.wvbtech.com', 'wvbCommunity']
+]
+
 export default {
     name: 'ViewAbout',
     components: { Banner, Card },
     data() {
         return {
-            buildInfo,
-            sources: [
-                ['https://changewindows.org', 'ChangeWindows'],
-                ['https://bbs.pcbeta.com/viewthread-1941423-1-1.html', '远景论坛 - 2262x(2263x).2506/2552更新包和修复包下载 & 内部版本进度 & .NET CU'],
-                ['https://community.wvbtech.com', 'wvbCommunity']
-            ]
+            buildInfo, sources
         }
     }
 }
