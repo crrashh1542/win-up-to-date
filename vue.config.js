@@ -58,16 +58,11 @@ module.exports = defineConfig({
          }
       }))
 
-      // 打包忽略 moment/locales，避免打包文件体积过大
-      config.plugin('ignore')
-         .use(new Webpack.IgnorePlugin({
-            resourceRegExp: /^\.\/locale$/, // 要排除的目录
-            contextRegExp: /moment$/ // 要被处理的目录
-         }))
       // chunk 拆分
       config.optimization.splitChunks({
          chunks: 'all',
          cacheGroups: {
+
             // GROUP1 ------ 第三方模块
             vendor: {
                name: 'vendors',
@@ -75,6 +70,7 @@ module.exports = defineConfig({
                priority: 10,
                chunks: 'initial'
             },
+
             // GROUP2 ------ 项目内组件
             commons: {
                name: 'common',
@@ -84,6 +80,7 @@ module.exports = defineConfig({
             },
          },
       })
+      
       // GROUP3 ------ 运行时
       config.optimization.runtimeChunk({
          name: 'runtime'
