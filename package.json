@@ -1,6 +1,6 @@
 {
   "name": "win-up-to-date",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "description": "A website project showing the latest status of Windows Insider versions.",
   "main": "index.js",
   "repository": "https://github.com/crrashh1542/win-up-to-date",
