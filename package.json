@@ -19,8 +19,7 @@
     "moment": "^2.29.4",
     "normalize.css": "^8.0.1",
     "vue": "^3.3.8",
-    "vue-router": "^4.2.5",
-    "webpack": "^5.89.0"
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@babel/core": "^7.23.3",
