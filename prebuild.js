@@ -37,7 +37,7 @@ function writeInfo() {
    const content = `   {
       "time": "` + getTime() + `",
       "hash": "` + getHash() + `",
-      "build": "` + getBuild() + `"
+      "build": ` + getBuild() + `
    }`
 
    // 新建 temp 文件夹
@@ -63,5 +63,5 @@ function writeInfo() {
 
 }
 
-// STEP6 -------- 导出函数
+// STEP5 -------- 导出函数
 module.exports = writeInfo

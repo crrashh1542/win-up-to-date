@@ -3,8 +3,6 @@
 // 引入配置及插件
 const { defineConfig } = require('@vue/cli-service')
 const { resolve } = require('path')
-const fs = require('fs')
-const Webpack = require('webpack')
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 
@@ -53,7 +51,7 @@ module.exports = defineConfig({
       config.module.rule('vue').use('vue-loader').tap(options => ({
          ...options,
          compilerOptions: {
-            // 不解析所有 fluent- 开头的元素
+            // 不解析所有 fluent- 开头的元素，作为自定义元素加载
             isCustomElement: tag => tag.startsWith('fluent-')
          }
       }))
