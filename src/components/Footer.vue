@@ -37,7 +37,7 @@ export default {
     .footer {
         --footer-line-height: 1.6;
         --footer-margin: .9em 0;
-        --footer-bottom-spacing: 88px;
+        --footer-bottom-spacing: 73px;
     }
 }
 

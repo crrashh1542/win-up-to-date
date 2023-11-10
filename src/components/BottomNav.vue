@@ -1,6 +1,5 @@
 <script>
 const navSections = [
-    // 由于伪类的居中问题，故直接放 ../assets/fonts/iconfont/iconfont.less 的 UTF-8 编码
     {
         "path": "/",
         "icon": "icon-home",
@@ -27,8 +26,8 @@ export default {
         <router-link v-for="s in navSections" :to="s.path" 
             :key="s.value" class="inline text-center basis-1/2 py-2">
 
-            <span class="icon block text-2xl p-1.5" :class="s.icon"></span>
-            <span class="block text-sm p-1">{{ s.text }}</span>
+            <span class="icon block text-xl pt-1 pb-0.5" :class="s.icon"></span>
+            <span class="block text-sm py-0.5">{{ s.text }}</span>
 
         </router-link>
 
@@ -42,7 +41,7 @@ export default {
     display: var(--nav-display);
     background-color: @wu-color-nav;
     backdrop-filter: blur(3px);
-    border-top: 1px solid #999;
+    border-top: 1px solid @wu-color-split-line;
     .path-active { // router 活跃状态（处于当前页时）的配置 class
         color: @wu-color-theme;
     }
