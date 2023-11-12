@@ -3,6 +3,7 @@ description: 遇到的任何问题都可以反馈！
 labels: ["Bug"]
 title: "【BUG】"
 body: 
+
   - type: dropdown
     attributes:
       label: 出现位置
@@ -18,7 +19,13 @@ body:
           required: true
         - label: 其它，请在后续详细补充
           required: true
-      
+
+  - type: input
+    attributes: 
+      label: 项目版本
+      description: 你可以在此处输入 Bug 出现时项目的版本。若不填写则默认为 `dev` 分支最新版本。
+      placeholder: 格式为“包版本@hash (Build 构建数)”
+
   - type: textarea
     attributes:
       label: 具体表现
@@ -33,7 +40,7 @@ body:
     validations:
       required: true
 
-  - type: select
+  - type: dropdown
     attributes: 
       label: 该 Bug 的优先级
       description: 你可以在此处表述你希望该 Bug 得到开发者注意的优先级怎么样。
@@ -43,7 +50,8 @@ body:
         - label: 低
 
   - type: checkboxes
-    attributes:
+    attributes: 
+      label: 提交 Issue 前须知
       options:
         - label: 我已经查看近期 Issues（包含 Open 和 Closed），未发现已存在此 Issue 或相似/同类型的 Issue。
           required: true
