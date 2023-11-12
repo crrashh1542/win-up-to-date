@@ -9,16 +9,13 @@ body:
       label: 出现位置
       description: 你可以在此处指出该 Bug 出现于本项目的哪个位置。
       options:
-        - label: 构建过程（Node）
-          required: true
-        - label: 生产模式页面（Browser）
-          required: true
-        - label: 开发模式页面（Browser）
-          required: true
-        - label: 操作逻辑
-          required: true
-        - label: 其它，请在后续详细补充
-          required: true
+        - 构建过程（Node）
+        - 生产模式页面（Browser）
+        - 开发模式页面（Browser）
+        - 操作逻辑
+        - 其它，请在后续详细补充
+      validations:
+        required: true
 
   - type: input
     attributes: 
@@ -45,9 +42,9 @@ body:
       label: 该 Bug 的优先级
       description: 你可以在此处表述你希望该 Bug 得到开发者注意的优先级怎么样。
       options: 
-        - label: 高
-        - label: 中
-        - label: 低
+        - 高
+        - 中
+        - 低
 
   - type: checkboxes
     attributes: 
