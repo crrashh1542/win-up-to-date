@@ -14,7 +14,7 @@ body:
         - 开发模式页面（Browser）
         - 操作逻辑
         - 其它，请在后续详细补充
-      validations:
+    validations:
         required: true
 
   - type: input
