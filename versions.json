@@ -8,7 +8,7 @@
                 "style": "color-amber",
                 "version": "25992.1000",
                 "branch": "rs_prerelease",
-                "codename": "Gernamnium",
+                "codename": "Germanium",
                 "period": "24H2"
             },
             {
@@ -30,24 +30,24 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "22631.2506",
-                "branch": "23h2_ni_release_svc_prod3",
+                "version": "22631.2715",
+                "branch": "23h2_ni_release_svc_prod1",
                 "codename": "Nickel",
                 "period": "23H2"
             },
             {
                 "name": "正式版",
                 "style": "color-theme",
-                "version": "22631.2506",
-                "branch": "23h2_ni_release_svc_prod3",
+                "version": "22631.2715",
+                "branch": "23h2_ni_release_svc_prod1",
                 "codename": "Nickel",
                 "period": "23H2"
             },
             {
                 "name": "正式版",
                 "style": "color-theme",
-                "version": "22621.2506",
-                "branch": "ni_release_svc_prod3",
+                "version": "22621.2715",
+                "branch": "ni_release_svc_prod1",
                 "codename": "Nickel",
                 "period": "22H2"
             },
@@ -76,32 +76,32 @@
             {
                 "name": "vNext",
                 "style": "color-amber",
-                "version": "26001.1000",
-                "branch": "rs_???",
-                "codename": "Gernamnium",
+                "version": "25997.1000",
+                "branch": "rs_prerelease",
+                "codename": "Germanium",
                 "period": "24H2"
             },
             {
-                "name": "Server 23H2",
-                "style": "color-orange",
-                "version": "25398.529",
-                "branch": "zn_release_svc_prod1",
-                "codename": "Zinc",
-                "period": "23H2"
+                "name": "vNext",
+                "style": "color-amber",
+                "version": "26001.1000",
+                "branch": "rs_???（已计划）",
+                "codename": "Germanium",
+                "period": "24H2"
             },
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "22631.2714",
-                "branch": "23h2_ni_release_svc_prod1",
+                "version": "22631.2786",
+                "branch": "23h2_ni_release_svc_prod(2/3)",
                 "codename": "Nickel",
                 "period": "23H2"
             },
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "22000.2593",
-                "branch": "co_release_svc_prod2/3",
+                "version": "22000.2600",
+                "branch": "co_release_svc_prod1",
                 "codename": "Cobalt",
                 "period": "21H2"
             }
@@ -114,16 +114,16 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "19045.3636",
-                "branch": "22h2_release_svc_prod3",
+                "version": "19045.3693",
+                "branch": "22h2_release_svc_prod1",
                 "codename": "Vibranium",
                 "period": "22H2"
             },
             {
                 "name": "正式版",
                 "style": "color-theme",
-                "version": "19045.3636",
-                "branch": "22h2_release_svc_prod3",
+                "version": "19045.3693",
+                "branch": "22h2_release_svc_prod1",
                 "codename": "Vibranium",
                 "period": "22H2"
             },
@@ -136,12 +136,36 @@
                 "period": "21H2"
             },
             {
-                "name": "LTSC",
+                "name": "LTSC (2021)",
                 "style": "color-teal",
                 "version": "19044.3570",
                 "branch": "21h2_release_svc_prod1",
                 "codename": "Vibranium",
                 "period": "21H2"
+            },
+            {
+                "name": "LTSC (2019)",
+                "style": "color-teal",
+                "version": "17763.5122",
+                "branch": "rs5_release_svc_prod1",
+                "codename": "Redstone",
+                "period": "1809"
+            },
+            {
+                "name": "LTSB (2016)",
+                "style": "color-teal",
+                "version": "14393.6351",
+                "branch": "rs1_release",
+                "codename": "Redstone",
+                "period": "1607"
+            },
+            {
+                "name": "LTSB (2015)",
+                "style": "color-teal",
+                "version": "10240.20232",
+                "branch": "th1",
+                "codename": "Threshold",
+                "period": "1507"
             }
         ]
     },
@@ -154,13 +178,13 @@
                 "style": "color-amber",
                 "version": "25987.1000",
                 "branch": "rs_prerelease",
-                "codename": "Gallium",
-                "period": "24H1"
+                "codename": "Germanium",
+                "period": "24H2"
             },
             {
-                "name": "年度频道 2023",
-                "style": "color-orange",
-                "version": "25398.469",
+                "name": "年度频道 (2023)",
+                "style": "color-theme",
+                "version": "25398.531",
                 "branch": "zn_release_svc_prod1",
                 "codename": "Zinc",
                 "period": "23H2"
@@ -168,18 +192,10 @@
             {
                 "name": "正式版 (2022)",
                 "style": "color-theme",
-                "version": "20349.2031",
+                "version": "20348.2113",
                 "branch": "fe_release_svc_prod1",
                 "codename": "Iron",
-                "period": "22H1"
-            },
-            {
-                "name": "正式版 (2022)",
-                "style": "color-theme",
-                "version": "20348.2031",
-                "branch": "fe_release_svc_prod1",
-                "codename": "Iron",
-                "period": "21H1"
+                "period": "21H2"
             },
             {
                 "name": "LTSC (2022)",
@@ -187,7 +203,23 @@
                 "version": "20348.2031",
                 "branch": "fe_release_svc_prod1",
                 "codename": "Iron",
-                "period": "21H1"
+                "period": "21H2"
+            },
+            {
+                "name": "LTSC (2019)",
+                "style": "color-teal",
+                "version": "17763.5112",
+                "branch": "rs5_release_svc_prod1",
+                "codename": "Redstone",
+                "period": "1809"
+            },
+{
+                "name": "LTSC (2016)",
+                "style": "color-teal",
+                "version": "17763.6351",
+                "branch": "rs1_release",
+                "codename": "Redstone",
+                "period": "1607"
             }
         ]
     },
@@ -200,8 +232,8 @@
                 "style": "color-amber",
                 "version": "25977.1000",
                 "branch": "rs_prerelease",
-                "codename": "Gallium",
-                "period": "24H1"
+                "codename": "Germanium",
+                "period": "24H2"
             },
             {
                 "name": "Dev",
@@ -241,9 +273,9 @@
         "style": "icon-azure",
         "releases": [
             {
-                "name": "Preview",
-                "style": "color-amber",
-                "version": "25398.469",
+                "name": "Production",
+                "style": "color-theme",
+                "version": "25398.531",
                 "branch": "zn_release_svc_prod1",
                 "codename": "Zinc",
                 "period": "23H2"
@@ -251,37 +283,18 @@
             {
                 "name": "Production",
                 "style": "color-theme",
-                "version": "20349.2031",
+                "version": "20349.2113",
                 "branch": "fe_release_svc_prod1",
                 "codename": "Iron",
-                "period": "22H1"
-            }
-        ]
-    },
-    {
-        "category": "Windows SDK",
-        "style": "icon-code",
-        "releases": [
-            {
-                "name": "非稳定版",
-                "style": "color-amber",
-                "version": "25992.1000",
-                "codename": "Gallium",
-                "period": "24H1"
-            },
-            {
-                "name": "非稳定版",
-                "style": "color-orange",
-                "version": "23585.1001",
-                "codename": "Nickel",
-                "period": "23H2"
-            },
-            {
-                "name": "稳定版",
-                "style": "color-theme",
-                "version": "22621.1",
-                "codename": "Nickel",
                 "period": "22H2"
+            },
+            {
+                "name": "Production",
+                "style": "color-theme",
+                "version": "20348.2113",
+                "branch": "fe_release_svc_prod1",
+                "codename": "Iron",
+                "period": "21H2"
             }
         ]
     }
