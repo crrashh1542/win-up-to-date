@@ -45,13 +45,14 @@ export default {
                class="link item" target="_blank">{{ i.name }}</a>
 
             <!-- 如果类型是项目内路由 → <router-link> -->
-            <router-link v-if="i.type == 'route'" :to="i.link" class="item">
+            <router-link class="item" v-if="i.type == 'route'" :to="i.link">
                {{ i.name }}</router-link>
          </span>
 
-         <span><!-- 保留节目，你必须在！ -->
-            <a href="#" @click="dialogOpen">选项</a>
+         <span><!-- 保留节目，选项必须在！ -->
+            <a href="#" class="item" @click="dialogOpen">选项</a>
          </span>
+         
       </div>
    </div>
 </template>
