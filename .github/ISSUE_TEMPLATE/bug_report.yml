@@ -1,0 +1,54 @@
+name: 🐛 Bug 反馈
+description: 遇到的任何问题都可以反馈！
+labels: ["Bug"]
+title: "【BUG】"
+body: 
+
+  - type: dropdown
+    attributes:
+      label: 出现位置
+      description: 你可以在此处指出该 Bug 出现于本项目的哪个位置。
+      options:
+        - 构建过程（Node）
+        - 生产模式页面（Browser）
+        - 开发模式页面（Browser）
+        - 操作逻辑
+        - 其它，请在后续详细补充
+    validations:
+        required: true
+
+  - type: input
+    attributes: 
+      label: 项目版本
+      description: 你可以在此处输入 Bug 出现时项目的版本。若不填写则默认为 `dev` 分支最新版本。
+      placeholder: 格式为“包版本@hash (Build 构建数)”
+
+  - type: textarea
+    attributes:
+      label: 具体表现
+      description: 你可以在此处描述该问题出现的具体情况，包括但不限于复现步骤、报错时的提示或日志等等。
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: 预期表现
+      description: 你可以在此处描述你所希望的发生情形。
+    validations:
+      required: true
+
+  - type: dropdown
+    attributes: 
+      label: 该 Bug 的优先级
+      description: 你可以在此处表述你希望该 Bug 得到开发者注意的优先级怎么样。
+      options: 
+        - 高
+        - 中
+        - 低
+
+  - type: checkboxes
+    attributes: 
+      label: 提交 Issue 前须知
+      options:
+        - label: 我已经查看近期 Issues（包含 Open 和 Closed），未发现已存在此 Issue 或相似/同类型的 Issue。
+          required: true
