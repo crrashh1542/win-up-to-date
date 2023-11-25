@@ -1,4 +1,4 @@
-name: 🐛 新功能提议
+name: 🚀 新功能提议
 description: 想要啥新功能都可以建议！
 labels: ["Feature"]
 title: "【FEAT】"
@@ -9,7 +9,7 @@ body:
       label: 类型
       description: 你可以在此处指出你想要的功能隶属于哪个类别。
       options:
-        - UI 设计
+        - UI & 设计
         - 独立页面（如版本页面）
         - 页内大版面组件
         - 页内小部件
@@ -21,14 +21,14 @@ body:
   - type: textarea
     attributes:
       label: 具体要求
-      description: 你可以在此处描述你希望增加的功能的具体情况。
+      description: 你可以在此处描述你希望增加的功能的具体信息。
     validations:
       required: true
 
   - type: dropdown
     attributes: 
       label: 该请求的优先级
-      description: 你可以在此处表述你希望该功能请求得到开发者注意的优先级怎么样。
+      description: 你可以在此处表述你希望该功能请求得到注意的优先级怎么样。
       options: 
         - 高
         - 中
