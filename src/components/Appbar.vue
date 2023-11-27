@@ -50,7 +50,7 @@ export default {
          </span>
 
          <span><!-- 保留节目，选项必须在！ -->
-            <a href="#" class="item" @click="dialogOpen">选项</a>
+            <a href="#" class="item stable" @click="dialogOpen">选项</a>
          </span>
          
       </div>
@@ -98,6 +98,10 @@ export default {
       font-size: 17px;
       color: @wu-color-text-accent;
       display: var(--appbar-link-display);
+   }
+
+   a.stable {
+      display: inline-block !important;
    }
 }
 
