@@ -6,15 +6,15 @@
             {
                 "name": "Canary",
                 "style": "color-amber",
-                "version": "25997.1010",
-                "branch": "rs_prerelease_flt",
+                "version": "26002.1000",
+                "branch": "rs_prerelease",
                 "codename": "Germanium",
                 "period": "24H2"
             },
             {
                 "name": "Dev",
                 "style": "color-orange",
-                "version": "23590.1000",
+                "version": "23595.1001",
                 "branch": "ni_prerelease",
                 "codename": "Nickel",
                 "period": "23H2"
@@ -22,7 +22,7 @@
             {
                 "name": "Beta",
                 "style": "color-green",
-                "version": "22635.2771",
+                "version": "22635.2776",
                 "branch": "ni_release_betaflt_svc_prod1",
                 "codename": "Nickel",
                 "period": "23H2"
@@ -76,31 +76,31 @@
             {
                 "name": "Canary",
                 "style": "color-amber",
-                "version": "25997.1063",
+                "version": "26002.1063",
                 "branch": "rs_prerelease_flt",
                 "codename": "Germanium",
                 "period": "24H2"
             },
             {
-                "name": "vNext",
+                "name": "Canary",
                 "style": "color-amber",
-                "version": "26001.1000",
+                "version": "26007.1000",
                 "branch": "rs_prerelease",
                 "codename": "Germanium",
                 "period": "24H2"
             },
             {
-                "name": "vNext",
-                "style": "color-amber",
-                "version": "26007.1000",
-                "branch": "（已计划）",
-                "codename": "Germanium",
-                "period": "24H2"
+                "name": "年度 Server (2023)",
+                "style": "color-theme",
+                "version": "25398.582",
+                "branch": "zn_release_svc_prod1",
+                "codename": "Zinc",
+                "period": "23H2"
             },
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "22631.2787",
+                "version": "22631.2789",
                 "branch": "23h2_ni_release_svc_prod(2/3)",
                 "codename": "Nickel",
                 "period": "23H2"
@@ -108,7 +108,7 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "22000.2650",
+                "version": "22000.2651",
                 "branch": "co_release_svc_prod1",
                 "codename": "Cobalt",
                 "period": "21H2"
@@ -116,7 +116,7 @@
             {
                 "name": "Server 2022",
                 "style": "color-theme",
-                "version": "20349.2141",
+                "version": "20349.2143",
                 "branch": "fe_release_svc_prod1",
                 "codename": "Iron",
                 "period": "21H2"
@@ -124,8 +124,16 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "19045.3800",
+                "version": "19045.3802",
                 "branch": "22h2_release_svc_prod1",
+                "codename": "Vibranium",
+                "period": "22H2"
+            },
+                        {
+                "name": "LTSC (2021)",
+                "style": "color-purple",
+                "version": "19044.3802",
+                "branch": "21h2_release_svc_prod1",
                 "codename": "Vibranium",
                 "period": "22H2"
             }
@@ -138,8 +146,8 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "19045.3754",
-                "branch": "22h2_release_svc_prod2",
+                "version": "19045.3758",
+                "branch": "22h2_release_svc_prod3",
                 "codename": "Vibranium",
                 "period": "22H2"
             },
