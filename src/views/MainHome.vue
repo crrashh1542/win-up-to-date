@@ -10,7 +10,7 @@ import Card from '../components/Card.vue'
 import LoadAnim from '../components/LoadAnim.vue'
 
 export default {
-    name: 'ViewVersion',
+    name: 'MainHome',
     components: { Banner, Catalog, Card, LoadAnim },
     setup() {
         // STEP1 ------ 设定初始值

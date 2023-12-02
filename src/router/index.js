@@ -4,8 +4,9 @@ const router = createRouter({
     linkActiveClass: 'path-active',
     history: createWebHistory(),
     routes: [
-        { path: '/', component: () => import('../../src/views/Versions.vue') },
-        { path: '/about', component: () => import('../../src/views/About.vue') },
+        { path: '/', component: () => import('../../src/views/MainHome.vue') },
+        { path: '/category', component: () => import('../../src/views/MainCategory.vue') },
+        { path: '/about', component: () => import('../../src/views/MainAbout.vue') },
     ]
 })
 
