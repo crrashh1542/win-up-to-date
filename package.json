@@ -18,7 +18,7 @@
     "core-js": "^3.34.0",
     "moment": "^2.29.4",
     "normalize.css": "^8.0.1",
-    "vue": "^3.3.11",
+    "vue": "^3.3.13",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
