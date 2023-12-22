@@ -5,6 +5,10 @@ const linkList =
       'link': 'https://www.crrashh.com/',
       'type': 'link'
    }, {
+      'name': '分类',
+      'link': '/category',
+      'type': 'route'
+   }, {
       'name': '关于',
       'link': '/about',
       'type': 'route'
