@@ -46,7 +46,7 @@ export default {
 
 <template>
     <!-- 横幅 -->
-    <Banner class="z-20" :description="'一个反映 Windows 系统各版本情况实时进展的统计站点'">
+    <Banner class="z-20" description="一个反映 Windows 系统各版本情况实时进展的统计站点">
         <div class="title">Windows Up-to-Date</div>
     </Banner>
 

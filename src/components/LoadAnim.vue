@@ -16,7 +16,7 @@ export default {
 
 <style lang="less">
 .load {
-    margin: 15% 0;
+    margin: 17% 0 !important;
 
     fluent-progress-ring {
         width: 64px;
