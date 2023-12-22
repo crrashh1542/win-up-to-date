@@ -21,13 +21,13 @@ export default {
 @import url('../assets/styles/adaption.less');
 
 .banner {
-    padding: @wu-layout-nav-height 0 20px;
+    padding: @wu-layout-nav-height 0 15px;
     margin: 30px 0 0;
     line-height: 1.25;
     .title {
         font-weight: @wu-font-catalog-weight;
         font-size: var(--banner-title);
-        padding-bottom: .5em;
+        padding-bottom: .35em;
     }
     .subtitle {
         font-size: var(--banner-subtitle);
@@ -43,8 +43,8 @@ export default {
 }
 @media screen and (min-width: 800px) {
     .banner {
-        --banner-title: 42px;
-        --banner-subtitle: 30px;
+        --banner-title: 36px;
+        --banner-subtitle: 24px;
     }
 }
 </style>
