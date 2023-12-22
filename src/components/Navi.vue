@@ -6,6 +6,11 @@ const navSections = [
         "text": "主页"
     },
     {
+        "path": "/category",
+        "icon": "icon-tag",
+        "text": "分类"
+    },
+    {
         "path": "/about",
         "icon": "icon-about",
         "text": "关于"
@@ -24,7 +29,7 @@ export default {
     <div class="nav flex flex-row fixed bottom-0 left-0 w-full">
 
         <router-link v-for="s in navSections" :to="s.path" 
-            :key="s.value" class="inline text-center basis-1/2 py-2">
+            :key="s.value" class="inline text-center basis-1/3 py-2">
 
             <span class="icon block text-xl pt-1 pb-0.5" :class="s.icon"></span>
             <span class="block text-sm py-0.5">{{ s.text }}</span>

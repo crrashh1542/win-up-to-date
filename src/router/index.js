@@ -4,8 +4,12 @@ const router = createRouter({
     linkActiveClass: 'path-active',
     history: createWebHistory(),
     routes: [
-        { path: '/', component: () => import('../../src/views/Versions.vue') },
-        { path: '/about', component: () => import('../../src/views/About.vue') },
+        { path: '/', component: () => import('../../src/views/MainHome.vue') },
+
+        { path: '/category', redirect: '/category/Germanium' }, // 临时作为类型首页
+        { path: '/category/:platform', name: 'category', component: () => import('../../src/views/CategoryList.vue') },
+
+        { path: '/about', component: () => import('../../src/views/MainAbout.vue') },
     ]
 })
 

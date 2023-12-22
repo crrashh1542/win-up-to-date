@@ -10,7 +10,7 @@ import Card from '../components/Card.vue'
 import LoadAnim from '../components/LoadAnim.vue'
 
 export default {
-    name: 'ViewVersion',
+    name: 'MainHome',
     components: { Banner, Catalog, Card, LoadAnim },
     setup() {
         // STEP1 ------ 设定初始值
@@ -22,7 +22,7 @@ export default {
         // STEP2 ------ 获取数据
         // 此处填写 Windows 最新数据的 API 地址，相关 API 方面，咕咕正在 TODO 状态中
         // 目前仅仅对 github.com/crrashh1542/win-up-to-date@data/versions.json 做了反代而已
-        axios.get('https://wutd.crrashh.com/api/getVersions')
+        axios.get('https://wutd.crrashh.com/api/latestVersions')
 
             // STEP3 ------ 处理并修改数据
             .then(function (response) {

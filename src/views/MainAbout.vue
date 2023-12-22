@@ -1,7 +1,5 @@
 <script>
-// 引入库和数据和组件
 import buildInfo from '../scripts/parseInfo'
-
 import Banner from '../components/Banner.vue'
 import Card from '../components/Card.vue'
 
@@ -13,7 +11,7 @@ const sources = [
 ]
 
 export default {
-    name: 'ViewAbout',
+    name: 'MainAbout',
     components: { Banner, Card },
     data() {
         return {
