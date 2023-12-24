@@ -65,7 +65,7 @@ export default {
 </template>
 
 <style lang="less" scoped>
-@import url('../assets/styles/reset.less');
+@import url('../assets/styles/global.less');
 
 li {
     list-style: circle;
