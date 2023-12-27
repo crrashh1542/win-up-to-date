@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@fluentui/web-components": "^2.5.16",
-    "axios": "^1.6.2",
+    "axios": "^1.6.3",
     "core-js": "^3.34.0",
     "moment": "^2.30.0",
     "normalize.css": "^8.0.1",
