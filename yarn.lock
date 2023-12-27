@@ -6991,10 +6991,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment@npm:^2.30.0":
-  version: 2.30.0
-  resolution: "moment@npm:2.30.0"
-  checksum: 3effc8c3dfe8c26045a313b1d9a049ca4a0feaafd4f098240ee90d0802888a3ac30b443a9036975508e6bad2e80308148984b0711263465178810cdfccef8d6f
+"moment@npm:^2.30.1":
+  version: 2.30.1
+  resolution: "moment@npm:2.30.1"
+  checksum: ae42d876d4ec831ef66110bdc302c0657c664991e45cf2afffc4b0f6cd6d251dde11375c982a5c0564ccc0fa593fc564576ddceb8c8845e87c15f58aa6baca69
   languageName: node
   linkType: hard
 
@@ -9969,7 +9969,7 @@ __metadata:
     eslint-plugin-vue: "npm:^9.18.1"
     less: "npm:^4.1.3"
     less-loader: "npm:^11.1.3"
-    moment: "npm:^2.30.0"
+    moment: "npm:^2.30.1"
     normalize.css: "npm:^8.0.1"
     postcss: "npm:^8.4.32"
     speed-measure-webpack-plugin: "npm:^1.5.0"
