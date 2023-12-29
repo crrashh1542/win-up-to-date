@@ -8,24 +8,8 @@ export default {
 </script>
 
 <template>
-    <div class="load text-center align-middle">
-        <fluent-progress-ring class="m-auto"></fluent-progress-ring>
-        <p>数据加载中，请稍候</p>
+    <div class="load absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4">
+        <fluent-progress-ring class="m-auto w-16 h-16"></fluent-progress-ring>
+        <p class="text-2xl m-8">数据加载中，请稍候</p>
     </div>
 </template>
-
-<style lang="less">
-.load {
-    margin: 17% 0 !important;
-
-    fluent-progress-ring {
-        width: 64px;
-        height: 64px;
-    }
-
-    p {
-        font-size: 24px;
-        margin: 30px;
-    }
-}
-</style>

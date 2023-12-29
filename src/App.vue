@@ -74,5 +74,6 @@ export default {
 
 main {
    padding: 0 var(--container-padding);
+   flex: 1;
 }
 </style>
