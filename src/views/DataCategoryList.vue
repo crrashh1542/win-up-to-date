@@ -10,7 +10,7 @@ import Card from '../components/Card.vue'
 import LoadAnim from '../components/LoadAnim.vue'
 
 export default {
-    name: 'MainCategory',
+    name: 'DataCategoryList',
     components: { Banner, LoadAnim, Card },
     setup() {
         // STEP1 ------ 设定初始值
@@ -28,7 +28,7 @@ export default {
 
             // STEP3 ------ 处理并修改数据
             .then(function (response) {
-                let resp = response.data
+                let resp = response.data.content
                 // 获取到数据后，关闭加载动画
                 data.category = resp
                 data.isLoading = false
@@ -38,9 +38,11 @@ export default {
                 } else {
                     data.customVersionRange = resp.range[0] + ' ~ ' + resp.range[1]
                 }
+
             })
-            .catch(function (error) {
-                console.log(error)
+            .catch(() => {
+                // 由于服务器设置，目前只返回 404
+                router.replace('/404')
             })
 
         // STEP4 ------ 返回数据
@@ -51,7 +53,7 @@ export default {
             let vueObj = this
             axios.get('https://wutd.crrashh.com/api/category?platform=' + platform)
                 .then(function (response) {
-                    let resp = response.data
+                    let resp = response.data.content
                     vueObj.category = resp
                     if (resp.range[1] == null) {
                         vueObj.customVersionRange = resp.range[0] + ' ~ ?'
@@ -59,8 +61,8 @@ export default {
                         vueObj.customVersionRange = resp.range[0] + ' ~ ' + resp.range[1]
                     }
                 })
-                .catch(function (error) {
-                    console.log(error)
+                .catch(() => {
+                    this.$router.replace('/404')
                 })
         }
     }
@@ -191,4 +193,5 @@ table.data {
         --th-font-size: 20px;
         --td-font-size: 18px
     }
-}</style>
+}
+</style>
