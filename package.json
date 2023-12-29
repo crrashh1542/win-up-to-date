@@ -16,7 +16,7 @@
     "@fluentui/web-components": "^2.5.16",
     "axios": "^1.6.3",
     "core-js": "^3.34.0",
-    "moment": "^2.30.0",
+    "moment": "^2.30.1",
     "normalize.css": "^8.0.1",
     "vue": "^3.3.13",
     "vue-router": "^4.2.5"
