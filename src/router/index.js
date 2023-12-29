@@ -13,7 +13,7 @@ const router = createRouter({
         { path: '/category/:platform', name: 'category', component: () => import('../../src/views/DataCategoryList.vue') },
 
         // GROUP 3 ---- 异常情况配置（404）
-        { path: '/404', component: () => import('../../src/views/NotFound.vue') },
+        { path: '/404', name: '404', component: () => import('../../src/views/NotFound.vue') },
         { path: '/:pathMatch(.*)', redirect: '/404' },
     ]
 })

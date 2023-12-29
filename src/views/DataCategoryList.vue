@@ -29,7 +29,6 @@ export default {
             // STEP3 ------ 处理并修改数据
             .then(function (response) {
                 let resp = response.data.content
-                console.log(resp);
                 // 获取到数据后，关闭加载动画
                 data.category = resp
                 data.isLoading = false
@@ -39,9 +38,11 @@ export default {
                 } else {
                     data.customVersionRange = resp.range[0] + ' ~ ' + resp.range[1]
                 }
+
             })
-            .catch(function (error) {
-                console.log(error)
+            .catch(() => {
+                // 由于服务器设置，目前只返回 404
+                router.replace('/404')
             })
 
         // STEP4 ------ 返回数据
@@ -60,8 +61,8 @@ export default {
                         vueObj.customVersionRange = resp.range[0] + ' ~ ' + resp.range[1]
                     }
                 })
-                .catch(function (error) {
-                    console.log(error)
+                .catch(() => {
+                    this.$router.replace('/404')
                 })
         }
     }
@@ -192,4 +193,5 @@ table.data {
         --th-font-size: 20px;
         --td-font-size: 18px
     }
-}</style>
+}
+</style>
