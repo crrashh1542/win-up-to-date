@@ -1,11 +1,16 @@
 ## `category` 格式
 
 ### 第一层数据结构
+* `name`：当前阶段名称
 * `category`：当前阶段代号
 * `semester`：当前开发阶段
 * `range`：当前代号版本范围
 * `previous`：上一阶段代号
 * `next`：下一阶段代号
+
+### 第二层 `previous`/`next` 数据结构
+* `path`：导航的路由路径，与 JSON 文件名称一致
+* `name`：显示在导航栏的文字
 
 ### 第二层 `range` 数据结构
 * 第0项：起始版本
