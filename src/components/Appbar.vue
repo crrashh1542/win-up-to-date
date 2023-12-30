@@ -74,7 +74,7 @@ export default {
    width: 100%;
    height: @wu-layout-nav-height;
    line-height: @wu-layout-nav-height;
-   background-color: @wu-color-nav;
+   background-color: @wu-color-bar;
    padding: 0 var(--container-padding);
    border-bottom: 1px solid @wu-color-split-line;
    backdrop-filter: blur(3px);
@@ -114,7 +114,7 @@ export default {
 // 亮色
 @media screen and (prefers-color-swueme: light) {
    .appbar {
-      background-color: @wu-color-nav;
+      background-color: @wu-color-bar;
    }
 }
 

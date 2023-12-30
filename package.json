@@ -1,6 +1,6 @@
 {
   "name": "win-up-to-date",
-  "version": "0.12.2",
+  "version": "0.12.3",
   "description": "A website project showing the latest status of Windows Insider versions.",
   "main": "index.js",
   "repository": "https://github.com/crrashh1542/win-up-to-date",
@@ -18,7 +18,7 @@
     "core-js": "^3.35.0",
     "moment": "^2.30.1",
     "normalize.css": "^8.0.1",
-    "vue": "^3.4.0",
+    "vue": "^3.4.3",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {

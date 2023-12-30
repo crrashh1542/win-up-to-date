@@ -66,6 +66,9 @@ export default {
 
 <style lang="less" scoped>
 @import url('../assets/styles/global.less');
+.card {
+    padding: var(--about-card-padding);
+}
 
 li {
     list-style: circle;
@@ -75,7 +78,7 @@ li {
 // 桌面端
 @media screen and (min-width: 800px) {
     .card {
-        padding: 10px 1.5em;
+        --about-card-padding: 10px 1.5em;
 
         .item::before {
             margin-right: .5em;
@@ -87,7 +90,7 @@ li {
 // 移动端
 @media screen and (max-width: 800px) {
     .card {
-        padding: 7px .75em;
+        --about-card-padding: 9px .8em;
 
         .item::before {
             margin-right: .25em;

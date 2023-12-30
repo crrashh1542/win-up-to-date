@@ -9,7 +9,7 @@ const router = createRouter({
         { path: '/about', component: () => import('../../src/views/MainAbout.vue') },
 
         // GROUP 2 ---- 数据页
-        { path: '/category', redirect: '/category/Germanium' }, // 临时作为类型首页
+        { path: '/category', redirect: '/category/germanium' }, // 临时作为类型首页
         { path: '/category/:platform', name: 'category', component: () => import('../../src/views/DataCategoryList.vue') },
 
         // GROUP 3 ---- 异常情况配置（404）
