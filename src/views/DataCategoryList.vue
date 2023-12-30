@@ -71,7 +71,7 @@ export default {
 
 <template>
     <!-- 横幅 -->
-    <Banner class="z-20" :description="category.codename">
+    <Banner class="z-20" :description="category.name">
         <div class="title">版本列表</div>
     </Banner>
 
@@ -83,13 +83,13 @@ export default {
         <!-- 快速导航 -->
         <div class="nav flex font-bold">
             <span class="icon-left float-left item" v-if="category.previous != null">
-                <router-link :to="category.previous" @click="refreshData(category.previous)">
-                    {{ category.previous }}</router-link>
+                <router-link :to="category.previous.path" @click="refreshData(category.previous.path)">
+                    {{ category.previous.name }}</router-link>
             </span>
             <span class="grow"></span>
             <span class="icon-right float-right item" v-if="category.next != null">
-                <router-link :to="category.next" @click="refreshData(category.next)">
-                    {{ category.next }}</router-link>
+                <router-link :to="category.next.path" @click="refreshData(category.next.path)">
+                    {{ category.next.name }}</router-link>
             </span>
         </div>
 
