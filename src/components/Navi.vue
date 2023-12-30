@@ -44,7 +44,7 @@ export default {
 
 .nav {
     display: var(--nav-display);
-    background-color: @wu-color-nav;
+    background-color: @wu-color-bar;
     backdrop-filter: blur(3px);
     border-top: 1px solid @wu-color-split-line;
     .path-active { // router 活跃状态（处于当前页时）的配置 class

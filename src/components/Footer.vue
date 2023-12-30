@@ -19,7 +19,7 @@ export default {
 @import url('../assets/styles/adaption.less');
 
 .footer {
-    background-color: @wu-color-theme-lighter;
+    background-color: var(--footer-bg);
     border-top: 1px solid @wu-color-split-line;
     padding: .5em var(--container-padding);
     color: @wu-color-text-accent;
@@ -35,6 +35,7 @@ export default {
 /* 不同设备适配 */
 @media screen and (max-width: 650px) {
     .footer {
+        --footer-bg: @wu-color-theme-lighter;
         --footer-line-height: 1.6;
         --footer-margin: .9em 0;
         --footer-bottom-spacing: 73px;
@@ -43,6 +44,7 @@ export default {
 
 @media screen and (min-width: 650px) {
     .footer {
+        --footer-bg: @wu-color-theme-bg;
         --footer-line-height: 1.6;
         --footer-margin: .9em 0;
         --footer-bottom-spacing: 0;
