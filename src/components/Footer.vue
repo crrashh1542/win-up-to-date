@@ -7,7 +7,7 @@ export default {
 <template>
     <div class="footer">
         <p>
-            (C) Copyright 2023 Kotsuki Crrashh. / 
+            (C) Copyright 2023-2024 Kotsuki Crrashh. / 
             <a href="//beian.miit.gov.cn" target="_blank">蜀ICP备2022029657号-2</a> /
             <a href="//icp.gov.moe/?keyword=20220551" target="_blank">萌ICP备20220551号</a>
         </p>
