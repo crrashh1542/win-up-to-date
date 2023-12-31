@@ -60,7 +60,7 @@ export default {
     </ul>
     </p>
 
-    <p>Windows 为 Microsoft Corporation 的注册商标，本项目与 Microsoft Corporation 无关。项目涉及的字体和图片仅用作学习，其版权归原公司所有；图标来自 <a
+    <p>Windows 为 Microsoft Corporation 的注册商标，本项目与 Microsoft Corporation 无关。项目采用的所有字体和图片均搜集自网络且仅用作学习，其版权归原公司所有；项目采用的所有图标来自 <a
             href="https://www.iconfont.cn">iconfont</a>。</p>
 </template>
 
