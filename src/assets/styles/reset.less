@@ -3,17 +3,18 @@
  */
 
 // 引入字体
-@import url('https://s.cdn.crrashh.com/prod/font/PingFang-SC-CN/e5d34e48-3138-88be-303a-9e8bd2c54ee3/index.css');
 @import url('https://s.cdn.crrashh.com/prod/font/Google-Sans/aa7bb3f3-b88d-4f98-3310-83626911a5ba/index.css');
 @import url('../fonts/iconfont/iconfont.less');
 
+// 全局变量
 @import url('./global.less');
 
-/* 初始化 -------- BEGIN */
+// 启用 Tailwind
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+// 文档流初始化
 body {
     background-size: cover;
     background-image: url('../images/bg.webp');
@@ -52,7 +53,7 @@ body {
         font-size: 15px;
         vertical-align: middle;
         text-align: center;
-        margin-left: .3em;
+        margin-left: .1em;
         display: inline-block;
         content: '\e622';
     }
@@ -63,11 +64,4 @@ body {
         color: @wu-color-theme;
      }
 
-}
-/* 初始化 -------- END */
-
-@font-face {
-    font-family: 'iconfont';  /* Project id 3626945 */
-    src: url('../fonts/iconfont/iconfont.woff2') format('woff2'),
-         url('../fonts/iconfont/iconfont.ttf') format('ttf')
 }
