@@ -1,5 +1,5 @@
 <script>
-import buildInfo from '../scripts/parseInfo'
+import buildInfo from '../scripts/parseRepoInfo'
 import Banner from '../components/Banner.vue'
 import Card from '../components/Card.vue'
 

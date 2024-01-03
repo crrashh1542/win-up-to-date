@@ -5,7 +5,7 @@
  * @version 3.0
  */
 
-import buildInfo from './parseInfo'
+import buildInfo from './parseRepoInfo'
 const version = buildInfo[0][2].split(' (build')[0]
 
 export default function showInfo() {

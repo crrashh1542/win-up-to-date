@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import showInfo from './scripts/showInfo'
+import showInfo from './scripts/showRepoInfo'
 import router from './router'
 import App from './App.vue'
 
