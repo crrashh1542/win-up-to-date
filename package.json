@@ -35,7 +35,7 @@
     "eslint-plugin-vue": "^9.19.2",
     "less": "^4.2.0",
     "less-loader": "^11.1.4",
-    "postcss": "^8.4.32",
+    "postcss": "^8.4.33",
     "speed-measure-webpack-plugin": "^1.5.0",
     "tailwindcss": "^3.4.0"
   },
