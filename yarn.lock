@@ -3369,14 +3369,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.4":
-  version: 1.6.4
-  resolution: "axios@npm:1.6.4"
+"axios@npm:^1.6.5":
+  version: 1.6.5
+  resolution: "axios@npm:1.6.5"
   dependencies:
     follow-redirects: "npm:^1.15.4"
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
-  checksum: ed15229f447dd81a5a9e3dac5c84d64f8598145b1102fb6f8c5feb0d02d0dafaef7bf071d2575a7687dd0c014b9da2edbcff59ee9a57b59da941ae673b938919
+  checksum: 465489d9bf8f039b9adbc8103b6299d6a5e26de77b27f0e4173d814d39bca8f4b4659d94e09ee40461aedccd8c2452f1e2b3edace1c9f81220060d2974ff9dc7
   languageName: node
   linkType: hard
 
@@ -9924,7 +9924,7 @@ __metadata:
     "@vue/cli-plugin-eslint": "npm:~5.0.8"
     "@vue/cli-service": "npm:~5.0.8"
     autoprefixer: "npm:^10.4.16"
-    axios: "npm:^1.6.4"
+    axios: "npm:^1.6.5"
     compression-webpack-plugin: "npm:^10.0.0"
     core-js: "npm:^3.35.0"
     eslint: "npm:^8.56.0"
