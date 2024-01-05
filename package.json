@@ -37,7 +37,7 @@
     "less-loader": "^11.1.4",
     "postcss": "^8.4.33",
     "speed-measure-webpack-plugin": "^1.5.0",
-    "tailwindcss": "^3.4.0"
+    "tailwindcss": "^3.4.1"
   },
   "eslintConfig": {
     "root": true,
