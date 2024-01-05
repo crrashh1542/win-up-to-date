@@ -6,15 +6,15 @@
             {
                 "name": "Canary",
                 "style": "color-amber",
-                "version": "26016.1012",
-                "branch": "rs_prerelease_flt",
+                "version": "26020.1000",
+                "branch": "rs_prerelease",
                 "codename": "Germanium",
                 "period": "24H2"
             },
             {
                 "name": "Dev",
                 "style": "color-orange",
-                "version": "23606.1000",
+                "version": "23612.1000",
                 "branch": "ni_prerelease",
                 "codename": "Nickel",
                 "period": "23H2"
@@ -22,7 +22,7 @@
             {
                 "name": "Beta",
                 "style": "color-green",
-                "version": "22635.2915",
+                "version": "22635.2921",
                 "branch": "ni_release_betaflt_svc_prod1",
                 "codename": "Nickel",
                 "period": "23H2"
@@ -76,7 +76,7 @@
             {
                 "name": "主分支",
                 "style": "color-amber",
-                "version": "26021.1000",
+                "version": "26028.1000",
                 "branch": "rs_prerelease",
                 "codename": "Germanium",
                 "period": "24H2"
@@ -84,7 +84,7 @@
             {
                 "name": "Moment 上游分支",
                 "style": "color-orange",
-                "version": "23611.1000",
+                "version": "23614.1000",
                 "branch": "ni_prerelease",
                 "codename": "Nickel",
                 "period": "23H2"
@@ -92,7 +92,7 @@
             {
                 "name": "年度频道 (2023)",
                 "style": "color-theme",
-                "version": "25398.642",
+                "version": "25398.643",
                 "branch": "zn_release_svc_prod1",
                 "codename": "Zinc",
                 "period": "23H2"
@@ -106,9 +106,9 @@
                 "period": "23H2"
             },
             {
-                "name": "发布预览",
-                "style": "color-purple",
-                "version": "22000.2712",
+                "name": "正式通道",
+                "style": "color-theme",
+                "version": "22000.2713",
                 "branch": "co_release_svc_prod1",
                 "codename": "Cobalt",
                 "period": "21H2"
@@ -116,7 +116,7 @@
             {
                 "name": "Server 2022",
                 "style": "color-theme",
-                "version": "20349.2215",
+                "version": "20349.2226",
                 "branch": "fe_release_svc_prod1",
                 "codename": "Iron",
                 "period": "21H2"
@@ -124,7 +124,7 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "19045.3924",
+                "version": "19045.3929",
                 "branch": "22h2_release_svc_prod1",
                 "codename": "Vibranium",
                 "period": "22H2"
@@ -132,7 +132,7 @@
             {
                 "name": "LTSC (2019)",
                 "style": "color-teal",
-                "version": "17763.5328",
+                "version": "17763.5329",
                 "branch": "rs5_release_svc_prod1",
                 "codename": "Redstone",
                 "period": "1809"
