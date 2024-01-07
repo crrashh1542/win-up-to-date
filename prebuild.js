@@ -20,24 +20,32 @@ function getTime() {
 // STEP3 -------- 获取构建 hash
 function getHash(params) {
    const buildHash = childProcess.execSync('git rev-parse --short HEAD', { 'encoding': 'utf8' }).split('\n')[0]
-   console.log('[buildInfo] 已获取构建 commit hash：' + buildHash)
+   console.log('[buildInfo] 已获取当前提交 hash：' + buildHash)
    return buildHash
 }
 
-// STEP4 -------- 获取构建次数
+// STEP5 -------- 获取构建分支
 function getBuild(params) {
    const buildHash = childProcess.execSync('git rev-list HEAD --count', { 'encoding': 'utf8' }).split('\n')[0]
    console.log('[buildInfo] 已获取构建数：' + buildHash)
    return buildHash
 }
 
-// STEP4 -------- 组装并输出到文件
+// STEP4 -------- 获取构建次数
+function getBranch(params) {
+   const buildBranch = childProcess.execSync('git rev-parse --abbrev-ref HEAD', { 'encoding': 'utf8' }).split('\n')[0]
+   console.log('[buildInfo] 已获取当前分支：' + buildBranch)
+   return buildBranch
+}
+
+// STEP6 -------- 组装并输出到文件
 function writeInfo() {
    // 组装要输出的内容
    const content = `   {
       "time": "` + getTime() + `",
       "hash": "` + getHash() + `",
-      "build": ` + getBuild() + `
+      "build": ` + getBuild() + `,
+      "branch": "` + getBranch() + `"
    }`
 
    // 新建 temp 文件夹
@@ -63,5 +71,5 @@ function writeInfo() {
 
 }
 
-// STEP5 -------- 导出函数
+// STEP7 -------- 导出函数
 module.exports = writeInfo
