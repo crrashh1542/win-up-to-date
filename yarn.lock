@@ -6384,13 +6384,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"less-loader@npm:^11.1.4":
-  version: 11.1.4
-  resolution: "less-loader@npm:11.1.4"
+"less-loader@npm:^12.0.0":
+  version: 12.0.0
+  resolution: "less-loader@npm:12.0.0"
   peerDependencies:
     less: ^3.5.0 || ^4.0.0
     webpack: ^5.0.0
-  checksum: 4d8764ac1c3bb20500d785b4282151529322a5af5b3f3c483f479b4a97664e2d684a7cba1e7eb615fb8dfab4a043451cf9777bcb47f224b2c29e65972f24377e
+  checksum: 66b6f73a17a8fef8ac5e02d019a59a20120768f82e5489b1d66144d4fac96c2d53ee73ef7226c5cc181eac18e8d0427cb74978bed70d3ca87675ad01eb6026f1
   languageName: node
   linkType: hard
 
@@ -9930,7 +9930,7 @@ __metadata:
     eslint: "npm:^8.56.0"
     eslint-plugin-vue: "npm:^9.20.1"
     less: "npm:^4.2.0"
-    less-loader: "npm:^11.1.4"
+    less-loader: "npm:^12.0.0"
     moment: "npm:^2.30.1"
     normalize.css: "npm:^8.0.1"
     postcss: "npm:^8.4.33"
