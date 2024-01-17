@@ -5,7 +5,7 @@ export default {
 </script>
 
 <template>
-    <div class="title">
+    <div class="title text-2xl my-3 font-medium">
         <slot></slot>
     </div>
 </template>
@@ -15,8 +15,6 @@ export default {
 
 .title {
     color: @wu-color-text-imp;
-    font-size: @wu-font-catalog-size;
-    font-weight: @wu-font-catalog-weight;
     margin-bottom: 10px;
 }
 </style>
