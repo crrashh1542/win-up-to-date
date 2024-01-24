@@ -18,7 +18,7 @@ const navSections = [
 ]
 
 export default {
-    name: 'WidgetNav',
+    name: 'WidgetNavBar',
     data() {
         return { navSections }
     }
