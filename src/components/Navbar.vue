@@ -26,7 +26,7 @@ export default {
 </script>
 
 <template>
-    <div class="nav flex flex-row fixed bottom-0 left-0 w-full">
+    <div class="navbar flex flex-row fixed bottom-0 left-0 w-full">
 
         <router-link v-for="s in navSections" :to="s.path" 
             :key="s.value" class="inline text-center basis-1/3 py-2">
@@ -42,7 +42,7 @@ export default {
 <style lang="less" scoped>
 @import url('../assets/styles/global.less');
 
-.nav {
+.navbar {
     display: var(--nav-display);
     background-color: @wu-color-bar;
     backdrop-filter: blur(3px);
@@ -57,13 +57,13 @@ export default {
 
 // 适配
 @media screen and (min-width: 650px) {
-    .nav {
+    .navbar {
         --nav-display: none;
     }
 }
 
 @media screen and (max-width: 650px) {
-    .nav {
+    .navbar {
         --nav-display: flex;
     }
 }
