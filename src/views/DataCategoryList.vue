@@ -8,10 +8,11 @@ import axios from 'axios'
 import Banner from '../components/Banner.vue'
 import Card from '../components/Card.vue'
 import LoadAnim from '../components/LoadAnim.vue'
+import TopNav from '../components/TopNav.vue'
 
 export default {
     name: 'DataCategoryList',
-    components: { Banner, LoadAnim, Card },
+    components: { Banner, LoadAnim, Card, TopNav },
     setup() {
         // STEP1 ------ 设定初始值
         let data = reactive({
@@ -81,17 +82,17 @@ export default {
     <main v-if="!isLoading">
 
         <!-- 快速导航 -->
-        <div class="nav flex font-bold">
-            <span class="icon-left float-left item" v-if="category.previous != null">
+        <TopNav>
+            <span class="icon-left" v-if="category.previous != null">
                 <router-link :to="category.previous.path" @click="refreshData(category.previous.path)">
                     {{ category.previous.name }}</router-link>
             </span>
             <span class="grow"></span>
-            <span class="icon-right float-right item" v-if="category.next != null">
+            <span class="icon-right" v-if="category.next != null">
                 <router-link :to="category.next.path" @click="refreshData(category.next.path)">
                     {{ category.next.name }}</router-link>
             </span>
-        </div>
+        </TopNav>
 
         <!-- 基本信息 -->
         <Card class="info">
@@ -125,13 +126,6 @@ export default {
 .item::before {
     // 图标间隙
     margin-right: .4em;
-}
-
-// 快速导航
-.nav {
-    margin: 0 .4em 12px;
-    color: #666;
-    font-size: var(--td-font-size);
 }
 
 // 信息栏
