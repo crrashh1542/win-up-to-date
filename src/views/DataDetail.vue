@@ -46,9 +46,14 @@ export default {
         return { ...toRefs(data) }
     },
     methods: {
-        // 组合路由路径
-        constructRoute(obj) {
+        // 组合导航路由路径
+        constructNavRoute(obj) {
             return '/detail/' + obj.category + '/' + obj.build
+        },
+
+        // 组合归属路由路径
+        constructBelongingRoute(value) {
+            return '/category/' + value
         },
 
         // 刷新数据
@@ -82,14 +87,14 @@ export default {
         <TopNav>
             <span class="icon-left" v-if="detail.nav.previous != null">
                 <router-link 
-                    :to="constructRoute(detail.nav.previous)" 
+                    :to="constructNavRoute(detail.nav.previous)" 
                     @click="refreshData(detail.nav.previous.category, detail.nav.previous.build)">
                     {{ detail.nav.previous.build }}</router-link>
             </span>
             <span class="grow"></span>
             <span class="icon-right" v-if="detail.nav.next != null">
                 <router-link 
-                    :to="constructRoute(detail.nav.next)" 
+                    :to="constructNavRoute(detail.nav.next)" 
                     @click="refreshData(detail.nav.next.category, detail.nav.next.build)">
                     {{ detail.nav.next.build }}</router-link>
             </span>
@@ -103,9 +108,10 @@ export default {
                 <p class="icon-compile">编译时间 / {{ detail.build.compileTime }}</p>
             </div>
             <div>
-                <p class="icon-arch">系统架构 / <span v-for="i in detail.build.arch" :key="i">{{ i }}&nbsp;&nbsp;</span></p>
-                <p class="icon-announcement">推送频道 / {{ detail.release.channel }}</p>
-                <p class="icon-time">推送时间 / {{ detail.release.time }}<span class="suffix"> (UTC)</span></p>
+                <p class="icon-arch">系统架构 / 
+                    <span v-for="i in detail.build.arch" :key="i">{{ i }}&nbsp;&nbsp;</span></p>
+                <p class="icon-branch">构建归属 / <router-link :to="constructBelongingRoute(detail.belongsTo.path)">
+                    {{ detail.belongsTo.name }}</router-link></p>
             </div>
         </Card>
         <br /><br />
@@ -113,31 +119,55 @@ export default {
         <!-- 发版信息 -->
         <Card>
             <Catalog class="font-semibold icon-announcement">发版信息</Catalog>
-            <p v-if="detail.release.url !== null">官方发版日志：
-                <a target="_blank" :href="detail.release.url">{{ detail.release.announcePlace }}</a>
-            </p>
-            <p v-if="detail.featureIds !== null">ViveID 列表：
-                <a target="_blank" :href="detail.featureIds.url">{{ detail.featureIds.fileName }}</a>
-            </p>
+
+            <div v-if="detail.release !== undefined">
+                <p v-if="detail.release.channel !== undefined">推送频道：{{ detail.release.channel }}</p>
+                <p v-if="detail.release.channel !== undefined">推送时间：{{ detail.release.time }} (UTC)</p>
+                <p v-if="detail.release.url !== undefined">官方发版日志：
+                    <a target="_blank" :href="detail.release.url">{{ detail.release.announcePlace }}</a>
+                </p>
+                <p v-if="detail.featureIds !== undefined">ViveID 列表：
+                    <a target="_blank" :href="detail.featureIds.url">{{ detail.featureIds.fileName }}</a>
+                </p>
+            </div>
+
+            <div class="placeholder w-full h-24 text-center" v-else>
+                <p>暂无可获取的发版信息</p>
+            </div>
         </Card>
 
         <!-- 下载 UUP -->
-        <Card v-if="detail.updateId !== null">
+        <Card>
             <Catalog class="font-semibold icon-uup">从 UUP 获取构建</Catalog>
-            <p v-for="id in detail.updateId" :key="id.arch">
-                {{ id.arch }}：<CopiableCode :value="id.id" />
-            </p>
+
+            <div v-if="detail.updateId !== undefined">
+                <p v-for="id in detail.updateId" :key="id.arch">
+                    {{ id.arch }}：<CopiableCode :value="id.id" />
+                </p>
+            </div>
+
+            <div class="placeholder w-full h-24 text-center" v-else>
+                <p>暂无可获取的 UUP 信息</p>
+            </div>
         </Card>
 
         <!-- 下载 ISO -->
-        <Card v-if="detail.download !== null">
+        <Card>
             <Catalog class="font-semibold icon-iso">下载 ISO / 更新包</Catalog>
-            <p>文件名称：{{ detail.download.name }}</p>
-            <p>系统架构：{{ detail.download.arch }}</p>
-            <p>下载地址：<a target="_blank" :href="detail.download.url">{{ detail.download.source }}</a></p>
-            <p>MD5：<CopiableCode :value="detail.download.md5" /></p>
-            <p>SHA-256：<CopiableCode :value="detail.download.sha256" /></p>
+
+            <div v-if="detail.download !== undefined">
+                <p>文件名称：{{ detail.download.name }}</p>
+                <p>系统架构：{{ detail.download.arch }}</p>
+                <p>下载地址：<a target="_blank" :href="detail.download.url">{{ detail.download.source }}</a></p>
+                <p>MD5：<CopiableCode :value="detail.download.md5" /></p>
+                <p>SHA-256：<CopiableCode :value="detail.download.sha256" /></p>
+            </div>
+
+            <div class="placeholder w-full h-24 text-center" v-else>
+                <p>暂无可供下载的内容</p>
+            </div>
         </Card>
+
 
     </div>
 
@@ -182,29 +212,22 @@ export default {
         font-size: var(--card-tsize);
         text-overflow: ellipsis;
     }
+    .placeholder > p {
+        line-height: 64px; // 等效于 h-24 再减去 32px，用于垂直居中偏上
+    }
 }
 
 // 移动端适配
-// 695px +
-@media screen and (min-width: 695px) {
+// 630px +
+@media screen and (min-width: 630px) {
     .card {
         --card-tsize: 1.1rem;
         --card-block-display: flex;
         --card-block-flex-width: 50%;
-        --card-suffix-display: inline;
     }
 }
-// 695px ~ 750px
-@media screen and (max-width: 695px) {
-    .card {
-        --card-tsize: 1.1rem;
-        --card-block-display: flex;
-        --card-block-flex-width: 50%;
-        --card-suffix-display: none;
-    }
-}
-// 635px ~ 700px
-@media screen and (max-width: 655px) {
+// 570px ~ 630px
+@media screen and (max-width: 630px) {
     .card {
         --card-tsize: 1rem;
         --card-block-display: flex;
@@ -212,24 +235,10 @@ export default {
         --card-suffix-display: inline;
     }
 }
-// 570px ~ 635px
-@media screen and (max-width: 635px) {
-    .card {
-        --card-suffix-display: none;
-    }
-}
-// 365px ~ 570px
+// 570px -
 @media screen and (max-width: 570px) {
     .card {
         --card-block-display: inline-block;
-        --card-suffix-display: inline;
-    }
-}
-// 365px -
-@media screen and (max-width: 365px) {
-    .card {
-        --card-block-display: inline-block;
-        --card-suffix-display: none;
     }
 }
 </style>
