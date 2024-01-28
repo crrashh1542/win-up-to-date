@@ -50,6 +50,12 @@ export default {
         return { ...toRefs(data) }
     },
     methods: {
+        // 获取点击的构建的 path
+        getPath(build) {
+            return '/detail/' + this.$route.params.platform + '/' + build
+        },
+
+        // 刷新数据
         refreshData(platform) {
             let vueObj = this
             axios.get('https://wutd.crrashh.com/api/category?platform=' + platform)
@@ -102,20 +108,19 @@ export default {
         </Card>
 
         <!-- 数据表 -->
-        <table class="data">
-            <thead>
-                <tr>
-                    <th width="35%">版本</th>
-                    <th width="65%">发布时间</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="row in category.list" :key="row[0]">
-                    <td>{{ row[0] }}</td>
-                    <td>{{ row[1] }}</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="data">
+            <div class="head">
+                <span class="left">版本</span>
+                <span class="right">发布时间</span>
+            </div>
+
+            <div class="content" v-for="row in category.list" :key="row[0]">
+                <router-link :to="getPath(row[0])">
+                    <span class="left">{{ row[0] }}</span>
+                    <span class="right">{{ row[1] }}</span>
+                </router-link>
+            </div>
+        </div>
     </main>
 </template>
 
@@ -141,33 +146,37 @@ export default {
 }
 
 // 数据表
-table.data {
+.data {
     width: 100%;
     margin: 1.5em 0;
+    .left { width: 30%; }
+    .right { width: 70%; }
 
-    thead {
+    .head {
         background-color: #fff;
         text-align-last: left;
         border-bottom: 1px solid #ccc;
 
-        th {
+        span {
+            display: inline-block;
             padding: 8px 1em;
             font-size: var(--th-font-size);
         }
     }
 
-    tbody {
+    .content {
         background-color: @wu-color-theme-bg;
         text-align-last: left;
-
-        tr:hover {
-            background-color: #fff;
-        }
-
-        td {
+        a { display: block; }
+        span {
             padding: 4px 1em;
             font-size: var(--td-font-size);
+            display: inline-block; 
         }
+    }
+
+    .content:hover {
+        background-color: #fff;
     }
 }
 
