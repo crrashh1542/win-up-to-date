@@ -9,7 +9,7 @@ export default {
 
 <template>
     <div class="banner">
-        <div class="title">
+        <div class="title font-medium">
             <slot></slot>
         </div>
         <div class="subtitle">{{ description }}</div>
@@ -25,7 +25,6 @@ export default {
     margin: 30px 0 0;
     line-height: 1.25;
     .title {
-        font-weight: @wu-font-catalog-weight;
         font-size: var(--banner-title);
         padding-bottom: .35em;
     }

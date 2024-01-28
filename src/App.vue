@@ -11,12 +11,12 @@ import './assets/styles/reset.less'
 // 引入组件
 import Appbar from './components/Appbar.vue'
 import Foo from './components/Footer.vue'
-import Navi from './components/Navi.vue'
+import Navbar from './components/Navbar.vue'
 import Setting from './components/Setting.vue'
 
 export default {
    name: 'App',
-   components: { Appbar, Foo, Setting, Navi },
+   components: { Appbar, Foo, Setting, Navbar },
    setup() {
 
       // STEP1 ------ 设置卡片显示的初始值，避免出现 undefined
@@ -58,7 +58,7 @@ export default {
       <router-view :isShowFlight="isShowFlight" :isShowBranch="isShowBranch" />
    </main>
    <Foo class="z-20" />
-   <Navi class="z-40"></Navi>
+   <Navbar class="z-40"></Navbar>
    <Setting class="z-50" @isShowFlight="setState" @isShowBranch="setState" />
 </template>
 

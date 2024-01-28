@@ -5,7 +5,7 @@ export default {
 </script>
 
 <template>
-    <div class="title">
+    <div class="catalog text-2xl my-3 font-medium">
         <slot></slot>
     </div>
 </template>
@@ -13,10 +13,8 @@ export default {
 <style lang="less" scoped>
 @import url('../assets/styles/global.less');
 
-.title {
+.catalog {
     color: @wu-color-text-imp;
-    font-size: @wu-font-catalog-size;
-    font-weight: @wu-font-catalog-weight;
     margin-bottom: 10px;
 }
 </style>
