@@ -131,8 +131,9 @@ export default {
 
         <!-- 下载 ISO -->
         <Card v-if="detail.download !== null">
-            <Catalog class="font-semibold icon-iso">下载 ISO</Catalog>
-            <p>文件名：{{ detail.download.name }}</p>
+            <Catalog class="font-semibold icon-iso">下载 ISO / 更新包</Catalog>
+            <p>文件名称：{{ detail.download.name }}</p>
+            <p>系统架构：{{ detail.download.arch }}</p>
             <p>下载地址：<a target="_blank" :href="detail.download.url">{{ detail.download.source }}</a></p>
             <p>MD5：<CopiableCode :value="detail.download.md5" /></p>
             <p>SHA-256：<CopiableCode :value="detail.download.sha256" /></p>
