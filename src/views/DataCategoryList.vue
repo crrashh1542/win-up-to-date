@@ -108,13 +108,13 @@ export default {
         </Card>
 
         <!-- 数据表 -->
-        <div class="data">
+        <div class="data rounded-lg shadow">
             <div class="head">
                 <span class="left">版本</span>
                 <span class="right">发布时间</span>
             </div>
 
-            <div class="content" v-for="row in category.list" :key="row[0]">
+            <div class="content leading-8" v-for="row in category.list" :key="row[0]">
                 <router-link :to="getPath(row[0])">
                     <span class="left">{{ row[0] }}</span>
                     <span class="right">{{ row[1] }}</span>
@@ -125,12 +125,11 @@ export default {
 </template>
 
 <style lang="less" scoped>
-@import url('../assets/styles/reset.less');
+@import url('../assets/styles/global.less');
 
 // 本页全局
 .item::before {
-    // 图标间隙
-    margin-right: .4em;
+    margin-right: @wu-icon-spacing;
 }
 
 // 信息栏
@@ -147,14 +146,12 @@ export default {
 
 // 数据表
 .data {
-    width: 100%;
     margin: 1.5em 0;
     .left { width: 30%; }
     .right { width: 70%; }
 
     .head {
         background-color: #fff;
-        text-align-last: left;
         border-bottom: 1px solid #ccc;
 
         span {
@@ -166,7 +163,7 @@ export default {
 
     .content {
         background-color: @wu-color-theme-bg;
-        text-align-last: left;
+        border-bottom: .25px solid #dedede;
         a { display: block; }
         span {
             padding: 4px 1em;
