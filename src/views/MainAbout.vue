@@ -48,8 +48,8 @@ export default {
     </Card>
 
     <br />
-    <p>本项目数据托管于<a href="https://github.com/crrashh1542/win-up-to-date/tree/data">公共维护的仓库</a>，<s>以后会在咕咕咕技术比较成熟之后有可能会换到 UUP
-            dump 上</s>。项目遵循 GPL-3.0 开源协议，并仅限于作展示和交流学习用途。</p>
+    <p>本项目数据托管于<a href="https://github.com/crrashh1542/win-up-to-date/tree/data" target="_blank">公共维护的仓库</a>。
+        项目遵循 <a href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank">GPL-3.0 开源协议</a>，并仅限于作展示和交流学习用途。</p>
     <p>以下为该仓库数据的数据来源，由衷感谢：</p>
 
     <p>

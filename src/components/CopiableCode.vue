@@ -3,6 +3,7 @@
  * 可复制代码组件，代码右侧有个小复制按钮
  * 用法：<CopiableCode value="xxx" />
  */
+
 // 引入库
 import { provideFluentDesignSystem, fluentButton } from "@fluentui/web-components"
 import useClipboard from 'vue-clipboard3'
@@ -25,7 +26,7 @@ export default {
 
 <template>
     <!-- 代码本身 -->
-    <code class="text-base">{{ value }}</code>
+    <code class="text-base leading-7">{{ value }}</code>
 
     <!-- 复制按钮 -->
     <fluent-button class="text-sm" @click="copy(value)">
