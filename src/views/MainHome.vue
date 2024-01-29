@@ -15,7 +15,7 @@ export default {
     setup() {
         // STEP1 ------ 设定初始值
         let data = reactive({
-            data: [],
+            list: [],
             isLoading: true
         })
 
@@ -26,7 +26,7 @@ export default {
 
             // STEP3 ------ 处理并修改数据
             .then(function (response) {
-                data.data = response.data
+                data.list = response.data.content
                 data.isLoading = false
             })
             .catch(function (error) {
@@ -35,6 +35,11 @@ export default {
 
         // STEP4 ------ 返回数据
         return { ...toRefs(data) }
+    },
+    methods: {
+        constructRoute(category, build) {
+            return '/detail/' + category + '/' + build
+        }
     },
     props: {
         // 接收 SettingDialog 传到父组件的数据
@@ -55,39 +60,62 @@ export default {
 
     <!-- 内容块 -->
     <div v-if="!isLoading">
-        <div class="block" v-for="d in data" :key="d.category" :id="d.category">
+        <div class="block" v-for="d in list" :key="d.category" :id="d.category">
             <!-- 标题 -->
-            <catalog>
+            <Catalog>
                 <span :class=d.style></span>{{ d.category }}
-            </catalog>
+            </Catalog>
 
             <!-- 卡片 -->
-            <card v-for="r in d.releases" :key="r.name" :class=r.style>
-                <div class="info">
+            <Card v-for="r in d.releases" :key="r.name" :class=r.style>
 
-                    <!-- 第一行 -->
-                    <div class="row">
-                        <span class="font-medium text-base leading-none category">
-                            {{ r.name }}<!-- 类型 -->
-                        </span>
-                        <span class="detail codename float-right" v-if="isShowFlight !== false">
-                            {{ r.codename }} {{ r.period }} <!-- 周期和代号 -->
-                        </span>
+                <!-- 如果 r.detail 存在则设置 router-link -->
+                <router-link v-if="r.detail !== undefined" :to="constructRoute(r.detail.category, r.version)">
+                    <div class="info">
+                        <!-- 第一行 -->
+                        <div class="row">
+                            <span class="font-medium text-base leading-none category">
+                                {{ r.name }}<!-- 类型 -->
+                            </span>
+                            <span class="detail codename float-right" v-if="isShowFlight !== false">
+                                {{ r.codename }} {{ r.period }} <!-- 周期和代号 -->
+                            </span>
+                        </div>
+                        <!-- 第二行 -->
+                        <div class="font-medium text-2xl version">{{ r.version }}<!-- 版本 --></div>
+                        <!-- 第三行 -->
+                        <div class="row" v-if="r.branch !== undefined && isShowBranch !== false">
+                            <span class="detail branch">{{ r.branch }}<!-- 分支 --></span>
+                        </div>
+                        <div class="row" v-else-if="isShowBranch !== false">
+                            <span class="detail"></span>
+                        </div>
                     </div>
+                </router-link>
 
-                    <!-- 第二行 -->
-                    <div class="font-medium text-2xl version">{{ r.version }}<!-- 版本 --></div>
-
-                    <!-- 第三行 -->
-                    <div class="row" v-if="r.branch !== undefined && isShowBranch !== false">
-                        <span class="detail branch">{{ r.branch }}<!-- 分支 --></span>
+                <div v-else>
+                    <div class="info">
+                        <!-- 第一行 -->
+                        <div class="row">
+                            <span class="font-medium text-base leading-none category">
+                                {{ r.name }}<!-- 类型 -->
+                            </span>
+                            <span class="detail codename float-right" v-if="isShowFlight !== false">
+                                {{ r.codename }} {{ r.period }} <!-- 周期和代号 -->
+                            </span>
+                        </div>
+                        <!-- 第二行 -->
+                        <div class="font-medium text-2xl version">{{ r.version }}<!-- 版本 --></div>
+                        <!-- 第三行 -->
+                        <div class="row" v-if="r.branch !== undefined && isShowBranch !== false">
+                            <span class="detail branch">{{ r.branch }}<!-- 分支 --></span>
+                        </div>
+                        <div class="row" v-else-if="isShowBranch !== false">
+                            <span class="detail"></span>
+                        </div>
                     </div>
-                    <div class="row" v-else-if="isShowBranch !== false">
-                        <span class="detail"></span>
-                    </div>
-
                 </div>
-            </card>
+            </Card>
         </div>
     </div>
 </template>
@@ -144,11 +172,13 @@ export default {
         --card-width: 32%;
     }
 }
+
 @media screen and (max-width: 1150px) {
     .card {
         --card-width: 48%;
     }
 }
+
 // SEC 2 ------ 一列
 @media screen and (max-width: 620px) {
     .card {
