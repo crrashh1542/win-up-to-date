@@ -101,10 +101,14 @@ export default {
         </TopNav>
 
         <!-- 基本信息 -->
-        <Card class="info">
-            <div class="icon-code item">平台代号 / {{ category.codename }}</div>
-            <div class="icon-time item">开发周期 / {{ category.semester }}</div>
-            <div class="icon-tag item">版本范围 / {{ customVersionRange }}</div>
+        <Card class="overview">
+            <div>
+                <p class="icon-code">平台代号 / {{ category.codename }}</p>
+                <p class="icon-time">开发周期 / {{ category.semester }}</p>
+            </div>
+            <div>
+                <p class="icon-tag">版本范围 / {{ customVersionRange }}</p>
+            </div>
         </Card>
 
         <!-- 数据表 -->
@@ -126,23 +130,6 @@ export default {
 
 <style lang="less" scoped>
 @import url('../assets/styles/global.less');
-
-// 本页全局
-.item::before {
-    margin-right: @wu-icon-spacing;
-}
-
-// 信息栏
-.info {
-    font-size: var(--info-font-size);
-    padding: 6px 15px;
-
-    .item {
-        display: block;
-        line-height: 1.75;
-        width: var(--info-item-width);
-    }
-}
 
 // 数据表
 .data {
@@ -179,8 +166,6 @@ export default {
 
 @media screen and (max-width: 650px) {
     main {
-        --info-font-size: 16px;
-        --info-item-width: 80%;
         --th-font-size: 16px;
         --td-font-size: 16px;
     }
@@ -188,8 +173,6 @@ export default {
 
 @media screen and (min-width: 650px) {
     main {
-        --info-font-size: 18px;
-        --info-item-width: 33%;
         --th-font-size: 20px;
         --td-font-size: 18px
     }
