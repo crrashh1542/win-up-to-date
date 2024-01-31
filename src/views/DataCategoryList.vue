@@ -108,6 +108,7 @@ export default {
             </div>
             <div>
                 <p class="icon-tag">版本范围 / {{ customVersionRange }}</p>
+                <p class="icon-compile">分类归属 / {{ category.belonging }}</p>
             </div>
         </Card>
 
