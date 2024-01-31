@@ -69,8 +69,8 @@ export default {
             <!-- 卡片 -->
             <Card v-for="r in d.releases" :key="r.name" :class=r.style>
 
-                <!-- 如果 r.detail 存在则设置 router-link -->
-                <router-link v-if="r.detail !== undefined" :to="constructRoute(r.detail.category, r.version)">
+                <!-- 如果 r.category 存在则设置 router-link -->
+                <router-link v-if="r.category !== undefined" :to="constructRoute(r.category, r.version)">
                     <div class="info">
                         <!-- 第一行 -->
                         <div class="row">

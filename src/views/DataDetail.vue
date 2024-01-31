@@ -176,29 +176,6 @@ export default {
 <style lang="less" scoped>
 @import url('../assets/styles/global.less');
 
-// 一览卡片
-.card.overview {
-    background-color: #fff;
-    display: var(--card-block-display);
-    padding: 0 1.5em;
-
-    div {
-        width: var(--card-block-flex-width);
-
-        p {
-            font-size: var(--card-tsize);
-            line-height: 1;
-            .suffix {
-                display: var(--card-suffix-display);
-            }
-        }
-        p::before {
-            padding-right: .4em;
-        }
-    }
-}
-
-// 其他卡片
 .card {
     padding: 0 1em;
     background-color: rgba(255, 255, 255, .8);
@@ -209,36 +186,11 @@ export default {
     p {
         line-height: 1.4;
         word-wrap: break-word;
-        font-size: var(--card-tsize);
+        font-size: var(--card-tsize); // 取自 ../components/Card.vue
         text-overflow: ellipsis;
     }
     .placeholder > p {
         line-height: 64px; // 等效于 h-24 再减去 32px，用于垂直居中偏上
-    }
-}
-
-// 移动端适配
-// 630px +
-@media screen and (min-width: 630px) {
-    .card {
-        --card-tsize: 1.1rem;
-        --card-block-display: flex;
-        --card-block-flex-width: 50%;
-    }
-}
-// 570px ~ 630px
-@media screen and (max-width: 630px) {
-    .card {
-        --card-tsize: 1rem;
-        --card-block-display: flex;
-        --card-block-flex-width: 100%;
-        --card-suffix-display: inline;
-    }
-}
-// 570px -
-@media screen and (max-width: 570px) {
-    .card {
-        --card-block-display: inline-block;
     }
 }
 </style>
