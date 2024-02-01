@@ -33,6 +33,7 @@ export default {
                 // 获取到数据后，关闭加载动画
                 data.category = resp
                 data.isLoading = false
+                document.title = resp.name + ' / Windows Up-to-Date'
                 // 处理版本范围
                 if (resp.range[1] == null) {
                     data.customVersionRange = resp.range[0] + ' ~ ?'
@@ -57,11 +58,14 @@ export default {
 
         // 刷新数据
         refreshData(platform) {
+            document.title = platform.name + ' / Windows Up-to-Date'
+            let category = platform.path
             let vueObj = this
-            axios.get('https://wutd.crrashh.com/api/category?platform=' + platform)
+            axios.get('https://wutd.crrashh.com/api/category?platform=' + category)
                 .then(function (response) {
                     let resp = response.data.content
                     vueObj.category = resp
+                    
                     if (resp.range[1] == null) {
                         vueObj.customVersionRange = resp.range[0] + ' ~ ?'
                     } else {
@@ -90,12 +94,12 @@ export default {
         <!-- 快速导航 -->
         <TopNav>
             <span class="icon-left" v-if="category.previous != null">
-                <router-link :to="category.previous.path" @click="refreshData(category.previous.path)">
+                <router-link :to="category.previous.path" @click="refreshData(category.previous)">
                     {{ category.previous.name }}</router-link>
             </span>
             <span class="grow"></span>
             <span class="icon-right" v-if="category.next != null">
-                <router-link :to="category.next.path" @click="refreshData(category.next.path)">
+                <router-link :to="category.next.path" @click="refreshData(category.next)">
                     {{ category.next.name }}</router-link>
             </span>
         </TopNav>

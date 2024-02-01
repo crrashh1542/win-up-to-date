@@ -14,6 +14,7 @@ export default {
     components: { Banner, Catalog, Card, LoadAnim },
     setup() {
         // STEP1 ------ 设定初始值
+        document.title = 'Windows Up-to-Date'
         let data = reactive({
             list: [],
             isLoading: true

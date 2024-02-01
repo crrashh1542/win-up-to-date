@@ -33,8 +33,9 @@ export default {
             // STEP3 ------ 处理并修改数据
             .then(function (response) {
                 let resp = response.data.content
-                // 获取到数据后，关闭加载动画
                 data.detail = resp
+                document.title = resp.build.number + ' / Windows Up-to-Date'
+                // 获取到数据后，关闭加载动画
                 data.isLoading = false
             })
             .catch(() => {
@@ -58,6 +59,7 @@ export default {
 
         // 刷新数据
         refreshData(platform, build) {
+            document.title = build + ' / Windows Up-to-Date'
             let vueObj = this
             axios.get('https://wutd.crrashh.com/api/detail?platform=' + platform + '&build=' + build)
                 .then(function (response) {

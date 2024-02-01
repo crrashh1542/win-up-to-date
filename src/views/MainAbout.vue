@@ -17,6 +17,9 @@ export default {
         return {
             buildInfo, sources
         }
+    },
+    setup() {
+        document.title = '关于项目 / Windows Up-to-Date'
     }
 }
 </script>
