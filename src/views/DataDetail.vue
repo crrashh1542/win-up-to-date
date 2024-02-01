@@ -158,7 +158,9 @@ export default {
             <div v-if="detail.download !== undefined">
                 <p>文件名称：{{ detail.download.name }}</p>
                 <p>系统架构：{{ detail.download.arch }}</p>
-                <p>下载地址：<a target="_blank" :href="detail.download.url">{{ detail.download.source }}</a></p>
+                <p>下载地址：<span v-for="(l, index) in detail.download.link" :key="index">
+                    <a target="_blank" :href="l.url">{{ l.source }}</a>&nbsp;&nbsp;&nbsp;
+                </span></p>
                 <p>MD5：<CopiableCode :value="detail.download.md5" /></p>
                 <p>SHA-256：<CopiableCode :value="detail.download.sha256" /></p>
             </div>
