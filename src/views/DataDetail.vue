@@ -33,8 +33,9 @@ export default {
             // STEP3 ------ 处理并修改数据
             .then(function (response) {
                 let resp = response.data.content
-                // 获取到数据后，关闭加载动画
                 data.detail = resp
+                document.title = resp.build.number + ' / Windows Up-to-Date'
+                // 获取到数据后，关闭加载动画
                 data.isLoading = false
             })
             .catch(() => {
@@ -58,6 +59,7 @@ export default {
 
         // 刷新数据
         refreshData(platform, build) {
+            document.title = build + ' / Windows Up-to-Date'
             let vueObj = this
             axios.get('https://wutd.crrashh.com/api/detail?platform=' + platform + '&build=' + build)
                 .then(function (response) {
@@ -158,7 +160,9 @@ export default {
             <div v-if="detail.download !== undefined">
                 <p>文件名称：{{ detail.download.name }}</p>
                 <p>系统架构：{{ detail.download.arch }}</p>
-                <p>下载地址：<a target="_blank" :href="detail.download.url">{{ detail.download.source }}</a></p>
+                <p>下载地址：<span v-for="(l, index) in detail.download.link" :key="index">
+                    <a target="_blank" :href="l.url">{{ l.source }}</a>&nbsp;&nbsp;&nbsp;
+                </span></p>
                 <p>MD5：<CopiableCode :value="detail.download.md5" /></p>
                 <p>SHA-256：<CopiableCode :value="detail.download.sha256" /></p>
             </div>

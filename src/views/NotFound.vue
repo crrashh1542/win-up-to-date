@@ -4,6 +4,9 @@ provideFluentDesignSystem().register(fluentButton())
 
 export default {
     name: 'OtherNotFound',
+    setup() {
+        document.title = '内容不见啦！ / Windows Up-to-Date'
+    },
     methods: {
         routerToHome() {
             this.$router.push('/')

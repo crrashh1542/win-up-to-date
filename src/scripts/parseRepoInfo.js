@@ -2,7 +2,7 @@
 /**
  * 此脚本用于在处理本项目相关信息
  * @author crrashh1542
- * @version 1.4
+ * @version 1.5
  */
 
 import packageInfo from '/package.json'
