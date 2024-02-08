@@ -35,7 +35,7 @@ export default {
 
     <Card v-for="i in buildInfo" :key="i.key" class="text-lg">
         <!-- 如果有外部链接，加 a 标签 -->
-        <a v-if="i[3] !== undefined" :href="i[2]" class="flex">
+        <a v-if="i[3] !== undefined" :href="i[2]" class="flex" target="_blank">
             <span class="flex-none item" :class="i[1]">{{ i[0] }}</span>
             <span class="grow"></span>
             <span class="flex-none value">{{ i[3] }}</span>
@@ -70,7 +70,12 @@ export default {
 <style lang="less" scoped>
 @import url('../assets/styles/global.less');
 .card {
-    padding: var(--about-card-padding);
+    padding: 10px 18px;
+
+    .item::before {
+        margin-right: 10px;
+        font-size: 18px;
+    }
 }
 
 li {
@@ -78,27 +83,9 @@ li {
     margin-left: 1em;
 }
 
-// 桌面端
-@media screen and (min-width: 800px) {
-    .card {
-        --about-card-padding: 10px 1.5em;
-
-        .item::before {
-            margin-right: .5em;
-            font-size: 1.2em;
-        }
-    }
-}
-
 // 移动端
 @media screen and (max-width: 800px) {
     .card {
-        --about-card-padding: 9px .8em;
-
-        .item::before {
-            margin-right: .25em;
-        }
-
         .value {
             font-size: 16px;
         }

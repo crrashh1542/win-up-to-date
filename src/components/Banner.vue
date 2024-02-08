@@ -11,8 +11,6 @@ export default {
         if (Cookie.get('isShowWarning') !== undefined) {
             isShowWarning = Cookie.get('isShowWarning')
         }
-        console.log(Cookie.get('isShowWarning'))
-        console.log(isShowWarning)
         let data = reactive({
             isShowWarning
         })
@@ -36,9 +34,11 @@ export default {
         <div class="subtitle">{{ description }}</div>
     </div>
 
-    <fluent-card class="warning" v-if="isShowWarning == true">
-        <div class="content text-base"><img src="../assets/images/warning.png" class="h-6 w-6 inline align-middle mr-2">
-            <span class="leading-6">项目处于较早期开发阶段，数据正在补全，bug 也会慢慢修复！感谢支持！</span></div>
+    <fluent-card class="warning flex" v-if="isShowWarning == true">
+        <div class="leading-7">
+            <div class="title font-bold">注意</div>
+            <div>项目处于较早期开发阶段，数据正在补全，bug 也会慢慢修复！感谢支持！</div>
+        </div>
         <div class="grow"></div>
         <div class="button" @click="stopShowingWarning">&#xe600;</div>
     </fluent-card>
@@ -65,11 +65,14 @@ export default {
 }
 
 .warning {
-    display: flex;
-    padding: .66em 1.25em .66em 1em;
+    padding: 8px 12px;
     background-color: @wu-color-yellow-light;
     border: 1px solid @wu-color-yellow;
+    border-left: 4px solid @wu-color-amber;
 
+    .title {
+        color: @wu-color-yellow-dark;
+    }
     .button {
         cursor: pointer;
     }
