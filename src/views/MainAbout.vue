@@ -35,7 +35,7 @@ export default {
 
     <Card v-for="i in buildInfo" :key="i.key" class="text-lg">
         <!-- 如果有外部链接，加 a 标签 -->
-        <a v-if="i[3] !== undefined" :href="i[2]" class="flex">
+        <a v-if="i[3] !== undefined" :href="i[2]" class="flex" target="_blank">
             <span class="flex-none item" :class="i[1]">{{ i[0] }}</span>
             <span class="grow"></span>
             <span class="flex-none value">{{ i[3] }}</span>
