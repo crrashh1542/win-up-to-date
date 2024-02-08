@@ -1,0 +1,51 @@
+{
+    "build": {
+        "number": "25951.1010",
+        "branch": "rs_prerelease_flt",
+        "compileTime": "2023-09-08 15:53",
+        "arch": ["AMD64", "ARM64"],
+        "counterpart": "Client & Server"
+    },
+    "release": {
+        "channel": "Canary",
+        "time": "2023-09-15 18:00",
+        "url": "https://blogs.windows.com/windows-insider/2023/09/13/announcing-windows-11-insider-preview-build-25951-canary-channel",
+        "announcePlace": "Windows Blogs"
+    },
+    "featureIds": {
+        "url": "https://github.com/riverar/mach2/blob/master/features/rs_prerelease/amd64/25947.1000_25951.1000_diff.patch",
+        "fileName": "25947.1000_25951.1000_diff.patch"
+    },
+    "nav": {
+        "previous": {
+            "category": "germanium",
+            "build": "25951.1000"
+        },
+        "next": {
+            "category": "germanium",
+            "build": "25967.1000"
+        }
+    },
+    "belongsTo": {
+        "path": "germanium",
+        "name": "Germanium"
+    },
+    "updateId": [{
+        "arch": "AMD64",
+        "id": "56c25d3c-20aa-4191-a064-16245b484181"
+    },
+    {
+        "arch": "ARM64",
+        "id": "dcb79774-e05b-4feb-8a34-137006b4e26b"
+    }],
+    "download": {
+        "name": "Windows11.0-KB5031089-x64.msu",
+        "link": [{
+            "url": "https://5y38gv-my.sharepoint.com/:u:/g/personal/store0_418_run/EWDEKoHMBNlAlYfEq89Ie3gB5oMs3sc23UG7tWu_GH_oFA?e=WD0vIw",
+            "source": "OneDrive"
+        }],
+        "arch": "MD5",
+        "md5": "960fb2b4fd4488aad6dfffccbc7044c8",
+        "sha256": "a8fcefc336b0dca592895c4e3551622a63c1301a0e0604ff0a62a2049d3d7e33"
+    }
+}

@@ -1,0 +1,45 @@
+{
+    "build": {
+        "number": "26047.1001",
+        "branch": "rs_prerelease",
+        "compileTime": "2024-01-28 16:36",
+        "arch": ["AMD64"],
+        "counterpart": "Server"
+    },
+    "featureIds": {
+        "url": "https://github.com/riverar/mach2/blob/master/features/rs_prerelease/amd64/26020.1000_26040.1000_diff.patch",
+        "fileName": "26020.1000_26040.1000_diff.patch"
+    },
+    "nav": {
+        "previous": {
+            "category": "germanium",
+            "build": "26040.1000"
+        },
+        "next": {
+            "category": "germanium",
+            "build": "26052.1000"
+        }
+    },
+    "belongsTo": {
+        "path": "germanium",
+        "name": "Germanium"
+    },
+    "updateId": [{
+        "arch": "AMD64",
+        "id": "c4a81e3d-4957-4a3b-8bab-07d6c78eb3f5"
+    }],
+    "download": {
+        "name": "26047.1001.240128-1636.rs_prerelease_SERVER_x64FRE_en-us.iso",
+        "link": [{
+            "url": "https://ia801307.us.archive.org/22/items/10.0.26047.1001.rs_prerelease.240128-1636_Server_AMD64Fre_en-US_ISO-UUPSrcPkg/ISO/26047.1000.240128-1636.rs_prerelease_SERVER_x64FRE_en-us.iso",
+            "source": "Internet Archive"
+        },
+        {
+            "url": "https://disk.crrashh.com/%F0%9F%96%A5%EF%B8%8F%20%E6%95%B0%E7%A0%81%E8%B5%84%E6%BA%90/%E7%94%B5%E8%84%91%20%E2%86%92%20Windows/%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/Windows%2011/%E6%B3%84%E9%9C%B2%E7%89%88/26047.1000.240128-1636.rs_prerelease_SERVER_x64FRE_en-us.iso",
+            "source": "阿里云盘"
+        }],
+        "arch": "AMD64",
+        "md5": "1a139e3ee513a6f9e53e30b75c6d42bf",
+        "sha256": "f8fc32e42050aee9265833aee88bcdf2490b7ef54858cdda64b65f22a6c12b55"
+    }
+}

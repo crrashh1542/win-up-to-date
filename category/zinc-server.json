@@ -1,6 +1,7 @@
 {
     "name": "Zinc (Server)",
     "codename": "Zinc",
+    "belonging": "Windows Server v2023",
     "semester": "23H2",
     "range": [25398.1, null],
     "previous": {

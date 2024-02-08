@@ -1,0 +1,38 @@
+{
+    "number": "",
+    "branch": "",
+    "compileTime": "",
+    "release": {
+        "time": "202 18:00 (UTC)",
+        "url": "https://blogs.windows.com/windows-insider/"
+    },
+    "arch": ["AMD64", "ARM64"],
+    "navigation": {
+        "previous": {
+            "categoryPath": "",
+            "build": ""
+        },
+        "next": {
+            "categoryPath": "",
+            "build": ""
+        }
+    },
+    "belongsTo": {
+        "path": "",
+        "name": ""
+    },
+    "download": {
+        "name": "_CLIENTPRO_OEMRET_X64FRE_zh-cn.iso",
+        "url": "",
+        "md5": "",
+        "sha256": ""
+    },
+    "updateId": [{
+        "arch": "AMD64",
+        "id": ""
+    },
+    {
+        "arch": "ARM64",
+        "id": ""
+    }]
+}

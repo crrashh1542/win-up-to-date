@@ -1,6 +1,7 @@
 {
     "name": "Gallium",
     "codename": "Gallium",
+    "belonging": "Windows 11",
     "semester": "24H1",
     "range": [25905, 25941],
     "previous": {

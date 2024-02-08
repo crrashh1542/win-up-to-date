@@ -1,0 +1,51 @@
+{
+    "build": {
+        "number": "26020.1000",
+        "branch": "rs_prerelease",
+        "compileTime": "2023-12-14 14:52",
+        "arch": ["AMD64", "ARM64"],
+        "counterpart": "Client"
+    },
+    "release": {
+        "channel": "Canary",
+        "time": "2024-01-03 18:00",
+        "url": "https://blogs.windows.com/windows-insider/2024/01/03/announcing-windows-11-insider-preview-build-26020-canary-channel/",
+        "announcePlace": "Windows Blogs"
+    },
+    "featureIds": {
+        "url": "https://github.com/riverar/mach2/blob/master/features/rs_prerelease/amd64/26016.1000_26020.1000_diff.patch",
+        "fileName": "26016.1000_26020.1000_diff.patch"
+    },
+    "nav": {
+        "previous": {
+            "category": "germanium",
+            "build": "26016.1012"
+        },
+        "next": {
+            "category": "germanium",
+            "build": "26040.1000"
+        }
+    },
+    "belongsTo": {
+        "path": "germanium",
+        "name": "Germanium"
+    },
+    "updateId": [{
+        "arch": "AMD64",
+        "id": "b431f856-d667-4533-b84f-1655f1d8f0b6"
+    },
+    {
+        "arch": "ARM64",
+        "id": "a3011bf0-2a0c-49d7-8637-d50d53df9585"
+    }],
+    "download": {
+        "name": "26020.1000.231214-1452.rs_prerelease_CLIENTPRO_OEMRET_X64FRE_zh-cn.iso",
+        "link": [{
+            "url": "https://5y38gv-my.sharepoint.com/:u:/g/personal/store0_418_run/Ed1PgsPYfYZLoOJs47BDqRcBXkZbxT16_9Z3aKpDxgH9eg?e=IXNI6B",
+            "source": "OneDrive"
+        }],
+        "arch": "AMD64",
+        "md5": "9ed9759fdf89b931abd37f8882642e52",
+        "sha256": "ba29ceea9c4a4b0ee7a9502ab894c6c53417b56349fdce37866520c8e5d50969"
+    }
+}

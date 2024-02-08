@@ -6,14 +6,11 @@
             {
                 "name": "Canary",
                 "style": "color-amber",
+                "category": "germanium",
                 "version": "26040.1000",
                 "branch": "rs_prerelease",
                 "codename": "Germanium",
-                "period": "24H2",
-                "detail": {
-                    "isDetailed": true,
-                    "category": "germanium"
-                }
+                "period": "24H2"
             },
             {
                 "name": "Dev",
@@ -26,7 +23,7 @@
             {
                 "name": "Beta",
                 "style": "color-green",
-                "version": "22635.3130",
+                "version": "22635.3139",
                 "branch": "ni_release_betaflt_svc_prod1",
                 "codename": "Nickel",
                 "period": "23H2"
@@ -86,10 +83,19 @@
                 "period": "24H2"
             },
             {
-                "name": "主分支",
+                "name": "Canary",
                 "style": "color-amber",
-                "version": "26045.1/1000",
-                "branch": "ge_release/rs_prerelease",
+                "category": "germanium",
+                "version": "26052.1000",
+                "branch": "ge_release",
+                "codename": "Germanium",
+                "period": "24H2"
+            },
+            {
+                "name": "Canary",
+                "style": "color-amber",
+                "version": "26052.1100",
+                "branch": "ge_release_svc_prod1",
                 "codename": "Germanium",
                 "period": "24H2"
             },
@@ -212,7 +218,8 @@
             {
                 "name": "预览版 (v2025)",
                 "style": "color-amber",
-                "version": "26040.1000",
+                "category": "germanium",
+                "version": "26047.1001",
                 "branch": "rs_prerelease",
                 "codename": "Germanium",
                 "period": "24H2"

@@ -1,0 +1,19 @@
+{
+    "build": {
+        "number": "26052.1000",
+        "branch": "ge_release",
+        "compileTime": "2024-02-02 14:19",
+        "arch": ["AMD64", "ARM64"],
+        "counterpart": "Client & Server"
+    },
+    "nav": {
+        "previous": {
+            "category": "germanium",
+            "build": "26047.1001"
+        }
+    },
+    "belongsTo": {
+        "path": "germanium",
+        "name": "Germanium"
+    }
+}
