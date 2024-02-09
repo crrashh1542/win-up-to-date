@@ -112,8 +112,9 @@ export default {
             <div>
                 <p class="icon-arch">系统架构 / 
                     <span v-for="i in detail.build.arch" :key="i">{{ i }}&nbsp;&nbsp;</span></p>
-                <p class="icon-version">构建归属 / <router-link :to="constructBelongingRoute(detail.belongsTo.path)">
+                <p class="icon-code">构建归属 / <router-link :to="constructBelongingRoute(detail.belongsTo.path)">
                     {{ detail.belongsTo.name }}</router-link></p>
+                <p class="icon-version">推送平台 / {{ detail.build.counterpart }}</p>
             </div>
         </Card>
         <br /><br />
