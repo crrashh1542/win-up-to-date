@@ -40,6 +40,12 @@
     },
     "download": {
         "name": "26052.1000.240202-1419.ge_release_CLIENTPRO_OEMRET_X64FRE_zh-cn.iso",
-        "arch": "AMD64"
+        "link": [{
+            "url": "https://5y38gv-my.sharepoint.com/:u:/g/personal/store0_418_run/EaXKnMhgnz9IpiioOB6nx8cBdq4HgVSqY14IW2xjpmbZaA?e=sNXdA3",
+            "source": "OneDrive"
+        }],
+        "arch": "AMD64",
+        "md5": "c01a729779b10ae2ed01a6ff48434def",
+        "sha256": "cde48642c807742a9e14b1bfdf0024158b135dbd631700356be930a6fc0c4f88"
     }
 }
