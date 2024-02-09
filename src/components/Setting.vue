@@ -50,13 +50,13 @@ export default {
 <template>
     <fluent-dialog id="setting" trap-focus hidden modal>
         <div class="container">
-            <catalog class="title">页面选项</catalog>
+            <catalog class="size-7 font-bold">页面选项</catalog>
 
-            <div class="flex section">
+            <!-- <div class="flex section">
                 <span>启用深色模式</span>
                 <span class="grow"></span>
                 <fluent-switch disabled="true"></fluent-switch>
-            </div>
+            </div> -->
 
             <div class="flex section">
                 <span>显示开发代号、周期</span>
@@ -87,10 +87,6 @@ export default {
     padding: @dialog-padding;
     height: 100%;
     position: relative;
-
-    .title {
-        font-size: 28px;
-    }
 
     .section {
         line-height: 2;
