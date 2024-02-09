@@ -6,6 +6,16 @@
         "arch": ["AMD64", "ARM64"],
         "counterpart": "Client & Server"
     },
+    "release": {
+        "channel": "Canary",
+        "time": "2024-02-08 18:00",
+        "url": "https://blogs.windows.com/windows-insider/2024/02/08/announcing-windows-11-insider-preview-build-26052-canary-and-dev-channels/",
+        "announcePlace": "Windows Blogs"
+    },
+    "featureIds": {
+        "url": "https://github.com/riverar/mach2/blob/master/features/ge_release/amd64/26040.1000_26052.1000_diff.patch",
+        "fileName": "26040.1000_26052.1000_diff.patch"
+    },
     "nav": {
         "previous": {
             "category": "germanium",
@@ -32,12 +42,6 @@
         "arch": "ARM64 (Client)",
         "id": "d0e335d8-4f63-4a20-adca-97b6081a1348"
     }],
-    "release": {
-        "channel": "Canary",
-        "time": "2024-02-08 18:00",
-        "url": "https://blogs.windows.com/windows-insider/2024/02/08/announcing-windows-11-insider-preview-build-26052-canary-and-dev-channels/",
-        "announcePlace": "Windows Blogs"
-    },
     "download": {
         "name": "26052.1000.240202-1419.ge_release_CLIENTPRO_OEMRET_X64FRE_zh-cn.iso",
         "link": [{

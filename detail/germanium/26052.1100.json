@@ -12,6 +12,10 @@
         "url": "https://blogs.windows.com/windows-insider/2024/02/08/announcing-windows-11-insider-preview-build-26052-canary-and-dev-channels/",
         "announcePlace": "Windows Blogs"
     },
+    "featureIds": {
+        "url": "https://github.com/riverar/mach2/blob/master/features/ge_release/amd64/26040.1000_26052.1000_diff.patch",
+        "fileName": "26040.1000_26052.1000_diff.patch"
+    },
     "nav": {
         "previous": {
             "category": "germanium",
