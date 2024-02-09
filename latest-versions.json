@@ -70,7 +70,7 @@
             {
                 "name": "Server 2023",
                 "style": "color-theme",
-                "version": "25398.704",
+                "version": "25398.709",
                 "branch": "zn_release_svc_prod1",
                 "codename": "Zinc",
                 "period": "23H2"
@@ -78,7 +78,7 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "22631.3148",
+                "version": "22631.3153",
                 "branch": "23h2_ni_release_svc_prod(2/3)",
                 "codename": "Nickel",
                 "period": "23H2"
@@ -86,7 +86,7 @@
             {
                 "name": "正式通道",
                 "style": "color-theme",
-                "version": "22000.2775",
+                "version": "22000.2777",
                 "branch": "co_release_svc_prod1",
                 "codename": "Cobalt",
                 "period": "21H2"
@@ -94,7 +94,7 @@
             {
                 "name": "Server v2022",
                 "style": "color-theme",
-                "version": "20349.2305",
+                "version": "20349.2322",
                 "branch": "22h2_fe_release_svc_prod1",
                 "codename": "Iron",
                 "period": "22H2"
@@ -102,7 +102,7 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "19045.4044",
+                "version": "19045.4046",
                 "branch": "22h2_release_svc_prod1",
                 "codename": "Vibranium",
                 "period": "22H2"
