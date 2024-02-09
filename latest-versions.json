@@ -7,23 +7,24 @@
                 "name": "Canary",
                 "style": "color-amber",
                 "category": "germanium",
-                "version": "26040.1000",
-                "branch": "rs_prerelease",
+                "version": "26052.1000",
+                "branch": "ge_release",
                 "codename": "Germanium",
                 "period": "24H2"
             },
             {
                 "name": "Dev",
                 "style": "color-orange",
-                "version": "23620.1000",
-                "branch": "ni_prerelease",
-                "codename": "Nickel",
-                "period": "23H2"
+                "category": "germanium",
+                "version": "26052.1100",
+                "branch": "ge_release_svc_prod1",
+                "codename": "Germanium",
+                "period": "24H2"
             },
             {
                 "name": "Beta",
                 "style": "color-green",
-                "version": "22635.3139",
+                "version": "22635.3140",
                 "branch": "ni_release_betaflt_svc_prod1",
                 "codename": "Nickel",
                 "period": "23H2"
@@ -67,52 +68,11 @@
         "style": "icon-chemical",
         "releases": [
             {
-                "name": "Canary",
-                "style": "color-amber",
-                "version": "26040.1010",
-                "branch": "rs_prerelease_flt",
-                "codename": "Germanium",
-                "period": "24H2"
-            },
-            {
-                "name": "Canary",
-                "style": "color-amber",
-                "version": "26040.1063",
-                "branch": "rs_prerelease_flt",
-                "codename": "Germanium",
-                "period": "24H2"
-            },
-            {
-                "name": "Canary",
-                "style": "color-amber",
-                "category": "germanium",
-                "version": "26052.1000",
-                "branch": "ge_release",
-                "codename": "Germanium",
-                "period": "24H2"
-            },
-            {
-                "name": "Canary",
-                "style": "color-amber",
-                "version": "26052.1100",
-                "branch": "ge_release_svc_prod1",
-                "codename": "Germanium",
-                "period": "24H2"
-            },
-            {
                 "name": "Server 2023",
                 "style": "color-theme",
                 "version": "25398.704",
                 "branch": "zn_release_svc_prod1",
                 "codename": "Zinc",
-                "period": "23H2"
-            },
-            {
-                "name": "Moment 上游分支",
-                "style": "color-orange",
-                "version": "23622.1000",
-                "branch": "ni_prerelease",
-                "codename": "Nickel",
                 "period": "23H2"
             },
             {

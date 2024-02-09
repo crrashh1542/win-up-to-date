@@ -1,0 +1,43 @@
+{
+    "build": {
+        "number": "26052.1100",
+        "branch": "ge_release_svc_prod1",
+        "compileTime": "2024-02-02 15:41",
+        "arch": ["AMD64", "ARM64"],
+        "counterpart": "Client & Server"
+    },
+    "release": {
+        "channel": "Dev",
+        "time": "2024-02-08 18:00",
+        "url": "https://blogs.windows.com/windows-insider/2024/02/08/announcing-windows-11-insider-preview-build-26052-canary-and-dev-channels/",
+        "announcePlace": "Windows Blogs"
+    },
+    "nav": {
+        "previous": {
+            "category": "germanium",
+            "build": "26052.1000"
+        }
+    },
+    "belongsTo": {
+        "path": "germanium",
+        "name": "Germanium"
+    },
+    "updateId": [{
+        "arch": "AMD64 (Client)",
+        "id": "73776830-7a01-481e-96b5-d1035cd617c5"
+    },
+    {
+        "arch": "AMD64 (Server)",
+        "id": "85be9e3d-a4fd-4f28-a1a6-bc3d42135028"
+    }],
+    "download": {
+        "name": "Windows11.0-KB5035384-x64.msu",
+        "link": [{
+            "url": "https://5y38gv-my.sharepoint.com/:u:/g/personal/store0_418_run/ETR3Y_SB7gVHjUTUC4LRe5sB9TBr8SVyXKaQJA_ck9s1LA?e=hiM6a6",
+            "source": "OneDrive"
+        }],
+        "arch": "AMD64",
+        "md5": "6844865225afc4b0d54d8e146981a0e8",
+        "sha256": "b78f50a0e28d9442b67ac702ecb80b2664bde8fe04e5e7cb87c36b74c880ef12"
+    }
+}
