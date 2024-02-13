@@ -68,6 +68,22 @@
         "style": "icon-chemical",
         "releases": [
             {
+                "name": "Canary",
+                "style": "color-amber",
+                "version": "26058.1000",
+                "branch": "ge_release",
+                "codename": "Germanium",
+                "period": "24H2"
+            },
+            {
+                "name": "Dev",
+                "style": "color-orange",
+                "version": "26058.1100",
+                "branch": "ge_release_svc_prod1",
+                "codename": "Germanium",
+                "period": "24H2"
+            },
+            {
                 "name": "Server 2023",
                 "style": "color-theme",
                 "version": "25398.709",
@@ -78,7 +94,15 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "22631.3153",
+                "version": "22631.3155",
+                "branch": "23h2_ni_release_svc_prod1",
+                "codename": "Nickel",
+                "period": "23H2"
+            },
+            {
+                "name": "发布预览",
+                "style": "color-purple",
+                "version": "22631.3227",
                 "branch": "23h2_ni_release_svc_prod(2/3)",
                 "codename": "Nickel",
                 "period": "23H2"
@@ -104,6 +128,14 @@
                 "style": "color-purple",
                 "version": "19045.4046",
                 "branch": "22h2_release_svc_prod1",
+                "codename": "Vibranium",
+                "period": "22H2"
+            },
+            {
+                "name": "发布预览",
+                "style": "color-purple",
+                "version": "19045.4116",
+                "branch": "22h2_release_svc_prod(2/3)",
                 "codename": "Vibranium",
                 "period": "22H2"
             }
@@ -179,8 +211,8 @@
                 "name": "预览版 (v2025)",
                 "style": "color-amber",
                 "category": "germanium",
-                "version": "26047.1001",
-                "branch": "rs_prerelease",
+                "version": "26052.1100",
+                "branch": "ge_release_svc_prod1",
                 "codename": "Germanium",
                 "period": "24H2"
             },
@@ -219,7 +251,7 @@
 {
                 "name": "LTSC (v2016)",
                 "style": "color-teal",
-                "version": "17763.6614",
+                "version": "14393.6614",
                 "branch": "rs1_release",
                 "codename": "Redstone",
                 "period": "1607"
