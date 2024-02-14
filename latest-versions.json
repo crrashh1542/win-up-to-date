@@ -32,15 +32,7 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "22631.3078",
-                "branch": "23h2_ni_release_svc_prod2",
-                "codename": "Nickel",
-                "period": "23H2"
-            },
-            {
-                "name": "正式通道",
-                "style": "color-theme",
-                "version": "22631.3007",
+                "version": "22631.3155",
                 "branch": "23h2_ni_release_svc_prod1",
                 "codename": "Nickel",
                 "period": "23H2"
@@ -48,7 +40,15 @@
             {
                 "name": "正式通道",
                 "style": "color-theme",
-                "version": "22621.3007",
+                "version": "22631.3155",
+                "branch": "23h2_ni_release_svc_prod1",
+                "codename": "Nickel",
+                "period": "23H2"
+            },
+            {
+                "name": "正式通道",
+                "style": "color-theme",
+                "version": "22621.3155",
                 "branch": "ni_release_svc_prod1",
                 "codename": "Nickel",
                 "period": "22H2"
@@ -56,7 +56,7 @@
             {
                 "name": "正式通道",
                 "style": "color-theme",
-                "version": "22000.2713",
+                "version": "22000.2777",
                 "branch": "co_release_svc_prod1",
                 "codename": "Cobalt",
                 "period": "21H2"
@@ -94,26 +94,10 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "22631.3155",
-                "branch": "23h2_ni_release_svc_prod1",
-                "codename": "Nickel",
-                "period": "23H2"
-            },
-            {
-                "name": "发布预览",
-                "style": "color-purple",
                 "version": "22631.3227",
                 "branch": "23h2_ni_release_svc_prod(2/3)",
                 "codename": "Nickel",
                 "period": "23H2"
-            },
-            {
-                "name": "正式通道",
-                "style": "color-theme",
-                "version": "22000.2777",
-                "branch": "co_release_svc_prod1",
-                "codename": "Cobalt",
-                "period": "21H2"
             },
             {
                 "name": "Server v2022",
@@ -121,14 +105,6 @@
                 "version": "20349.2322",
                 "branch": "22h2_fe_release_svc_prod1",
                 "codename": "Iron",
-                "period": "22H2"
-            },
-            {
-                "name": "发布预览",
-                "style": "color-purple",
-                "version": "19045.4046",
-                "branch": "22h2_release_svc_prod1",
-                "codename": "Vibranium",
                 "period": "22H2"
             },
             {
@@ -148,15 +124,7 @@
             {
                 "name": "发布预览",
                 "style": "color-purple",
-                "version": "19045.3992",
-                "branch": "22h2_release_svc_prod2",
-                "codename": "Vibranium",
-                "period": "22H2"
-            },
-            {
-                "name": "正式通道",
-                "style": "color-theme",
-                "version": "19045.3930",
+                "version": "19045.4046",
                 "branch": "22h2_release_svc_prod1",
                 "codename": "Vibranium",
                 "period": "22H2"
@@ -164,7 +132,15 @@
             {
                 "name": "正式通道",
                 "style": "color-theme",
-                "version": "19044.3930",
+                "version": "19045.4046",
+                "branch": "22h2_release_svc_prod1",
+                "codename": "Vibranium",
+                "period": "22H2"
+            },
+            {
+                "name": "正式通道",
+                "style": "color-theme",
+                "version": "19044.4046",
                 "branch": "21h2_release_svc_prod1",
                 "codename": "Vibranium",
                 "period": "21H2"
@@ -172,7 +148,7 @@
             {
                 "name": "LTSC (2021)",
                 "style": "color-teal",
-                "version": "19044.3930",
+                "version": "19044.4046",
                 "branch": "21h2_release_svc_prod1",
                 "codename": "Vibranium",
                 "period": "21H2"
@@ -180,7 +156,7 @@
             {
                 "name": "LTSC (2019)",
                 "style": "color-teal",
-                "version": "17763.5329",
+                "version": "17763.5458",
                 "branch": "rs5_release_svc_prod1",
                 "codename": "Redstone",
                 "period": "1809"
@@ -188,7 +164,7 @@
             {
                 "name": "LTSB (2016)",
                 "style": "color-teal",
-                "version": "14393.6614",
+                "version": "14393.6709",
                 "branch": "rs1_release",
                 "codename": "Redstone",
                 "period": "1607"
@@ -196,7 +172,7 @@
             {
                 "name": "LTSB (2015)",
                 "style": "color-teal",
-                "version": "10240.20402",
+                "version": "10240.20469",
                 "branch": "th1",
                 "codename": "Threshold",
                 "period": "1507"
