@@ -35,33 +35,14 @@ jobs:
          DIST_NAME: dist-${{ needs.setup.outputs.DIST_SUFFIX }}
       runs-on: ubuntu-latest
       steps:
-       - name: 🧐 Checkout
-         id: checkout
-         uses: actions/checkout@v4
-         with: 
-            fetch-depth: '0'
-
-       - name: 🛠️ Setup Node.js Env
-         id: setup-node
-         uses: actions/setup-node@main
-         with: 
-            node-version: latest
-          
-       - name: 🔧 Setup Yarn
-         id: setup-yarn
-         run: |
-            npm install yarn -g
-            yarn set version berry
-     
-       - name: 🚧 Setup dependencies
-         id: setup-deps
-         run: |
-            yarn add @vue/cli
-            yarn install
+       - name: 🛠️ Setup environment
+         id: setup
+         uses: crrashh1542/action-setup-yarn-berry@v1
 
        - name: ⚙️ Build production pages
          id: build
          run: |
+            yarn add @vue/cli
             yarn build
 
        - name: 🌐 Upload the build
