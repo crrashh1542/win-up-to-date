@@ -1,7 +1,8 @@
 name: Build Production Page
 on: 
    push:
-      branches: [wu_main]
+      # 由于其它分支为本地测试打包，故只 CI 主线变更
+      branches: [ wu_main ]
       paths-ignore: 
        - '**.md'
        - '**.txt'
@@ -23,8 +24,8 @@ jobs:
      - name: 📙 Get Package Suffix
        id: get-suffix
        run: |
-         ## 此处通过 jq 从 packagr.json 获取版本，否则在 depth 
-         ## 为 1 时通过 git tag 所读取的版本不准确
+         # 此处通过 jq 从 package.json 获取版本，否则在 depth 
+         # 为 1 时通过 git tag 所读取的版本不准确
          sudo apt-get install jq
          VERSION=$(jq -r '.version' ./package.json)
          
