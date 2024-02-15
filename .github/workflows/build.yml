@@ -2,6 +2,11 @@ name: Build Production Page
 on: 
    push:
       branches: [wu_main]
+      paths-ignore: 
+       - '**.md'
+       - '**.txt'
+       - '.github/**'
+       - '!.github/workflows/**'
 jobs:
    setup:
     name: Setup Project Info
