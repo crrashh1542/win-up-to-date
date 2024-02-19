@@ -42,14 +42,16 @@ jobs:
       runs-on: ubuntu-latest
       steps:
        - name: 🛠️ Setup environment
-         id: setup
-         uses: crrashh1542/action-setup-yarn-berry@v1
+         uses: pnpm/action-setup@v3
+         with:
+            version: 8
 
        - name: ⚙️ Build production pages
          id: build
          run: |
-            yarn add @vue/cli
-            yarn build
+            pnpm install
+            pnpm add @vue/cli
+            pnpm build
 
        - name: 🌐 Upload the build
          id: upload
