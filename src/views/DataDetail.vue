@@ -87,19 +87,21 @@ export default {
 
         <!-- 快速导航 -->
         <TopNav>
-            <span class="icon-left" v-if="detail.nav.previous != null">
-                <router-link 
-                    :to="constructNavRoute(detail.nav.previous)" 
-                    @click="refreshData(detail.nav.previous.category, detail.nav.previous.build)">
-                    {{ detail.nav.previous.build }}</router-link>
-            </span>
+            <router-link 
+                :to="constructNavRoute(detail.nav.previous)" v-if="detail.nav.previous != null"
+                @click="refreshData(detail.nav.previous.category, detail.nav.previous.build)">
+                <span class="icon-left">
+                    {{ detail.nav.previous.build }}
+                </span>
+            </router-link>
             <span class="grow"></span>
-            <span class="icon-right" v-if="detail.nav.next != null">
-                <router-link 
-                    :to="constructNavRoute(detail.nav.next)" 
-                    @click="refreshData(detail.nav.next.category, detail.nav.next.build)">
-                    {{ detail.nav.next.build }}</router-link>
-            </span>
+            <router-link 
+                :to="constructNavRoute(detail.nav.next)" v-if="detail.nav.next != null"
+                @click="refreshData(detail.nav.next.category, detail.nav.next.build)">
+                <span class="icon-right">
+                    {{ detail.nav.next.build }}
+                </span>
+            </router-link>
         </TopNav>
 
         <!-- 一览卡片 -->
