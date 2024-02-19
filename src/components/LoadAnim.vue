@@ -1,10 +1,8 @@
-<script>
+<script setup>
 import { fluentProgressRing, provideFluentDesignSystem } from '@fluentui/web-components'
 provideFluentDesignSystem().register(fluentProgressRing())
 
-export default {
-    name: 'MainLoadAnim'
-}
+defineOptions({ name: 'MainLoadAnim' })
 </script>
 
 <template>

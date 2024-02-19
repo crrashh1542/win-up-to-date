@@ -1,10 +1,8 @@
-<script>
-import { provideFluentDesignSystem, fluentCard } from "@fluentui/web-components"
-provideFluentDesignSystem().register(fluentCard())
+<script setup>
+defineOptions({ name: 'WidgetCard' })
 
-export default {
-    name: 'WidgetCard'
-}
+import { provideFluentDesignSystem, fluentCard } from '@fluentui/web-components'
+provideFluentDesignSystem().register(fluentCard())
 </script>
 
 <template>

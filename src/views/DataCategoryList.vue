@@ -93,15 +93,15 @@ export default {
 
         <!-- 快速导航 -->
         <TopNav>
-            <span class="icon-left" v-if="category.previous != null">
-                <router-link :to="category.previous.path" @click="refreshData(category.previous)">
-                    {{ category.previous.name }}</router-link>
-            </span>
+            <router-link :to="category.previous.path" v-if="category.previous != null"
+                @click="refreshData(category.previous)">
+                <span class="icon-left">{{ category.previous.name }}</span>
+            </router-link>
             <span class="grow"></span>
-            <span class="icon-right" v-if="category.next != null">
-                <router-link :to="category.next.path" @click="refreshData(category.next)">
-                    {{ category.next.name }}</router-link>
-            </span>
+            <router-link :to="category.next.path" v-if="category.next != null"
+                @click="refreshData(category.next)">
+                <span class="icon-right">{{ category.next.name }}</span>
+            </router-link>
         </TopNav>
 
         <!-- 基本信息 -->

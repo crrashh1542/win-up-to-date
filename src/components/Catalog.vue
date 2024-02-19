@@ -1,7 +1,5 @@
-<script>
-export default {
-    name: 'WidgetCatalog'
-}
+<script setup>
+defineOptions({ name: 'WidgetCatalog' })
 </script>
 
 <template>

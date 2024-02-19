@@ -1,18 +1,8 @@
-<script>
+<script setup>
 import { provideFluentDesignSystem, fluentButton } from "@fluentui/web-components"
 provideFluentDesignSystem().register(fluentButton())
 
-export default {
-    name: 'OtherNotFound',
-    setup() {
-        document.title = '内容不见啦！ / Windows Up-to-Date'
-    },
-    methods: {
-        routerToHome() {
-            this.$router.push('/')
-        }
-    }
-}
+document.title = '内容不见啦！ / Windows Up-to-Date'
 </script>
 
 <template>

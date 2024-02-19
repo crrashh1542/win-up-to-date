@@ -1,7 +1,5 @@
-<script>
-export default {
-    name: 'MainFooter'
-}
+<script setup>
+defineOptions({ name: 'MainFooter' })
 </script>
 
 <template>
