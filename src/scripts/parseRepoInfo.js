@@ -18,7 +18,7 @@ const buildNum = buildInfo.build // 构建次数
 
 // 数据合并
 const pVersion = 'v' + packageVerNum + ' (build ' + buildNum + ')' // 完整版本
-const pRepoName = packageRepo.split('https://github.com/')[1] // 项目名
+const pRepoName = packageRepo.url.split('https://github.com/')[1] // 项目名
 const pVue = 'v' + packageDeps['vue'].split('^')[1] // Vue 框架版本
 const pUI = 'v' + packageDeps['@fluentui/web-components'].split('^')[1] // 组件库版本
 
