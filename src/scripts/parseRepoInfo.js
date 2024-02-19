@@ -11,7 +11,7 @@ import buildInfo from '/temp/buildInfo.json'
 // packageInfo 相关
 const packageVerNum = packageInfo.version // 项目版本号
 const packageRepo = packageInfo.repository // 项目地址
-const packageDeps = packageInfo.dependencies // 依赖版本
+const packageDeps = packageInfo.devDependencies // 依赖版本
 
 // buildInfo 相关
 const buildNum = buildInfo.build // 构建次数

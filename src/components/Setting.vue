@@ -50,7 +50,9 @@ export default {
 <template>
     <fluent-dialog id="setting" trap-focus hidden modal>
         <div class="container">
-            <catalog class="size-7 font-bold">页面选项</catalog>
+            <Catalog class="w-full">
+                <span class="font-bold size-7">页面选项</span>
+            </Catalog>
 
             <!-- <div class="flex section">
                 <span>启用深色模式</span>
