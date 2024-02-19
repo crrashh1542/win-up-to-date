@@ -2,7 +2,7 @@
 /**
  * 此脚本用于在处理本项目相关信息
  * @author crrashh1542
- * @version 1.5
+ * @version 1.6
  */
 
 import packageInfo from '/package.json'
@@ -28,5 +28,5 @@ export default [
     ['项目地址', 'icon-github', packageRepo, pRepoName],
     ['Vue 框架版本', 'icon-vuejs', pVue],
     ['Fluent UI 组件库版本', 'icon-fluent', pUI],
-    ['交流群组', 'icon-qq', 'http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=4hmQNZoNwcIJ1YiSDSKKyMfuB-jrmC-N&authKey=Y3vSPFPTrJG5ygcd9e8tNdt5SM0ycnRGurSGdaoM0XJjKVKL9S58jc2YjnFmbPAs&noverify=0&group_code=672660118', '672660118']
+    ['交流群组', 'icon-qq', 'http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=i3uo_SoY8qYCP-DwlWN0MvBFzU7dIl-V&authKey=aAv%2FFuOJzObVvjbo5vV6%2FRDsT103410PnidS493vqwnLMe4xPwsI1g9UwRvlMANS&noverify=0&group_code=442133970', '442133970']
 ]
