@@ -22,7 +22,7 @@ module.exports = defineConfig({
 
    configureWebpack: config => {
       // gzip 处理
-      const plugins = [ require('unplugin-vue-setup-extend-plus/webpack').default() ]
+      const plugins = []
       if (IS_PROD) {
          plugins.push(new CompressionWebpackPlugin({
                filename: "[path].gz[query]",
