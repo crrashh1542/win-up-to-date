@@ -1,33 +1,23 @@
-<script>
-const linkList =
-   [{
-      'name': '主页',
-      'link': 'https://www.crrashh.com/',
-      'type': 'link'
-   }, {
-      'name': '分类',
-      'link': '/category',
-      'type': 'route'
-   }, {
-      'name': '关于',
-      'link': '/about',
-      'type': 'route'
-   }]
+<script setup>
+defineOptions({ name: 'WidgetAppbar' })
 
-export default {
-   name: 'MainAppbar',
-   data() {
-      return {
-         title: 'Windows Up-to-Date',
-         link: linkList
-      }
-   },
-   methods: {
-      dialogOpen(){
-         let dialogEl = document.getElementById('setting')
-         dialogEl.hidden = false
-      }
-   }
+const linkList = [{
+   'name': '主页',
+   'link': 'https://www.crrashh.com/',
+   'type': 'link'
+}, {
+   'name': '分类',
+   'link': '/category',
+   'type': 'route'
+}, {
+   'name': '关于',
+   'link': '/about',
+   'type': 'route'
+}]
+
+function dialogOpen() {
+   let dialogEl = document.getElementById('setting')
+   dialogEl.hidden = false
 }
 </script>
 
@@ -35,18 +25,17 @@ export default {
    <div class="appbar">
 
       <!-- 左侧标题 -->
-      <router-link to="/" class="title">{{ title }}</router-link>
+      <router-link to="/" class="title">Windows Up-to-Date</router-link>
 
       <!-- 左右分隔 -->
       <div class="grow"></div>
 
       <!-- 右侧链接 -->
       <div class="external">
-         <span v-for="i in link" :key="i.name">
-            
+         <span v-for="i in linkList" :key="i.name">
+
             <!-- 如果类型是外部链接 → <a> -->
-            <a v-if="i.type == 'link'" :href="i.link" 
-               class="link item" target="_blank">{{ i.name }}</a>
+            <a v-if="i.type == 'link'" :href="i.link" class="link item" target="_blank">{{ i.name }}</a>
 
             <!-- 如果类型是项目内路由 → <router-link> -->
             <router-link class="item" v-if="i.type == 'route'" :to="i.link">
@@ -56,7 +45,7 @@ export default {
          <span><!-- 保留节目，选项必须在！ -->
             <a href="#" class="item stable" @click="dialogOpen">选项</a>
          </span>
-         
+
       </div>
    </div>
 </template>
@@ -96,7 +85,7 @@ export default {
       display: none;
    }
 
-   .external > span > a.item {
+   .external>span>a.item {
       // 链接
       margin: 0 15px;
       font-size: 17px;
@@ -136,4 +125,5 @@ export default {
    .appbar {
       --appbar-link-display: none;
    }
-}</style>
+}
+</style>

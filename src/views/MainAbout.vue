@@ -1,27 +1,17 @@
-<script>
-import buildInfo from '../scripts/parseRepoInfo'
+<script setup>
+// 引入组件
 import Banner from '../components/Banner.vue'
 import Card from '../components/Card.vue'
 
+// 设定数据
+document.title = '关于项目 / Windows Up-to-Date'
+import buildInfo from '../scripts/parseRepoInfo'
 const sources = [
     ['https://msbuilds.rg-adguard.net', 'MSFT BUFFET DATABASE'],
     ['https://changewindows.org', 'ChangeWindows'],
     ['https://bbs.pcbeta.com/viewthread-1941423-1-1.html', '远景论坛 - 2262x(2263x).2715/2700更新包和修复包下载 & 内部版本进度 & .NET CU'],
     ['https://community.wvbtech.com', 'wvbCommunity']
 ]
-
-export default {
-    name: 'MainAbout',
-    components: { Banner, Card },
-    data() {
-        return {
-            buildInfo, sources
-        }
-    },
-    setup() {
-        document.title = '关于项目 / Windows Up-to-Date'
-    }
-}
 </script>
 
 <template>

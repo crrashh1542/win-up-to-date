@@ -1,7 +1,5 @@
-<script>
-export default {
-    name: 'WidgetTopNav'
-}
+<script setup>
+defineOptions({ name: 'WidgetTopNav' })
 </script>
 
 <template>
