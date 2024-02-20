@@ -11,11 +11,9 @@ const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
 const IS_PROD = ['production', 'prod'].includes(process.env.NODE_ENV)
 
 // 获取 build 信息并写入
-const buildInfo = require('./prebuild.js')
-buildInfo()
+require('./prebuild.js')()
 
 module.exports = defineConfig({
-
    transpileDependencies: true,
    indexPath: 'index.html',
    outputDir: process.env.outputDir || 'dist',
@@ -23,12 +21,10 @@ module.exports = defineConfig({
    assetsDir: 'assets',
 
    configureWebpack: config => {
-
       // gzip 处理
-      const plugins = [];
+      const plugins = [ require('unplugin-vue-setup-extend-plus/webpack').default() ]
       if (IS_PROD) {
-         plugins.push(
-            new CompressionWebpackPlugin({
+         plugins.push(new CompressionWebpackPlugin({
                filename: "[path].gz[query]",
                algorithm: "gzip",
                test: productionGzipExtensions,
@@ -37,16 +33,13 @@ module.exports = defineConfig({
             })
          )
       }
-
-      // 分析各个模板编译时长
       config.plugins.push(
+         // 分析各个模板编译时长
          new SpeedMeasurePlugin()
       )
-
    },
 
    chainWebpack: config => {
-
       // 自定义元素设定
       config.module.rule('vue').use('vue-loader').tap(options => ({
          ...options,
@@ -60,7 +53,6 @@ module.exports = defineConfig({
       config.optimization.splitChunks({
          chunks: 'all',
          cacheGroups: {
-
             // GROUP1 ------ 第三方模块
             vendor: {
                name: 'vendors',
