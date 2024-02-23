@@ -28,7 +28,7 @@ export default {
         let router = useRouter()
         let [platform, build] =
             [router.currentRoute.value.params.platform, router.currentRoute.value.params.build]
-        axios.get('https://wutd.crrashh.com/api/detail?platform=' + platform + '&build=' + build)
+        axios.get('https://wutd.api.crrashh.com/v1/detail?platform=' + platform + '&build=' + build)
 
             // STEP3 ------ 处理并修改数据
             .then(function (response) {
@@ -61,7 +61,7 @@ export default {
         refreshData(platform, build) {
             document.title = build + ' / Windows Up-to-Date'
             let vueObj = this
-            axios.get('https://wutd.crrashh.com/api/detail?platform=' + platform + '&build=' + build)
+            axios.get('https://wutd.api.crrashh.com/v1/detail?platform=' + platform + '&build=' + build)
                 .then(function (response) {
                     let resp = response.data.content
                     vueObj.detail = resp

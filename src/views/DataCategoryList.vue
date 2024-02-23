@@ -25,7 +25,7 @@ export default {
         // 通过当前路由，得到当前的 platform 并发送给 API
         let router = useRouter()
         let platform = router.currentRoute.value.params.platform
-        axios.get('https://wutd.crrashh.com/api/category?platform=' + platform)
+        axios.get('https://wutd.api.crrashh.com/v1/category?platform=' + platform)
 
             // STEP3 ------ 处理并修改数据
             .then(function (response) {
@@ -61,7 +61,7 @@ export default {
             document.title = platform.name + ' / Windows Up-to-Date'
             let category = platform.path
             let vueObj = this
-            axios.get('https://wutd.crrashh.com/api/category?platform=' + category)
+            axios.get('https://wutd.api.crrashh.com/v1/category?platform=' + category)
                 .then(function (response) {
                     let resp = response.data.content
                     vueObj.category = resp
