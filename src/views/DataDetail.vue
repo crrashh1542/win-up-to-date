@@ -106,17 +106,34 @@ export default {
 
         <!-- 一览卡片 -->
         <Card class="overview">
-            <div>
-                <p class="icon-tag">构建版号 / {{ detail.build.number }}</p>
-                <p class="icon-branch">构建分支 / {{ detail.build.branch }}</p>
-                <p class="icon-compile">编译时间 / {{ detail.build.compileTime }}</p>
+            <div class="leading-7">
+                <p class="flex">
+                    <span class="icon-tag">构建版号&nbsp;/&nbsp;</span>
+                    <span>{{ detail.build.number }}</span>
+                </p>
+                <p class="flex">
+                    <span class="icon-branch shrink-0">构建分支&nbsp;/&nbsp;</span>
+                    <span>{{ detail.build.branch }}</span>
+                </p>
+                <p class="flex">
+                    <span class="icon-compile">编译时间&nbsp;/&nbsp;</span>
+                    <span>{{ detail.build.compileTime }}</span>
+                </p>
             </div>
             <div>
-                <p class="icon-arch">系统架构 / 
-                    <span v-for="i in detail.build.arch" :key="i">{{ i }}&nbsp;&nbsp;</span></p>
-                <p class="icon-code">构建归属 / <router-link :to="constructBelongingRoute(detail.belongsTo.path)">
-                    {{ detail.belongsTo.name }}</router-link></p>
-                <p class="icon-version">推送平台 / {{ detail.build.counterpart }}</p>
+                <p class="flex">
+                    <span class="icon-arch">系统架构&nbsp;/&nbsp;</span>
+                    <span v-for="i in detail.build.arch" :key="i">{{ i }}&nbsp;&nbsp;</span>
+                </p>
+                <p class="flex">
+                    <span class="icon-version">推送平台&nbsp;/&nbsp;</span>
+                    <span>{{ detail.build.counterpart }}</span>
+                </p>
+                <p class="flex">
+                    <span class="icon-code">构建归属&nbsp;/&nbsp;</span>
+                    <router-link :to="constructBelongingRoute(detail.belongsTo.path)">
+                    {{ detail.belongsTo.name }}</router-link>
+                </p>
             </div>
         </Card>
         <br /><br />
