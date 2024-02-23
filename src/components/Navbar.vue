@@ -3,17 +3,17 @@ defineOptions({ name: 'WidgetNavBar' })
 
 const navSections = [{
     "path": "/",
-    "icon": "icon-home",
+    "icon": "w-icon-home",
     "text": "主页"
 },
 {
     "path": "/category",
-    "icon": "icon-tag",
+    "icon": "w-icon-tag",
     "text": "分类"
 },
 {
     "path": "/about",
-    "icon": "icon-about",
+    "icon": "w-icon-about",
     "text": "关于"
 }]
 </script>

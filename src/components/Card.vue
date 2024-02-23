@@ -38,7 +38,7 @@ export default {
                 display: var(--card-suffix-display);
             }
         }
-        p::before {
+        p::before, p > span::before {
             padding-right: @wu-icon-spacing;
         }
     }

@@ -1,6 +1,6 @@
 {
   "name": "win-up-to-date",
-  "version": "0.13.7",
+  "version": "0.13.8",
   "description": "A website project showing the latest status of Windows Insider versions.",
   "author": "crrashh1542 <kotsuki@crrashh.com>",
   "homepage": "https://wutd.crrashh.com",
@@ -22,8 +22,8 @@
     "@babel/core": "^7.23.9",
     "@babel/eslint-parser": "^7.23.10",
     "@fluentui/web-components": "^2.5.16",
-    "@typescript-eslint/eslint-plugin": "^7.0.1",
-    "@typescript-eslint/parser": "^7.0.1",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
     "@vue/cli-plugin-babel": "~5.0.8",
     "@vue/cli-plugin-eslint": "~5.0.8",
     "@vue/cli-service": "~5.0.8",
@@ -32,7 +32,7 @@
     "compression-webpack-plugin": "^11.0.0",
     "core-js": "^3.36.0",
     "eslint": "^8.56.0",
-    "eslint-plugin-vue": "^9.21.1",
+    "eslint-plugin-vue": "^9.22.0",
     "js-cookie": "^3.0.5",
     "less": "^4.2.0",
     "less-loader": "^12.2.0",
@@ -43,7 +43,7 @@
     "tailwindcss": "^3.4.1",
     "vue": "^3.4.19",
     "vue-clipboard3": "^2.0.0",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.3.0"
   },
   "eslintConfig": {
     "root": true,

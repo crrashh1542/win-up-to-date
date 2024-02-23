@@ -30,7 +30,7 @@ export default {
 
     <!-- 复制按钮 -->
     <fluent-button class="text-sm" @click="copy(value)">
-        <span class="icon-copy">复制</span>
+        <span class="w-icon-copy">复制</span>
     </fluent-button>
 
     <!-- 复制完成的提示 -->

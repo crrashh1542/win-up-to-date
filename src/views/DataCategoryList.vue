@@ -25,7 +25,7 @@ export default {
         // 通过当前路由，得到当前的 platform 并发送给 API
         let router = useRouter()
         let platform = router.currentRoute.value.params.platform
-        axios.get('https://wutd.crrashh.com/api/category?platform=' + platform)
+        axios.get('https://wutd.api.crrashh.com/v1/category?platform=' + platform)
 
             // STEP3 ------ 处理并修改数据
             .then(function (response) {
@@ -61,7 +61,7 @@ export default {
             document.title = platform.name + ' / Windows Up-to-Date'
             let category = platform.path
             let vueObj = this
-            axios.get('https://wutd.crrashh.com/api/category?platform=' + category)
+            axios.get('https://wutd.api.crrashh.com/v1/category?platform=' + category)
                 .then(function (response) {
                     let resp = response.data.content
                     vueObj.category = resp
@@ -95,24 +95,24 @@ export default {
         <TopNav>
             <router-link :to="category.previous.path" v-if="category.previous != null"
                 @click="refreshData(category.previous)">
-                <span class="icon-left">{{ category.previous.name }}</span>
+                <span class="w-icon-left">{{ category.previous.name }}</span>
             </router-link>
             <span class="grow"></span>
             <router-link :to="category.next.path" v-if="category.next != null"
                 @click="refreshData(category.next)">
-                <span class="icon-right">{{ category.next.name }}</span>
+                <span class="w-icon-right">{{ category.next.name }}</span>
             </router-link>
         </TopNav>
 
         <!-- 基本信息 -->
         <Card class="overview">
             <div>
-                <p class="icon-code">平台代号 / {{ category.codename }}</p>
-                <p class="icon-time">开发周期 / {{ category.semester }}</p>
+                <p class="w-icon-code">平台代号 / {{ category.codename }}</p>
+                <p class="w-icon-time">开发周期 / {{ category.semester }}</p>
             </div>
             <div>
-                <p class="icon-tag">版本范围 / {{ customVersionRange }}</p>
-                <p class="icon-compile">分类归属 / {{ category.belonging }}</p>
+                <p class="w-icon-tag">版本范围 / {{ customVersionRange }}</p>
+                <p class="w-icon-compile">分类归属 / {{ category.belonging }}</p>
             </div>
         </Card>
 
