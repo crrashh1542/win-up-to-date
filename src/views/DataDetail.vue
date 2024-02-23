@@ -90,7 +90,7 @@ export default {
             <router-link 
                 :to="constructNavRoute(detail.nav.previous)" v-if="detail.nav.previous != null"
                 @click="refreshData(detail.nav.previous.category, detail.nav.previous.build)">
-                <span class="icon-left">
+                <span class="w-icon-left">
                     {{ detail.nav.previous.build }}
                 </span>
             </router-link>
@@ -98,7 +98,7 @@ export default {
             <router-link 
                 :to="constructNavRoute(detail.nav.next)" v-if="detail.nav.next != null"
                 @click="refreshData(detail.nav.next.category, detail.nav.next.build)">
-                <span class="icon-right">
+                <span class="w-icon-right">
                     {{ detail.nav.next.build }}
                 </span>
             </router-link>
@@ -108,29 +108,29 @@ export default {
         <Card class="overview">
             <div class="leading-7">
                 <p class="flex">
-                    <span class="icon-tag">构建版号&nbsp;/&nbsp;</span>
+                    <span class="w-icon-tag">构建版号&nbsp;/&nbsp;</span>
                     <span>{{ detail.build.number }}</span>
                 </p>
                 <p class="flex">
-                    <span class="icon-branch shrink-0">构建分支&nbsp;/&nbsp;</span>
+                    <span class="w-icon-branch shrink-0">构建分支&nbsp;/&nbsp;</span>
                     <span>{{ detail.build.branch }}</span>
                 </p>
                 <p class="flex">
-                    <span class="icon-compile">编译时间&nbsp;/&nbsp;</span>
+                    <span class="w-icon-compile">编译时间&nbsp;/&nbsp;</span>
                     <span>{{ detail.build.compileTime }}</span>
                 </p>
             </div>
             <div>
                 <p class="flex">
-                    <span class="icon-arch">系统架构&nbsp;/&nbsp;</span>
+                    <span class="w-icon-arch">系统架构&nbsp;/&nbsp;</span>
                     <span v-for="i in detail.build.arch" :key="i">{{ i }}&nbsp;&nbsp;</span>
                 </p>
                 <p class="flex">
-                    <span class="icon-version">推送平台&nbsp;/&nbsp;</span>
+                    <span class="w-icon-version">推送平台&nbsp;/&nbsp;</span>
                     <span>{{ detail.build.counterpart }}</span>
                 </p>
                 <p class="flex">
-                    <span class="icon-code">构建归属&nbsp;/&nbsp;</span>
+                    <span class="w-icon-code">构建归属&nbsp;/&nbsp;</span>
                     <router-link :to="constructBelongingRoute(detail.belongsTo.path)">
                     {{ detail.belongsTo.name }}</router-link>
                 </p>
@@ -140,7 +140,7 @@ export default {
 
         <!-- 发版信息 -->
         <Card>
-            <Catalog class="font-semibold icon-announcement">发版信息</Catalog>
+            <Catalog class="font-semibold w-icon-announcement">发版信息</Catalog>
 
             <div v-if="detail.release !== undefined">
                 <p v-if="detail.release.channel !== undefined">推送频道：{{ detail.release.channel }}</p>
@@ -160,7 +160,7 @@ export default {
 
         <!-- 下载 UUP -->
         <Card>
-            <Catalog class="font-semibold icon-uup">从 UUP 获取构建</Catalog>
+            <Catalog class="font-semibold w-icon-uup">从 UUP 获取构建</Catalog>
 
             <div v-if="detail.updateId !== undefined">
                 <p v-for="id in detail.updateId" :key="id.arch">
@@ -175,7 +175,7 @@ export default {
 
         <!-- 下载 ISO -->
         <Card>
-            <Catalog class="font-semibold icon-iso">下载 ISO / 更新包</Catalog>
+            <Catalog class="font-semibold w-icon-iso">下载 ISO / 更新包</Catalog>
 
             <div v-if="detail.download !== undefined">
                 <p>文件名称：{{ detail.download.name }}</p>
