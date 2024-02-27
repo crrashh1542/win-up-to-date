@@ -1,4 +1,4 @@
-name: Build Production Page
+name: Build
 on: 
    push:
       # 由于其它分支为本地测试打包，故只 CI 主线变更
@@ -66,4 +66,3 @@ jobs:
          with:
              name: ${{ env.DIST_NAME }}
              path: dist
-             retention-days: 60
