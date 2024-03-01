@@ -6,7 +6,7 @@
  */
 
 import packageInfo from '/package.json'
-import buildInfo from '/temp/buildInfo.json'
+import buildInfo from '/scripts/buildInfo.json'
 
 // packageInfo 相关
 const packageVerNum = packageInfo.version // 项目版本号

@@ -1,8 +1,9 @@
 /* eslint-disable */
+"use strict"
 /**
  * 此脚本用于在开始打包前处理配置信息
  * @author crrashh1542
- * @version 1.4.2
+ * @version 1.5
  */
 
 // STEP1 -------- 导入依赖
@@ -48,20 +49,9 @@ function writeInfo() {
       "branch": "` + getBranch() + `"
    }`
 
-   // 新建 temp 文件夹
-   fs.mkdir('./temp', err => {
-      if (err === null) {
-         console.log('\n[buildInfo] temp 文件夹创建成功！')
-      } else {
-         if (fs.existsSync('temp')) {
-            console.log('\n[buildInfo] temp 文件夹已存在！')
-         } else {
-            console.warn('\n[buildInfo] 构建信息写入失败，详情请参阅：\n' + err)
-         }
-      }
-   })
    // 将 buildInfo 内容写入文件
-   fs.writeFile('./temp/buildInfo.json', content, err => {
+   // 由于执行者是 /vue.config.js，所以执行目录在项目的根目录，故此处使用 ./scripts/ 来导引路径
+   fs.writeFile('./scripts/buildInfo.json', content, err => {
       if (err === null) {
          console.log('[buildInfo] 构建信息写入成功！')
       } else {

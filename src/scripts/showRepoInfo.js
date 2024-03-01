@@ -5,7 +5,7 @@
  * @version 2.2
  */
 
-import buildInfo from '../../temp/buildInfo.json'
+import buildInfo from '../../scripts/buildInfo.json'
 import packageInfo from '../../package.json'
 
 // 处理详细版本

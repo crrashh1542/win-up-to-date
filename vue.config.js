@@ -11,7 +11,7 @@ const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
 const IS_PROD = ['production', 'prod'].includes(process.env.NODE_ENV)
 
 // 获取 build 信息并写入
-require('./prebuild.js')()
+require('./scripts/prebuild.js')()
 
 module.exports = defineConfig({
    transpileDependencies: true,
