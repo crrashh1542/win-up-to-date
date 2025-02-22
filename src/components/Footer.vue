@@ -5,7 +5,7 @@ defineOptions({ name: 'MainFooter' })
 <template>
     <div class="footer">
         <p>
-            (C) Copyright 2023-2024 crrashh1542. /
+            (C) Copyright 2023-2025 crrashh1542. /
             <a href="//beian.miit.gov.cn" target="_blank">蜀ICP备2022029657号-2</a> /
             <a href="//icp.gov.moe/?keyword=20220551" target="_blank">萌ICP备20220551号</a>
         </p>
