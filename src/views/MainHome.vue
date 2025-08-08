@@ -13,7 +13,7 @@ let state = reactive({
 })
 
 // STEP2 ---- 获取数据并填充
-axios.get('https://wutd.api.crrashh.com/v2/latestVersions')
+axios.get('https://p0-wutd.api.crrashh.com/v2/latestVersions')
     .then(response => {
         state.list = response.data.content
         state.isLoading = false

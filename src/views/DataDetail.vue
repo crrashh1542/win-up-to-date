@@ -32,7 +32,7 @@ export default {
         ]
         axios
             .get(
-                'https://wutd.api.crrashh.com/v1/detail?platform=' +
+                'https://p0-wutd.api.crrashh.com/v1/detail?platform=' +
                     platform +
                     '&build=' +
                     build
@@ -71,7 +71,7 @@ export default {
             let vueObj = this
             axios
                 .get(
-                    'https://wutd.api.crrashh.com/v1/detail?platform=' +
+                    'https://p0-wutd.api.crrashh.com/v1/detail?platform=' +
                         platform +
                         '&build=' +
                         build

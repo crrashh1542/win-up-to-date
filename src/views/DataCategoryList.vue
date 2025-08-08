@@ -27,7 +27,7 @@ export default {
         let platform = router.currentRoute.value.params.platform
         axios
             .get(
-                'https://wutd.api.crrashh.com/v1/category?platform=' + platform
+                'https://p0-wutd.api.crrashh.com/v1/category?platform=' + platform
             )
 
             // STEP3 ------ 处理并修改数据
@@ -68,7 +68,7 @@ export default {
             let vueObj = this
             axios
                 .get(
-                    'https://wutd.api.crrashh.com/v1/category?platform=' +
+                    'https://p0-wutd.api.crrashh.com/v1/category?platform=' +
                         category
                 )
                 .then((response) => {
