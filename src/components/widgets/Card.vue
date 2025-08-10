@@ -1,8 +1,14 @@
 <script setup>
-// 接收 mode 参数，若是 section 则为块级元素，否则为内联元素
+// 接收 mode 参数，inline，block，flex
 const props = defineProps(['mode'])
-let mode = props.mode
-if (mode !== 'section'){ mode = '' }
+// 默认为 inline
+let mode = 'inline'
+// 判断
+if(props.mode == 'block') {
+    mode = 'block'
+} else if(props.mode == 'flex') {
+    mode = 'flex'
+}
 </script>
 
 <template>
@@ -15,7 +21,6 @@ if (mode !== 'section'){ mode = '' }
 @import url('@/styles/global.less');
 
 .card {
-    display: inline-block;
     margin: 3px 0;
     padding: 18px calc(12px + 1.2%);
     line-height: 1.2;
@@ -24,7 +29,13 @@ if (mode !== 'section'){ mode = '' }
     border: 1px solid #e6e6e6;
     font-size: 18px;
 }
-.card.section {
+.card.inline {
+    display: inline-block;
+}
+.card.block {
     display: block;
+}
+.card.flex {
+    display: flex;
 }
 </style>
