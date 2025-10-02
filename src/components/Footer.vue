@@ -15,6 +15,7 @@ defineOptions({ name: 'MainFooter' })
 <style lang="less" scoped>
 @import url('@/styles/global.less');
 .footer {
+    margin-top: @wu-layout-footer-margin;
     border-top: 1px solid @wu-color-border;
     padding: 1em 36px;
     width: calc(100% - 72px);
