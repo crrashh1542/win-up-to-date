@@ -2,25 +2,25 @@
 // 引入库
 import { reactive, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
+import { Icon } from '@iconify/vue'
 import axios from 'axios'
 
 // 引入组件
-import Banner from '../components/Banner.vue'
-import Card from '../components/Card.vue'
-import Catalog from '../components/Catalog.vue'
-import CopiableCode from '../components/CopiableCode.vue'
-import LoadAnim from '../components/LoadAnim.vue'
-import TopNav from '../components/TopNav.vue'
+import Card from '@/components/widgets/Card.vue'
+import Code from '@/components/widgets/Code.vue'
+import LoadAnim from '@/components/widgets/LoadAnim.vue'
+import TopNav from '@/components/widgets/TopNav.vue'
+import initDetailData from '@/utils/initDetailData'
 
 export default {
-    name: 'DataDetails',
-    components: { Banner, LoadAnim, Card, Catalog, CopiableCode, TopNav },
+    name: 'DataDetail',
+    components: { LoadAnim, Card, Code, TopNav, Icon },
     setup() {
         // STEP1 ------ 设定初始值
-        let data = reactive({
+        let pageData = reactive({
             detail: { build: {} },
             isLoading: true,
-            customVersionRange: null,
+            nav: null
         })
 
         // STEP2 ------ 获取数据
@@ -30,58 +30,43 @@ export default {
             router.currentRoute.value.params.platform,
             router.currentRoute.value.params.build,
         ]
-        axios
-            .get(
-                'https://p0-wutd.api.crrashh.com/v1/detail?platform=' +
-                    platform +
-                    '&build=' +
-                    build
-            )
 
-            // STEP3 ------ 处理并修改数据
-            .then((response) => {
-                let resp = response.data.content
-                data.detail = resp
-                document.title = resp.build.number + ' / Windows Up-to-Date'
-                // 获取到数据后，关闭加载动画
-                data.isLoading = false
+        // STEP3 ------ 获取数据
+        axios.get(
+            'https://p0-wutd.api.crrashh.com/v1/detail?platform=' +
+            platform + '&build=' + build)
+
+            // STEP4 ------ 处理并修改数据
+            .then(response => {
+                initDetailData(response.data, pageData)
             })
             .catch(() => {
                 // 由于服务器设置，目前只返回 404
                 router.replace('/404')
             })
 
-        // STEP4 ------ 返回数据
-        return { ...toRefs(data) }
+        // STEP5 ------ 返回数据
+        return { ...toRefs(pageData) }
     },
     methods: {
-        // 组合导航路由路径
-        constructNavRoute(obj) {
-            return '/detail/' + obj.category + '/' + obj.build
-        },
-
-        // 组合归属路由路径
-        constructBelongingRoute(value) {
+        // 获取“构建归属”处的路由
+        getBelongingRoute(value) {
             return '/category/' + value
         },
 
         // 刷新数据
         refreshData(platform, build) {
-            document.title = build + ' / Windows Up-to-Date'
             let vueObj = this
-            axios
-                .get(
+            axios.get(
                     'https://p0-wutd.api.crrashh.com/v1/detail?platform=' +
-                        platform +
-                        '&build=' +
-                        build
-                )
-                .then((response) => {
-                    let resp = response.data.content
-                    vueObj.detail = resp
+                    platform + '&build=' + build)
+                .then(response => {
+                    // 由于 pageData 的数据已经存在于 Vue 实例上了，所以直接访问 vueObj
+                    initDetailData(response.data, vueObj)
                 })
                 .catch(() => {
-                    this.$router.replace('/404')
+                    // 由于服务器设置，目前只返回 404
+                    router.replace('/404')
                 })
         },
     },
@@ -90,92 +75,58 @@ export default {
 
 <template>
     <!-- 横幅 -->
-    <Banner class="z-20" :description="detail.build.number">
-        <div class="title">版本详情</div>
-    </Banner>
+    <div class="u-banner">版本详情</div>
+    <div class="u-subbanner">{{ detail.build.number }}</div>
 
     <!-- 加载动画 -->
     <LoadAnim v-if="isLoading" />
 
     <div class="wrapper" v-if="!isLoading">
         <!-- 快速导航 -->
-        <TopNav>
-            <router-link
-                :to="constructNavRoute(detail.nav.previous)"
-                v-if="detail.nav.previous != null"
-                @click="
-                    refreshData(
-                        detail.nav.previous.category,
-                        detail.nav.previous.build
-                    )
-                "
-            >
-                <span class="w-icon-left">
-                    {{ detail.nav.previous.build }}
-                </span>
-            </router-link>
-
-            <span class="grow"></span>
-
-            <router-link
-                :to="constructNavRoute(detail.nav.next)"
-                v-if="detail.nav.next != null"
-                @click="
-                    refreshData(detail.nav.next.category, detail.nav.next.build)
-                "
-            >
-                <span class="w-icon-right">
-                    {{ detail.nav.next.build }}
-                </span>
-            </router-link>
-        </TopNav>
+        <TopNav :data="nav" @event="refreshData" />
 
         <!-- 一览卡片 -->
         <Card class="overview">
-            <div class="leading-7">
-                <p class="flex">
-                    <span class="w-icon-tag">构建版号&nbsp;/&nbsp;</span>
-                    <span>{{ detail.build.number }}</span>
+            <div class="line-left">
+                <p>
+                    <Icon icon="fluent:tag-24-regular" width="22" height="22" />
+                    构建版号 / {{ detail.build.number }}
                 </p>
-                <p class="flex">
-                    <span class="w-icon-branch shrink-0"
-                        >构建分支&nbsp;/&nbsp;</span
-                    >
-                    <span>{{ detail.build.branch }}</span>
+                <p>
+                    <Icon icon="fluent:branch-24-regular" width="22" height="22" />
+                    构建分支 / {{ detail.build.branch }}
                 </p>
-                <p class="flex">
-                    <span class="w-icon-compile">编译时间&nbsp;/&nbsp;</span>
-                    <span>{{ detail.build.compileTime }}</span>
+                <p>
+                    <Icon icon="fluent:clock-24-regular" width="22" height="22" />
+                    编译时间 / {{ detail.build.compileTime }}
                 </p>
             </div>
             <div>
-                <p class="flex">
-                    <span class="w-icon-arch">系统架构&nbsp;/&nbsp;</span>
-                    <span v-for="i in detail.build.arch" :key="i"
-                        >{{ i }}&nbsp;&nbsp;</span
-                    >
+                <p>
+                    <Icon icon="fluent:developer-board-24-regular" width="22" height="22" />
+                    系统架构 / 
+                    <span v-for="i in detail.build.arch" :key="i">{{ i }}&nbsp;&nbsp;</span>
                 </p>
-                <p class="flex">
-                    <span class="w-icon-version">推送平台&nbsp;/&nbsp;</span>
-                    <span>{{ detail.build.counterpart }}</span>
+                <p>
+                    <Icon icon="fluent:search-24-regular" width="22" height="22" />
+                    推送平台 / {{ detail.build.counterpart }}
                 </p>
-                <p class="flex">
-                    <span class="w-icon-code">构建归属&nbsp;/&nbsp;</span>
-                    <router-link
-                        :to="constructBelongingRoute(detail.belongsTo.path)"
-                    >
+                <p>
+                    <Icon icon="fluent:code-24-regular" width="22" height="22" />
+                    构建归属 / 
+                    <router-link :to="getBelongingRoute(detail.belongsTo.path)">
                         {{ detail.belongsTo.name }}
                     </router-link>
                 </p>
             </div>
         </Card>
-        <br /><br />
 
-        <!-- 发版信息 -->
-        <Card>
-            <Catalog class="font-semibold w-icon-announcement"
-                >发版信息</Catalog
-            >
+        <!-- 发版信息卡片 -->
+        <Card mode="block">
+            <div class="u-catalog">
+                <Icon icon="fluent:megaphone-loud-24-regular" width="28" height="28" />
+                发版信息
+            </div>
 
             <div v-if="detail.release !== undefined">
                 <p v-if="detail.release.channel !== undefined">
@@ -187,60 +138,57 @@ export default {
                 <p v-if="detail.release.url !== undefined">
                     官方发版日志：
                     <a target="_blank" :href="detail.release.url">
-                        {{ detail.release.announcePlace }}</a
-                    >
+                        {{ detail.release.announcePlace }}</a>
                 </p>
                 <p v-if="detail.featureIds !== undefined">
                     ViveID 列表：
                     <a target="_blank" :href="detail.featureIds.url">
-                        {{ detail.featureIds.fileName }}</a
-                    >
+                        {{ detail.featureIds.fileName }}</a>
                 </p>
             </div>
-
-            <div class="placeholder w-full h-24 text-center" v-else>
+            <div class="placeholder" v-else>
                 <p>暂无可获取的发版信息</p>
             </div>
         </Card>
 
         <!-- 下载 UUP -->
-        <Card>
-            <Catalog class="font-semibold w-icon-uup">从 UUP 获取构建</Catalog>
+        <Card mode="block">
+            <div class="u-catalog">
+                <Icon icon="fluent:desktop-arrow-down-24-regular" width="28" height="28" />
+                从 UUP 获取构建
+            </div>
 
             <div v-if="detail.updateId !== undefined">
                 <p v-for="id in detail.updateId" :key="id.arch">
-                    {{ id.arch }}：<CopiableCode :value="id.id" />
+                    {{ id.arch }}：<Code :value="id.id" is-copiable="true" />
                 </p>
             </div>
-
-            <div class="placeholder w-full h-24 text-center" v-else>
+            <div class="placeholder" v-else>
                 <p>暂无可获取的 UUP 信息</p>
             </div>
         </Card>
 
         <!-- 下载 ISO -->
-        <Card>
-            <Catalog class="font-semibold w-icon-iso"
-                >下载 ISO / 更新包</Catalog
-            >
+        <Card mode="block">
+            <div class="u-catalog">
+                <Icon icon="fluent:box-24-regular" width="28" height="28" />
+                下载 ISO / 更新包
+            </div>
 
             <div v-if="detail.download !== undefined">
                 <p>文件名称：{{ detail.download.name }}</p>
                 <p>系统架构：{{ detail.download.arch }}</p>
                 <p>
-                    下载地址：<span
-                        v-for="(l, index) in detail.download.link"
-                        :key="index"
-                    >
+                    下载地址：
+                    <span v-for="(l, index) in detail.download.link" :key="index">
                         <a target="_blank" :href="l.url">{{ l.source }}</a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
                 </p>
-                <p>MD5：<CopiableCode :value="detail.download.md5" /></p>
-                <p>SHA-256：<CopiableCode :value="detail.download.sha256" /></p>
+                <p>MD5：<Code :value="detail.download.md5" is-break-word="true" is-copiable="true" /></p>
+                <p>SHA-256：<Code :value="detail.download.sha256" is-break-word="true" is-copiable="true" /></p>
             </div>
-
-            <div class="placeholder w-full h-24 text-center" v-else>
+            <div class="placeholder" v-else>
                 <p>暂无可供下载的内容</p>
             </div>
         </Card>
@@ -248,23 +196,40 @@ export default {
 </template>
 
 <style lang="less" scoped>
-@import url('@s/global.less');
+@import url('@/styles/global.less');
 
-.card {
-    padding: 0 1em;
-    background-color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 0.2em;
-    .catalog::before {
-        margin-right: @wu-icon-spacing;
+.overview {
+    display: var(--v-detail-overview);
+    .line-left {
+        width: var(--v-detail-overview-width);
     }
     p {
-        line-height: 1.4;
-        word-wrap: break-word;
-        font-size: var(--card-tsize); // 取自 ../components/Card.vue
-        text-overflow: ellipsis;
+        display: flex;
+        align-items: center;
+        gap: 6px;
     }
-    .placeholder > p {
-        line-height: 64px; // 等效于 h-24 再减去 32px，用于垂直居中偏上
-    }
+}
+.placeholder {
+    width: 100%;
+    height: 8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+// 响应式 ---- 移动端
+@media screen and (max-width: 700px) {
+   .wrapper { // v代表view
+      --v-detail-overview: block;
+      --v-detail-overview-width: 100%;
+   }
+}
+
+// 响应式 ---- PC
+@media screen and (min-width: 700px) {
+   .wrapper {
+      --v-detail-overview: flex;
+      --v-detail-overview-width: 50%;
+   }
 }
 </style>
