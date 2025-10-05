@@ -7,7 +7,7 @@
  * 
  * 参数说明：
  *    resp 即为 axios get 返回的 response.data
- *    data 应传递当前组件的 pageData
+ *    data 应传递当前 Vue 组件的 pageData
  */
 export default (respOrigin, data) => {
     let dataType = respOrigin.dataType // 获取的数据类型，区别 detail 和 category
@@ -23,6 +23,7 @@ export default (respOrigin, data) => {
     if(dataType == 'detail') {
         // 如果类型是 detail
         data.nav = {
+            type: 'detail',
             prev: {
                 platform: resp.nav.previous.category,
                 build: resp.nav.previous.build,
@@ -36,8 +37,9 @@ export default (respOrigin, data) => {
         }
         document.title = resp.build.number + ' / Windows Up-to-Date'
     } else {
-        // 如果类型是 category
+        // 如果类型是 categoryList
         data.nav = {
+            type: 'categoryList',
             prev: {
                 platform: resp.previous.name,
                 route: '/category/' + resp.previous.path

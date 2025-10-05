@@ -30,13 +30,11 @@ export default {
             router.currentRoute.value.params.platform,
             router.currentRoute.value.params.build,
         ]
-
-        // STEP3 ------ 获取数据
         axios.get(
             'https://p0-wutd.api.crrashh.com/v1/detail?platform=' +
             platform + '&build=' + build)
 
-            // STEP4 ------ 处理并修改数据
+            // STEP3 ------ 处理并修改数据
             .then(response => {
                 initDetailData(response.data, pageData)
             })
@@ -45,7 +43,7 @@ export default {
                 router.replace('/404')
             })
 
-        // STEP5 ------ 返回数据
+        // STEP4 ------ 返回数据
         return { ...toRefs(pageData) }
     },
     methods: {
@@ -55,11 +53,11 @@ export default {
         },
 
         // 刷新数据
-        refreshData(platform, build) {
+        refreshData(obj) {
             let vueObj = this
             axios.get(
                     'https://p0-wutd.api.crrashh.com/v1/detail?platform=' +
-                    platform + '&build=' + build)
+                    obj.platform + '&build=' + obj.build)
                 .then(response => {
                     // 由于 pageData 的数据已经存在于 Vue 实例上了，所以直接访问 vueObj
                     initDetailData(response.data, vueObj)

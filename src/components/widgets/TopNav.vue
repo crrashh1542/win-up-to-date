@@ -4,8 +4,8 @@ import { Icon } from '@iconify/vue'
 let nav = defineProps(['data'])
 let emit = defineEmits(['event'])
 
-const refreshData = (platform, build) => {
-   emit('event', platform, build)
+const refreshData = (obj) => {
+   emit('event', obj)
 }
 
 </script>
@@ -13,19 +13,43 @@ const refreshData = (platform, build) => {
 <template>
    <div class="nav">
 
-      <router-link class="icon-left" v-if="nav.data.prev != undefined"
+      <!-- 如果type是detail -->
+      <router-link class="icon-left"
+         v-if="nav.data.type == 'detail' && nav.data.prev != undefined"
          :to="nav.data.prev.route"
-         @click="refreshData(nav.data.prev.platform, nav.data.prev.build)">
+         @click="refreshData({
+            platform: nav.data.prev.platform, 
+            build: nav.data.prev.build })">
          <Icon icon="fluent:arrow-left-20-filled" />
-         {{ nav.data.prev.build }}
+         {{ nav.data.prev.build }} 
+      </router-link>
+      <!-- 如果type是categoryList -->
+      <router-link class="icon-left"
+         v-if="nav.data.type == 'categoryList' && nav.data.prev != undefined"
+         :to="nav.data.prev.route"
+         @click="refreshData({ platform: nav.data.prev.platform })">
+         <Icon icon="fluent:arrow-left-20-filled" />
+         {{ nav.data.prev.platform }} 
       </router-link>
 
       <span class="grow"></span>
       
-      <router-link class="icon-right" v-if="nav.data.next != undefined"
+      <!-- 如果type是detail -->
+      <router-link class="icon-right"
+         v-if="nav.data.type == 'detail' && nav.data.next != undefined"
          :to="nav.data.next.route"
-         @click="refreshData(nav.data.next.platform, nav.data.next.build)">
+         @click="refreshData({
+            platform: nav.data.next.platform, 
+            build: nav.data.next.build })">
          {{ nav.data.next.build }} <Icon icon="fluent:arrow-right-20-filled" />
+      </router-link>
+      <!-- 如果type是categoryList -->
+      <router-link class="icon-left"
+         v-if="nav.data.type == 'categoryList' && nav.data.next != undefined"
+         :to="nav.data.prev.route"
+         @click="refreshData({ platform: nav.data.next.platform })">
+         <Icon icon="fluent:arrow-left-20-filled" />
+         {{ nav.data.next.platform }} 
       </router-link>
    </div>
 </template>
