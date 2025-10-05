@@ -18,7 +18,7 @@ export default {
     setup() {
         // STEP1 ------ 设定初始值
         let pageData = reactive({
-            detail: { build: {} },
+            data: { build: {} },
             isLoading: true,
             nav: null
         })
@@ -74,7 +74,7 @@ export default {
 <template>
     <!-- 横幅 -->
     <div class="u-banner">版本详情</div>
-    <div class="u-subbanner">{{ detail.build.number }}</div>
+    <div class="u-subbanner">{{ data.build.number }}</div>
 
     <!-- 加载动画 -->
     <LoadAnim v-if="isLoading" />
@@ -88,32 +88,32 @@ export default {
             <div class="line-left">
                 <p>
                     <Icon icon="fluent:tag-24-regular" width="22" height="22" />
-                    构建版号 / {{ detail.build.number }}
+                    构建版号 / {{ data.build.number }}
                 </p>
                 <p>
                     <Icon icon="fluent:branch-24-regular" width="22" height="22" />
-                    构建分支 / {{ detail.build.branch }}
+                    构建分支 / {{ data.build.branch }}
                 </p>
                 <p>
                     <Icon icon="fluent:clock-24-regular" width="22" height="22" />
-                    编译时间 / {{ detail.build.compileTime }}
+                    编译时间 / {{ data.build.compileTime }}
                 </p>
             </div>
             <div>
                 <p>
                     <Icon icon="fluent:developer-board-24-regular" width="22" height="22" />
                     系统架构 / 
-                    <span v-for="i in detail.build.arch" :key="i">{{ i }}&nbsp;&nbsp;</span>
+                    <span v-for="i in data.build.arch" :key="i">{{ i }}&nbsp;&nbsp;</span>
                 </p>
                 <p>
                     <Icon icon="fluent:search-24-regular" width="22" height="22" />
-                    推送平台 / {{ detail.build.counterpart }}
+                    推送平台 / {{ data.build.counterpart }}
                 </p>
                 <p>
                     <Icon icon="fluent:code-24-regular" width="22" height="22" />
                     构建归属 / 
-                    <router-link :to="getBelongingRoute(detail.belongsTo.path)">
-                        {{ detail.belongsTo.name }}
+                    <router-link :to="getBelongingRoute(data.belongsTo.path)">
+                        {{ data.belongsTo.name }}
                     </router-link>
                 </p>
             </div>
@@ -126,22 +126,22 @@ export default {
                 发版信息
             </div>
 
-            <div v-if="detail.release !== undefined">
-                <p v-if="detail.release.channel !== undefined">
-                    推送频道：{{ detail.release.channel }}
+            <div v-if="data.release !== undefined">
+                <p v-if="data.release.channel !== undefined">
+                    推送频道：{{ data.release.channel }}
                 </p>
-                <p v-if="detail.release.channel !== undefined">
-                    推送时间：{{ detail.release.time }} (UTC)
+                <p v-if="data.release.channel !== undefined">
+                    推送时间：{{ data.release.time }} (UTC)
                 </p>
-                <p v-if="detail.release.url !== undefined">
+                <p v-if="data.release.url !== undefined">
                     官方发版日志：
-                    <a target="_blank" :href="detail.release.url">
-                        {{ detail.release.announcePlace }}</a>
+                    <a target="_blank" :href="data.release.url">
+                        {{ data.release.announcePlace }}</a>
                 </p>
-                <p v-if="detail.featureIds !== undefined">
+                <p v-if="data.featureIds !== undefined">
                     ViveID 列表：
-                    <a target="_blank" :href="detail.featureIds.url">
-                        {{ detail.featureIds.fileName }}</a>
+                    <a target="_blank" :href="data.featureIds.url">
+                        {{ data.featureIds.fileName }}</a>
                 </p>
             </div>
             <div class="placeholder" v-else>
@@ -156,8 +156,8 @@ export default {
                 从 UUP 获取构建
             </div>
 
-            <div v-if="detail.updateId !== undefined">
-                <p v-for="id in detail.updateId" :key="id.arch">
+            <div v-if="data.updateId !== undefined">
+                <p v-for="id in data.updateId" :key="id.arch">
                     {{ id.arch }}：<Code :value="id.id" is-copiable="true" />
                 </p>
             </div>
@@ -173,18 +173,18 @@ export default {
                 下载 ISO / 更新包
             </div>
 
-            <div v-if="detail.download !== undefined">
-                <p>文件名称：{{ detail.download.name }}</p>
-                <p>系统架构：{{ detail.download.arch }}</p>
+            <div v-if="data.download !== undefined">
+                <p>文件名称：{{ data.download.name }}</p>
+                <p>系统架构：{{ data.download.arch }}</p>
                 <p>
                     下载地址：
-                    <span v-for="(l, index) in detail.download.link" :key="index">
+                    <span v-for="(l, index) in data.download.link" :key="index">
                         <a target="_blank" :href="l.url">{{ l.source }}</a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
                 </p>
-                <p>MD5：<Code :value="detail.download.md5" is-break-word="true" is-copiable="true" /></p>
-                <p>SHA-256：<Code :value="detail.download.sha256" is-break-word="true" is-copiable="true" /></p>
+                <p>MD5：<Code :value="data.download.md5" is-break-word="true" is-copiable="true" /></p>
+                <p>SHA-256：<Code :value="data.download.sha256" is-break-word="true" is-copiable="true" /></p>
             </div>
             <div class="placeholder" v-else>
                 <p>暂无可供下载的内容</p>

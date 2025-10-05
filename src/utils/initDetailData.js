@@ -14,7 +14,7 @@ export default (respOrigin, data) => {
     let resp = respOrigin.content // 获取到的数据
 
     // 1. 重置数据
-    data.detail = resp
+    data.data = resp
 
     // 2. 关闭加载动画
     data.isLoading = false
