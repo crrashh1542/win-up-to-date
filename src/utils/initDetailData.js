@@ -20,35 +20,49 @@ export default (respOrigin, data) => {
     data.isLoading = false
 
     // 3. 设置导航栏和标题
+    let prev, next
+    // 如果类型是 detail
     if(dataType == 'detail') {
-        // 如果类型是 detail
-        data.nav = {
-            type: 'detail',
-            prev: {
+        // 判断是否存在上一个内容
+        if(resp.nav.previous != undefined) {
+            prev = {
                 platform: resp.nav.previous.category,
                 build: resp.nav.previous.build,
                 route: '/detail/' + resp.nav.previous.category + '/' + resp.nav.previous.build
-            },
-            next: {
+            }
+        } else { prev = undefined }
+        // 判断是否存在下一个内容
+        if(resp.nav.next != undefined) {
+            next = {
                 platform: resp.nav.next.category,
                 build: resp.nav.next.build,
                 route: '/detail/' + resp.nav.next.category + '/' + resp.nav.next.build
             }
-        }
+        } else { next = undefined }
+        // 设置数据
+        data.nav = { type: 'detail', prev, next }
         document.title = resp.build.number + ' / Windows Up-to-Date'
+
     } else {
         // 如果类型是 categoryList
-        data.nav = {
-            type: 'categoryList',
-            prev: {
+
+        // 判断是否存在上一个内容
+        if(resp.previous != undefined) {
+            prev = {
                 platform: resp.previous.name,
                 route: '/category/' + resp.previous.path
-            },
-            next: {
+            }
+        } else { prev = undefined }
+        // 判断是否存在下一个内容
+        if(resp.next != undefined) {
+            next = {
                 platform: resp.next.name,
                 route: '/category/' + resp.next.path
             }
-        }
+        } else { next = undefined }
+        // 设置数据
+        data.nav = { type: 'categoryList', prev, next }
         document.title = resp.name + ' / Windows Up-to-Date'
     }
+    
 }
