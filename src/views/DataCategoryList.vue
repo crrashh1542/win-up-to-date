@@ -2,58 +2,54 @@
 // 引入库
 import { reactive, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
+import { Icon } from '@iconify/vue'
 import axios from 'axios'
 
 // 引入组件
-import Banner from '../components/Banner.vue'
-import Card from '../components/Card.vue'
-import LoadAnim from '../components/LoadAnim.vue'
-import TopNav from '../components/TopNav.vue'
+import Card from '@/components/widgets/Card.vue'
+import LoadAnim from '@/components/widgets/LoadAnim.vue'
+import TopNav from '@/components/widgets/TopNav.vue'
+import initDetailData from '@/utils/initDetailData'
 
 export default {
     name: 'DataCategoryList',
-    components: { Banner, LoadAnim, Card, TopNav },
+    components: { LoadAnim, Card, TopNav, Icon },
     setup() {
         // STEP1 ------ 设定初始值
-        let data = reactive({
-            category: [],
+        let pageData = reactive({
+            data: {},
             isLoading: true,
             customVersionRange: null,
+            nav: null
         })
 
         // STEP2 ------ 获取数据
         // 通过当前路由，得到当前的 platform 并发送给 API
         let router = useRouter()
         let platform = router.currentRoute.value.params.platform
-        axios
-            .get(
-                'https://p0-wutd.api.crrashh.com/v1/category?platform=' + platform
-            )
+        axios.get(
+                'https://p0-wutd.api.crrashh.com/v1/category?platform=' + platform)
 
             // STEP3 ------ 处理并修改数据
-            .then((response) => {
-                let resp = response.data.content
-                // 获取到数据后，关闭加载动画
-                data.category = resp
-                data.isLoading = false
-                document.title = resp.name + ' / Windows Up-to-Date'
+            .then(response => {
+                initDetailData(response.data, pageData)
                 // 处理版本范围
-                if (resp.range[1] == null) {
+                let respContent = response.data.content
+                if (respContent.range[1] == null) {
                     // 如果没有提供最后一个版本，则为 “开始版本 ~ ?”
-                    data.customVersionRange = resp.range[0] + ' ~ ?'
+                    pageData.customVersionRange = respContent.range[0] + ' ~ ?'
                 } else {
                     // 如果提红利最后一个版本，则为 “开始版本 ~ 结束版本”
-                    data.customVersionRange =
-                        resp.range[0] + ' ~ ' + resp.range[1]
+                    pageData.customVersionRange =
+                        respContent.range[0] + ' ~ ' + respContent.range[1]
                 }
             })
             .catch(() => {
-                // 由于服务器设置，目前只返回 404
                 router.replace('/404')
             })
 
         // STEP4 ------ 返回数据
-        return { ...toRefs(data) }
+        return { ...toRefs(pageData) }
     },
     methods: {
         // 获取点击的构建的 path
@@ -62,24 +58,20 @@ export default {
         },
 
         // 刷新数据
-        refreshData(platform) {
-            document.title = platform.name + ' / Windows Up-to-Date'
-            let category = platform.path
+        refreshData(obj) {
             let vueObj = this
-            axios
-                .get(
-                    'https://p0-wutd.api.crrashh.com/v1/category?platform=' +
-                        category
-                )
-                .then((response) => {
-                    let resp = response.data.content
-                    vueObj.category = resp
-
-                    if (resp.range[1] == null) {
-                        vueObj.customVersionRange = resp.range[0] + ' ~ ?'
+            axios.get(
+                    'https://p0-wutd.api.crrashh.com/v1/category?platform=' + obj.platform)
+                .then(response => {
+                    // 由于 pageData 的数据已经存在于 Vue 实例上了，所以直接访问 vueObj
+                    initDetailData(response.data, vueObj)
+                    // 处理版本范围
+                    let respContent = response.data.content
+                    if (respContent.range[1] == null) {
+                        vueObj.customVersionRange = respContent.range[0] + ' ~ ?'
                     } else {
                         vueObj.customVersionRange =
-                            resp.range[0] + ' ~ ' + resp.range[1]
+                            respContent.range[0] + ' ~ ' + respContent.range[1]
                     }
                 })
                 .catch(() => {
@@ -92,123 +84,98 @@ export default {
 
 <template>
     <!-- 横幅 -->
-    <Banner class="z-20" :description="category.name">
-        <div class="title">版本列表</div>
-    </Banner>
+    <div class="u-banner">版本列表</div>
+    <div class="u-subbanner">{{ data.name }}</div>
 
     <!-- 加载动画 -->
     <LoadAnim v-if="isLoading" />
 
-    <main v-if="!isLoading">
+    <div class="wrapper" v-if="!isLoading">
         <!-- 快速导航 -->
-        <TopNav>
-            <router-link
-                :to="category.previous.path"
-                v-if="category.previous != null"
-                @click="refreshData(category.previous)"
-            >
-                <span class="w-icon-left">{{ category.previous.name }}</span>
-            </router-link>
-
-            <span class="grow"></span>
-
-            <router-link
-                :to="category.next.path"
-                v-if="category.next != null"
-                @click="refreshData(category.next)"
-            >
-                <span class="w-icon-right">{{ category.next.name }}</span>
-            </router-link>
-        </TopNav>
+        <TopNav :data="nav" @event="refreshData" />
 
         <!-- 基本信息 -->
-        <Card class="overview">
-            <div>
-                <p class="w-icon-code">平台代号 / {{ category.codename }}</p>
-                <p class="w-icon-time">开发周期 / {{ category.semester }}</p>
+        <Card class="overview" mode="block">
+            <div class="line-left">
+                <p>
+                    <Icon icon="fluent:laptop-settings-24-regular" width="22" height="22" />
+                    平台代号 / {{ data.codename }}
+                </p>
+                <p>
+                    <Icon icon="fluent:code-24-regular" width="22" height="22" />
+                    开发周期 / {{ data.semester }}
+                </p>
             </div>
             <div>
-                <p class="w-icon-tag">版本范围 / {{ customVersionRange }}</p>
-                <p class="w-icon-compile">
-                    分类归属 / {{ category.belonging }}
+                <p>
+                    <Icon icon="fluent:tag-24-regular" width="22" height="22" />
+                    版本范围 / {{ customVersionRange }}
+                </p>
+                <p>
+                    <Icon icon="fluent:square-multiple-24-regular" width="22" height="22" />
+                    分类归属 / {{ data.belonging }}
                 </p>
             </div>
         </Card>
 
         <!-- 数据表 -->
-        <div class="data rounded-lg shadow">
-            <div class="head">
+        <Card mode="block" class="data">
+            <div class="row">
                 <span class="left">版本</span>
-                <span class="right">发布时间</span>
+                <span class="right">发布日期</span>
             </div>
+            <router-link class="row" v-for="r in data.list" :key="r[0]" :to="getPath(r[0])">
+                    <span class="left">{{ r[0] }}</span>
+                    <span class="right">{{ r[1] }}</span>
+            </router-link>
+        </Card>
 
-            <div
-                class="content leading-8"
-                v-for="row in category.list"
-                :key="row[0]"
-            >
-                <router-link :to="getPath(row[0])">
-                    <span class="left">{{ row[0] }}</span>
-                    <span class="right">{{ row[1] }}</span>
-                </router-link>
-            </div>
-        </div>
-    </main>
+    </div>
 </template>
 
 <style lang="less" scoped>
-@import url('@s/global.less');
-
-// 数据表
+@import url('@/styles/global.less');
+.overview {
+    display: var(--v-detail-overview);
+    .line-left {
+        width: var(--v-detail-overview-width);
+    }
+    p {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+}
 .data {
-    margin: 1.5em 0;
-    .left {
-        width: 30%;
-    }
-    .right {
-        width: 70%;
-    }
+    padding: 0;
+    font-size: 1rem;
 
-    .head {
-        background-color: #fff;
-        border-bottom: 1px solid #ccc;
-
-        span {
-            display: inline-block;
-            padding: 8px 1em;
-            font-size: var(--th-font-size);
-        }
+    .row {
+        padding: 12px calc(18px + 1.2%);
+        display: flex;
+        border-bottom: 1px solid @wu-color-border;
+        transition: background-color 0.2s ease;
+        .left { flex: 0 0 40%; }
+        .right { flex: 0 0 60%; }
     }
-
-    .content {
-        background-color: @wu-color-theme-bg;
-        border-bottom: 0.25px solid #dedede;
-        a {
-            display: block;
-        }
-        span {
-            padding: 4px 1em;
-            font-size: var(--td-font-size);
-            display: inline-block;
-        }
-    }
-
-    .content:hover {
-        background-color: #fff;
+    a.row:hover {
+        background-color: @wu-color-base;
     }
 }
 
-@media screen and (max-width: 650px) {
-    main {
-        --th-font-size: 16px;
-        --td-font-size: 16px;
-    }
+// 响应式 ---- 移动端
+@media screen and (max-width: 700px) {
+   .wrapper { // v代表view
+      --v-detail-overview: block;
+      --v-detail-overview-width: 100%;
+   }
 }
 
-@media screen and (min-width: 650px) {
-    main {
-        --th-font-size: 20px;
-        --td-font-size: 18px;
-    }
+// 响应式 ---- PC
+@media screen and (min-width: 700px) {
+   .wrapper {
+      --v-detail-overview: flex;
+      --v-detail-overview-width: 50%;
+   }
 }
 </style>
