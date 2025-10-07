@@ -9,25 +9,22 @@
 
 如你所见，Windows Up-to-Date 是一个用于反映 Windows 系统各版本情况实时进展的项目。
 
-这是受到 [ChangeWindows](https://changewindows.org) 启发而制作的一个便民项目，也算作我的一个 [Vue 3](https://github.com/vuejs/core) + [Vue Router 4](https://github.com/vuejs/router) + [Fluent UI Web Component 2](https://github.com/microsoft/fluentui/tree/master/packages/web-components) 的一个练手项目 ~~（为自己代码质量低找借口）~~。由于目前在测试阶段，所以可能会出现较多的 bug，敬请谅解 :(
-
-当然，咱也灰常欢迎大佬们的 [issue](https://github.com/crrashh1542/win-up-to-date/issues) 和 [PR](https://github.com/crrashh1542/win-up-to-date/pulls) 啦~
+这是受到 [ChangeWindows](https://changewindows.org) 启发而制作的一个便民项目，技术栈为：[Vue 3](https://github.com/vuejs/core) + [Vue Router 4](https://github.com/vuejs/router)。由于该项目练手用~~（为自己代码质量低找借口）~~，欢迎各位提 issue 和 PR！
 
 ## 部署
 
 若要下载已打包好的代码，请移步 [Releases](https://github.com/crrashh1542/win-up-to-date/releases)。
 
-若要自行打包，需要注意以下几点：
-
--   必须要将项目 clone 下来，使用 zip 源代码下载方式会导致 prebuild 环节出错。
--   包管理器使用 PNPM，需要先安装管理器再安装依赖。
+若要自行打包，需要注意须要将项目 clone 下来，使用 zip 源代码下载方式会导致 prebuild 环节出错。
 
 ```bash
+git clone https://github.com/crrashh1542/win-up-to-date --depth=1
+cd win-up-to-date
 npm install pnpm -g
 pnpm install
 ```
 
--   启动各环境的命令详见 [`package.json`](./package.json)，~~测试环境以后会加上的！~~
+启动各环境的命令详见 [`package.json`](./package.json)，~~测试环境以后会加上的！~~
 
 ## 分支相关
 
@@ -37,4 +34,5 @@ pnpm install
 以代号开头的分支为某版本阶段的发布分支（即所有 Releases 都经由此分支），以下列表内加粗行表示为当前工作进行的分支。
 | 代号简写 | 代号 | 范围 |
 |----------|---------------|---------------|
-| **`th`** | **Threshold** | **v0 ~ v1.0** |
+| **`th`** | **Threshold** | **v0.x** |
+| **`hb`** | **Hibiscus**  | **v1.0** |

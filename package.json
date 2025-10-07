@@ -1,8 +1,8 @@
 {
     "name": "win-up-to-date",
-    "version": "0.13.9",
+    "version": "1.0.0-beta.0",
     "description": "A website project showing the latest status of Windows Insider versions.",
-    "author": "crrashh1542 <kotsuki@crrashh.com>",
+    "author": "crrashh1542 <1542@crrashh.com>",
     "homepage": "https://wutd.crrashh.com",
     "type": "module",
     "repository": {
@@ -22,24 +22,24 @@
         "p:write": "prettier . --write"
     },
     "devDependencies": {
-        "vue": "^3.5.13"
+        "@types/node": "^22.10.2",
+        "@vitejs/plugin-vue": "^5.2.1",
+        "autoprefixer": "^10.4.20",
+        "eslint": "^9.17.0",
+        "eslint-plugin-vue": "^9.32.0",
+        "moment": "^2.30.1",
+        "prettier": "^3.4.2",
+        "vite": "^6.0.6",
+        "vite-plugin-pwa": "^0.21.1"
     },
     "dependencies": {
         "@iconify/vue": "^4.2.0",
         "@studio384/amicons": "1.0.0-alpha.8",
-        "@types/node": "^22.10.2",
-        "@vitejs/plugin-vue": "^5.2.1",
-        "autoprefixer": "^10.4.20",
         "axios": "^1.7.9",
-        "eslint": "^9.17.0",
-        "eslint-plugin-vue": "^9.32.0",
         "js-cookie": "^3.0.5",
         "less": "^4.2.1",
-        "moment": "^2.30.1",
         "normalize.css": "^8.0.1",
-        "prettier": "^3.4.2",
-        "vite": "^6.0.6",
-        "vite-plugin-pwa": "^0.21.1",
+        "vue": "^3.5.13",
         "vue-clipboard3": "^2.0.0",
         "vue-router": "^4.5.0"
     },
