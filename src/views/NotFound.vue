@@ -1,15 +1,11 @@
 <script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
 import Button from '../components/widgets/Button.vue'
 
 defineOptions({ name: 'ViewNotFound' })
 document.title = '404 / Windows Up-to-Date'
-
-function goBack(){
-    this.$router.back(-1)
-}
-function goHome(){
-    this.$router.push('/')
-}
 </script>
 
 <template>
@@ -17,9 +13,9 @@ function goHome(){
         <h1>404 NOT Found</h1>
         <p>( > < )&nbsp;&nbsp;Error！这样我会出现困扰的！</p><br/>
         <p>
-            <Button @click="goBack">返回上级</Button>
+            <Button @click="router.back()">返回上级</Button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <Button @click="goHome">回到主页</Button>
+            <Button @click="router.push('/')">回到主页</Button>
         </p>
     </div>
 </template>
