@@ -1,6 +1,5 @@
 <script setup>
 import './styles/reset.less'
-import 'normalize.css/normalize.css'
 import Wrapper from './components/Wrapper.vue'
 </script>
 

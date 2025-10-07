@@ -37,13 +37,14 @@ export default defineConfig({
                     },
                 ],
             },
-        }),
+        })
     ],
     server: {
         port: 14724,
         host: true,
     },
     build: {
+        assetsInlineLimit: 6144,
         rollupOptions: {
             output: {
                 hashCharacters: 'hex',
@@ -52,11 +53,21 @@ export default defineConfig({
                 entryFileNames: '_wu/[name].[hash].js',
                 minifyInternalExports: true,
                 manualChunks(id) {
+                    // vendor
                     if (id.includes('@vue')) {
-                        return 'vendors/vue-rt'
-                    }
-                    if (id.includes('vue-router')) {
+                        return 'vendors/runtime'
+                    } else if (id.includes('vue-router')) {
                         return 'vendors/router'
+                    } else if (id.includes('axios')) {
+                        return 'vendors/axios'
+                    }
+                    // 组件库
+                    else if (id.includes('src/components')) {
+                        return 'components'
+                    }
+                    // 主要页面
+                    else if (id.includes('src/views/Main') || id.includes('NotFound')) {
+                        return 'MainViews'
                     }
                 },
             },
