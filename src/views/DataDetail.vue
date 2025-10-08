@@ -158,7 +158,7 @@ export default {
 
             <div v-if="data.updateId !== undefined">
                 <p v-for="id in data.updateId" :key="id.arch">
-                    {{ id.arch }}：<Code :value="id.id" is-copiable="true" />
+                    {{ id.arch }}：<Code :value="id.id" is-copiable=true />
                 </p>
             </div>
             <div class="placeholder" v-else>
@@ -183,8 +183,8 @@ export default {
                         &nbsp;&nbsp;&nbsp;
                     </span>
                 </p>
-                <p>MD5：<Code :value="data.download.md5" is-break-word="true" is-copiable="true" /></p>
-                <p>SHA-256：<Code :value="data.download.sha256" is-break-word="true" is-copiable="true" /></p>
+                <p>MD5：<Code :value="data.download.md5" is-break-word=true is-copiable=true /></p>
+                <p>SHA-256：<Code :value="data.download.sha256" is-break-word=true is-copiable=true /></p>
             </div>
             <div class="placeholder" v-else>
                 <p>暂无可供下载的内容</p>

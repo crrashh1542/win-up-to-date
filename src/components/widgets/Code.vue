@@ -11,7 +11,7 @@ import { Icon } from '@iconify/vue'
 
 const { toClipboard } = useClipboard()
 
-const props = defineProps({ value: String, isCopiable: Boolean, isBreakWord: Boolean })
+const props = defineProps({ value: String, isCopiable: String, isBreakWord: String })
 
 // 处理是否断词强制换行
 let breakWord = ''
