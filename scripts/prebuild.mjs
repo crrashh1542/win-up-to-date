@@ -8,13 +8,28 @@
 // STEP1 -------- 导入依赖
 import fs from 'node:fs'
 import childProcess from 'node:child_process'
-import moment from 'moment'
 
 // STEP2 -------- 获取构建时间
 const getTime = () => {
-    const buildTime = moment(Date.now()).format()
-    console.log('[buildInfo] 已获取构建时间：' + buildTime)
-    return buildTime
+    let now = new Date();
+    // 获取年、月、日、时、分、秒
+    let year = now.getFullYear()
+    let month = String(now.getMonth() + 1).padStart(2, '0')
+    let day = String(now.getDate()).padStart(2, '0')
+    let hours = String(now.getHours()).padStart(2, '0')
+    let minutes = String(now.getMinutes()).padStart(2, '0')
+    let seconds = String(now.getSeconds()).padStart(2, '0')
+    // 获取时区偏移量（分钟）
+    let offsetTimeZone = now.getTimezoneOffset();
+    let offsetHours = Math.floor(Math.abs(offsetTimeZone) / 60)
+    let offsetMinutes = Math.abs(offsetTimeZone) % 60
+    // 构建时区字符串（+/-HH:MM）
+    let timezoneSign = offsetTimeZone <= 0 ? '+' : '-'
+    let timezoneString = `${timezoneSign}${String(offsetHours).padStart(2, '0')}:${String(offsetMinutes).padStart(2, '0')}`
+    // 组合格式
+    let formattedTime = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}${timezoneString}`
+    console.log('[buildInfo] 已获取构建时间：' + formattedTime)
+    return formattedTime
 }
 
 // STEP3 -------- 获取构建 hash
