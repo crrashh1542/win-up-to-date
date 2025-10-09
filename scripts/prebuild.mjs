@@ -55,7 +55,7 @@ const getBranch = () => {
     let buildBranch = childProcess
         .execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' })
         .split('\n')[0]
-    buildBranch = buildBranch.replace('/', '_')
+    buildBranch = buildBranch.replaceAll('/', '_')
     console.log('[buildInfo] 已获取当前分支：' + buildBranch)
     return buildBranch
 }
