@@ -12,7 +12,7 @@ const appVersion = ref(version)
     <!-- Part 1 ---- 顶部导航栏 -->
     <div class="topbar">
         <div class="title">
-            <span class="name">Windows Up-to-Date</span>&nbsp;
+            <router-link to="/" class="name">Windows Up-to-Date</router-link>&nbsp;
             <span class="version">v{{ appVersion }}</span>
         </div>
         <div class="u-grow"></div>
@@ -25,7 +25,7 @@ const appVersion = ref(version)
         <!-- Part 2 ---- 左侧（移动端底部）导航栏 -->
         <div class="navbar">
             <router-link to="/" class="section">
-                <Icon icon="fluent:tag-24-filled"></Icon>
+                <Icon icon="fluent:tag-24-regular"></Icon>
                 <div class="name">版本</div>
             </router-link>
             <router-link to="/category" class="section">
@@ -162,7 +162,7 @@ main {
         .container-inner {
             padding: 0 36px;
             width: calc(100% - 72px);
-            min-height: calc(100% - 1px);
+            min-height: calc(100% - 36px);
         }
     }
 }
