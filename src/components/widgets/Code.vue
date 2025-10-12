@@ -42,8 +42,8 @@ code {
     padding: .2em .4em;
     line-height: 1.5rem;
     border-radius: 4px;
-    font-family: 'JetBrains Mono';
-    font-size: 15px;
+    font-family: 'JetBrains Mono' !important;
+    font-size: 14px;
 }
 code.break-word {
     word-break: break-all;
