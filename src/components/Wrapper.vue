@@ -1,11 +1,27 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
 import { version } from '../../package.json'
-import Foo from './Footer.vue';
 
+import Foo from './Footer.vue'
+import Popup from './AboutPopup.vue'
+
+const router = useRouter()
 defineOptions({ name: 'MainWrapper' })
+
 const appVersion = ref(version)
+const isPopupVisible = ref(false)
+
+const openAbout = () => {
+    const ua = navigator.userAgent || window.opera
+    const mobileRegex = /android|iphone|ipad|ipod|blackberry|mobile|phone|webos|kindle|tablet/i
+    if(mobileRegex.test(ua.toLowerCase())) { // 如果匹配移动端规则，就前往单独的关于页面
+        router.push('/about')
+    } else { // 否则（即 PC 端则通过弹窗展示关于页面）
+        isPopupVisible.value = true
+    }
+}
 </script>
 
 <template>
@@ -16,8 +32,8 @@ const appVersion = ref(version)
             <span class="version">v{{ appVersion }}</span>
         </div>
         <div class="u-grow"></div>
-        <div class="setting">
-            <Icon icon="fluent:settings-24-regular" />
+        <div class="about">
+            <Icon icon="fluent:info-24-regular" @click="openAbout" />
         </div>
     </div>
 
@@ -32,9 +48,9 @@ const appVersion = ref(version)
                 <Icon icon="fluent:library-24-regular" />
                 <div class="name">分类</div>
             </router-link>
-            <router-link to="/about" class="section">
-                <Icon icon="fluent:info-24-regular" />
-                <div class="name">关于</div>
+            <router-link to="/settings" class="section">
+                <Icon icon="fluent:settings-24-regular" />
+                <div class="name">设置</div>
             </router-link>
         </div>
 
@@ -52,6 +68,9 @@ const appVersion = ref(version)
                 <Foo />
             </div>
         </main>
+
+        <!-- Part 4 ---- 右上角可触发的”关于”弹窗 -->
+        <Popup v-model:visibility="isPopupVisible" />
 
 </template>
 
@@ -80,7 +99,7 @@ const appVersion = ref(version)
             font-size: 14px;
         }
     }
-    .setting {
+    .about {
         cursor: pointer;
         svg {
             width: 1.2em;
