@@ -62,8 +62,8 @@ export default defineConfig({
                         return 'vendors/axios'
                     }
                     // 组件库
-                    else if (id.includes('src/components')) {
-                        return 'components'
+                    else if (id.includes('src/components/widgets')) {
+                        return 'widgets'
                     }
                     // 主要页面
                     else if (id.includes('src/views/Main') || id.includes('NotFound')) {
