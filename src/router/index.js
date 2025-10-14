@@ -5,32 +5,32 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         // GROUP 1 ---- 基础设施
-        { path: '/', component: () => import('../../src/views/MainHome.vue') },
-        {
-            path: '/about',
-            component: () => import('../../src/views/MainAbout.vue'),
-        },
+        { path: '/', component: () => import('@/views/MainHome.vue') },
+        { path: '/about', component: () => import('@/views/MainAbout.vue') },
+        { path: '/settings', component: () => import('@/views/MainSettings.vue') },
 
-        // GROUP 2 ---- 异常情况配置（404）
-        {
-            path: '/404',
-            name: '404',
-            component: () => import('../../src/views/NotFound.vue'),
-        },
-        { path: '/:pathMatch(.*)', redirect: '/404' },
-
-        // GROUP 3 ---- 数据页面
-        { path: '/category', redirect: '/category/germanium' }, // 临时作为类型首页
+        // GROUP 2 ---- 数据页面
+        { path: '/category', redirect: '/category/26H1-bromine' }, // 临时作为类型首页
         {
             path: '/category/:platform',
             name: 'category',
-            component: () => import('../../src/views/DataCategoryList.vue'),
+            component: () => import('@/views/DataCategoryList.vue'),
         },
         {
             path: '/detail/:platform/:build',
             name: 'detail',
-            component: () => import('../../src/views/DataDetail.vue'),
+            component: () => import('@/views/DataDetail.vue'),
         },
+
+        // GROUP 3 ---- 异常情况配置（404）
+        {
+            path: '/404',
+            name: '404',
+            component: () => import('@/views/NotFound.vue'),
+        },
+        { path: '/:pathMatch(.*)', redirect: '/404' },
+
+        
     ],
 })
 
