@@ -54,7 +54,7 @@ const emit = defineEmits(['update:visibility'])
         height: 60%;
         max-width: 1600px;
         max-height: 900px;
-        min-width: 960px;
+        min-width: 680px;
         min-height: 600px;
         border-radius: @wu-layout-radius;
         box-shadow: @wu-layout-shadow;
