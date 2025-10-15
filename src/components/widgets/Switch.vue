@@ -4,11 +4,23 @@
 -->
 <script setup>
 import { Icon } from '@iconify/vue'
+
+const props = defineProps({
+    isChecked: {
+        type: Boolean,
+        default: false
+    },
+    isDisabled: {
+        type: Boolean,
+        default: false
+    }
+})
 </script>
 
 <template>
     <div class="switch">
-        <input class="input-box" role="switch" type="checkbox" />
+        <input class="input-box" role="switch" type="checkbox"
+               :checked="isChecked" :disabled="isDisabled" />
         <div aria-hidden="true" class="indicator">
             <Icon icon="fluent:circle-24-filled" />
         </div>
@@ -89,6 +101,9 @@ import { Icon } from '@iconify/vue'
     .input-box:enabled:checked:hover:active ~ .indicator {
         background-color: #005a9e;
         border-color: transparent;
+    }
+    .input-box:disabled ~ .indicator {
+        color: #bdbdbd;
     }
     .input-box:disabled:not(:checked) ~ .indicator {
         border-color: #e0e0e0;
