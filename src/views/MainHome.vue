@@ -147,18 +147,18 @@ axios.get('https://p0-wutd.api.crrashh.com/v2/latestVersions')
 
 /* 卡片多端适配 ----- BEGIN */
 // SEC 1 ------ 两列
-@media screen and (min-width: 1150px) {
+@media screen and (min-width: 1100px) {
     .card {
         --card-width: calc(31% - 5px * 3);
     }
 }
-@media screen and (max-width: 1150px) {
+@media screen and (max-width: 1100px) {
     .card {
-        --card-width: 46%;
+        --card-width: calc(46% - 5px * 2);
     }
 }
 // SEC 2 ------ 一列
-@media screen and (max-width: 620px) {
+@media screen and (max-width: 750px) {
     .card {
         --card-width: 100%;
     }
