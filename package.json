@@ -1,6 +1,6 @@
 {
     "name": "win-up-to-date",
-    "version": "1.0.0-beta.1",
+    "version": "1.0.0-beta.2",
     "description": "A website project showing the latest status of Windows Insider versions.",
     "author": "crrashh1542 <1542@crrashh.com>",
     "homepage": "https://wutd.crrashh.com",
@@ -26,9 +26,7 @@
         "@vitejs/plugin-vue": "^6.0.1",
         "eslint": "^9.37.0",
         "eslint-plugin-vue": "^10.5.0",
-        "prettier": "^3.6.2",
-        "vite": "^7.1.9",
-        "vite-plugin-pwa": "^1.0.3"
+        "prettier": "^3.6.2"
     },
     "dependencies": {
         "@iconify/vue": "^5.0.0",
@@ -37,6 +35,9 @@
         "js-cookie": "^3.0.5",
         "less": "^4.4.2",
         "normalize.css": "^8.0.1",
+        "pinia": "^3.0.3",
+        "vite": "^7.1.9",
+        "vite-plugin-pwa": "^1.0.3",
         "vue": "^3.5.22",
         "vue-clipboard3": "^2.0.0",
         "vue-router": "^4.5.1"

@@ -36,7 +36,7 @@ if (mode !== 'filled'){ mode = '' }
     <div class="placeholder" v-if="mode == 'filled'">placeholder</div>
 </template>
 
-<style lang="less">
+<style lang="less" scoped>
 .load-anim {
     --spinner-duration: 1.5s;
     --spinner-indicatorSize: 4px;

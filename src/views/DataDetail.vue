@@ -77,7 +77,7 @@ export default {
     <div class="u-subbanner">{{ data.build.number }}</div>
 
     <!-- 加载动画 -->
-    <LoadAnim v-if="isLoading" />
+    <LoadAnim v-if="isLoading" mode="filled" />
 
     <div class="wrapper" v-if="!isLoading">
         <!-- 快速导航 -->
