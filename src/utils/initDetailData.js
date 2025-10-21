@@ -1,9 +1,6 @@
 /**
  * 此脚本用于处理 Detail 相关 View 中的数据初始化/刷新
- * @version 1.0
- * 
- * TODO：detail 的 previous 和 next 是包裹在 nav 对象里的，而 category
- *       的是直接写在根节点上的，以后维护 API 时需要注意统一。
+ * @version 1.1
  * 
  * 参数说明：
  *    resp 即为 axios get 返回的 response.data
@@ -47,17 +44,19 @@ export default (respOrigin, data) => {
         // 如果类型是 categoryList
 
         // 判断是否存在上一个内容
-        if(resp.previous != undefined) {
+        if(resp.nav.previous != undefined) {
             prev = {
-                platform: resp.previous.name,
-                route: '/category/' + resp.previous.path
+                platform: resp.nav.previous.name,
+                path: resp.nav.previous.path,
+                route: '/category/' + resp.nav.previous.path
             }
         } else { prev = undefined }
         // 判断是否存在下一个内容
-        if(resp.next != undefined) {
+        if(resp.nav.next != undefined) {
             next = {
-                platform: resp.next.name,
-                route: '/category/' + resp.next.path
+                platform: resp.nav.next.name,
+                path: resp.nav.next.path,
+                route: '/category/' + resp.nav.next.path
             }
         } else { next = undefined }
         // 设置数据

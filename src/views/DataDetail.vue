@@ -31,7 +31,7 @@ export default {
             router.currentRoute.value.params.build,
         ]
         axios.get(
-            'https://p0-wutd.api.crrashh.com/v1/detail?platform=' +
+            'https://p0-wutd.api.crrashh.com/v2/detail?platform=' +
             platform + '&build=' + build)
 
             // STEP3 ------ 处理并修改数据
@@ -56,7 +56,7 @@ export default {
         refreshData(obj) {
             let vueObj = this
             axios.get(
-                    'https://p0-wutd.api.crrashh.com/v1/detail?platform=' +
+                    'https://p0-wutd.api.crrashh.com/v2/detail?platform=' +
                     obj.platform + '&build=' + obj.build)
                 .then(response => {
                     // 由于 pageData 的数据已经存在于 Vue 实例上了，所以直接访问 vueObj
