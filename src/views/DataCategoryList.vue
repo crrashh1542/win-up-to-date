@@ -11,6 +11,8 @@ import LoadAnim from '@/components/widgets/LoadAnim.vue'
 import TopNav from '@/components/widgets/TopNav.vue'
 import initDetailData from '@/utils/initDetailData'
 
+const api = import.meta.env.VITE_API_URL
+
 export default {
     name: 'DataCategoryList',
     components: { LoadAnim, Card, TopNav, Icon },
@@ -27,8 +29,7 @@ export default {
         // 通过当前路由，得到当前的 platform 并发送给 API
         let router = useRouter()
         let platform = router.currentRoute.value.params.platform
-        axios.get(
-                'https://p0-wutd.api.crrashh.com/v2/category?platform=' + platform)
+        axios.get(api + '/category?platform=' + platform)
 
             // STEP3 ------ 处理并修改数据
             .then(response => {
@@ -60,8 +61,7 @@ export default {
         // 刷新数据
         refreshData(obj) {
             let vueObj = this
-            axios.get(
-                    'https://p0-wutd.api.crrashh.com/v2/category?platform=' + obj.platform)
+            axios.get(api + '/category?platform=' + obj.platform)
                 .then(response => {
                     // 由于 pageData 的数据已经存在于 Vue 实例上了，所以直接访问 vueObj
                     initDetailData(response.data, vueObj)

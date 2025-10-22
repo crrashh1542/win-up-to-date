@@ -13,13 +13,14 @@ let { settings } = storeToRefs(settingsStore)
 
 // STEP1 ---- 初始化
 document.title = 'Windows Up-to-Date'
+const api = import.meta.env.VITE_API_URL
 let state = reactive({
     list: [],
     isLoading: true,
 })
 
 // STEP2 ---- 获取数据并填充
-axios.get('https://p0-wutd.api.crrashh.com/v2/latestVersions')
+axios.get(api + '/latestVersions')
     .then(response => {
         state.list = response.data.content
         state.isLoading = false
@@ -42,8 +43,9 @@ axios.get('https://p0-wutd.api.crrashh.com/v2/latestVersions')
                 {{ c.category }}
             </div>
 
-            <!-- 内容卡片（若存在 category 属性，则提供 router-link） -->
+            <!-- 内容卡片 -->
             <Card v-for="build in c.releases" :key="build.name" :class="build.style">
+                
                 <!-- 如果 build.category 存在则设置 router-link -->
                 <router-link :to="'/detail/' + build.category + '/' + build.version"
                     v-if="build.category !== undefined">
