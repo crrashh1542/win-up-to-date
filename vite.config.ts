@@ -26,14 +26,14 @@ export default defineConfig({
                 theme_color: '#f6f8fe',
                 icons: [
                     {
-                        src: 'pwa-192.png',
-                        sizes: '192x192',
-                        type: 'image/png',
+                        src: 'pwa-128.jpg',
+                        sizes: '48x48 72x72 96x96 128x128',
+                        type: 'image/jpeg',
                     },
                     {
-                        src: 'pwa-512.png',
-                        sizes: '512x512',
-                        type: 'image/png',
+                        src: 'pwa-256.jpg',
+                        sizes: '144x144 192x192 256x256',
+                        type: 'image/jpeg',
                     },
                 ],
             },
