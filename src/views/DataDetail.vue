@@ -171,7 +171,7 @@ export default {
                 下载 ISO / 更新包
             </div>
 
-            <div v-if="data.download !== undefined">
+            <div v-if="data.download !== undefined && data.download != {}">
                 <p>文件名称：{{ data.download.name }}</p>
                 <p>系统架构：{{ data.download.arch }}</p>
                 <p>
