@@ -42,24 +42,31 @@ export default defineConfig({
     server: {
         port: 14724,
         host: true,
+        proxy: {
+           '/api': {
+              target: 'http://localhost:14726',
+              changeOrigin: true,
+              rewrite: path => path.replace(/^\/api/, ''),
+           },
+        }
     },
     build: {
         assetsInlineLimit: 6144,
         rollupOptions: {
             output: {
                 hashCharacters: 'hex',
-                assetFileNames: '_wu/assets/[name].[hash].[ext]',
-                chunkFileNames: '_wu/[name].[hash].js',
-                entryFileNames: '_wu/[name].[hash].js',
+                assetFileNames: '_wu/[name]-[hash].[ext]',
+                chunkFileNames: '_wu/[name]-[hash].js',
+                entryFileNames: '_wu/[name]-[hash].js',
                 minifyInternalExports: true,
                 manualChunks(id) {
                     // vendor
                     if (id.includes('@vue')) {
-                        return 'vendors/runtime'
+                        return 'vendor/'
                     } else if (id.includes('vue-router')) {
-                        return 'vendors/router'
+                        return 'vendor/'
                     } else if (id.includes('axios')) {
-                        return 'vendors/axios'
+                        return 'vendor/'
                     }
                     // 主要页面
                     else if (id.includes('src/views/Main') || id.includes('NotFound')) {
