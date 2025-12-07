@@ -154,7 +154,7 @@ export default {
                 从 UUP 获取构建
             </div>
 
-            <div v-if="data.updateId !== undefined">
+            <div v-if="data.updateId !== undefined && data.updateId.length > 0">
                 <p v-for="id in data.updateId" :key="id.arch">
                     {{ id.arch }}：<Code :value="id.id" is-copiable=true />
                 </p>
@@ -171,7 +171,7 @@ export default {
                 下载 ISO / 更新包
             </div>
 
-            <div v-if="data.download !== undefined && data.download != {}">
+            <div v-if="data.download !== undefined && Object.keys(data.download).length > 0">
                 <p>文件名称：{{ data.download.name }}</p>
                 <p>系统架构：{{ data.download.arch }}</p>
                 <p>
