@@ -12,7 +12,6 @@ const settingsStore = useSettingsStore()
 let { settings } = storeToRefs(settingsStore)
 
 // STEP1 ---- 初始化
-document.title = 'Windows Up-to-Date'
 let state = reactive({
     list: [],
     isLoading: true,

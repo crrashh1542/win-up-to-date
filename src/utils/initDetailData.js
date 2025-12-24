@@ -1,3 +1,5 @@
+import { setTitle } from './title'
+
 /**
  * 此脚本用于处理 Detail 相关 View 中的数据初始化/刷新
  * @version 1.1
@@ -38,7 +40,7 @@ export default (respOrigin, data) => {
         } else { next = undefined }
         // 设置数据
         data.nav = { type: 'detail', prev, next }
-        document.title = resp.build.number + ' / Windows Up-to-Date'
+        setTitle(resp.build.number)
 
     } else {
         // 如果类型是 categoryList
@@ -61,7 +63,7 @@ export default (respOrigin, data) => {
         } else { next = undefined }
         // 设置数据
         data.nav = { type: 'categoryList', prev, next }
-        document.title = resp.name + ' / Windows Up-to-Date'
+        setTitle(resp.name)
     }
     
 }
