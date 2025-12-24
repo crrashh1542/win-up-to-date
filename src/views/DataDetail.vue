@@ -1,7 +1,7 @@
-<script>
+<script setup>
 // 引入库
 import { reactive, toRefs } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
 import axios from 'axios'
 
@@ -14,58 +14,54 @@ import initDetailData from '@/utils/initDetailData'
 
 const api = import.meta.env.VITE_API_URL
 
-export default {
-    name: 'DataDetail',
-    components: { LoadAnim, Card, Code, TopNav, Icon },
-    setup() {
-        // STEP1 ------ 设定初始值
-        let pageData = reactive({
-            data: { build: {} },
-            isLoading: true,
-            nav: null
+defineOptions({
+    name: 'DataDetail'
+})
+
+// STEP1 ------ 设定初始值
+const pageData = reactive({
+    data: { build: {} },
+    isLoading: true,
+    nav: null
+})
+
+// STEP2 ------ 获取数据
+// 通过当前路由，得到当前的 platform 和 build 并发送给 API
+const router = useRouter()
+const route = useRoute()
+const [platform, build] = [
+    route.params.platform,
+    route.params.build,
+]
+axios.get(api + '/detail?platform=' + platform + '&build=' + build)
+
+    // STEP3 ------ 处理并修改数据
+    .then(response => {
+        initDetailData(response.data, pageData)
+    })
+    .catch(() => {
+        // 由于服务器设置，目前只返回 404
+        router.replace('/404')
+    })
+
+// STEP4 ------ 返回数据
+const { data, isLoading, nav } = toRefs(pageData)
+
+// 获取“构建归属”处的路由
+const getBelongingRoute = value => {
+    return '/category/' + value
+}
+
+// 刷新数据
+const refreshData = obj => {
+    axios.get(api + '/detail?platform=' + obj.platform + '&build=' + obj.build)
+        .then(response => {
+            initDetailData(response.data, pageData)
         })
-
-        // STEP2 ------ 获取数据
-        // 通过当前路由，得到当前的 platform 和 build 并发送给 API
-        let router = useRouter()
-        let [platform, build] = [
-            router.currentRoute.value.params.platform,
-            router.currentRoute.value.params.build,
-        ]
-        axios.get(api + '/detail?platform=' + platform + '&build=' + build)
-
-            // STEP3 ------ 处理并修改数据
-            .then(response => {
-                initDetailData(response.data, pageData)
-            })
-            .catch(() => {
-                // 由于服务器设置，目前只返回 404
-                router.replace('/404')
-            })
-
-        // STEP4 ------ 返回数据
-        return { ...toRefs(pageData) }
-    },
-    methods: {
-        // 获取“构建归属”处的路由
-        getBelongingRoute(value) {
-            return '/category/' + value
-        },
-
-        // 刷新数据
-        refreshData(obj) {
-            let vueObj = this
-            axios.get(api + '/detail?platform=' + obj.platform + '&build=' + obj.build)
-                .then(response => {
-                    // 由于 pageData 的数据已经存在于 Vue 实例上了，所以直接访问 vueObj
-                    initDetailData(response.data, vueObj)
-                })
-                .catch(() => {
-                    // 由于服务器设置，目前只返回 404
-                    router.replace('/404')
-                })
-        },
-    },
+        .catch(() => {
+            // 由于服务器设置，目前只返回 404
+            router.replace('/404')
+        })
 }
 </script>
 
