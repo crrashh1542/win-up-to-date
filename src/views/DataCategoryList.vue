@@ -3,15 +3,13 @@
 import { reactive, toRefs } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
-import axios from 'axios'
+import request from '@/utils/request'
 
 // 引入组件
 import Card from '@/components/widgets/Card.vue'
 import LoadAnim from '@/components/widgets/LoadAnim.vue'
 import TopNav from '@/components/widgets/TopNav.vue'
 import initDetailData from '@/utils/initDetailData'
-
-const api = import.meta.env.VITE_API_URL
 
 defineOptions({
     name: 'DataCategoryList'
@@ -30,7 +28,7 @@ const pageData = reactive({
 const router = useRouter()
 const route = useRoute()
 const platform = route.params.platform
-axios.get(api + '/category?platform=' + platform)
+request({ url: '/category', method: 'get', params: { platform } })
 
     // STEP3 ------ 处理并修改数据
     .then(response => {
@@ -60,7 +58,7 @@ const getPath = build => {
 
 // 刷新数据
 const refreshData = obj => {
-    axios.get(api + '/category?platform=' + obj.platform)
+    request({ url: '/category', method: 'get', params: { platform: obj.platform } })
         .then(response => {
             initDetailData(response.data, pageData)
             // 处理版本范围

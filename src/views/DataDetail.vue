@@ -3,7 +3,7 @@
 import { reactive, toRefs } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
-import axios from 'axios'
+import request from '@/utils/request'
 
 // 引入组件
 import Card from '@/components/widgets/Card.vue'
@@ -11,8 +11,6 @@ import Code from '@/components/widgets/Code.vue'
 import LoadAnim from '@/components/widgets/LoadAnim.vue'
 import TopNav from '@/components/widgets/TopNav.vue'
 import initDetailData from '@/utils/initDetailData'
-
-const api = import.meta.env.VITE_API_URL
 
 defineOptions({
     name: 'DataDetail'
@@ -33,7 +31,7 @@ const [platform, build] = [
     route.params.platform,
     route.params.build,
 ]
-axios.get(api + '/detail?platform=' + platform + '&build=' + build)
+request({ url: '/detail', method: 'get', params: { platform, build } })
 
     // STEP3 ------ 处理并修改数据
     .then(response => {
@@ -54,7 +52,11 @@ const getBelongingRoute = value => {
 
 // 刷新数据
 const refreshData = obj => {
-    axios.get(api + '/detail?platform=' + obj.platform + '&build=' + obj.build)
+    request({
+        url: '/detail',
+        method: 'get',
+        params: { platform: obj.platform, build: obj.build },
+    })
         .then(response => {
             initDetailData(response.data, pageData)
         })
