@@ -9,7 +9,7 @@ import server from '@studio384/amicons/icons/server.svg'
 import windows10 from './windows10.svg'
 import windows11 from '@studio384/amicons/icons/windows.svg'
 
-export default {
+const icons = {
     azure,
     branch,
     iso,
@@ -18,3 +18,5 @@ export default {
     windows10,
     windows11
 }
+
+export default icons

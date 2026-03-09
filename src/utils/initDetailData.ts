@@ -8,7 +8,19 @@ import { setTitle } from './title'
  *    resp 即为 axios get 返回的 response.data
  *    data 应传递当前 Vue 组件的 pageData
  */
-export default (respOrigin, data) => {
+
+type RespOrigin = {
+    dataType: string
+    content: any
+}
+
+type PageData = {
+    data: any
+    isLoading: boolean
+    nav?: any
+}
+
+export default (respOrigin: RespOrigin, data: PageData) => {
     let dataType = respOrigin.dataType // 获取的数据类型，区别 detail 和 category
     let resp = respOrigin.content // 获取到的数据
 

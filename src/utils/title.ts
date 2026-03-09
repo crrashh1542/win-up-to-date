@@ -1,14 +1,14 @@
 const baseTitle = 'Windows Up-to-Date'
-let overrideTitle = null
+let overrideTitle: string | null = null
 
-const formatTitle = title => {
+const formatTitle = (title?: string | null) => {
     if (title) {
         return `${title} / ${baseTitle}`
     }
     return baseTitle
 }
 
-const setTitle = title => {
+const setTitle = (title?: string | null) => {
     overrideTitle = title || null
     document.title = formatTitle(overrideTitle)
 }
@@ -17,7 +17,7 @@ const clearTitle = () => {
     overrideTitle = null
 }
 
-const applyRouteTitle = title => {
+const applyRouteTitle = (title?: string | null) => {
     if (overrideTitle) {
         return
     }
