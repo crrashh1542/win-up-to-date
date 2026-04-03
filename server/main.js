@@ -64,8 +64,7 @@ const readJsonFile = async filePath => {
 
 const server = http.createServer(async (req, res) => {
     const reqUrl = new URL(req.url || '/', 'http://127.0.0.1')
-    const rawPath = reqUrl.pathname || '/'
-    const reqPath = rawPath.startsWith('/v1') ? (rawPath.slice(3) || '/') : rawPath
+    const reqPath = reqUrl.pathname || '/'
 
     res.on('finish', () => {
         const method = req.method || 'GET'

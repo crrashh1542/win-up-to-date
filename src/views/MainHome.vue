@@ -18,7 +18,7 @@ let state = reactive({
 })
 
 // STEP2 ---- 获取数据并填充
-request({ url: '/latestVersions', method: 'get' })
+request({ url: '/latestBuilds', method: 'get' })
     .then(response => {
         state.list = response.data.content
         state.isLoading = false
