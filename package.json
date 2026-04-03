@@ -16,6 +16,8 @@
     },
     "scripts": {
         "dev": "vite",
+        "dev:api": "node server/main.js",
+        "dev:all": "concurrently -n api,web \"pnpm dev:api\" \"pnpm dev\"",
         "build": "vite build",
         "preview": "vite preview",
         "lint": "eslint \"src/**/*.{js,ts,vue}\"",
@@ -28,6 +30,7 @@
         "@typescript-eslint/parser": "^8.46.1",
         "@types/node": "^24.9.2",
         "@vitejs/plugin-vue": "^6.0.1",
+        "concurrently": "^9.2.1",
         "eslint": "^9.38.0",
         "eslint-plugin-vue": "^10.5.1",
         "prettier": "^3.6.2",
