@@ -7,9 +7,6 @@ import Card from '@/components/widgets/Card.vue'
 import { aboutInfo } from '@/utils/parseRepoInfo'
 
 const route = useRoute()
-if (route.path == '/about') {
-    document.title = '关于项目 / Windows Up-to-Date'
-}
 </script>
 
 <template>

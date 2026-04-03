@@ -16,17 +16,25 @@
     },
     "scripts": {
         "dev": "vite",
+        "dev:api": "node server/main.js",
+        "dev:all": "concurrently -n api,web \"pnpm dev:api\" \"pnpm dev\"",
         "build": "vite build",
         "preview": "vite preview",
+        "lint": "eslint \"src/**/*.{js,ts,vue}\"",
+        "lint:fix": "pnpm lint -- --fix",
         "p:check": "prettier . --check",
         "p:write": "prettier . --write"
     },
     "devDependencies": {
+        "@eslint/js": "^9.38.0",
+        "@typescript-eslint/parser": "^8.46.1",
         "@types/node": "^24.9.2",
         "@vitejs/plugin-vue": "^6.0.1",
+        "concurrently": "^9.2.1",
         "eslint": "^9.38.0",
         "eslint-plugin-vue": "^10.5.1",
-        "prettier": "^3.6.2"
+        "prettier": "^3.6.2",
+        "typescript": "^5.9.3"
     },
     "dependencies": {
         "@iconify/vue": "^5.0.0",
@@ -41,17 +49,6 @@
         "vue": "^3.5.22",
         "vue-clipboard3": "^2.0.0",
         "vue-router": "^4.6.3"
-    },
-    "eslintConfig": {
-        "root": true,
-        "env": {
-            "node": true
-        },
-        "extends": [
-            "plugin:vue/vue3-essential",
-            "eslint:recommended"
-        ],
-        "rules": {}
     },
     "browserslist": [
         "> 1%",

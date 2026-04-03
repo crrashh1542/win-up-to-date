@@ -1,5 +1,5 @@
 <script setup>
-import axios from 'axios'
+import request from '@/utils/request'
 import { reactive } from 'vue'
 import { storeToRefs } from 'pinia'
 
@@ -12,15 +12,13 @@ const settingsStore = useSettingsStore()
 let { settings } = storeToRefs(settingsStore)
 
 // STEP1 ---- 初始化
-document.title = 'Windows Up-to-Date'
-const api = import.meta.env.VITE_API_URL
 let state = reactive({
     list: [],
     isLoading: true,
 })
 
 // STEP2 ---- 获取数据并填充
-axios.get(api + '/latestVersions')
+request({ url: '/latestBuilds', method: 'get' })
     .then(response => {
         state.list = response.data.content
         state.isLoading = false

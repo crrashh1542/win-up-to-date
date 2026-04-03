@@ -5,8 +5,8 @@
  * @version 2.0
  */
 
-import packageInfo from '/package.json'
-import buildInfo from '/scripts/buildInfo.json'
+import packageInfo from '../../package.json'
+import buildInfo from '../../scripts/buildInfo.json'
 
 // 项目信息相关
 const pkgVersion = 'v' + packageInfo.version + ' (build ' + buildInfo.build + ')' // 项目版本号
@@ -32,7 +32,7 @@ const buildTag = (() => {
 })()
 
 // 导出数据
-let aboutInfo = [
+const aboutInfo: Array<[string, string, string, string?]> = [
     ['站点版本', 'fluent:search-24-regular', pkgVersion],
     ['项目地址', 'fluent:code-24-regular', pkgRepo, pkgRepoName],
     [

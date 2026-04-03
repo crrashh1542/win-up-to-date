@@ -43,10 +43,10 @@ export default defineConfig({
         port: 14724,
         host: true,
         proxy: {
-           '/api': {
+           '/v1': {
               target: 'http://localhost:14726',
               changeOrigin: true,
-              rewrite: path => path.replace(/^\/api/, ''),
+              rewrite: path => path.replace(/^\/v1/, ''),
            },
         }
     },
@@ -56,17 +56,22 @@ export default defineConfig({
             output: {
                 hashCharacters: 'hex',
                 assetFileNames: '_wu/[name]-[hash].[ext]',
-                chunkFileNames: '_wu/[name]-[hash].js',
+                chunkFileNames: chunk => {
+                    if (chunk.name.startsWith('vendor-')) {
+                        return '_wu/vendor/[hash].js'
+                    }
+                    return '_wu/[name]-[hash].js'
+                },
                 entryFileNames: '_wu/[name]-[hash].js',
                 minifyInternalExports: true,
-                manualChunks(id) {
+                manualChunks: id => {
                     // vendor
                     if (id.includes('@vue')) {
-                        return 'vendor/'
+                        return 'vendor-vue'
                     } else if (id.includes('vue-router')) {
-                        return 'vendor/'
+                        return 'vendor-router'
                     } else if (id.includes('axios')) {
-                        return 'vendor/'
+                        return 'vendor-axios'
                     }
                     // 主要页面
                     else if (id.includes('src/views/Main') || id.includes('NotFound')) {

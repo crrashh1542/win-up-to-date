@@ -1,9 +1,9 @@
-<script>
+<script setup>
 // 引入库
 import { reactive, toRefs } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
-import axios from 'axios'
+import request from '@/utils/request'
 
 // 引入组件
 import Card from '@/components/widgets/Card.vue'
@@ -11,74 +11,68 @@ import LoadAnim from '@/components/widgets/LoadAnim.vue'
 import TopNav from '@/components/widgets/TopNav.vue'
 import initDetailData from '@/utils/initDetailData'
 
-const api = import.meta.env.VITE_API_URL
+defineOptions({
+    name: 'DataCategoryList'
+})
 
-export default {
-    name: 'DataCategoryList',
-    components: { LoadAnim, Card, TopNav, Icon },
-    setup() {
-        // STEP1 ------ 设定初始值
-        let pageData = reactive({
-            data: {},
-            isLoading: true,
-            customVersionRange: null,
-            nav: null
+// STEP1 ------ 设定初始值
+const pageData = reactive({
+    data: {},
+    isLoading: true,
+    customVersionRange: null,
+    nav: null
+})
+
+// STEP2 ------ 获取数据
+// 通过当前路由，得到当前的 platform 并发送给 API
+const router = useRouter()
+const route = useRoute()
+const platform = route.params.platform
+request({ url: '/category', method: 'get', params: { platform } })
+
+    // STEP3 ------ 处理并修改数据
+    .then(response => {
+        initDetailData(response.data, pageData)
+        // 处理版本范围
+        const respContent = response.data.content
+        if (respContent.range[1] == null) {
+            // 如果没有提供最后一个版本，则为 “开始版本 ~ ?”
+            pageData.customVersionRange = respContent.range[0] + ' ~ ?'
+        } else {
+            // 如果提红利最后一个版本，则为 “开始版本 ~ 结束版本”
+            pageData.customVersionRange =
+                respContent.range[0] + ' ~ ' + respContent.range[1]
+        }
+    })
+    .catch(() => {
+        router.replace('/404')
+    })
+
+// STEP4 ------ 返回数据
+const { data, isLoading, customVersionRange, nav } = toRefs(pageData)
+
+// 获取点击的构建的 path
+const getPath = build => {
+    return '/detail/' + route.params.platform + '/' + build
+}
+
+// 刷新数据
+const refreshData = obj => {
+    request({ url: '/category', method: 'get', params: { platform: obj.platform } })
+        .then(response => {
+            initDetailData(response.data, pageData)
+            // 处理版本范围
+            const respContent = response.data.content
+            if (respContent.range[1] == null) {
+                pageData.customVersionRange = respContent.range[0] + ' ~ ?'
+            } else {
+                pageData.customVersionRange =
+                    respContent.range[0] + ' ~ ' + respContent.range[1]
+            }
         })
-
-        // STEP2 ------ 获取数据
-        // 通过当前路由，得到当前的 platform 并发送给 API
-        let router = useRouter()
-        let platform = router.currentRoute.value.params.platform
-        axios.get(api + '/category?platform=' + platform)
-
-            // STEP3 ------ 处理并修改数据
-            .then(response => {
-                initDetailData(response.data, pageData)
-                // 处理版本范围
-                let respContent = response.data.content
-                if (respContent.range[1] == null) {
-                    // 如果没有提供最后一个版本，则为 “开始版本 ~ ?”
-                    pageData.customVersionRange = respContent.range[0] + ' ~ ?'
-                } else {
-                    // 如果提红利最后一个版本，则为 “开始版本 ~ 结束版本”
-                    pageData.customVersionRange =
-                        respContent.range[0] + ' ~ ' + respContent.range[1]
-                }
-            })
-            .catch(() => {
-                router.replace('/404')
-            })
-
-        // STEP4 ------ 返回数据
-        return { ...toRefs(pageData) }
-    },
-    methods: {
-        // 获取点击的构建的 path
-        getPath(build) {
-            return '/detail/' + this.$route.params.platform + '/' + build
-        },
-
-        // 刷新数据
-        refreshData(obj) {
-            let vueObj = this
-            axios.get(api + '/category?platform=' + obj.platform)
-                .then(response => {
-                    // 由于 pageData 的数据已经存在于 Vue 实例上了，所以直接访问 vueObj
-                    initDetailData(response.data, vueObj)
-                    // 处理版本范围
-                    let respContent = response.data.content
-                    if (respContent.range[1] == null) {
-                        vueObj.customVersionRange = respContent.range[0] + ' ~ ?'
-                    } else {
-                        vueObj.customVersionRange =
-                            respContent.range[0] + ' ~ ' + respContent.range[1]
-                    }
-                })
-                .catch(() => {
-                    this.$router.replace('/404')
-                })
-        },
-    },
+        .catch(() => {
+            router.replace('/404')
+        })
 }
 </script>
 

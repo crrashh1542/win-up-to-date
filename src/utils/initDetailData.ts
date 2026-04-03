@@ -1,3 +1,5 @@
+import { setTitle } from './title'
+
 /**
  * 此脚本用于处理 Detail 相关 View 中的数据初始化/刷新
  * @version 1.1
@@ -6,7 +8,19 @@
  *    resp 即为 axios get 返回的 response.data
  *    data 应传递当前 Vue 组件的 pageData
  */
-export default (respOrigin, data) => {
+
+type RespOrigin = {
+    dataType: string
+    content: any
+}
+
+type PageData = {
+    data: any
+    isLoading: boolean
+    nav?: any
+}
+
+export default (respOrigin: RespOrigin, data: PageData) => {
     let dataType = respOrigin.dataType // 获取的数据类型，区别 detail 和 category
     let resp = respOrigin.content // 获取到的数据
 
@@ -38,7 +52,7 @@ export default (respOrigin, data) => {
         } else { next = undefined }
         // 设置数据
         data.nav = { type: 'detail', prev, next }
-        document.title = resp.build.number + ' / Windows Up-to-Date'
+        setTitle(resp.build.number)
 
     } else {
         // 如果类型是 categoryList
@@ -61,7 +75,7 @@ export default (respOrigin, data) => {
         } else { next = undefined }
         // 设置数据
         data.nav = { type: 'categoryList', prev, next }
-        document.title = resp.name + ' / Windows Up-to-Date'
+        setTitle(resp.name)
     }
     
 }

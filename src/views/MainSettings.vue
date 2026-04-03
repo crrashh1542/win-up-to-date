@@ -14,7 +14,6 @@ const updateSetting = (key, value) => {
     
 }
 
-document.title = '设置 / Windows Up-to-Date'
 const settingsMenu = [
     {
         name: '全局设置',

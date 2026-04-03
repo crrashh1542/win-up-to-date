@@ -5,7 +5,6 @@ const router = useRouter()
 import Button from '../components/widgets/Button.vue'
 
 defineOptions({ name: 'ViewNotFound' })
-document.title = '404 / Windows Up-to-Date'
 </script>
 
 <template>
