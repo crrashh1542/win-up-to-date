@@ -88,7 +88,7 @@ request({ url: '/latestBuilds', method: 'get' })
 </template>
 
 <style lang="less" scoped>
-@import url('@/styles/reset.less');
+@import url('@/styles/global.less');
 
 .block {
     margin: 1em 0;

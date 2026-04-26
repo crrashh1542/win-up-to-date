@@ -46,7 +46,7 @@ const route = useRoute()
 </template>
 
 <style lang="less" scoped>
-@import url('@/styles/reset.less');
+@import url('@/styles/global.less');
 
 .card {
     a, div {

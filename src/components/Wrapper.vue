@@ -75,7 +75,7 @@ const openAbout = () => {
 </template>
 
 <style lang="less">
-@import url('@/styles/reset.less');
+@import url('@/styles/global.less');
 
 .topbar {
     display: flex;
