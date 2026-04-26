@@ -42,11 +42,9 @@ request({ url: '/latestBuilds', method: 'get' })
             </div>
 
             <!-- 内容卡片 -->
-            <Card v-for="build in c.releases" :key="build.name" :class="build.style">
-                
-                <!-- 如果 build.category 存在则设置 router-link -->
-                <router-link :to="'/detail/' + build.category + '/' + build.version"
-                    v-if="build.category !== undefined">
+            <Card v-for="build in c.releases" :key="build.version" :class="build.style">
+                <component :is="build.category !== undefined ? 'router-link' : 'span'"
+                    v-bind="build.category !== undefined ? { to: '/detail/' + build.category + '/' + build.version } : {}">
                     <div class="row">
                         <!-- 左上标签 -->
                         <span :class="'channel u-float-l ' + build.style">{{ build.channel }}</span>
@@ -63,26 +61,7 @@ request({ url: '/latestBuilds', method: 'get' })
                         <img :src="icons.branch" class="u-box-xs u-icon"/>
                         {{ build.branch }}
                     </div>
-                </router-link>
-
-                <span v-else>
-                    <div class="row">
-                        <!-- 左上标签 -->
-                        <span :class="'channel u-float-l ' + build.style">{{ build.channel }}</span>
-                        <!-- 右上代号 & 周期 -->
-                        <span class="u-space-r u-float-r" v-if="settings.isShowFlight">
-                            <img :src="icons.rocket" class="u-box-xs u-icon" />&nbsp;
-                            {{ build.codename }} {{ build.semester }}
-                        </span>
-                    </div>
-                    <!-- 版本号 -->
-                    <div class="number">{{ build.version }}</div>
-                    <!-- 分支 -->
-                    <div class="row" v-if="settings.isShowBranch">
-                        <img :src="icons.branch" class="u-box-xs u-icon"/>
-                        {{ build.branch }}
-                    </div>
-                </span>
+                </component>
             </Card>
         </div>
 </template>
