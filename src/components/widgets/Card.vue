@@ -21,7 +21,6 @@ if(props.mode == 'block') {
 @import url('@/styles/global.less');
 
 .card {
-    margin: 3px 0;
     padding: 16px calc(12px + 1.2%);
     line-height: 1.2;
     border-radius: @wu-layout-radius;

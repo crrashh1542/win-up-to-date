@@ -92,11 +92,15 @@ request({ url: '/latestBuilds', method: 'get' })
 
 .block {
     margin: 1em 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 7px;
+
+    .u-catalog {
+        grid-column: 1 / -1;
+    }
 
     .card {
-        width: var(--card-width);
-        max-width: 400px;
-        margin-right: 5px;
         padding: 10px 5px 10px 20px;
         border-radius: 8px;
         box-shadow: @wu-layout-shadow;
@@ -145,23 +149,4 @@ request({ url: '/latestBuilds', method: 'get' })
 }
 /* 频道颜色变化 ----- END */
 
-/* 卡片多端适配 ----- BEGIN */
-// SEC 1 ------ 两列
-@media screen and (min-width: 1100px) {
-    .card {
-        --card-width: calc(31% - 5px * 3);
-    }
-}
-@media screen and (max-width: 1100px) {
-    .card {
-        --card-width: calc(46% - 5px * 2);
-    }
-}
-// SEC 2 ------ 一列
-@media screen and (max-width: 750px) {
-    .card {
-        --card-width: 100%;
-    }
-}
-/* 卡片多端适配 ----- END */
 </style>
