@@ -1,6 +1,4 @@
 <script setup>
-import request from '@/utils/request'
-import { reactive } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import icons from '@/assets/icons'
@@ -8,32 +6,19 @@ import Card from '@/components/widgets/Card.vue'
 import LoadAnim from '@/components/widgets/LoadAnim.vue'
 
 import { useSettingsStore } from '@/stores/settings'
-const settingsStore = useSettingsStore()
-let { settings } = storeToRefs(settingsStore)
+import { useBuildsStore } from '@/stores/latestBuilds'
 
-// STEP1 ---- 初始化
-let state = reactive({
-    list: [],
-    isLoading: true,
-})
-
-// STEP2 ---- 获取数据并填充
-request({ url: '/latestBuilds', method: 'get' })
-    .then(response => {
-        state.list = response.data.content
-        state.isLoading = false
-    })
-    .catch(error => {
-        console.error(error)
-    })
+const { settings } = storeToRefs(useSettingsStore())
+const { list, isLoading } = storeToRefs(useBuildsStore())
+useBuildsStore().fetchBuilds()
 </script>
 
 <template>
     <div class="u-banner">当前版本列表</div>
-    <LoadAnim v-if="state.isLoading" mode="filled" />
+    <LoadAnim v-if="isLoading" mode="filled" />
 
     <!-- 内容块 BEGIN -->
-        <div class="block" v-if="!state.isLoading" v-for="c in state.list" :key="c.id">
+        <div class="block" v-if="!isLoading" v-for="c in list" :key="c.id">
 
             <!-- 标题 -->
             <div class="u-catalog">
@@ -72,7 +57,7 @@ request({ url: '/latestBuilds', method: 'get' })
 .block {
     margin: 1em 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 7px;
 
     .u-catalog {
