@@ -1,61 +1,63 @@
-<script setup>
+<script setup lang="ts">
+import { computed } from 'vue'
 import { Icon } from '@iconify/vue'
 
-let nav = defineProps(['data'])
-let emit = defineEmits(['event'])
-
-const refreshData = (obj) => {
-   emit('event', obj)
+interface NavItem {
+   route: string
+   build: string
+   platform: string
+   path: string
 }
 
+interface NavData {
+   type: 'detail' | 'platform'
+   prev?: NavItem
+   next?: NavItem
+}
+
+const props = defineProps<{ data: NavData }>()
+const emit = defineEmits<{ event: [payload: { platform: string; build?: string }] }>()
+
+const isDetail = computed(() => props.data.type === 'detail')
+
+const buildLink = (source?: NavItem) => {
+   if (!source) return null
+   return {
+      route: source.route,
+      text: isDetail.value ? source.build : source.platform,
+      payload: isDetail.value
+         ? { platform: source.platform, build: source.build }
+         : { platform: source.path }
+   }
+}
+
+const prev = computed(() => buildLink(props.data.prev))
+const next = computed(() => buildLink(props.data.next))
 </script>
 
 <template>
    <div class="nav">
-
-      <!-- 如果type是detail -->
       <router-link class="icon-left"
-         v-if="nav.data.type == 'detail' && nav.data.prev != undefined"
-         :to="nav.data.prev.route"
-         @click="refreshData({
-            platform: nav.data.prev.platform, 
-            build: nav.data.prev.build })">
+         v-if="prev"
+         :to="prev.route"
+         @click="emit('event', prev.payload)">
          <Icon icon="fluent:arrow-left-20-filled" />
-         {{ nav.data.prev.build }} 
-      </router-link>
-      <!-- 如果type是categoryList -->
-      <router-link class="icon-left"
-         v-if="nav.data.type == 'categoryList' && nav.data.prev != undefined"
-         :to="nav.data.prev.route"
-         @click="refreshData({ platform: nav.data.prev.path })">
-         <Icon icon="fluent:arrow-left-20-filled" />
-         {{ nav.data.prev.platform }} 
+         {{ prev.text }}
       </router-link>
 
       <span class="grow"></span>
-      
-      <!-- 如果type是detail -->
+
       <router-link class="icon-right"
-         v-if="nav.data.type == 'detail' && nav.data.next != undefined"
-         :to="nav.data.next.route"
-         @click="refreshData({
-            platform: nav.data.next.platform, 
-            build: nav.data.next.build })">
-         {{ nav.data.next.build }}
-         <Icon icon="fluent:arrow-right-20-filled" />
-      </router-link>
-      <!-- 如果type是categoryList -->
-      <router-link class="icon-right"
-         v-if="nav.data.type == 'categoryList' && nav.data.next != undefined"
-         :to="nav.data.prev.route"
-         @click="refreshData({ platform: nav.data.next.path })">
-         {{ nav.data.next.platform }} 
+         v-if="next"
+         :to="next.route"
+         @click="emit('event', next.payload)">
+         {{ next.text }}
          <Icon icon="fluent:arrow-right-20-filled" />
       </router-link>
    </div>
 </template>
 
-<style lang="less">
+<style lang="less" scoped>
 @import url('@/styles/global.less');
 
 .nav {
@@ -66,20 +68,15 @@ const refreshData = (obj) => {
    margin-bottom: 0.75rem;
    width: 100%;
 
-   .icon-left {
+   .icon-left, .icon-right {
       display: flex;
       align-items: center;
-      svg {
-         margin-right: .25em;
-      }
    }
-   .icon-right {
-      display: flex;
-      align-items: center;
-      svg {
-         margin-left: .25em;
-         vertical-align: middle;
-      }
+   .icon-left svg {
+      margin-right: .25em;
+   }
+   .icon-right svg {
+      margin-left: .25em;
    }
    .grow {
       flex-grow: 1;
