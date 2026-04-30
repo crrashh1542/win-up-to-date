@@ -1,11 +1,9 @@
-<script setup>
-// 引入库
-import { reactive, toRefs } from 'vue'
+<script setup lang="ts">
+import { reactive, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
 import request from '@/utils/request'
 
-// 引入组件
 import Card from '@/components/widgets/Card.vue'
 import LoadAnim from '@/components/widgets/LoadAnim.vue'
 import TopNav from '@/components/widgets/TopNav.vue'
@@ -15,99 +13,98 @@ defineOptions({
     name: 'DataCategoryList'
 })
 
-// STEP1 ------ 设定初始值
+interface CategoryData {
+    name: string
+    codename: string
+    semester: string
+    belonging: string
+    range: [string, string | null]
+    list: [string, string][]
+}
+
+interface NavData {
+    type: 'detail' | 'categoryList'
+    prev?: { route: string; build: string; platform: string }
+    next?: { route: string; build: string; platform: string }
+}
+
 const pageData = reactive({
-    data: {},
+    data: {} as CategoryData,
     isLoading: true,
-    customVersionRange: null,
-    nav: null
+    versionRange: null as string | null,
+    nav: null as NavData | null
 })
 
-// STEP2 ------ 获取数据
-// 通过当前路由，得到当前的 platform 并发送给 API
 const router = useRouter()
 const route = useRoute()
-const platform = route.params.platform
-request({ url: '/category', method: 'get', params: { platform } })
 
-    // STEP3 ------ 处理并修改数据
-    .then(response => {
-        initDetailData(response.data, pageData)
-        // 处理版本范围
-        const respContent = response.data.content
-        if (respContent.range[1] == null) {
-            // 如果没有提供最后一个版本，则为 “开始版本 ~ ?”
-            pageData.customVersionRange = respContent.range[0] + ' ~ ?'
-        } else {
-            // 如果提红利最后一个版本，则为 “开始版本 ~ 结束版本”
-            pageData.customVersionRange =
-                respContent.range[0] + ' ~ ' + respContent.range[1]
-        }
-    })
-    .catch(() => {
-        router.replace('/404')
-    })
-
-// STEP4 ------ 返回数据
-const { data, isLoading, customVersionRange, nav } = toRefs(pageData)
-
-// 获取点击的构建的 path
-const getPath = build => {
+// utils
+const formatVersionRange = (range: [string, string | null]) => {
+    return range[0] + ' ~ ' + (range[1] ?? '?')
+}
+const getPath = (build: string) => {
     return '/detail/' + route.params.platform + '/' + build
 }
-
-// 刷新数据
-const refreshData = obj => {
-    request({ url: '/category', method: 'get', params: { platform: obj.platform } })
-        .then(response => {
-            initDetailData(response.data, pageData)
-            // 处理版本范围
-            const respContent = response.data.content
-            if (respContent.range[1] == null) {
-                pageData.customVersionRange = respContent.range[0] + ' ~ ?'
-            } else {
-                pageData.customVersionRange =
-                    respContent.range[0] + ' ~ ' + respContent.range[1]
-            }
+// 请求数据
+const fetchData = async (platform: string) => {
+    pageData.isLoading = true
+    try {
+        const { data: resp } = await request({
+            url: '/category', method: 'get', params: { platform }
         })
-        .catch(() => {
+        initDetailData(resp, pageData)
+        pageData.versionRange = formatVersionRange(resp.content.range)
+    } catch (err: any) {
+        if (err.response?.status === 404) {
             router.replace('/404')
-        })
+        } else {
+            console.error('加载数据失败:', err)
+        }
+    } finally {
+        pageData.isLoading = false
+    }
 }
+
+// 监听路由参数，重新请求数据
+watch(
+    () => route.params.platform as string,
+    platform => { if (platform) fetchData(platform) },
+    { immediate: true }
+)
 </script>
 
 <template>
     <!-- 横幅 -->
     <div class="u-banner">版本列表</div>
-    <div class="u-subbanner">{{ data.name }}</div>
+    <div class="u-subbanner">{{ pageData.data.name }}</div>
 
     <!-- 加载动画 -->
-    <LoadAnim v-if="isLoading" mode="filled" />
+    <LoadAnim v-if="pageData.isLoading" mode="filled" />
 
-    <div class="wrapper" v-if="!isLoading">
+    <div class="wrapper" v-if="!pageData.isLoading">
         <!-- 快速导航 -->
-        <TopNav :data="nav" @event="refreshData" />
+        <TopNav :data="pageData.nav" />
 
         <!-- 基本信息 -->
         <Card class="overview" mode="block">
             <div class="line-left">
                 <p>
                     <Icon icon="fluent:laptop-settings-24-regular" width="22" height="22" />
-                    平台代号 / {{ data.codename }}
+                    平台代号 / {{ pageData.data.codename }}
                 </p>
                 <p>
                     <Icon icon="fluent:code-24-regular" width="22" height="22" />
-                    开发周期 / {{ data.semester }}
+                    开发周期 / {{ pageData.data.semester }}
                 </p>
             </div>
             <div>
                 <p>
                     <Icon icon="fluent:tag-24-regular" width="22" height="22" />
-                    版本范围 / {{ customVersionRange }}
+                    版本范围 / {{ pageData.versionRange }}
                 </p>
                 <p>
                     <Icon icon="fluent:square-multiple-24-regular" width="22" height="22" />
-                    分类归属 / {{ data.belonging }}
+                    分类归属 / {{ pageData.data.belonging }}
                 </p>
             </div>
         </Card>
@@ -118,9 +115,9 @@ const refreshData = obj => {
                 <span class="left">版本</span>
                 <span class="right">发布日期</span>
             </div>
-            <router-link class="row" v-for="r in data.list" :key="r[0]" :to="getPath(r[0])">
-                    <span class="left">{{ r[0] }}</span>
-                    <span class="right">{{ r[1] }}</span>
+            <router-link class="row" v-for="r in pageData.data.list" :key="r[0]" :to="getPath(r[0])">
+                <span class="left">{{ r[0] }}</span>
+                <span class="right">{{ r[1] }}</span>
             </router-link>
         </Card>
 

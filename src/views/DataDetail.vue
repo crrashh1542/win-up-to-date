@@ -1,11 +1,9 @@
-<script setup>
-// 引入库
-import { reactive, toRefs } from 'vue'
+<script setup lang="ts">
+import { reactive, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
 import request from '@/utils/request'
 
-// 引入组件
 import Card from '@/components/widgets/Card.vue'
 import Code from '@/components/widgets/Code.vue'
 import LoadAnim from '@/components/widgets/LoadAnim.vue'
@@ -16,100 +14,102 @@ defineOptions({
     name: 'DataDetail'
 })
 
-// STEP1 ------ 设定初始值
-const pageData = reactive({
-    data: { build: {} },
-    isLoading: true,
-    nav: null
-})
-
-// STEP2 ------ 获取数据
-// 通过当前路由，得到当前的 platform 和 build 并发送给 API
-const router = useRouter()
-const route = useRoute()
-const [platform, build] = [
-    route.params.platform,
-    route.params.build,
-]
-request({ url: '/detail', method: 'get', params: { platform, build } })
-
-    // STEP3 ------ 处理并修改数据
-    .then(response => {
-        initDetailData(response.data, pageData)
-    })
-    .catch(() => {
-        // 由于服务器设置，目前只返回 404
-        router.replace('/404')
-    })
-
-// STEP4 ------ 返回数据
-const { data, isLoading, nav } = toRefs(pageData)
-
-// 获取“构建归属”处的路由
-const getBelongingRoute = value => {
-    return '/category/' + value
+interface DetailData {
+    build: {
+        number: string
+        branch: string
+        compileTime: string
+        arch: string[]
+        counterpart: string
+    }
+    belongsTo: { name: string; path: string }
+    release?: { channel: string; time: string; url: string; announcePlace: string }
+    featureIds?: { url: string; fileName: string }
+    updateId?: { arch: string; id: string }[]
+    download?: { name: string; arch: string; link: { url: string; source: string }[]; md5: string; sha256: string }
 }
 
-// 刷新数据
-const refreshData = obj => {
-    request({
-        url: '/detail',
-        method: 'get',
-        params: { platform: obj.platform, build: obj.build },
-    })
-        .then(response => {
-            initDetailData(response.data, pageData)
+const pageData = reactive({
+    data: { build: {} } as DetailData,
+    isLoading: true,
+    nav: null as any
+})
+
+const router = useRouter()
+const route = useRoute()
+
+const fetchData = async (platform: string, build: string) => {
+    pageData.isLoading = true
+    try {
+        const { data: resp } = await request({
+            url: '/detail', method: 'get', params: { platform, build }
         })
-        .catch(() => {
-            // 由于服务器设置，目前只返回 404
+        initDetailData(resp, pageData)
+    } catch (err: any) {
+        if (err.response?.status === 404) {
             router.replace('/404')
-        })
+        } else {
+            console.error('加载数据失败:', err)
+        }
+    } finally {
+        pageData.isLoading = false
+    }
+}
+
+watch(
+    () => [route.params.platform, route.params.build] as string[],
+    ([platform, build]) => { if (platform && build) fetchData(platform, build) },
+    { immediate: true }
+)
+
+const getBelongingRoute = (value: string) => {
+    return '/category/' + value
 }
 </script>
 
 <template>
     <!-- 横幅 -->
     <div class="u-banner">版本详情</div>
-    <div class="u-subbanner">{{ data.build.number }}</div>
+    <div class="u-subbanner">{{ pageData.data.build.number }}</div>
 
     <!-- 加载动画 -->
-    <LoadAnim v-if="isLoading" mode="filled" />
+    <LoadAnim v-if="pageData.isLoading" mode="filled" />
 
-    <div class="wrapper" v-if="!isLoading">
+    <div class="wrapper" v-if="!pageData.isLoading">
         <!-- 快速导航 -->
-        <TopNav :data="nav" @event="refreshData" />
+        <TopNav :data="pageData.nav" />
 
         <!-- 一览卡片 -->
         <Card class="overview">
             <div class="line-left">
                 <p>
                     <Icon icon="fluent:tag-24-regular" width="22" height="22" />
-                    构建版号 / {{ data.build.number }}
+                    构建版号 / {{ pageData.data.build.number }}
                 </p>
                 <p>
                     <Icon icon="fluent:branch-24-regular" width="22" height="22" />
-                    构建分支 / {{ data.build.branch }}
+                    构建分支 / {{ pageData.data.build.branch }}
                 </p>
                 <p>
                     <Icon icon="fluent:clock-24-regular" width="22" height="22" />
-                    编译时间 / {{ data.build.compileTime }}
+                    编译时间 / {{ pageData.data.build.compileTime }}
                 </p>
             </div>
             <div>
                 <p>
                     <Icon icon="fluent:developer-board-24-regular" width="22" height="22" />
-                    系统架构 / 
-                    <span v-for="i in data.build.arch" :key="i">{{ i }}&nbsp;&nbsp;</span>
+                    系统架构 /
+                    <span v-for="i in pageData.data.build.arch" :key="i">{{ i }}&nbsp;&nbsp;</span>
                 </p>
                 <p>
                     <Icon icon="fluent:search-24-regular" width="22" height="22" />
-                    推送平台 / {{ data.build.counterpart }}
+                    推送平台 / {{ pageData.data.build.counterpart }}
                 </p>
                 <p>
                     <Icon icon="fluent:code-24-regular" width="22" height="22" />
-                    构建归属 / 
-                    <router-link :to="getBelongingRoute(data.belongsTo.path)">
-                        {{ data.belongsTo.name }}
+                    构建归属 /
+                    <router-link :to="getBelongingRoute(pageData.data.belongsTo.path)">
+                        {{ pageData.data.belongsTo.name }}
                     </router-link>
                 </p>
             </div>
@@ -122,22 +122,22 @@ const refreshData = obj => {
                 发版信息
             </div>
 
-            <div v-if="data.release !== undefined">
-                <p v-if="data.release.channel !== undefined">
-                    推送频道：{{ data.release.channel }}
+            <div v-if="pageData.data.release !== undefined">
+                <p v-if="pageData.data.release.channel !== undefined">
+                    推送频道：{{ pageData.data.release.channel }}
                 </p>
-                <p v-if="data.release.channel !== undefined">
-                    推送时间：{{ data.release.time }} (UTC)
+                <p v-if="pageData.data.release.channel !== undefined">
+                    推送时间：{{ pageData.data.release.time }} (UTC)
                 </p>
-                <p v-if="data.release.url !== undefined">
+                <p v-if="pageData.data.release.url !== undefined">
                     官方发版日志：
-                    <a target="_blank" :href="data.release.url">
-                        {{ data.release.announcePlace }}</a>
+                    <a target="_blank" :href="pageData.data.release.url">
+                        {{ pageData.data.release.announcePlace }}</a>
                 </p>
-                <p v-if="data.featureIds !== undefined">
+                <p v-if="pageData.data.featureIds !== undefined">
                     ViveID 列表：
-                    <a target="_blank" :href="data.featureIds.url">
-                        {{ data.featureIds.fileName }}</a>
+                    <a target="_blank" :href="pageData.data.featureIds.url">
+                        {{ pageData.data.featureIds.fileName }}</a>
                 </p>
             </div>
             <div class="placeholder" v-else>
@@ -152,8 +152,8 @@ const refreshData = obj => {
                 从 UUP 获取构建
             </div>
 
-            <div v-if="data.updateId !== undefined && data.updateId.length > 0">
-                <p v-for="id in data.updateId" :key="id.arch">
+            <div v-if="pageData.data.updateId !== undefined && pageData.data.updateId.length > 0">
+                <p v-for="id in pageData.data.updateId" :key="id.arch">
                     {{ id.arch }}：<Code :value="id.id" is-copiable=true />
                 </p>
             </div>
@@ -169,18 +169,18 @@ const refreshData = obj => {
                 下载 ISO / 更新包
             </div>
 
-            <div v-if="data.download !== undefined && Object.keys(data.download).length > 0">
-                <p>文件名称：{{ data.download.name }}</p>
-                <p>系统架构：{{ data.download.arch }}</p>
+            <div v-if="pageData.data.download !== undefined && Object.keys(pageData.data.download).length > 0">
+                <p>文件名称：{{ pageData.data.download.name }}</p>
+                <p>系统架构：{{ pageData.data.download.arch }}</p>
                 <p>
                     下载地址：
-                    <span v-for="(l, index) in data.download.link" :key="index">
+                    <span v-for="(l, index) in pageData.data.download.link" :key="index">
                         <a target="_blank" :href="l.url">{{ l.source }}</a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
                 </p>
-                <p>MD5：<Code :value="data.download.md5" is-break-word=true is-copiable=true /></p>
-                <p>SHA-256：<Code :value="data.download.sha256" is-break-word=true is-copiable=true /></p>
+                <p>MD5：<Code :value="pageData.data.download.md5" is-break-word=true is-copiable=true /></p>
+                <p>SHA-256：<Code :value="pageData.data.download.sha256" is-break-word=true is-copiable=true /></p>
             </div>
             <div class="placeholder" v-else>
                 <p>暂无可供下载的内容</p>
