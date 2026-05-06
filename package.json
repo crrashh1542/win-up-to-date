@@ -44,7 +44,7 @@
         "@studio384/amicons": "1.0.0-alpha.12",
         "axios": "^1.18.1",
         "js-cookie": "^3.0.8",
-        "normalize.css": "^8.0.1",
+        "modern-normalize": "^3.0.1",
         "pinia": "^3.0.4",
         "vue": "^3.5.38",
         "vue-clipboard3": "^2.0.0",
