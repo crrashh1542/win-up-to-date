@@ -122,7 +122,7 @@ const openAbout = () => {
 
     .section {
         width: 66px;
-        padding: 10px 0;
+        padding: 11px 0;
         border-radius: 6px;
         svg {
             width: 1.6em;
@@ -137,6 +137,7 @@ const openAbout = () => {
     .section.path-active {
         position: relative;
         background-color: @wu-color-main;
+        padding: 10px 0;
         border: 1px solid @wu-color-border;
         color: @wu-color-blue;
     }
