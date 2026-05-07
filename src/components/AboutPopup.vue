@@ -14,8 +14,8 @@ const emit = defineEmits(['update:visibility'])
 </script>
 
 <template>
-    <div v-if="visibility" class="popup-wrapper">
-        <div class="popup-container">
+    <div v-if="visibility" class="wrapper">
+        <div class="container">
             <div class="banner-container">
                 <span class="u-banner">关于项目</span>
                 <span class="u-grow"></span>
@@ -30,10 +30,10 @@ const emit = defineEmits(['update:visibility'])
     </div>
 </template>
 
-<style lang="less" >
+<style lang="less" scoped>
 @import url('@/styles/global.less');
 
-.popup-wrapper {
+.wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -45,7 +45,7 @@ const emit = defineEmits(['update:visibility'])
     background-color: rgba(210, 210, 210, .5);
     z-index: 100;
 
-    .popup-container {
+    .container {
         display: flex;
         flex-direction: column;
         background-color: #fff;

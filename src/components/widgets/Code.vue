@@ -33,7 +33,7 @@ if(props.isBreakWord) { breakWord = 'break-word' }
     <!-- TODO -->
 </template>
 
-<style lang="less">
+<style lang="less" scoped>
 @import url('@/styles/global.less');
 
 code {

@@ -83,7 +83,7 @@ const openAbout = () => {
     position: absolute;
     top: 0;
     left: 0;
-    width: calc(100% - 2 * 14px);
+    width: 100%;
     height: 54px;
     padding: 0 14px;
     font-size: 18px;
@@ -177,11 +177,11 @@ main {
     // 设置 flex 是为了能让 footer 始终置于页面底部
     flex-direction: column;
     .container-outer {
-        min-height: calc(100% - 80px);
-        padding: 24px 0 56px; // 下边距 56px 为 Footer 组件高度
+        min-height: calc(100% - 54px);
+        padding-top: 24px;
         .container-inner {
             padding: 0 36px;
-            width: calc(100% - 72px);
+            width: 100%;
             min-height: calc(100% - 36px);
         }
     }
