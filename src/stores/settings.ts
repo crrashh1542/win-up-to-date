@@ -18,4 +18,6 @@ export const useSettingsStore = defineStore('settings', () => {
         isShowBranch: true, // 显示分支
     })
     return { settings }
+}, {
+    persist: true
 })
