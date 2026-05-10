@@ -52,10 +52,15 @@ export default defineConfig({
     },
     build: {
         assetsInlineLimit: 6144,
-        rollupOptions: {
+        rolldownOptions: {
             output: {
-                hashCharacters: 'hex',
-                assetFileNames: '_wu/[name]-[hash].[ext]',
+                minify: true,
+                assetFileNames: asset => {
+                    if (asset.name.startsWith('vendor-')) {
+                        return '_wu/vendor/[hash].[ext]'
+                    }
+                    return '_wu/[name]-[hash].[ext]'
+                },
                 chunkFileNames: chunk => {
                     if (chunk.name.startsWith('vendor-')) {
                         return '_wu/vendor/[hash].js'
@@ -63,21 +68,40 @@ export default defineConfig({
                     return '_wu/[name]-[hash].js'
                 },
                 entryFileNames: '_wu/[name]-[hash].js',
-                minifyInternalExports: true,
-                manualChunks: id => {
-                    // vendor
-                    if (id.includes('@vue')) {
-                        return 'vendor-vue'
-                    } else if (id.includes('vue-router')) {
-                        return 'vendor-router'
-                    } else if (id.includes('axios')) {
-                        return 'vendor-axios'
-                    }
-                    // 主要页面
-                    else if (id.includes('src/views/Main') || id.includes('NotFound')) {
-                        return 'MainViews'
-                    }
-                },
+                codeSplitting: {
+                    groups: [
+                        {
+                            name: 'vendor-vue',
+                            test: /@vue/,
+                            priority: 10,
+                        },
+                        {
+                            name: 'vendor-iconify',
+                            test: /iconify/,
+                            priority: 10,
+                        },
+                        {
+                            name: 'vendor-axios',
+                            test: /axios/,
+                            priority: 10,
+                        },
+                        {
+                            name: 'utils',
+                            test: /[\\/]src[\\/]utils[\\/]/,
+                            priority: 5,
+                        },
+                        {
+                            name: 'components',
+                            test: /[\\/]src[\\/]components[\\/]/,
+                            priority: 5,
+                        },
+                        {
+                            name: 'MainViews',
+                            test: /[\\/]src[\\/]views[\\/]/,
+                            priority: 5,
+                        }
+                    ]
+                }
             },
         },
     },
