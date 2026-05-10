@@ -26,14 +26,14 @@ export default defineConfig({
                 theme_color: '#f6f8fe',
                 icons: [
                     {
-                        src: 'pwa-192.png',
-                        sizes: '192x192',
-                        type: 'image/png',
+                        src: 'pwa-128.jpg',
+                        sizes: '48x48 72x72 96x96 128x128',
+                        type: 'image/jpeg',
                     },
                     {
-                        src: 'pwa-512.png',
-                        sizes: '512x512',
-                        type: 'image/png',
+                        src: 'pwa-256.jpg',
+                        sizes: '144x144 192x192 256x256',
+                        type: 'image/jpeg',
                     },
                 ],
             },
@@ -42,28 +42,36 @@ export default defineConfig({
     server: {
         port: 14724,
         host: true,
+        proxy: {
+           '/v1': {
+              target: 'http://localhost:14726',
+              changeOrigin: true,
+              rewrite: path => path.replace(/^\/v1/, ''),
+           },
+        }
     },
     build: {
         assetsInlineLimit: 6144,
         rollupOptions: {
             output: {
                 hashCharacters: 'hex',
-                assetFileNames: '_wu/assets/[name].[hash].[ext]',
-                chunkFileNames: '_wu/[name].[hash].js',
-                entryFileNames: '_wu/[name].[hash].js',
+                assetFileNames: '_wu/[name]-[hash].[ext]',
+                chunkFileNames: chunk => {
+                    if (chunk.name.startsWith('vendor-')) {
+                        return '_wu/vendor/[hash].js'
+                    }
+                    return '_wu/[name]-[hash].js'
+                },
+                entryFileNames: '_wu/[name]-[hash].js',
                 minifyInternalExports: true,
-                manualChunks(id) {
+                manualChunks: id => {
                     // vendor
                     if (id.includes('@vue')) {
-                        return 'vendors/runtime'
+                        return 'vendor-vue'
                     } else if (id.includes('vue-router')) {
-                        return 'vendors/router'
+                        return 'vendor-router'
                     } else if (id.includes('axios')) {
-                        return 'vendors/axios'
-                    }
-                    // 组件库
-                    else if (id.includes('src/components')) {
-                        return 'components'
+                        return 'vendor-axios'
                     }
                     // 主要页面
                     else if (id.includes('src/views/Main') || id.includes('NotFound')) {

@@ -1,6 +1,6 @@
 {
     "name": "win-up-to-date",
-    "version": "1.0.0-beta.1",
+    "version": "1.0.0-beta.0",
     "description": "A website project showing the latest status of Windows Insider versions.",
     "author": "crrashh1542 <1542@crrashh.com>",
     "homepage": "https://wutd.crrashh.com",
@@ -16,47 +16,44 @@
     },
     "scripts": {
         "dev": "vite",
+        "dev:api": "node server/main.js",
+        "dev:all": "concurrently -n api,web \"pnpm dev:api\" \"pnpm dev\"",
         "build": "vite build",
         "preview": "vite preview",
+        "lint": "eslint \"src/**/*.{js,ts,vue}\"",
+        "lint:fix": "pnpm lint -- --fix",
         "p:check": "prettier . --check",
         "p:write": "prettier . --write"
     },
     "devDependencies": {
-        "@types/node": "^24.7.0",
-        "@vitejs/plugin-vue": "^6.0.1",
-        "eslint": "^9.37.0",
-        "eslint-plugin-vue": "^10.5.0",
-        "prettier": "^3.6.2",
-        "vite": "^7.1.9",
-        "vite-plugin-pwa": "^1.0.3"
+        "@eslint/js": "^10.0.1",
+        "@types/node": "^25.6.2",
+        "@typescript-eslint/parser": "^8.59.2",
+        "@vitejs/plugin-vue": "^6.0.6",
+        "concurrently": "^9.2.1",
+        "eslint": "^10.3.0",
+        "eslint-plugin-vue": "^10.9.1",
+        "prettier": "^3.8.3",
+        "typescript": "^6.0.3"
     },
     "dependencies": {
-        "@iconify/vue": "^5.0.0",
-        "@studio384/amicons": "1.0.0-alpha.9",
-        "axios": "^1.12.2",
+        "@iconify/vue": "^5.0.1",
+        "@studio384/amicons": "1.0.0-alpha.12",
+        "axios": "^1.16.0",
         "js-cookie": "^3.0.5",
-        "less": "^4.4.2",
+        "less": "^4.6.4",
         "normalize.css": "^8.0.1",
-        "vue": "^3.5.22",
+        "pinia": "^3.0.4",
+        "vite": "^8.0.11",
+        "vite-plugin-pwa": "^1.3.0",
+        "vue": "^3.5.34",
         "vue-clipboard3": "^2.0.0",
-        "vue-router": "^4.5.1"
-    },
-    "eslintConfig": {
-        "root": true,
-        "env": {
-            "node": true
-        },
-        "extends": [
-            "plugin:vue/vue3-essential",
-            "eslint:recommended"
-        ],
-        "rules": {}
+        "vue-router": "^5.0.6"
     },
     "browserslist": [
         "> 1%",
         "last 2 versions",
         "not dead",
         "not ie 11"
-    ],
-    "packageManager": "pnpm@9.2.0"
+    ]
 }

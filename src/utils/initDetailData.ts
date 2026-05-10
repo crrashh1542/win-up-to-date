@@ -1,15 +1,26 @@
+import { setTitle } from './title'
+
 /**
  * 此脚本用于处理 Detail 相关 View 中的数据初始化/刷新
- * @version 1.0
- * 
- * TODO：detail 的 previous 和 next 是包裹在 nav 对象里的，而 category
- *       的是直接写在根节点上的，以后维护 API 时需要注意统一。
+ * @version 1.1
  * 
  * 参数说明：
  *    resp 即为 axios get 返回的 response.data
  *    data 应传递当前 Vue 组件的 pageData
  */
-export default (respOrigin, data) => {
+
+type RespOrigin = {
+    dataType: string
+    content: any
+}
+
+type PageData = {
+    data: any
+    isLoading: boolean
+    nav?: any
+}
+
+export default (respOrigin: RespOrigin, data: PageData) => {
     let dataType = respOrigin.dataType // 获取的数据类型，区别 detail 和 category
     let resp = respOrigin.content // 获取到的数据
 
@@ -41,28 +52,30 @@ export default (respOrigin, data) => {
         } else { next = undefined }
         // 设置数据
         data.nav = { type: 'detail', prev, next }
-        document.title = resp.build.number + ' / Windows Up-to-Date'
+        setTitle(resp.build.number)
 
     } else {
         // 如果类型是 categoryList
 
         // 判断是否存在上一个内容
-        if(resp.previous != undefined) {
+        if(resp.nav.previous != undefined) {
             prev = {
-                platform: resp.previous.name,
-                route: '/category/' + resp.previous.path
+                platform: resp.nav.previous.name,
+                path: resp.nav.previous.path,
+                route: '/category/' + resp.nav.previous.path
             }
         } else { prev = undefined }
         // 判断是否存在下一个内容
-        if(resp.next != undefined) {
+        if(resp.nav.next != undefined) {
             next = {
-                platform: resp.next.name,
-                route: '/category/' + resp.next.path
+                platform: resp.nav.next.name,
+                path: resp.nav.next.path,
+                route: '/category/' + resp.nav.next.path
             }
         } else { next = undefined }
         // 设置数据
         data.nav = { type: 'categoryList', prev, next }
-        document.title = resp.name + ' / Windows Up-to-Date'
+        setTitle(resp.name)
     }
     
 }

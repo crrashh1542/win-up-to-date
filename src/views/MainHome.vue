@@ -1,19 +1,24 @@
 <script setup>
-import axios from 'axios'
+import request from '@/utils/request'
 import { reactive } from 'vue'
+import { storeToRefs } from 'pinia'
+
 import icons from '@/assets/icons'
 import Card from '@/components/widgets/Card.vue'
 import LoadAnim from '@/components/widgets/LoadAnim.vue'
 
+import { useSettingsStore } from '@/stores/settings'
+const settingsStore = useSettingsStore()
+let { settings } = storeToRefs(settingsStore)
+
 // STEP1 ---- 初始化
-document.title = 'Windows Up-to-Date'
 let state = reactive({
     list: [],
     isLoading: true,
 })
 
 // STEP2 ---- 获取数据并填充
-axios.get('https://p0-wutd.api.crrashh.com/v2/latestVersions')
+request({ url: '/latestBuilds', method: 'get' })
     .then(response => {
         state.list = response.data.content
         state.isLoading = false
@@ -36,20 +41,25 @@ axios.get('https://p0-wutd.api.crrashh.com/v2/latestVersions')
                 {{ c.category }}
             </div>
 
-            <!-- 内容卡片（若存在 category 属性，则提供 router-link） -->
+            <!-- 内容卡片 -->
             <Card v-for="build in c.releases" :key="build.name" :class="build.style">
+                
                 <!-- 如果 build.category 存在则设置 router-link -->
                 <router-link :to="'/detail/' + build.category + '/' + build.version"
                     v-if="build.category !== undefined">
                     <div class="row">
+                        <!-- 左上标签 -->
                         <span :class="'channel u-float-l ' + build.style">{{ build.channel }}</span>
-                        <span class="u-space-r u-float-r">
+                        <!-- 右上代号 & 周期 -->
+                        <span class="u-space-r u-float-r" v-if="settings.isShowFlight">
                             <img :src="icons.rocket" class="u-box-xs u-icon" />&nbsp;
                             {{ build.codename }} {{ build.semester }}
                         </span>
                     </div>
+                    <!-- 版本号 -->
                     <div class="number">{{ build.version }}</div>
-                    <div class="row">
+                    <!-- 分支 -->
+                    <div class="row" v-if="settings.isShowBranch">
                         <img :src="icons.branch" class="u-box-xs u-icon"/>
                         {{ build.branch }}
                     </div>
@@ -57,14 +67,18 @@ axios.get('https://p0-wutd.api.crrashh.com/v2/latestVersions')
 
                 <span v-else>
                     <div class="row">
+                        <!-- 左上标签 -->
                         <span :class="'channel u-float-l ' + build.style">{{ build.channel }}</span>
-                        <span class="u-space-r u-float-r">
+                        <!-- 右上代号 & 周期 -->
+                        <span class="u-space-r u-float-r" v-if="settings.isShowFlight">
                             <img :src="icons.rocket" class="u-box-xs u-icon" />&nbsp;
                             {{ build.codename }} {{ build.semester }}
                         </span>
                     </div>
+                    <!-- 版本号 -->
                     <div class="number">{{ build.version }}</div>
-                    <div class="row">
+                    <!-- 分支 -->
+                    <div class="row" v-if="settings.isShowBranch">
                         <img :src="icons.branch" class="u-box-xs u-icon"/>
                         {{ build.branch }}
                     </div>
@@ -133,18 +147,18 @@ axios.get('https://p0-wutd.api.crrashh.com/v2/latestVersions')
 
 /* 卡片多端适配 ----- BEGIN */
 // SEC 1 ------ 两列
-@media screen and (min-width: 1150px) {
+@media screen and (min-width: 1100px) {
     .card {
         --card-width: calc(31% - 5px * 3);
     }
 }
-@media screen and (max-width: 1150px) {
+@media screen and (max-width: 1100px) {
     .card {
-        --card-width: 46%;
+        --card-width: calc(46% - 5px * 2);
     }
 }
 // SEC 2 ------ 一列
-@media screen and (max-width: 620px) {
+@media screen and (max-width: 750px) {
     .card {
         --card-width: 100%;
     }

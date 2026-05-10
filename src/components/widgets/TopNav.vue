@@ -27,7 +27,7 @@ const refreshData = (obj) => {
       <router-link class="icon-left"
          v-if="nav.data.type == 'categoryList' && nav.data.prev != undefined"
          :to="nav.data.prev.route"
-         @click="refreshData({ platform: nav.data.prev.platform })">
+         @click="refreshData({ platform: nav.data.prev.path })">
          <Icon icon="fluent:arrow-left-20-filled" />
          {{ nav.data.prev.platform }} 
       </router-link>
@@ -41,15 +41,16 @@ const refreshData = (obj) => {
          @click="refreshData({
             platform: nav.data.next.platform, 
             build: nav.data.next.build })">
-         {{ nav.data.next.build }} <Icon icon="fluent:arrow-right-20-filled" />
+         {{ nav.data.next.build }}
+         <Icon icon="fluent:arrow-right-20-filled" />
       </router-link>
       <!-- 如果type是categoryList -->
-      <router-link class="icon-left"
+      <router-link class="icon-right"
          v-if="nav.data.type == 'categoryList' && nav.data.next != undefined"
          :to="nav.data.prev.route"
-         @click="refreshData({ platform: nav.data.next.platform })">
-         <Icon icon="fluent:arrow-left-20-filled" />
+         @click="refreshData({ platform: nav.data.next.path })">
          {{ nav.data.next.platform }} 
+         <Icon icon="fluent:arrow-right-20-filled" />
       </router-link>
    </div>
 </template>

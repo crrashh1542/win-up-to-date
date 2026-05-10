@@ -1,9 +1,9 @@
-<script>
+<script setup>
 // 引入库
 import { reactive, toRefs } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
-import axios from 'axios'
+import request from '@/utils/request'
 
 // 引入组件
 import Card from '@/components/widgets/Card.vue'
@@ -12,62 +12,58 @@ import LoadAnim from '@/components/widgets/LoadAnim.vue'
 import TopNav from '@/components/widgets/TopNav.vue'
 import initDetailData from '@/utils/initDetailData'
 
-export default {
-    name: 'DataDetail',
-    components: { LoadAnim, Card, Code, TopNav, Icon },
-    setup() {
-        // STEP1 ------ 设定初始值
-        let pageData = reactive({
-            data: { build: {} },
-            isLoading: true,
-            nav: null
+defineOptions({
+    name: 'DataDetail'
+})
+
+// STEP1 ------ 设定初始值
+const pageData = reactive({
+    data: { build: {} },
+    isLoading: true,
+    nav: null
+})
+
+// STEP2 ------ 获取数据
+// 通过当前路由，得到当前的 platform 和 build 并发送给 API
+const router = useRouter()
+const route = useRoute()
+const [platform, build] = [
+    route.params.platform,
+    route.params.build,
+]
+request({ url: '/detail', method: 'get', params: { platform, build } })
+
+    // STEP3 ------ 处理并修改数据
+    .then(response => {
+        initDetailData(response.data, pageData)
+    })
+    .catch(() => {
+        // 由于服务器设置，目前只返回 404
+        router.replace('/404')
+    })
+
+// STEP4 ------ 返回数据
+const { data, isLoading, nav } = toRefs(pageData)
+
+// 获取“构建归属”处的路由
+const getBelongingRoute = value => {
+    return '/category/' + value
+}
+
+// 刷新数据
+const refreshData = obj => {
+    request({
+        url: '/detail',
+        method: 'get',
+        params: { platform: obj.platform, build: obj.build },
+    })
+        .then(response => {
+            initDetailData(response.data, pageData)
         })
-
-        // STEP2 ------ 获取数据
-        // 通过当前路由，得到当前的 platform 和 build 并发送给 API
-        let router = useRouter()
-        let [platform, build] = [
-            router.currentRoute.value.params.platform,
-            router.currentRoute.value.params.build,
-        ]
-        axios.get(
-            'https://p0-wutd.api.crrashh.com/v1/detail?platform=' +
-            platform + '&build=' + build)
-
-            // STEP3 ------ 处理并修改数据
-            .then(response => {
-                initDetailData(response.data, pageData)
-            })
-            .catch(() => {
-                // 由于服务器设置，目前只返回 404
-                router.replace('/404')
-            })
-
-        // STEP4 ------ 返回数据
-        return { ...toRefs(pageData) }
-    },
-    methods: {
-        // 获取“构建归属”处的路由
-        getBelongingRoute(value) {
-            return '/category/' + value
-        },
-
-        // 刷新数据
-        refreshData(obj) {
-            let vueObj = this
-            axios.get(
-                    'https://p0-wutd.api.crrashh.com/v1/detail?platform=' +
-                    obj.platform + '&build=' + obj.build)
-                .then(response => {
-                    // 由于 pageData 的数据已经存在于 Vue 实例上了，所以直接访问 vueObj
-                    initDetailData(response.data, vueObj)
-                })
-                .catch(() => {
-                    // 由于服务器设置，目前只返回 404
-                    router.replace('/404')
-                })
-        },
-    },
+        .catch(() => {
+            // 由于服务器设置，目前只返回 404
+            router.replace('/404')
+        })
 }
 </script>
 
@@ -77,7 +73,7 @@ export default {
     <div class="u-subbanner">{{ data.build.number }}</div>
 
     <!-- 加载动画 -->
-    <LoadAnim v-if="isLoading" />
+    <LoadAnim v-if="isLoading" mode="filled" />
 
     <div class="wrapper" v-if="!isLoading">
         <!-- 快速导航 -->
@@ -156,7 +152,7 @@ export default {
                 从 UUP 获取构建
             </div>
 
-            <div v-if="data.updateId !== undefined">
+            <div v-if="data.updateId !== undefined && data.updateId.length > 0">
                 <p v-for="id in data.updateId" :key="id.arch">
                     {{ id.arch }}：<Code :value="id.id" is-copiable=true />
                 </p>
@@ -173,7 +169,7 @@ export default {
                 下载 ISO / 更新包
             </div>
 
-            <div v-if="data.download !== undefined">
+            <div v-if="data.download !== undefined && Object.keys(data.download).length > 0">
                 <p>文件名称：{{ data.download.name }}</p>
                 <p>系统架构：{{ data.download.arch }}</p>
                 <p>
