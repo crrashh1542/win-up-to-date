@@ -1,10 +1,18 @@
 <script setup>
-// 引入组件
-import { Icon } from '@iconify/vue'
 import { useRoute } from 'vue-router'
 
 import Card from '@/components/widgets/Card.vue'
 import { aboutInfo } from '@/utils/parseRepoInfo'
+
+import Search24RegularIcon from '@iconify-vue/fluent/search-24-regular'
+import Code24RegularIcon from '@iconify-vue/fluent/code-24-regular'
+import Chat24RegularIcon from '@iconify-vue/fluent/chat-24-regular'
+
+const icons = {
+    'search': Search24RegularIcon,
+    'code': Code24RegularIcon,
+    'chat': Chat24RegularIcon,
+}
 
 const route = useRoute()
 </script>
@@ -15,21 +23,21 @@ const route = useRoute()
     <p>如你所见，这是一个反映 Windows 系统各版本情况实时进展的统计<s>和一堆其它莫名其妙功能混一起的</s>站点。</p>
     <p>作者云萧自身也是一个 Windows Insider 爱好者，若你喜欢这个项目，给项目点个小星星吧！=≡Σ((( つ•̀ω•́)つ</p>
 
-    <Card v-for="i in aboutInfo" :key="i.key" mode="block">
+    <Card v-for="item in aboutInfo" :key="item.label" mode="block">
         <!-- 如果有外部链接，加 a 标签 -->
-        <a v-if="i[3] !== undefined" :href="i[2]" target="_blank">
-            <Icon :icon="i[1]" class="icon" />
-            <span class="item">{{ i[0] }}</span>
+        <a v-if="item.link" :href="item.link" target="_blank">
+            <component :is="icons[item.icon]" class="icon" width="24" height="24" />
+            <span class="item">{{ item.label }}</span>
             <span class="u-grow"></span>
-            <span class="value">{{ i[3] }}</span>
+            <span class="value">{{ item.value }}</span>
         </a>
 
         <!-- 如果没有外部链接，加 span 标签 -->
         <div v-else>
-            <Icon :icon="i[1]" class="icon" />
-            <span class="item">{{ i[0] }}</span>
+            <component :is="icons[item.icon]" class="icon" width="24" height="24" />
+            <span class="item">{{ item.label }}</span>
             <span class="u-grow"></span>
-            <span class="value">{{ i[2] }}</span>
+            <span class="value">{{ item.value }}</span>
         </div>
     </Card>
 

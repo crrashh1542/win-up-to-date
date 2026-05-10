@@ -1,6 +1,5 @@
 <script setup>
-
-import { Icon } from '@iconify/vue'
+import Dismiss24RegularIcon from '@iconify-vue/fluent/dismiss-24-regular'
 
 import AboutView from '@/views/MainAbout.vue'
 
@@ -20,7 +19,7 @@ const emit = defineEmits(['update:visibility'])
                 <span class="u-banner">关于项目</span>
                 <span class="u-grow"></span>
                 <span class="button">
-                    <icon icon="fluent:dismiss-24-filled" width="24" height="24" @click="emit('update:visibility', false)" />
+                    <Dismiss24RegularIcon width="24" height="24" @click="emit('update:visibility', false)" />
                 </span>
             </div>
             <div class="view-container">

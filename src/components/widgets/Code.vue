@@ -7,7 +7,7 @@
 // 引入库
 import Button from './Button.vue'
 import useClipboard from 'vue-clipboard3'
-import { Icon } from '@iconify/vue'
+import Copy16RegularIcon from '@iconify-vue/fluent/copy-16-regular'
 
 const { toClipboard } = useClipboard()
 
@@ -24,9 +24,7 @@ if(props.isBreakWord) { breakWord = 'break-word' }
 
     <!-- 复制按钮 -->
     <Button @click="toClipboard(value)" v-if="isCopiable">
-        <div>
-            <Icon icon="fluent:copy-16-regular" width="16" height="16" />
-            复制</div>
+        <div><Copy16RegularIcon width="1.25em" height="1.25em" />复制</div>
     </Button>
 
     <!-- 复制完成的提示 -->
@@ -39,10 +37,10 @@ if(props.isBreakWord) { breakWord = 'break-word' }
 code {
     background-color: #f3f3f3;
     border: 1px solid #ddd;
-    padding: .2em .4em;
-    line-height: 1.5rem;
+    padding: .1em .4em;
+    line-height: 1.5;
     border-radius: 4px;
-    font-family: 'JetBrains Mono' !important;
+    font-family: 'JetBrainsMono NF', 'JetBrains Mono', monospace;
     font-size: 14px;
 }
 code.break-word {
@@ -50,10 +48,10 @@ code.break-word {
 }
 
 .button {
-	font-size: 1rem;
+	font-size: 14px;
     line-height: 1.25rem;
-    padding: .4em .6em;
-    margin: .2em .4em;
+    padding: .3em .6em;
+    margin-left: .4em;
     div {
         display: flex;
         align-items: center;

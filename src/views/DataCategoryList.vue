@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { reactive, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { Icon } from '@iconify/vue'
 import request from '@/utils/request'
+
+import Code24RegularIcon from '@iconify-vue/fluent/code-24-regular'
+import Laptop24RegularIcon from '@iconify-vue/fluent/laptop-24-regular'
+import SquareMultiple24RegularIcon from '@iconify-vue/fluent/square-multiple-24-regular'
+import Tag24RegularIcon from '@iconify-vue/fluent/tag-24-regular'
 
 import Card from '@/components/widgets/Card.vue'
 import LoadAnim from '@/components/widgets/LoadAnim.vue'
@@ -89,21 +93,21 @@ watch(
         <Card class="overview" mode="block">
             <div class="line-left">
                 <p>
-                    <Icon icon="fluent:laptop-settings-24-regular" width="22" height="22" />
+                    <Laptop24RegularIcon width="22" height="22" />
                     平台代号 / {{ pageData.data.codename }}
                 </p>
                 <p>
-                    <Icon icon="fluent:code-24-regular" width="22" height="22" />
+                    <Code24RegularIcon width="22" height="22" />
                     开发周期 / {{ pageData.data.semester }}
                 </p>
             </div>
             <div>
                 <p>
-                    <Icon icon="fluent:tag-24-regular" width="22" height="22" />
+                    <Tag24RegularIcon width="22" height="22" />
                     版本范围 / {{ pageData.versionRange }}
                 </p>
                 <p>
-                    <Icon icon="fluent:square-multiple-24-regular" width="22" height="22" />
+                    <SquareMultiple24RegularIcon width="22" height="22" />
                     分类归属 / {{ pageData.data.belonging }}
                 </p>
             </div>

@@ -1,8 +1,17 @@
 <script setup lang="ts">
 import { reactive, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { Icon } from '@iconify/vue'
 import request from '@/utils/request'
+
+import Box24RegularIcon from '@iconify-vue/fluent/box-24-regular'
+import Branch24RegularIcon from '@iconify-vue/fluent/branch-24-regular'
+import Clock24RegularIcon from '@iconify-vue/fluent/clock-24-regular'
+import Code24RegularIcon from '@iconify-vue/fluent/code-24-regular'
+import DesktopArrowDown24RegularIcon from '@iconify-vue/fluent/desktop-arrow-down-24-regular'
+import DeveloperBoard24RegularIcon from '@iconify-vue/fluent/developer-board-24-regular'
+import Search24RegularIcon from '@iconify-vue/fluent/search-24-regular'
+import Tag24RegularIcon from '@iconify-vue/fluent/tag-24-regular'
+import MegaphoneLoud24RegularIcon from '@iconify-vue/fluent/megaphone-loud-24-regular'
 
 import Card from '@/components/widgets/Card.vue'
 import Code from '@/components/widgets/Code.vue'
@@ -83,30 +92,30 @@ const getBelongingRoute = (value: string) => {
         <Card class="overview">
             <div class="line-left">
                 <p>
-                    <Icon icon="fluent:tag-24-regular" width="22" height="22" />
+                    <Tag24RegularIcon width="22" height="22" />
                     构建版号 / {{ pageData.data.build.number }}
                 </p>
                 <p>
-                    <Icon icon="fluent:branch-24-regular" width="22" height="22" />
+                    <Branch24RegularIcon width="22" height="22" />
                     构建分支 / {{ pageData.data.build.branch }}
                 </p>
                 <p>
-                    <Icon icon="fluent:clock-24-regular" width="22" height="22" />
+                    <Clock24RegularIcon width="22" height="22" />
                     编译时间 / {{ pageData.data.build.compileTime }}
                 </p>
             </div>
             <div>
                 <p>
-                    <Icon icon="fluent:developer-board-24-regular" width="22" height="22" />
+                    <DeveloperBoard24RegularIcon width="22" height="22" />
                     系统架构 /
                     <span v-for="i in pageData.data.build.arch" :key="i">{{ i }}&nbsp;&nbsp;</span>
                 </p>
                 <p>
-                    <Icon icon="fluent:search-24-regular" width="22" height="22" />
+                    <Search24RegularIcon width="22" height="22" />
                     推送平台 / {{ pageData.data.build.counterpart }}
                 </p>
                 <p>
-                    <Icon icon="fluent:code-24-regular" width="22" height="22" />
+                    <Code24RegularIcon width="22" height="22" />
                     构建归属 /
                     <router-link :to="getBelongingRoute(pageData.data.belongsTo.path)">
                         {{ pageData.data.belongsTo.name }}
@@ -118,7 +127,7 @@ const getBelongingRoute = (value: string) => {
         <!-- 发版信息卡片 -->
         <Card mode="block">
             <div class="u-catalog">
-                <Icon icon="fluent:megaphone-loud-24-regular" width="28" height="28" />
+                <MegaphoneLoud24RegularIcon width="28" height="28" />
                 发版信息
             </div>
 
@@ -148,12 +157,12 @@ const getBelongingRoute = (value: string) => {
         <!-- 下载 UUP -->
         <Card mode="block">
             <div class="u-catalog">
-                <Icon icon="fluent:desktop-arrow-down-24-regular" width="28" height="28" />
+                <DesktopArrowDown24RegularIcon width="28" height="28" />
                 从 UUP 获取构建
             </div>
 
             <div v-if="pageData.data.updateId !== undefined && pageData.data.updateId.length > 0">
-                <p v-for="id in pageData.data.updateId" :key="id.arch">
+                <p class="u-para-code" v-for="id in pageData.data.updateId" :key="id.arch">
                     {{ id.arch }}：<Code :value="id.id" is-copiable=true />
                 </p>
             </div>
@@ -165,7 +174,7 @@ const getBelongingRoute = (value: string) => {
         <!-- 下载 ISO -->
         <Card mode="block">
             <div class="u-catalog">
-                <Icon icon="fluent:box-24-regular" width="28" height="28" />
+                <Box24RegularIcon width="28" height="28" />
                 下载 ISO / 更新包
             </div>
 
@@ -179,8 +188,8 @@ const getBelongingRoute = (value: string) => {
                         &nbsp;&nbsp;&nbsp;
                     </span>
                 </p>
-                <p>MD5：<Code :value="pageData.data.download.md5" is-break-word=true is-copiable=true /></p>
-                <p>SHA-256：<Code :value="pageData.data.download.sha256" is-break-word=true is-copiable=true /></p>
+                <p class="u-para-code">MD5：<Code :value="pageData.data.download.md5" is-break-word=true is-copiable=true /></p>
+                <p class="u-para-code">SHA-256：<Code :value="pageData.data.download.sha256" is-break-word=true is-copiable=true /></p>
             </div>
             <div class="placeholder" v-else>
                 <p>暂无可供下载的内容</p>

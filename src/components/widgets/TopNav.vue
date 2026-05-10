@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { Icon } from '@iconify/vue'
+import ArrowLeft20FilledIcon from '@iconify-vue/fluent/arrow-left-20-filled'
+import ArrowRight20FilledIcon from '@iconify-vue/fluent/arrow-right-20-filled'
 
 interface NavItem {
     route: string
@@ -15,9 +16,7 @@ interface NavData {
 }
 
 const props = defineProps<{ data: NavData | null }>()
-
 const isDetail = computed(() => props.data?.type === 'detail')
-
 const buildLink = (source?: NavItem) => {
     if (!source) return null
     return {
@@ -31,18 +30,19 @@ const next = computed(() => buildLink(props.data?.next))
 </script>
 
 <template>
+    
     <div class="nav">
-        <router-link class="icon-left" v-if="prev" :to="prev.route">
-            <Icon icon="fluent:arrow-left-20-filled" />
+        <RouterLink class="icon-left" v-if="prev" :to="prev.route">
+            <ArrowLeft20FilledIcon width="1em" height="1em" />
             {{ prev.text }}
-        </router-link>
+        </RouterLink>
 
         <span class="grow"></span>
 
-        <router-link class="icon-right" v-if="next" :to="next.route">
+        <RouterLink class="icon-right" v-if="next" :to="next.route">
             {{ next.text }}
-            <Icon icon="fluent:arrow-right-20-filled" />
-        </router-link>
+            <ArrowRight20FilledIcon width="1em" height="1em" />
+        </RouterLink>
     </div>
 </template>
 
@@ -63,9 +63,11 @@ const next = computed(() => buildLink(props.data?.next))
     }
     .icon-left svg {
         margin-right: .25em;
+        display: flex;
     }
     .icon-right svg {
         margin-left: .25em;
+        display: flex;
     }
 
     .grow {

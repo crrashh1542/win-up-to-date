@@ -3,7 +3,7 @@
     参考：https://github.com/microsoft/fluentui/tree/@fluentui/react-components_v9.72.2/packages/react-components/react-switch/library/src/components/Switch
 -->
 <script setup>
-import { Icon } from '@iconify/vue'
+import Circle20FilledIcon from '@iconify-vue/fluent/circle-20-filled'
 
 const props = defineProps({
     isChecked: {
@@ -22,7 +22,7 @@ const props = defineProps({
         <input class="input-box" role="switch" type="checkbox"
                :checked="isChecked" :disabled="isDisabled" />
         <div aria-hidden="true" class="indicator">
-            <Icon icon="fluent:circle-24-filled" />
+            <Circle20FilledIcon width="18" height="18" />
         </div>
     </div>
 </template>
