@@ -35,7 +35,7 @@ interface DetailData {
     release?: { channel: string; time: string; url: string; announcePlace: string }
     featureIds?: { url: string; fileName: string }
     updateId?: { arch: string; id: string }[]
-    download?: { name: string; arch: string; link: { url: string; source: string }[]; md5: string; sha256: string }
+    download?: { name: string; arch: string; size?: string; link: { url: string; source: string }[]; md5: string; sha256: string }
 }
 
 const pageData = reactive({
@@ -181,6 +181,7 @@ const getBelongingRoute = (value: string) => {
             <div v-if="pageData.data.download !== undefined && Object.keys(pageData.data.download).length > 0">
                 <p>文件名称：{{ pageData.data.download.name }}</p>
                 <p>系统架构：{{ pageData.data.download.arch }}</p>
+                <p v-if="pageData.data.download.size">文件大小：{{ pageData.data.download.size }}</p>
                 <p>
                     下载地址：
                     <span v-for="(l, index) in pageData.data.download.link" :key="index">
