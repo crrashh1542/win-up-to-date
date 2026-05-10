@@ -2,7 +2,7 @@
 import { useRoute } from 'vue-router'
 
 import Card from '@/components/widgets/Card.vue'
-import { aboutInfo } from '@/utils/parseRepoInfo'
+import aboutInfo from '@/utils/parseRepoInfo'
 
 import Search24RegularIcon from '@iconify-vue/fluent/search-24-regular'
 import Code24RegularIcon from '@iconify-vue/fluent/code-24-regular'

@@ -4,7 +4,6 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import router from './router'
 
 import App from './App.vue'
-import './utils/showRepoInfo'
 
 const app = createApp(App)
 const pinia = createPinia()

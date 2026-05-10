@@ -1,8 +1,6 @@
 'use strict'
 /**
  * 此脚本用于在处理本项目相关信息
- * @author crrashh1542
- * @version 2.0
  */
 
 import packageInfo from '../../package.json'
@@ -31,6 +29,21 @@ const buildTag = (() => {
     return buildNum + '.' + buildBranch + '.' + buildTime
 })()
 
+const styleVerName = `font-size: 14px;
+                    color: #000; 
+                    background-color: #8ad5b3; 
+                    padding: 5px 9px;
+                    border-radius: 3px 0 0 3px;
+                    margin: 10px 0; `
+const styleVerValue = `font-size: 14px; 
+                     color: #fff; 
+                     background-color: #607d8b; 
+                     padding: 5px 9px;
+                     border-radius: 0 3px 3px 0;
+                     margin: 6px 0; `
+console.log('%c%s%c%s', styleVerName, 'wutd', styleVerValue, 'v' + packageInfo.version)
+console.log(`Build Tag: ${ buildTag } (g${ buildInfo.hash })`)
+
 // 导出数据
 export interface AboutItem {
     label: string
@@ -44,4 +57,4 @@ const aboutInfo: AboutItem[] = [
     { label: '项目地址', icon: 'code', value: pkgRepoName, link: pkgRepo },
     { label: '交流群组', icon: 'chat', value: '442133970', link: 'https://qm.qq.com/q/UAI4de5OM0' },
 ]
-export { aboutInfo, buildTag }
+export default aboutInfo
