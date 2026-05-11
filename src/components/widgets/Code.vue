@@ -1,21 +1,21 @@
-<script setup>
+<script setup lang="ts">
 /**
  * 可复制代码组件，代码右侧有个小复制按钮
  * 用法：<Code value="xxx" />
  */
 
-// 引入库
 import Button from './Button.vue'
-import useClipboard from 'vue-clipboard3'
 import Copy16RegularIcon from '@iconify-vue/fluent/copy-16-regular'
 
-const { toClipboard } = useClipboard()
+const props = defineProps<{ value?: string; isCopiable?: string; isBreakWord?: string }>()
 
-const props = defineProps({ value: String, isCopiable: String, isBreakWord: String })
+const copy = async () => {
+    if (props.value) {
+        await navigator.clipboard.writeText(props.value)
+    }
+}
 
-// 处理是否断词强制换行
-let breakWord = ''
-if(props.isBreakWord) { breakWord = 'break-word' }
+const breakWord = props.isBreakWord ? 'break-word' : ''
 </script>
 
 <template>
@@ -23,7 +23,7 @@ if(props.isBreakWord) { breakWord = 'break-word' }
     <code :class="breakWord">{{ value }}</code>
 
     <!-- 复制按钮 -->
-    <Button @click="toClipboard(value)" v-if="isCopiable">
+    <Button @click="copy" v-if="isCopiable">
         <div><Copy16RegularIcon width="1.25em" height="1.25em" />复制</div>
     </Button>
 
