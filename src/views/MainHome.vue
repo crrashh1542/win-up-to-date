@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 
 import icons from '@/assets/icons'
 import Card from '@/components/widgets/Card.vue'
-import LoadAnim from '@/components/widgets/LoadAnim.vue'
+import Spinner from '@/components/widgets/Spinner.vue'
 
 import { useSettingsStore } from '@/stores/settings'
 import { useBuildsStore } from '@/stores/latestBuilds'
@@ -15,7 +15,7 @@ useBuildsStore().fetchBuilds()
 
 <template>
     <div class="u-banner">当前版本列表</div>
-    <LoadAnim v-if="isLoading" mode="filled" />
+    <Spinner v-if="isLoading" mode="filled" />
 
     <!-- 内容块 BEGIN -->
         <div class="block" v-if="!isLoading" v-for="c in list" :key="c.id">

@@ -9,7 +9,7 @@ import SquareMultiple24RegularIcon from '@iconify-vue/fluent/square-multiple-24-
 import Tag24RegularIcon from '@iconify-vue/fluent/tag-24-regular'
 
 import Card from '@/components/widgets/Card.vue'
-import LoadAnim from '@/components/widgets/LoadAnim.vue'
+import Spinner from '@/components/widgets/Spinner.vue'
 import TopNav from '@/components/widgets/TopNav.vue'
 import initDetailData from '@/utils/initDetailData'
 
@@ -83,7 +83,7 @@ watch(
     <div class="u-subbanner">{{ pageData.data.name }}</div>
 
     <!-- 加载动画 -->
-    <LoadAnim v-if="pageData.isLoading" mode="filled" />
+    <Spinner v-if="pageData.isLoading" mode="filled" />
 
     <div class="wrapper" v-if="!pageData.isLoading">
         <!-- 快速导航 -->

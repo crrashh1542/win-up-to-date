@@ -15,7 +15,7 @@ import MegaphoneLoud24RegularIcon from '@iconify-vue/fluent/megaphone-loud-24-re
 
 import Card from '@/components/widgets/Card.vue'
 import Code from '@/components/widgets/Code.vue'
-import LoadAnim from '@/components/widgets/LoadAnim.vue'
+import Spinner from '@/components/widgets/Spinner.vue'
 import TopNav from '@/components/widgets/TopNav.vue'
 import initDetailData from '@/utils/initDetailData'
 
@@ -82,7 +82,7 @@ const getBelongingRoute = (value: string) => {
     <div class="u-subbanner">{{ pageData.data.build.number }}</div>
 
     <!-- 加载动画 -->
-    <LoadAnim v-if="pageData.isLoading" mode="filled" />
+    <Spinner v-if="pageData.isLoading" mode="filled" />
 
     <div class="wrapper" v-if="!pageData.isLoading">
         <!-- 快速导航 -->
