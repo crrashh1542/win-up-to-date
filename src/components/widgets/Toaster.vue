@@ -115,14 +115,6 @@ function onLeave(el: Element, done: () => void) {
     }
 }
 
-// 顶部位置：column-reverse 使 unshift 的新 toast 出现在视觉底部（队尾）
-// 已有 toast 位置变化触发 move transition
-.pos-top,
-.pos-top-end,
-.pos-top-start {
-    flex-direction: column-reverse;
-}
-
 // 位置
 .pos-top {
     top: 0;
