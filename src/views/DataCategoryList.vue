@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import request from '@/utils/request'
 
 import Code24RegularIcon from '@iconify-vue/fluent/code-24-regular'
@@ -39,7 +39,6 @@ const pageData = reactive({
     nav: null as NavData | null
 })
 
-const router = useRouter()
 const route = useRoute()
 
 // utils
@@ -58,12 +57,6 @@ const fetchData = async (platform: string) => {
         })
         initDetailData(resp, pageData)
         pageData.versionRange = formatVersionRange(resp.content.range)
-    } catch (err: any) {
-        if (err.response?.status === 404) {
-            router.replace('/404')
-        } else {
-            console.error('加载数据失败:', err)
-        }
     } finally {
         pageData.isLoading = false
     }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import request from '@/utils/request'
 
 import Box24RegularIcon from '@iconify-vue/fluent/box-24-regular'
@@ -41,25 +41,22 @@ interface DetailData {
 const pageData = reactive({
     data: { build: {} } as DetailData,
     isLoading: true,
+    isError: false,
     nav: null as any
 })
 
-const router = useRouter()
 const route = useRoute()
 
 const fetchData = async (platform: string, build: string) => {
     pageData.isLoading = true
+    pageData.isError = false
     try {
         const { data: resp } = await request({
             url: '/detail', method: 'get', params: { platform, build }
         })
         initDetailData(resp, pageData)
-    } catch (err: any) {
-        if (err.response?.status === 404) {
-            router.replace('/404')
-        } else {
-            console.error('加载数据失败:', err)
-        }
+    } catch {
+        pageData.isError = true
     } finally {
         pageData.isLoading = false
     }
@@ -70,10 +67,6 @@ watch(
     ([platform, build]) => { if (platform && build) fetchData(platform, build) },
     { immediate: true }
 )
-
-const getBelongingRoute = (value: string) => {
-    return '/category/' + value
-}
 </script>
 
 <template>
@@ -84,7 +77,7 @@ const getBelongingRoute = (value: string) => {
     <!-- 加载动画 -->
     <Spinner v-if="pageData.isLoading" mode="filled" />
 
-    <div class="wrapper" v-if="!pageData.isLoading">
+    <div class="wrapper" v-if="!pageData.isLoading && !pageData.isError">
         <!-- 快速导航 -->
         <TopNav :data="pageData.nav" />
 
@@ -117,7 +110,7 @@ const getBelongingRoute = (value: string) => {
                 <p>
                     <Code24RegularIcon width="22" height="22" />
                     构建归属 /
-                    <router-link :to="getBelongingRoute(pageData.data.belongsTo.path)">
+                    <router-link :to="'/category/' + pageData.data.belongsTo.path"">
                         {{ pageData.data.belongsTo.name }}
                     </router-link>
                 </p>
