@@ -2,25 +2,21 @@
     此组件移植自 FluentUI React v9 的 Switch 组件
     参考：https://github.com/microsoft/fluentui/tree/@fluentui/react-components_v9.72.2/packages/react-components/react-switch/library/src/components/Switch
 -->
-<script setup>
+<script setup lang="ts">
 import Circle20FilledIcon from '@iconify-vue/fluent/circle-20-filled'
 
-const props = defineProps({
-    isChecked: {
-        type: Boolean,
-        default: false
-    },
-    isDisabled: {
-        type: Boolean,
-        default: false
-    }
+const model = defineModel<boolean>()
+const props = withDefaults(defineProps<{
+    isDisabled?: boolean
+}>(), {
+    isDisabled: false
 })
 </script>
 
 <template>
     <div class="switch">
         <input class="input-box" role="switch" type="checkbox"
-               :checked="isChecked" :disabled="isDisabled" />
+               v-model="model" :disabled="isDisabled" />
         <div aria-hidden="true" class="indicator">
             <Circle20FilledIcon width="18" height="18" />
         </div>

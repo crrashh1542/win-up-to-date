@@ -17,9 +17,6 @@ const icons = {
 
 const settingsStore = useSettingsStore()
 const { settings } = storeToRefs(settingsStore)
-const updateSetting = (key, value) => {
-    settingsStore.settings[key] = value
-}
 
 const settingsMenu = [
     {
@@ -67,8 +64,7 @@ const settingsMenu = [
                 {{ item.name }}
             </span>
             <span class="u-grow"></span>
-            <Switch :is-disabled="item.isDisabled" :is-checked="settings[item.value]"
-                    @change="updateSetting(item.value, $event.target.checked)" />
+            <Switch :is-disabled="item.isDisabled" v-model="settings[item.value]" />
         </card>
     </div>
 </template>
