@@ -1,81 +1,149 @@
 import { setTitle } from './title'
 
-/**
- * 此脚本用于处理 Detail 相关 View 中的数据初始化/刷新
- * @version 1.1
- * 
- * 参数说明：
- *    resp 即为 axios get 返回的 response.data
- *    data 应传递当前 Vue 组件的 pageData
- */
-
-type RespOrigin = {
-    dataType: string
-    content: any
+// 接口数据结构 BEGIN
+// Detail
+export interface DetailBuild {
+    number: string
+    branch: string
+    compileTime: string
+    arch: string[]
+    counterpart: string
+}
+export interface DetailRelease {
+    channel: string
+    time: string
+    url: string
+    announcePlace: string
+}
+export interface DetailFeatureIds {
+    url: string
+    fileName: string
+}
+export interface DetailNavRef {
+    category: string
+    build: string
+}
+export interface DetailBelongsTo {
+    path: string
+    name: string
+}
+export interface DetailUpdateId {
+    arch: string
+    id: string
+}
+export interface DetailDownload {
+    name: string
+    link: { url: string; source: string }[]
+    arch: string
+    md5?: string
+    sha256?: string
+    size?: string
+}
+export interface DetailContent {
+    build: DetailBuild
+    release?: DetailRelease
+    featureIds?: DetailFeatureIds
+    nav: { previous?: DetailNavRef; next?: DetailNavRef }
+    belongsTo: DetailBelongsTo
+    updateId?: DetailUpdateId[]
+    download?: DetailDownload
 }
 
-type PageData = {
-    data: any
+// CategoryList
+export interface CategoryNavRef {
+    path: string
+    name: string
+}
+export interface CategoryContent {
+    name: string
+    codename: string
+    belonging: string
+    semester: string
+    range: [string, string]
+    nav: { previous?: CategoryNavRef; next?: CategoryNavRef }
+    list: [string, string][]
+}
+
+// 其它通用结构
+export interface NavItem {
+    platform: string
+    route: string
+    build?: string
+    path?: string
+}
+export interface NavData {
+    type: 'detail' | 'categoryList'
+    prev?: NavItem
+    next?: NavItem
+}
+export interface PageData {
+    data: DetailContent | CategoryContent
     isLoading: boolean
-    nav?: any
+    nav?: NavData | null
+}
+export interface RespOrigin {
+    dataType: 'detail' | 'categoryList'
+    content: DetailContent | CategoryContent
+}
+// 结构 END
+
+const buildDetailNav = (resp: DetailContent): NavData => {
+    const { previous, next } = resp.nav
+    const nav: NavData = { type: 'detail' }
+    if (previous) {
+        nav.prev = {
+            platform: previous.category,
+            build: previous.build,
+            route: '/detail/' + previous.category + '/' + previous.build
+        }
+    }
+    if (next) {
+        nav.next = {
+            platform: next.category,
+            build: next.build,
+            route: '/detail/' + next.category + '/' + next.build
+        }
+    }
+    return nav
+}
+
+const buildCategoryNav = (resp: CategoryContent): NavData => {
+    const { previous, next } = resp.nav
+    const nav: NavData = { type: 'categoryList' }
+    if (previous) {
+        nav.prev = {
+            platform: previous.name,
+            path: previous.path,
+            route: '/category/' + previous.path
+        }
+    }
+    if (next) {
+        nav.next = {
+            platform: next.name,
+            path: next.path,
+            route: '/category/' + next.path
+        }
+    }
+    return nav
 }
 
 export default (respOrigin: RespOrigin, data: PageData) => {
-    let dataType = respOrigin.dataType // 获取的数据类型，区别 detail 和 category
-    let resp = respOrigin.content // 获取到的数据
+    const { dataType, content } = respOrigin
 
     // 1. 重置数据
-    data.data = resp
+    data.data = content
 
     // 2. 关闭加载动画
     data.isLoading = false
 
     // 3. 设置导航栏和标题
-    let prev, next
-    // 如果类型是 detail
-    if(dataType == 'detail') {
-        // 判断是否存在上一个内容
-        if(resp.nav.previous != undefined) {
-            prev = {
-                platform: resp.nav.previous.category,
-                build: resp.nav.previous.build,
-                route: '/detail/' + resp.nav.previous.category + '/' + resp.nav.previous.build
-            }
-        } else { prev = undefined }
-        // 判断是否存在下一个内容
-        if(resp.nav.next != undefined) {
-            next = {
-                platform: resp.nav.next.category,
-                build: resp.nav.next.build,
-                route: '/detail/' + resp.nav.next.category + '/' + resp.nav.next.build
-            }
-        } else { next = undefined }
-        // 设置数据
-        data.nav = { type: 'detail', prev, next }
+    if (dataType === 'detail') {
+        const resp = content as DetailContent
+        data.nav = buildDetailNav(resp)
         setTitle(resp.build.number)
-
     } else {
-        // 如果类型是 categoryList
-
-        // 判断是否存在上一个内容
-        if(resp.nav.previous != undefined) {
-            prev = {
-                platform: resp.nav.previous.name,
-                path: resp.nav.previous.path,
-                route: '/category/' + resp.nav.previous.path
-            }
-        } else { prev = undefined }
-        // 判断是否存在下一个内容
-        if(resp.nav.next != undefined) {
-            next = {
-                platform: resp.nav.next.name,
-                path: resp.nav.next.path,
-                route: '/category/' + resp.nav.next.path
-            }
-        } else { next = undefined }
-        // 设置数据
-        data.nav = { type: 'categoryList', prev, next }
+        const resp = content as CategoryContent
+        data.nav = buildCategoryNav(resp)
         setTitle(resp.name)
     }
-    
 }

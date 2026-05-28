@@ -12,28 +12,14 @@ import Card from '@/components/widgets/Card.vue'
 import Spinner from '@/components/widgets/Spinner.vue'
 import TopNav from '@/components/widgets/TopNav.vue'
 import initDetailData from '@/utils/initDetailData'
+import type { CategoryContent, NavData } from '@/utils/initDetailData'
 
 defineOptions({
     name: 'DataCategoryList'
 })
 
-interface CategoryData {
-    name: string
-    codename: string
-    semester: string
-    belonging: string
-    range: [string, string | null]
-    list: [string, string][]
-}
-
-interface NavData {
-    type: 'detail' | 'categoryList'
-    prev?: { route: string; build: string; platform: string }
-    next?: { route: string; build: string; platform: string }
-}
-
 const pageData = reactive({
-    data: {} as CategoryData,
+    data: {} as CategoryContent,
     isLoading: true,
     versionRange: null as string | null,
     nav: null as NavData | null

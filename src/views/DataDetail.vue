@@ -18,31 +18,17 @@ import Code from '@/components/widgets/Code.vue'
 import Spinner from '@/components/widgets/Spinner.vue'
 import TopNav from '@/components/widgets/TopNav.vue'
 import initDetailData from '@/utils/initDetailData'
+import type { DetailContent, NavData } from '@/utils/initDetailData'
 
 defineOptions({
     name: 'DataDetail'
 })
 
-interface DetailData {
-    build: {
-        number: string
-        branch: string
-        compileTime: string
-        arch: string[]
-        counterpart: string
-    }
-    belongsTo: { name: string; path: string }
-    release?: { channel: string; time: string; url: string; announcePlace: string }
-    featureIds?: { url: string; fileName: string }
-    updateId?: { arch: string; id: string }[]
-    download?: { name: string; arch: string; size?: string; link: { url: string; source: string }[]; md5: string; sha256: string }
-}
-
 const pageData = reactive({
-    data: { build: {} } as DetailData,
+    data: { build: {} } as DetailContent,
     isLoading: true,
     isError: false,
-    nav: null as any
+    nav: null as NavData | null
 })
 
 const route = useRoute()
