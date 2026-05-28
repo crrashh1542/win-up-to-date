@@ -4,18 +4,36 @@
  * 用法：<Code value="xxx" />
  */
 
-import { computed } from 'vue'
-import Button from './Button.vue'
+import { computed, ref } from 'vue'
 import Copy16RegularIcon from '@iconify-vue/fluent/copy-16-regular'
+import Checkmark16RegularIcon from '@iconify-vue/fluent/checkmark-16-regular'
 
-const props = defineProps<{ value?: string; isCopiable?: boolean; isBreakWord?: boolean }>()
+import Button from './Button.vue'
+import { useToastStore } from '@/stores/toast'
+
+const props = withDefaults(defineProps<{
+    value?: string
+    isCopiable?: boolean
+    isBreakWord?: boolean
+}>(), {
+    isCopiable: false,
+    isBreakWord: false
+})
+
+const toast = useToastStore()
+const isCopied = ref(false)
+let copiedTimer: ReturnType<typeof setTimeout> | null = null
 
 const copy = async () => {
     if (!props.value) return
     try {
         await navigator.clipboard.writeText(props.value)
+        // 复制完成后显示已复制 1.5s
+        isCopied.value = true
+        if (copiedTimer) clearTimeout(copiedTimer)
+        copiedTimer = setTimeout(() => { isCopied.value = false }, 1500)
     } catch {
-        console.error('复制失败：剪贴板 API 不可用')
+        toast.show({ title: '复制内容失败', intent: 'error' })
     }
 }
 
@@ -28,11 +46,12 @@ const breakWord = computed(() => props.isBreakWord ? 'break-word' : '')
 
     <!-- 复制按钮 -->
     <Button @click="copy" v-if="isCopiable">
-        <div><Copy16RegularIcon width="1.25em" height="1.25em" />复制</div>
+        <div>
+            <Checkmark16RegularIcon v-if="isCopied" width="1.25em" height="1.25em" />
+            <Copy16RegularIcon v-else width="1.25em" height="1.25em" />
+            {{ isCopied ? '已复制' : '复制' }}
+        </div>
     </Button>
-
-    <!-- 复制完成的提示 -->
-    <!-- TODO -->
 </template>
 
 <style lang="less" scoped>
