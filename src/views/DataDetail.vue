@@ -142,7 +142,7 @@ watch(
 
             <div v-if="pageData.data.updateId !== undefined && pageData.data.updateId.length > 0">
                 <p class="u-para-code" v-for="id in pageData.data.updateId" :key="id.arch">
-                    {{ id.arch }}：<Code :value="id.id" is-copiable=true />
+                    {{ id.arch }}：<Code :value="id.id" is-copiable />
                 </p>
             </div>
             <div class="placeholder" v-else>
@@ -168,8 +168,8 @@ watch(
                         &nbsp;&nbsp;&nbsp;
                     </span>
                 </p>
-                <p class="u-para-code">MD5：<Code :value="pageData.data.download.md5" is-break-word=true is-copiable=true /></p>
-                <p class="u-para-code">SHA-256：<Code :value="pageData.data.download.sha256" is-break-word=true is-copiable=true /></p>
+                <p class="u-para-code">MD5：<Code :value="pageData.data.download.md5" is-break-word is-copiable /></p>
+                <p class="u-para-code">SHA-256：<Code :value="pageData.data.download.sha256" is-break-word is-copiable /></p>
             </div>
             <div class="placeholder" v-else>
                 <p>暂无可供下载的内容</p>

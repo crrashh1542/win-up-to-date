@@ -4,18 +4,22 @@
  * 用法：<Code value="xxx" />
  */
 
+import { computed } from 'vue'
 import Button from './Button.vue'
 import Copy16RegularIcon from '@iconify-vue/fluent/copy-16-regular'
 
-const props = defineProps<{ value?: string; isCopiable?: string; isBreakWord?: string }>()
+const props = defineProps<{ value?: string; isCopiable?: boolean; isBreakWord?: boolean }>()
 
 const copy = async () => {
-    if (props.value) {
+    if (!props.value) return
+    try {
         await navigator.clipboard.writeText(props.value)
+    } catch {
+        console.error('复制失败：剪贴板 API 不可用')
     }
 }
 
-const breakWord = props.isBreakWord ? 'break-word' : ''
+const breakWord = computed(() => props.isBreakWord ? 'break-word' : '')
 </script>
 
 <template>
@@ -35,20 +39,20 @@ const breakWord = props.isBreakWord ? 'break-word' : ''
 @import url('@/styles/global.less');
 
 code {
-    background-color: #f3f3f3;
-    border: 1px solid #ddd;
-    padding: .1em .4em;
+    background-color: @wu-color-base;
+    border: 1px solid @wu-color-border;
+    padding: .2em .4em;
     line-height: 1.5;
     border-radius: 4px;
     font-family: 'JetBrainsMono NF', 'JetBrains Mono', monospace;
     font-size: 14px;
 }
 code.break-word {
-    word-break: break-all;
+    overflow-wrap: break-word;
 }
 
 .button {
-	font-size: 14px;
+    font-size: 14px;
     line-height: 1.25rem;
     padding: .3em .6em;
     margin-left: .4em;
