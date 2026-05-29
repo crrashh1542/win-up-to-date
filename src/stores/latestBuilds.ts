@@ -1,23 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import request from '@/utils/request'
-
-export interface Release {
-    channel: string
-    style: string
-    version: string
-    branch: string
-    codename: string
-    semester: string
-    category?: string
-}
-
-export interface Category {
-    category: string
-    id: string
-    icon: string
-    releases: Release[]
-}
+import type { Category } from '@/types'
 
 export const useBuildsStore = defineStore('builds', () => {
     const list = ref<Category[]>([])

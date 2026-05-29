@@ -12,7 +12,7 @@ import Card from '@/components/widgets/Card.vue'
 import Spinner from '@/components/widgets/Spinner.vue'
 import TopNav from '@/components/widgets/TopNav.vue'
 import initDetailData from '@/utils/initDetailData'
-import type { CategoryContent, NavData } from '@/utils/initDetailData'
+import type { CategoryContent, NavData } from '@/types'
 
 defineOptions({
     name: 'DataCategoryList'

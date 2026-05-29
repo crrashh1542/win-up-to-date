@@ -1,6 +1,5 @@
-<script setup>
-import { useRoute } from 'vue-router'
-
+<script setup lang="ts">
+import type { Component } from 'vue'
 import Card from '@/components/widgets/Card.vue'
 import aboutInfo from '@/utils/parseRepoInfo'
 
@@ -8,17 +7,15 @@ import Search24RegularIcon from '@iconify-vue/fluent/search-24-regular'
 import Code24RegularIcon from '@iconify-vue/fluent/code-24-regular'
 import Chat24RegularIcon from '@iconify-vue/fluent/chat-24-regular'
 
-const icons = {
+const icons: Record<string, Component> = {
     'search': Search24RegularIcon,
     'code': Code24RegularIcon,
     'chat': Chat24RegularIcon,
 }
-
-const route = useRoute()
 </script>
 
 <template>
-    <div class="u-banner" v-if="route.path == '/about'">关于项目</div>
+    <div class="u-banner" v-if="$route.path == '/about'">关于项目</div>
 
     <p>如你所见，这是一个反映 Windows 系统各版本情况实时进展的统计<s>和一堆其它莫名其妙功能混一起的</s>站点。</p>
     <p>作者云萧自身也是一个 Windows Insider 爱好者，若你喜欢这个项目，给项目点个小星星吧！=≡Σ((( つ•̀ω•́)つ</p>

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { version } from '../../package.json'
@@ -18,9 +18,8 @@ const appVersion = ref(version)
 const isPopupVisible = ref(false)
 
 const openAbout = () => {
-    const ua = navigator.userAgent || window.opera
     const mobileRegex = /android|iphone|ipad|ipod|blackberry|mobile|phone|webos|kindle|tablet/i
-    if(mobileRegex.test(ua.toLowerCase())) { // 如果匹配移动端规则，就前往单独的关于页面
+    if(mobileRegex.test(navigator.userAgent.toLowerCase())) { // 如果匹配移动端规则，就前往单独的关于页面
         router.push('/about')
     } else { // 否则（即 PC 端则通过弹窗展示关于页面）
         isPopupVisible.value = true
@@ -78,7 +77,7 @@ const openAbout = () => {
 
 </template>
 
-<style lang="less">
+<style lang="less" scoped>
 @import url('@/styles/global.less');
 
 .topbar {

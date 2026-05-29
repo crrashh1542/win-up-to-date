@@ -18,7 +18,7 @@ import Code from '@/components/widgets/Code.vue'
 import Spinner from '@/components/widgets/Spinner.vue'
 import TopNav from '@/components/widgets/TopNav.vue'
 import initDetailData from '@/utils/initDetailData'
-import type { DetailContent, NavData } from '@/utils/initDetailData'
+import type { DetailContent, NavData } from '@/types'
 
 defineOptions({
     name: 'DataDetail'
@@ -96,7 +96,7 @@ watch(
                 <p>
                     <Code24RegularIcon width="22" height="22" />
                     构建归属 /
-                    <router-link :to="'/category/' + pageData.data.belongsTo.path"">
+                    <router-link :to="'/category/' + pageData.data.belongsTo.path">
                         {{ pageData.data.belongsTo.name }}
                     </router-link>
                 </p>
@@ -114,7 +114,7 @@ watch(
                 <p v-if="pageData.data.release.channel !== undefined">
                     推送频道：{{ pageData.data.release.channel }}
                 </p>
-                <p v-if="pageData.data.release.channel !== undefined">
+                <p v-if="pageData.data.release.time !== undefined">
                     推送时间：{{ pageData.data.release.time }} (UTC)
                 </p>
                 <p v-if="pageData.data.release.url !== undefined">

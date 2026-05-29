@@ -8,7 +8,7 @@ import DismissCircle24Filled from '@iconify-vue/fluent/dismiss-circle-24-filled'
 import Warning24Filled from '@iconify-vue/fluent/warning-24-filled'
 import Info24Regular from '@iconify-vue/fluent/info-24-regular'
 
-import { ToastIntent } from '@/stores/toast'
+import type { ToastIntent } from '@/types'
 
 const intentIcons: Record<ToastIntent, typeof CheckmarkCircle24Filled> = {
     success: CheckmarkCircle24Filled,

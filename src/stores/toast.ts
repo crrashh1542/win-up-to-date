@@ -1,22 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-
-export type ToastIntent = 'success' | 'error' | 'warning' | 'info'
-export type ToastPosition = 'top' | 'top-end' | 'top-start' | 'bottom' | 'bottom-end' | 'bottom-start'
-
-export interface ToastOptions {
-    title: string
-    body?: string
-    intent?: ToastIntent
-    position?: ToastPosition
-    /** 持续时间(ms)，默认 4000 */
-    duration?: number
-}
-
-interface ToastItem extends Required<Omit<ToastOptions, 'duration'>> {
-    id: number
-    duration: number
-}
+import type { ToastOptions, ToastItem } from '@/types'
 
 let nextId = 0
 

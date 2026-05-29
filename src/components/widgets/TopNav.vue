@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import ArrowLeft20FilledIcon from '@iconify-vue/fluent/arrow-left-20-filled'
 import ArrowRight20FilledIcon from '@iconify-vue/fluent/arrow-right-20-filled'
-import type { NavItem, NavData } from '@/utils/initDetailData'
+import type { NavItem, NavData } from '@/types'
 
 const props = defineProps<{ data: NavData | null }>()
 const isDetail = computed(() => props.data?.type === 'detail')

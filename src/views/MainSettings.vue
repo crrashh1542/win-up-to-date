@@ -1,5 +1,5 @@
-<script setup>
-import { useSettingsStore } from '@/stores/settings'
+<script setup lang="ts">
+import type { Component } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import WeatherMoon24RegularIcon from '@iconify-vue/fluent/weather-moon-24-regular'
@@ -8,8 +8,10 @@ import Branch24RegularIcon from '@iconify-vue/fluent/branch-24-regular'
 
 import Card from '@/components/widgets/Card.vue'
 import Switch from '@/components/widgets/Switch.vue'
+import { useSettingsStore } from '@/stores/settings'
+import type { SettingsMenu } from '@/types'
 
-const icons = {
+const icons: Record<string, Component> = {
     'weather-moon': WeatherMoon24RegularIcon,
     'laptop-settings': LaptopSettings24RegularIcon,
     'branch': Branch24RegularIcon,
@@ -18,7 +20,7 @@ const icons = {
 const settingsStore = useSettingsStore()
 const { settings } = storeToRefs(settingsStore)
 
-const settingsMenu = [
+const settingsMenu: SettingsMenu = [
     {
         name: '全局设置',
         id: 0,
@@ -26,7 +28,7 @@ const settingsMenu = [
             name: '启用深色模式 (TODO)',
             icon: 'weather-moon',
             value: 'isDarkMode',
-            isDisabled: true
+            enabled: false
         }]
     },
     {
@@ -36,13 +38,13 @@ const settingsMenu = [
             name: '显示开发周期及代号',
             icon: 'laptop-settings',
             value: 'isShowFlight',
-            isDisabled: false
+            enabled: true
         },
         {
             name: '显示分支',
             icon: 'branch',
             value: 'isShowBranch',
-            isDisabled: false
+            enabled: true
         }]
     },
 ]
@@ -64,7 +66,7 @@ const settingsMenu = [
                 {{ item.name }}
             </span>
             <span class="u-grow"></span>
-            <Switch :is-disabled="item.isDisabled" v-model="settings[item.value]" />
+            <Switch :is-disabled="!item.enabled" v-model="settings[item.value]" />
         </card>
     </div>
 </template>

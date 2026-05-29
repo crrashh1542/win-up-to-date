@@ -6,16 +6,16 @@ import branch from './branch.svg'
 import rocket from './rocket.svg'
 import windows10 from './windows10.svg'
 
-const toSvgDataUri = (svg: string) => `data:image/svg+xml,${encodeURIComponent(svg)}`
+const toUri = (svg: string) => `data:image/svg+xml,${encodeURIComponent(svg)}`
 
-const icons = {
-    azure: toSvgDataUri(aiAzure.data),
+const icons: Record<string, string> = {
+    azure: toUri(aiAzure.data),
     branch,
-    iso: toSvgDataUri(aiCompactDisc.data),
-    server: toSvgDataUri(aiServer.data),
+    iso: toUri(aiCompactDisc.data),
+    server: toUri(aiServer.data),
     rocket,
     windows10,
-    windows11: toSvgDataUri(aiWindows.data)
+    windows11: toUri(aiWindows.data)
 }
 
 export default icons

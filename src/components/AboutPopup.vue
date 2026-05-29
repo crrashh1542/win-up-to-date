@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import Dismiss24RegularIcon from '@iconify-vue/fluent/dismiss-24-regular'
 
 import AboutView from '@/views/MainAbout.vue'

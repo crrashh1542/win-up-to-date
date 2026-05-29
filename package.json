@@ -28,6 +28,7 @@
     "devDependencies": {
         "@eslint/js": "^10.0.1",
         "@types/node": "^26.0.0",
+        "@typescript-eslint/eslint-plugin": "^8.62.0",
         "@typescript-eslint/parser": "^8.62.0",
         "@vitejs/plugin-vue": "^6.0.7",
         "concurrently": "^10.0.3",

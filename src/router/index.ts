@@ -38,9 +38,8 @@ const router = createRouter({
     ],
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(() => {
     clearTitle()
-    next()
 })
 
 router.afterEach(to => {

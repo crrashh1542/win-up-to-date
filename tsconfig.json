@@ -1,8 +1,6 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
-        "ignoreDeprecations": "6.0",
-        "target": "ES2019",
+        "target": "ES2022",
         "module": "ESNext",
         "moduleResolution": "Bundler",
         "paths": {
@@ -11,9 +9,9 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
-        "lib": ["ES2019", "DOM"],
+        "lib": ["ES2022", "DOM"],
         "skipLibCheck": true
     },
-    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
-    "exclude": []
+    "include": ["src/**/*.ts", "src/**/*.vue"],
+    "exclude": ["server/*.js", "node_modules"]
 }

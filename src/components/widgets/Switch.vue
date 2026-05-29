@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<{
     </div>
 </template>
 
-<style lang="less">
+<style lang="less" scoped>
 @import url('@/styles/global.less');
 
 .switch {
