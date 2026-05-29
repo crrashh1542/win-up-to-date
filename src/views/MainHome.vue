@@ -15,7 +15,7 @@ useBuildsStore().fetchBuilds()
 
 <template>
     <div class="u-banner">当前版本列表</div>
-    <Spinner v-if="isLoading" mode="filled" />
+    <Spinner v-if="isLoading" filled />
 
     <!-- 内容块 BEGIN -->
         <div class="block" v-if="!isLoading" v-for="c in list" :key="c.id">

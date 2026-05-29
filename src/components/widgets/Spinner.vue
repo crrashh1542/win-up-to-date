@@ -4,47 +4,44 @@
 -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
-
-// 接收 mode 参数，若是 filled 则在整个 div 居中显示，否则仅内联显示
+// 接收 filled 参数，若为 true 则在整个 div 居中显示，否则仅内联显示
 const props = defineProps({
-    mode: { type: String, default: '' }
+    filled: { type: Boolean, default: false }
 })
-const isFilled = computed(() => props.mode === 'filled')
 </script>
 
 <template>
-    <div :class="['wrapper', { filled: isFilled }]">
+    <div :class="['wrapper', { filled }]">
         <div class="load-anim">
             <div class="tail"></div>
         </div>
-        <div class="tip" v-if="isFilled">
+        <div class="tip" v-if="filled">
             数据正在玩命加载中 ᕕ( ᐛ )ᕗ
         </div>
     </div>
 
     <!--
-        若mode为filled，则需要其内有内容支撑，否则整个外部flex的高度会多出24px
+        若filled为true，则需要其内有内容支撑，否则整个外部flex的高度会多出24px
         导致Footer组件被挤到页面底部之外，出现排版错误。
     -->
-    <div class="placeholder" v-if="isFilled" aria-hidden="true">&nbsp;</div>
+    <div class="placeholder" v-if="filled" aria-hidden="true">&nbsp;</div>
 </template>
 
 <style lang="less" scoped>
-@spinner-size: 42px;
-@spinner-stroke-width: 4px;
 
 .load-anim {
+    --spinner-size: 42px;
+    --spinner-stroke-width: 4px;
     position: relative;
     flex-shrink: 0;
-    height: @spinner-size;
-    width: @spinner-size;
+    height: var(--spinner-size);
+    width: var(--spinner-size);
 
     // 用 maskImage 创建环形镂空效果，替代旧的 border 方案
     mask-image: radial-gradient(
         closest-side,
-        transparent calc(100% - @spinner-stroke-width - 1px),
-        white calc(100% - @spinner-stroke-width) calc(100% - 1px),
+        transparent calc(100% - var(--spinner-stroke-width) - 1px),
+        white calc(100% - var(--spinner-stroke-width)) calc(100% - 1px),
         transparent 100%
     );
     background-color: #d7e8fb; // colorBrandStroke2

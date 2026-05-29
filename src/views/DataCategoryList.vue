@@ -62,7 +62,7 @@ watch(
     <div class="u-subbanner">{{ pageData.data.name }}</div>
 
     <!-- 加载动画 -->
-    <Spinner v-if="pageData.isLoading" mode="filled" />
+    <Spinner v-if="pageData.isLoading" filled />
 
     <div class="wrapper" v-if="!pageData.isLoading">
         <!-- 快速导航 -->
