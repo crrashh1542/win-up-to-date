@@ -15,8 +15,8 @@ import MegaphoneLoud24RegularIcon from '@iconify-vue/fluent/megaphone-loud-24-re
 
 import Card from '@/components/widgets/Card.vue'
 import Code from '@/components/widgets/Code.vue'
-import Spinner from '@/components/widgets/Spinner.vue'
-import TopNav from '@/components/widgets/TopNav.vue'
+import NProgress from '@/utils/progress'
+import TopNav from '@/components/TopNav.vue'
 import initDetailData from '@/utils/initDetailData'
 import type { DetailContent, NavData } from '@/types'
 
@@ -36,6 +36,7 @@ const route = useRoute()
 const fetchData = async (platform: string, build: string) => {
     pageData.isLoading = true
     pageData.isError = false
+    NProgress.start()
     try {
         const { data: resp } = await request({
             url: '/detail', method: 'get', params: { platform, build }
@@ -45,6 +46,7 @@ const fetchData = async (platform: string, build: string) => {
         pageData.isError = true
     } finally {
         pageData.isLoading = false
+        NProgress.done()
     }
 }
 
@@ -59,9 +61,6 @@ watch(
     <!-- 横幅 -->
     <div class="u-banner">版本详情</div>
     <div class="u-subbanner">{{ pageData.data.build.number }}</div>
-
-    <!-- 加载动画 -->
-    <Spinner v-if="pageData.isLoading" filled />
 
     <div class="wrapper" v-if="!pageData.isLoading && !pageData.isError">
         <!-- 快速导航 -->

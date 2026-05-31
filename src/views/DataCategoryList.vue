@@ -9,8 +9,8 @@ import SquareMultiple24RegularIcon from '@iconify-vue/fluent/square-multiple-24-
 import Tag24RegularIcon from '@iconify-vue/fluent/tag-24-regular'
 
 import Card from '@/components/widgets/Card.vue'
-import Spinner from '@/components/widgets/Spinner.vue'
-import TopNav from '@/components/widgets/TopNav.vue'
+import NProgress from '@/utils/progress'
+import TopNav from '@/components/TopNav.vue'
 import initDetailData from '@/utils/initDetailData'
 import type { CategoryContent, NavData } from '@/types'
 
@@ -37,6 +37,7 @@ const getPath = (build: string) => {
 // 请求数据
 const fetchData = async (platform: string) => {
     pageData.isLoading = true
+    NProgress.start()
     try {
         const { data: resp } = await request({
             url: '/category', method: 'get', params: { platform }
@@ -45,6 +46,7 @@ const fetchData = async (platform: string) => {
         pageData.versionRange = formatVersionRange(resp.content.range)
     } finally {
         pageData.isLoading = false
+        NProgress.done()
     }
 }
 
@@ -60,9 +62,6 @@ watch(
     <!-- 横幅 -->
     <div class="u-banner">版本列表</div>
     <div class="u-subbanner">{{ pageData.data.name }}</div>
-
-    <!-- 加载动画 -->
-    <Spinner v-if="pageData.isLoading" filled />
 
     <div class="wrapper" v-if="!pageData.isLoading">
         <!-- 快速导航 -->
