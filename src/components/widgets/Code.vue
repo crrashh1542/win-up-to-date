@@ -46,11 +46,9 @@ const breakWord = computed(() => props.isBreakWord ? 'break-word' : '')
 
     <!-- 复制按钮 -->
     <Button @click="copy" v-if="isCopiable">
-        <div>
-            <Checkmark16RegularIcon v-if="isCopied" width="1.25em" height="1.25em" />
-            <Copy16RegularIcon v-else width="1.25em" height="1.25em" />
-            {{ isCopied ? '已复制' : '复制' }}
-        </div>
+        <Checkmark16RegularIcon v-if="isCopied" width="1.25em" height="1.25em" />
+        <Copy16RegularIcon v-else width="1.25em" height="1.25em" />
+        {{ isCopied ? '已复制' : '复制' }}
     </Button>
 </template>
 
@@ -70,15 +68,7 @@ code.break-word {
     overflow-wrap: break-word;
 }
 
-.button {
-    font-size: 14px;
-    line-height: 1.25rem;
-    padding: .3em .6em;
+button {
     margin-left: .4em;
-    div {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-    }
 }
 </style>
