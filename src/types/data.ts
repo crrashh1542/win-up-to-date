@@ -1,7 +1,7 @@
 // 首页数据
 export interface Release {
     channel: string
-    style: string
+    color: 'amber' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'purple'
     version: string
     branch: string
     codename: string

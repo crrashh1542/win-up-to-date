@@ -27,12 +27,12 @@ useBuildsStore().fetchBuilds()
             </div>
 
             <!-- 内容卡片 -->
-            <Card v-for="build in c.releases" :key="build.version" :class="build.style" mode="inline">
+            <Card v-for="build in c.releases" :key="build.version" :class="'color-' + build.color" mode="inline">
                 <component :is="build.category !== undefined ? 'router-link' : 'span'"
                     v-bind="build.category !== undefined ? { to: '/detail/' + build.category + '/' + build.version } : {}">
                     <div class="row">
                         <!-- 左上标签 -->
-                        <span :class="'channel u-float-l ' + build.style">{{ build.channel }}</span>
+                        <span :class="'channel u-float-l color-' + build.color">{{ build.channel }}</span>
                         <!-- 右上代号 & 周期 -->
                         <span class="u-space-r u-float-r" v-if="settings.isShowFlight">
                             <img :src="icons.rocket" class="u-box-xs u-icon" />&nbsp;
@@ -105,7 +105,7 @@ useBuildsStore().fetchBuilds()
 .color-teal .channel {
     color: @wu-color-teal;
 }
-.color-theme .channel {
+.color-blue .channel {
     color: @wu-color-blue;
 }
 .color-purple .channel {
