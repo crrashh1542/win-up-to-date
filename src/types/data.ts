@@ -1,7 +1,9 @@
+export type BuiltInColor = 'amber' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'purple'
+
 // 首页数据
 export interface Release {
     channel: string
-    color: 'amber' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'purple'
+    color: BuiltInColor
     version: string
     branch: string
     codename: string
