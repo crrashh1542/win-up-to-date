@@ -21,7 +21,8 @@ useBuildsStore().fetchBuilds()
     <Spinner v-if="isLoading" filled />
 
     <!-- 内容块 BEGIN -->
-        <div class="block" v-if="!isLoading" v-for="c in list" :key="c.id">
+    <template v-for="c in list" :key="c.id">
+        <div class="block" v-if="!isLoading">
 
             <!-- 标题 -->
             <div class="u-catalog">
@@ -32,7 +33,7 @@ useBuildsStore().fetchBuilds()
             <!-- 内容卡片 -->
             <Card v-for="build in c.releases" :key="build.version" mode="inline">
                 <component :is="build.category !== undefined ? 'router-link' : 'span'"
-                    v-bind="build.category !== undefined ? { to: '/detail/' + build.category + '/' + build.version } : {}">
+                    v-bind="build.category !== undefined ? { to: `/detail/${build.category}/${build.version}` } : {}">
                     <div class="row">
                         <!-- 左上标签 -->
                         <span :class="['channel', `color-${build.color}`]">{{ build.channel }}</span>
@@ -56,11 +57,10 @@ useBuildsStore().fetchBuilds()
                 </component>
             </Card>
         </div>
+    </template>
 </template>
 
 <style lang="less" scoped>
-@import url('@/styles/global.less');
-
 .block {
     margin: 1em 0;
     display: grid;

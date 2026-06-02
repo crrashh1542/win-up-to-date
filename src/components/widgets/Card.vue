@@ -11,8 +11,6 @@ const props = withDefaults(defineProps<{ mode?: 'inline' | 'block' | 'flex' }>()
 </template>
 
 <style lang="less">
-@import url('@/styles/global.less');
-
 .card {
     padding: 16px calc(12px + 1.2%);
     line-height: 1.2;

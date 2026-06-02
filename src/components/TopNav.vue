@@ -36,8 +36,6 @@ const next = computed(() => buildLink(props.data?.next))
 </template>
 
 <style lang="less" scoped>
-@import url('@/styles/global.less');
-
 .nav {
     display: flex;
     color: #666;

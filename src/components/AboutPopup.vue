@@ -30,8 +30,6 @@ const emit = defineEmits(['update:visibility'])
 </template>
 
 <style lang="less" scoped>
-@import url('@/styles/global.less');
-
 .wrapper {
     display: flex;
     align-items: center;

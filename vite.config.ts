@@ -37,31 +37,31 @@ export default defineConfig({
                     },
                 ],
             },
-        })
+        }),
     ],
     server: {
         port: 14724,
         host: true,
         proxy: {
-           '/v1': {
-              target: 'http://localhost:14726',
-              changeOrigin: true,
-              rewrite: path => path.replace(/^\/v1/, ''),
-           },
-        }
+            '/v1': {
+                target: 'http://localhost:14726',
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/v1/, ''),
+            },
+        },
     },
     build: {
         assetsInlineLimit: 6144,
         rolldownOptions: {
             output: {
                 minify: true,
-                assetFileNames: asset => {
+                assetFileNames: (asset) => {
                     if (asset.name.startsWith('vendor-')) {
                         return '_wu/vendor/[hash].[ext]'
                     }
                     return '_wu/[name]-[hash].[ext]'
                 },
-                chunkFileNames: chunk => {
+                chunkFileNames: (chunk) => {
                     if (chunk.name.startsWith('vendor-')) {
                         return '_wu/vendor/[hash].js'
                     }
@@ -99,9 +99,9 @@ export default defineConfig({
                             name: 'MainViews',
                             test: /[\\/]src[\\/]views[\\/]/,
                             priority: 5,
-                        }
-                    ]
-                }
+                        },
+                    ],
+                },
             },
         },
     },
@@ -109,13 +109,14 @@ export default defineConfig({
         preprocessorOptions: {
             less: {
                 javascriptEnabled: true,
+                additionalData: `@import "${resolve(__dirname, 'src/styles/global.less')}";`,
             },
         },
     },
     // 引入@作为./src的alias
     resolve: {
         alias: {
-            '@': resolve(__dirname, './src')
+            '@': resolve(__dirname, './src'),
         },
     },
 })

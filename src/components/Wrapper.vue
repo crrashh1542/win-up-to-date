@@ -78,8 +78,6 @@ const openAbout = () => {
 </template>
 
 <style lang="less" scoped>
-@import url('@/styles/global.less');
-
 .topbar {
     display: flex;
     align-items: center;

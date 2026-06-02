@@ -43,8 +43,6 @@ const props = defineProps<{
 </template>
 
 <style lang="less" scoped>
-@import url('@/styles/global.less');
-
 .toast {
     display: grid;
     grid-template-columns: auto 1fr;

@@ -12,9 +12,7 @@ defineOptions({ name: 'MainFooter' })
     </div>
 </template>
 
-<style lang="less" scoped>
-@import url('@/styles/global.less');
-.footer {
+<style lang="less" scoped>.footer {
     margin-top: @wu-layout-footer-margin;
     border-top: 1px solid @wu-color-border;
     padding: 1em 36px;

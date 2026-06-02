@@ -26,8 +26,6 @@ const classes = computed(() => [
 </template>
 
 <style lang="less" scoped>
-@import url('@/styles/global.less');
-
 .badge {
     display: inline-flex;
     align-items: center;

@@ -51,8 +51,6 @@ const icons: Record<string, Component> = {
 </template>
 
 <style lang="less" scoped>
-@import url('@/styles/global.less');
-
 .card {
     a, div {
         display: flex;

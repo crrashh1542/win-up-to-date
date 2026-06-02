@@ -178,8 +178,6 @@ watch(
 </template>
 
 <style lang="less" scoped>
-@import url('@/styles/global.less');
-
 .overview {
     display: var(--v-detail-overview);
     .line-left {

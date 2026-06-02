@@ -24,8 +24,6 @@ const props = withDefaults(defineProps<{
 </template>
 
 <style lang="less" scoped>
-@import url('@/styles/global.less');
-
 .switch {
     align-items: flex-start;
     box-sizing: border-box;
