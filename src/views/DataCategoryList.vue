@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import request from '@/utils/request'
 
 import Code24RegularIcon from '@iconify-vue/fluent/code-24-regular'
@@ -26,6 +26,7 @@ const pageData = reactive({
 })
 
 const route = useRoute()
+const router = useRouter()
 
 // utils
 const formatVersionRange = (range: [string, string | null]) => {
@@ -44,6 +45,10 @@ const fetchData = async (platform: string) => {
         })
         initDetailData(resp, pageData)
         pageData.versionRange = formatVersionRange(resp.content.range)
+    } catch (error: any) {
+        if (error.response?.status === 404) {
+            router.replace('/404')
+        }
     } finally {
         pageData.isLoading = false
         NProgress.done()
@@ -106,9 +111,7 @@ watch(
     </div>
 </template>
 
-<style lang="less" scoped>
-@import url('@/styles/global.less');
-.overview {
+<style lang="less" scoped>.overview {
     display: var(--v-detail-overview);
     .line-left {
         width: var(--v-detail-overview-width);

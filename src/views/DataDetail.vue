@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import request from '@/utils/request'
 
 import Box24RegularIcon from '@iconify-vue/fluent/box-24-regular'
@@ -32,6 +32,7 @@ const pageData = reactive({
 })
 
 const route = useRoute()
+const router = useRouter()
 
 const fetchData = async (platform: string, build: string) => {
     pageData.isLoading = true
@@ -42,7 +43,10 @@ const fetchData = async (platform: string, build: string) => {
             url: '/detail', method: 'get', params: { platform, build }
         })
         initDetailData(resp, pageData)
-    } catch {
+    } catch (error: any) {
+        if (error.response?.status === 404) {
+            router.replace('/404')
+        }
         pageData.isError = true
     } finally {
         pageData.isLoading = false
