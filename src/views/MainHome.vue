@@ -30,7 +30,7 @@ useBuildsStore().fetchBuilds()
             </div>
 
             <!-- 内容卡片 -->
-            <Card v-for="build in c.releases" :key="build.version" :class="'color-' + build.color" mode="inline">
+            <Card v-for="build in c.releases" :key="build.version" mode="inline">
                 <component :is="build.category !== undefined ? 'router-link' : 'span'"
                     v-bind="build.category !== undefined ? { to: '/detail/' + build.category + '/' + build.version } : {}">
                     <div class="row">
@@ -77,7 +77,6 @@ useBuildsStore().fetchBuilds()
         box-shadow: @wu-layout-shadow;
 
         .row {
-            font-size: 14px;
             color: @wu-color-text-accent;
             display: flex;
             justify-content: space-between;
@@ -97,7 +96,7 @@ useBuildsStore().fetchBuilds()
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            font-size: 14px;
+            font-size: 15px;
             color: @wu-color-text-accent;
             line-height: 1.6;
             gap: 4px;
@@ -106,25 +105,25 @@ useBuildsStore().fetchBuilds()
 }
 
 /* 频道颜色变化 ----- BEGIN */
-.color-amber .channel {
+.channel.color-amber {
     color: @wu-color-amber;
 }
-.color-orange .channel {
+.channel.color-orange {
     color: @wu-color-orange;
 }
-.color-yellow .channel {
+.channel.color-yellow {
     color: @wu-color-yellow;
 }
-.color-green .channel {
+.channel.color-green {
     color: @wu-color-green;
 }
-.color-teal .channel {
+.channel.color-teal {
     color: @wu-color-teal;
 }
-.color-blue .channel {
+.channel.color-blue {
     color: @wu-color-blue;
 }
-.color-purple .channel {
+.channel.color-purple {
     color: @wu-color-purple;
 }
 /* 频道颜色变化 ----- END */
