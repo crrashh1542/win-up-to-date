@@ -2,6 +2,7 @@
 import type { Component } from 'vue'
 import { storeToRefs } from 'pinia'
 
+import Calendar24RegularIcon from '@iconify-vue/fluent/calendar-24-regular'
 import WeatherMoon24RegularIcon from '@iconify-vue/fluent/weather-moon-24-regular'
 import LaptopSettings24RegularIcon from '@iconify-vue/fluent/laptop-settings-24-regular'
 import Branch24RegularIcon from '@iconify-vue/fluent/branch-24-regular'
@@ -15,6 +16,7 @@ const icons: Record<string, Component> = {
     'weather-moon': WeatherMoon24RegularIcon,
     'laptop-settings': LaptopSettings24RegularIcon,
     'branch': Branch24RegularIcon,
+    'calendar': Calendar24RegularIcon,
 }
 
 const settingsStore = useSettingsStore()
@@ -44,6 +46,12 @@ const settingsMenu: SettingsMenu = [
             name: '显示分支',
             icon: 'branch',
             value: 'isShowBranch',
+            enabled: true
+        },
+        {
+            name: '显示发布日期',
+            icon: 'calendar',
+            value: 'isShowDate',
             enabled: true
         }]
     },

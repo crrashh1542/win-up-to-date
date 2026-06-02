@@ -162,6 +162,8 @@ const openAbout = () => {
 }
 
 main {
+    --container-padding: 42px;
+
     display: flex;
     position: absolute;
     right: 0;
@@ -183,10 +185,16 @@ main {
         min-height: calc(100% - 54px);
         padding-top: 24px;
         .container-inner {
-            padding: 0 36px;
+            padding: 0 var(--container-padding);
             width: 100%;
             min-height: calc(100% - 36px);
         }
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    main {
+        --container-padding: 9%;
     }
 }
 

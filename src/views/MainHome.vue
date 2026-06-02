@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import Branch16RegularIcon from '@iconify-vue/fluent/branch-16-regular'
+import Calendar16RegularIcon from '@iconify-vue/fluent/calendar-16-regular'
+import Rocket24RegularIcon from '@iconify-vue/fluent/rocket-24-regular'
 
 import icons from '@/assets/icons'
 import Card from '@/components/widgets/Card.vue'
@@ -32,19 +35,23 @@ useBuildsStore().fetchBuilds()
                     v-bind="build.category !== undefined ? { to: '/detail/' + build.category + '/' + build.version } : {}">
                     <div class="row">
                         <!-- 左上标签 -->
-                        <span :class="'channel u-float-l color-' + build.color">{{ build.channel }}</span>
+                        <span :class="['channel', `color-${build.color}`]">{{ build.channel }}</span>
                         <!-- 右上代号 & 周期 -->
-                        <span class="u-space-r u-float-r" v-if="settings.isShowFlight">
-                            <img :src="icons.rocket" class="u-box-xs u-icon" />&nbsp;
+                        <span class="info" v-if="settings.isShowFlight">
+                            <Rocket24RegularIcon width="22px" />
                             {{ build.codename }} {{ build.semester }}
                         </span>
                     </div>
                     <!-- 版本号 -->
                     <div class="number">{{ build.version }}</div>
                     <!-- 分支 -->
-                    <div class="row" v-if="settings.isShowBranch">
-                        <img :src="icons.branch" class="u-box-xs u-icon"/>
+                    <div class="info" v-if="settings.isShowBranch">
+                        <Branch16RegularIcon width="16px" />
                         {{ build.branch }}
+                    </div>
+                    <div class="info" v-if="settings.isShowDate">
+                        <Calendar16RegularIcon width="16px" />
+                        {{ build.date }}
                     </div>
                 </component>
             </Card>
@@ -58,33 +65,42 @@ useBuildsStore().fetchBuilds()
     margin: 1em 0;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 7px;
+    gap: 6px;
 
     .u-catalog {
         grid-column: 1 / -1;
     }
 
     .card {
-        padding: 10px 5px 10px 20px;
+        padding: 8px 18px;
         border-radius: 8px;
         box-shadow: @wu-layout-shadow;
 
         .row {
-            font-size: 16px;
+            font-size: 14px;
             color: @wu-color-text-accent;
-            overflow: hidden;
-            vertical-align: middle;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             line-height: 1.5;
             .channel {
-                font-size: 18px;
+                font-size: 17px;
                 font-weight: 500;
             }
         }
         .number {
-            font-size: 25px;
-            line-height: 32px;
+            font-size: 24px;
             font-weight: 600;
-            margin: 0 0 8px;
+            margin: 0 0 .4em;
+        }
+        .info {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            font-size: 14px;
+            color: @wu-color-text-accent;
+            line-height: 1.6;
+            gap: 4px;
         }
     }
 }

@@ -8,6 +8,7 @@ export interface Release {
     branch: string
     codename: string
     semester: string
+    date: string
     category?: string
 }
 

@@ -5,6 +5,7 @@ export type Settings = {
     // 主页设置
     isShowFlight: boolean // 显示开发周期及代号
     isShowBranch: boolean // 显示分支
+    isShowDate: boolean // 显示发布日期
 }
 // 设置菜单
 export type SettingsMenu = {
