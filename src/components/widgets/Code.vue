@@ -53,6 +53,8 @@ const breakWord = computed(() => props.isBreakWord ? 'break-word' : '')
 </template>
 
 <style lang="less" scoped>
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap");
+
 code {
     background-color: @wu-color-base;
     border: 1px solid @wu-color-border;
