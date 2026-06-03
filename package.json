@@ -43,7 +43,6 @@
     },
     "dependencies": {
         "@iconify-vue/fluent": "^1.0.5",
-        "@studio384/amicons": "1.0.0-alpha.12",
         "axios": "^1.18.1",
         "modern-normalize": "^3.0.1",
         "nprogress": "^0.2.0",

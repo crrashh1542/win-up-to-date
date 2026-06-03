@@ -11,9 +11,6 @@ importers:
       '@iconify-vue/fluent':
         specifier: ^1.0.5
         version: 1.0.5(vue@3.5.38(typescript@6.0.3))
-      '@studio384/amicons':
-        specifier: 1.0.0-alpha.12
-        version: 1.0.0-alpha.12(react@19.2.0)
       axios:
         specifier: ^1.18.1
         version: 1.18.1
@@ -1029,12 +1026,6 @@ packages:
     resolution: {integrity: sha512-BfzEnDJOt9T8M989/lA37EcJgat01wLRnoi5dQf3QzOH7jzpqTAzdDbVfRljVr5r+jzKqpbHeyOfAaXxAd0PAA==}
     cpu: [x64]
     os: [win32]
-
-  '@studio384/amicons@1.0.0-alpha.12':
-    resolution: {integrity: sha512-Rgd7DXU/YHXDwKeN+NqiV6Vua2K7hRV8Zh4HtNZofOMnLyPDrLaPWrPQ7l7hYUFz5Fy5DuuFlspGHinr3Q1dgg==}
-    engines: {node: '>=24', npm: use pnpm, pnpm: '>=10'}
-    peerDependencies:
-      react: '>=16.x'
 
   '@trickfilm400/rollup-plugin-off-main-thread@3.0.0-pre1':
     resolution: {integrity: sha512-/67zpWDBLV+oYAEL682s1ktXL0HgqX76f6gaVGkGnVZlBbm1zd0v4Bz8MFF2GGhoX9rvfq3KSQHubFHwa6w6/Q==}
@@ -2315,10 +2306,6 @@ packages:
 
   quansync@0.2.11:
     resolution: {integrity: sha512-AifT7QEbW9Nri4tAwR5M/uzpBuqfZf+zwaEM/QkzEjj7NBuFD2rBuy0K3dE+8wltbezDV7JMA0WfnCPYRSYbXA==}
-
-  react@19.2.0:
-    resolution: {integrity: sha512-tmbWg6W31tQLeB5cdIBOicJDJRR2KzXsV7uSK9iNfLWQ5bIZfxuPEHp7M8wiHyHnn0DD1i7w3Zmin0FtkrwoCQ==}
-    engines: {node: '>=0.10.0'}
 
   readdirp@5.0.0:
     resolution: {integrity: sha512-9u/XQ1pvrQtYyMpZe7DXKv2p5CNvyVwzUB6uhLAnQwHMSgKMBR62lc7AHljaeteeHXn11XTAaLLUVZYVZyuRBQ==}
@@ -3879,10 +3866,6 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.62.2':
     optional: true
 
-  '@studio384/amicons@1.0.0-alpha.12(react@19.2.0)':
-    dependencies:
-      react: 19.2.0
-
   '@trickfilm400/rollup-plugin-off-main-thread@3.0.0-pre1':
     dependencies:
       ejs: 3.1.10
@@ -5242,8 +5225,6 @@ snapshots:
   punycode@2.3.1: {}
 
   quansync@0.2.11: {}
-
-  react@19.2.0: {}
 
   readdirp@5.0.0: {}
 
