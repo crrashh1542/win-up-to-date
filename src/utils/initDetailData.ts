@@ -3,46 +3,21 @@
  */
 
 import { setTitle } from './title'
-import type { DetailContent, CategoryContent, NavData, PageData, RespOrigin } from '@/types'
+import type { NavItem, NavData, PageData, RespOrigin } from '@/types'
 
-const buildDetailNav = (resp: DetailContent): NavData => {
-    const { previous, next } = resp.nav
-    const nav: NavData = { type: 'detail' }
-    if (previous) {
-        nav.prev = {
-            platform: previous.category,
-            build: previous.build,
-            route: '/detail/' + previous.category + '/' + previous.build
-        }
-    }
-    if (next) {
-        nav.next = {
-            platform: next.category,
-            build: next.build,
-            route: '/detail/' + next.category + '/' + next.build
-        }
-    }
-    return nav
-}
+type NavMapper<T> = (ref: T) => NavItem
 
-const buildCategoryNav = (resp: CategoryContent): NavData => {
-    const { previous, next } = resp.nav
-    const nav: NavData = { type: 'categoryList' }
-    if (previous) {
-        nav.prev = {
-            platform: previous.name,
-            path: previous.path,
-            route: '/category/' + previous.path
-        }
-    }
-    if (next) {
-        nav.next = {
-            platform: next.name,
-            path: next.path,
-            route: '/category/' + next.path
-        }
-    }
-    return nav
+// 构建导航数据
+const buildNav = <T>(
+    nav: { previous?: T; next?: T },
+    type: NavData['type'], // detail | categoryList
+    mapFn: NavMapper<T> // 映射函数
+): NavData => {
+    const result: NavData = { type }
+    // 映射上一页和下一页数据
+    if (nav.previous) result.prev = mapFn(nav.previous)
+    if (nav.next) result.next = mapFn(nav.next)
+    return result
 }
 
 export default (respOrigin: RespOrigin, data: PageData) => {
@@ -56,12 +31,18 @@ export default (respOrigin: RespOrigin, data: PageData) => {
 
     // 3. 设置导航栏和标题
     if (dataType === 'detail') {
-        const resp = content as DetailContent
-        data.nav = buildDetailNav(resp)
-        setTitle(resp.build.number)
+        data.nav = buildNav(content.nav, 'detail', ref => ({
+            platform: ref.category,
+            build: ref.build,
+            route: `/detail/${ref.category}/${ref.build}`
+        }))
+        setTitle(content.build.number)
     } else {
-        const resp = content as CategoryContent
-        data.nav = buildCategoryNav(resp)
-        setTitle(resp.name)
+        data.nav = buildNav(content.nav, 'categoryList', ref => ({
+            platform: ref.name,
+            path: ref.path,
+            route: `/category/${ref.path}`
+        }))
+        setTitle(content.name)
     }
 }

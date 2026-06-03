@@ -110,7 +110,6 @@ export interface PageData {
     nav?: NavData | null
 }
 
-export interface RespOrigin {
-    dataType: 'detail' | 'categoryList'
-    content: DetailContent | CategoryContent
-}
+export type RespOrigin =
+    | { dataType: 'detail'; content: DetailContent }
+    | { dataType: 'categoryList'; content: CategoryContent }
