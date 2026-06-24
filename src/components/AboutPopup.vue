@@ -1,6 +1,5 @@
 <script setup>
-
-import { Icon } from '@iconify/vue'
+import Dismiss24RegularIcon from '@iconify-vue/fluent/dismiss-24-regular'
 
 import AboutView from '@/views/MainAbout.vue'
 
@@ -14,13 +13,13 @@ const emit = defineEmits(['update:visibility'])
 </script>
 
 <template>
-    <div v-if="visibility" class="popup-wrapper">
-        <div class="popup-container">
+    <div v-if="visibility" class="wrapper">
+        <div class="container">
             <div class="banner-container">
                 <span class="u-banner">关于项目</span>
                 <span class="u-grow"></span>
                 <span class="button">
-                    <icon icon="fluent:dismiss-24-filled" width="24" height="24" @click="emit('update:visibility', false)" />
+                    <Dismiss24RegularIcon width="24" height="24" @click="emit('update:visibility', false)" />
                 </span>
             </div>
             <div class="view-container">
@@ -30,10 +29,10 @@ const emit = defineEmits(['update:visibility'])
     </div>
 </template>
 
-<style lang="less" >
+<style lang="less" scoped>
 @import url('@/styles/global.less');
 
-.popup-wrapper {
+.wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -45,7 +44,7 @@ const emit = defineEmits(['update:visibility'])
     background-color: rgba(210, 210, 210, .5);
     z-index: 100;
 
-    .popup-container {
+    .container {
         display: flex;
         flex-direction: column;
         background-color: #fff;

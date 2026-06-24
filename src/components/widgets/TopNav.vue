@@ -1,88 +1,77 @@
-<script setup>
-import { Icon } from '@iconify/vue'
+<script setup lang="ts">
+import { computed } from 'vue'
+import ArrowLeft20FilledIcon from '@iconify-vue/fluent/arrow-left-20-filled'
+import ArrowRight20FilledIcon from '@iconify-vue/fluent/arrow-right-20-filled'
 
-let nav = defineProps(['data'])
-let emit = defineEmits(['event'])
-
-const refreshData = (obj) => {
-   emit('event', obj)
+interface NavItem {
+    route: string
+    build: string
+    platform: string
 }
 
+interface NavData {
+    type: 'detail' | 'categoryList'
+    prev?: NavItem
+    next?: NavItem
+}
+
+const props = defineProps<{ data: NavData | null }>()
+const isDetail = computed(() => props.data?.type === 'detail')
+const buildLink = (source?: NavItem) => {
+    if (!source) return null
+    return {
+        route: source.route,
+        text: isDetail.value ? source.build : source.platform
+    }
+}
+
+const prev = computed(() => buildLink(props.data?.prev))
+const next = computed(() => buildLink(props.data?.next))
 </script>
 
 <template>
-   <div class="nav">
+    
+    <div class="nav">
+        <RouterLink class="icon-left" v-if="prev" :to="prev.route">
+            <ArrowLeft20FilledIcon width="1em" height="1em" />
+            {{ prev.text }}
+        </RouterLink>
 
-      <!-- 如果type是detail -->
-      <router-link class="icon-left"
-         v-if="nav.data.type == 'detail' && nav.data.prev != undefined"
-         :to="nav.data.prev.route"
-         @click="refreshData({
-            platform: nav.data.prev.platform, 
-            build: nav.data.prev.build })">
-         <Icon icon="fluent:arrow-left-20-filled" />
-         {{ nav.data.prev.build }} 
-      </router-link>
-      <!-- 如果type是categoryList -->
-      <router-link class="icon-left"
-         v-if="nav.data.type == 'categoryList' && nav.data.prev != undefined"
-         :to="nav.data.prev.route"
-         @click="refreshData({ platform: nav.data.prev.path })">
-         <Icon icon="fluent:arrow-left-20-filled" />
-         {{ nav.data.prev.platform }} 
-      </router-link>
+        <span class="grow"></span>
 
-      <span class="grow"></span>
-      
-      <!-- 如果type是detail -->
-      <router-link class="icon-right"
-         v-if="nav.data.type == 'detail' && nav.data.next != undefined"
-         :to="nav.data.next.route"
-         @click="refreshData({
-            platform: nav.data.next.platform, 
-            build: nav.data.next.build })">
-         {{ nav.data.next.build }}
-         <Icon icon="fluent:arrow-right-20-filled" />
-      </router-link>
-      <!-- 如果type是categoryList -->
-      <router-link class="icon-right"
-         v-if="nav.data.type == 'categoryList' && nav.data.next != undefined"
-         :to="nav.data.prev.route"
-         @click="refreshData({ platform: nav.data.next.path })">
-         {{ nav.data.next.platform }} 
-         <Icon icon="fluent:arrow-right-20-filled" />
-      </router-link>
-   </div>
+        <RouterLink class="icon-right" v-if="next" :to="next.route">
+            {{ next.text }}
+            <ArrowRight20FilledIcon width="1em" height="1em" />
+        </RouterLink>
+    </div>
 </template>
 
-<style lang="less">
+<style lang="less" scoped>
 @import url('@/styles/global.less');
 
 .nav {
-   display: flex;
-   color: #666;
-   font-weight: 600;
-   font-size: 17px;
-   margin-bottom: 0.75rem;
-   width: 100%;
+    display: flex;
+    color: #666;
+    font-weight: 600;
+    font-size: 17px;
+    margin: 24px 0 12px;
+    width: 100%;
 
-   .icon-left {
-      display: flex;
-      align-items: center;
-      svg {
-         margin-right: .25em;
-      }
-   }
-   .icon-right {
-      display: flex;
-      align-items: center;
-      svg {
-         margin-left: .25em;
-         vertical-align: middle;
-      }
-   }
-   .grow {
-      flex-grow: 1;
-   }
+    .icon-left, .icon-right {
+        display: flex;
+        align-items: center;
+    }
+    .icon-left svg {
+        margin-right: .25em;
+        display: flex;
+    }
+    .icon-right svg {
+        margin-left: .25em;
+        display: flex;
+    }
+
+    .grow {
+        flex-grow: 1;
+    }
 }
 </style>

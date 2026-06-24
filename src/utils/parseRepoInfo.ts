@@ -15,7 +15,7 @@ const pkgRepoName = pkgRepo.split('https://github.com/')[1] // 项目名
 
 // 获取 build tag
 const buildTag = (() => {
-    // 处理版本号和分支
+    // 处理版本号和分支 
     const buildNum = buildInfo.build
     const buildBranch = buildInfo.branch
     // 处理构建时间
@@ -32,14 +32,16 @@ const buildTag = (() => {
 })()
 
 // 导出数据
-const aboutInfo: Array<[string, string, string, string?]> = [
-    ['站点版本', 'fluent:search-24-regular', pkgVersion],
-    ['项目地址', 'fluent:code-24-regular', pkgRepo, pkgRepoName],
-    [
-        '交流群组',
-        'fluent:chat-24-regular',
-        '//qm.qq.com/cgi-bin/qm/qr?k=i3uo_SoY8qYCP-DwlWN0MvBFzU7dIl-V&group_code=442133970',
-        '442133970',
-    ],
+export interface AboutItem {
+    label: string
+    icon: string
+    value: string
+    link?: string
+}
+
+const aboutInfo: AboutItem[] = [
+    { label: '站点版本', icon: 'search', value: pkgVersion },
+    { label: '项目地址', icon: 'code', value: pkgRepoName, link: pkgRepo },
+    { label: '交流群组', icon: 'chat', value: '442133970', link: 'https://qm.qq.com/q/UAI4de5OM0' },
 ]
 export { aboutInfo, buildTag }

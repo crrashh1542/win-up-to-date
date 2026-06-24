@@ -18,7 +18,7 @@ defineOptions({ name: 'MainFooter' })
     margin-top: @wu-layout-footer-margin;
     border-top: 1px solid @wu-color-border;
     padding: 1em 36px;
-    width: calc(100% - 72px);
+    width: 100%;
     font-size: 16px;
     p { margin: 0; }
 }

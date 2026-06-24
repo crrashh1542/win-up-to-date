@@ -1,6 +1,4 @@
 <script setup>
-import request from '@/utils/request'
-import { reactive } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import icons from '@/assets/icons'
@@ -8,32 +6,19 @@ import Card from '@/components/widgets/Card.vue'
 import LoadAnim from '@/components/widgets/LoadAnim.vue'
 
 import { useSettingsStore } from '@/stores/settings'
-const settingsStore = useSettingsStore()
-let { settings } = storeToRefs(settingsStore)
+import { useBuildsStore } from '@/stores/latestBuilds'
 
-// STEP1 ---- 初始化
-let state = reactive({
-    list: [],
-    isLoading: true,
-})
-
-// STEP2 ---- 获取数据并填充
-request({ url: '/latestBuilds', method: 'get' })
-    .then(response => {
-        state.list = response.data.content
-        state.isLoading = false
-    })
-    .catch(error => {
-        console.error(error)
-    })
+const { settings } = storeToRefs(useSettingsStore())
+const { list, isLoading } = storeToRefs(useBuildsStore())
+useBuildsStore().fetchBuilds()
 </script>
 
 <template>
     <div class="u-banner">当前版本列表</div>
-    <LoadAnim v-if="state.isLoading" mode="filled" />
+    <LoadAnim v-if="isLoading" mode="filled" />
 
     <!-- 内容块 BEGIN -->
-        <div class="block" v-if="!state.isLoading" v-for="c in state.list" :key="c.id">
+        <div class="block" v-if="!isLoading" v-for="c in list" :key="c.id">
 
             <!-- 标题 -->
             <div class="u-catalog">
@@ -42,11 +27,9 @@ request({ url: '/latestBuilds', method: 'get' })
             </div>
 
             <!-- 内容卡片 -->
-            <Card v-for="build in c.releases" :key="build.name" :class="build.style">
-                
-                <!-- 如果 build.category 存在则设置 router-link -->
-                <router-link :to="'/detail/' + build.category + '/' + build.version"
-                    v-if="build.category !== undefined">
+            <Card v-for="build in c.releases" :key="build.version" :class="build.style" mode="inline">
+                <component :is="build.category !== undefined ? 'router-link' : 'span'"
+                    v-bind="build.category !== undefined ? { to: '/detail/' + build.category + '/' + build.version } : {}">
                     <div class="row">
                         <!-- 左上标签 -->
                         <span :class="'channel u-float-l ' + build.style">{{ build.channel }}</span>
@@ -63,40 +46,25 @@ request({ url: '/latestBuilds', method: 'get' })
                         <img :src="icons.branch" class="u-box-xs u-icon"/>
                         {{ build.branch }}
                     </div>
-                </router-link>
-
-                <span v-else>
-                    <div class="row">
-                        <!-- 左上标签 -->
-                        <span :class="'channel u-float-l ' + build.style">{{ build.channel }}</span>
-                        <!-- 右上代号 & 周期 -->
-                        <span class="u-space-r u-float-r" v-if="settings.isShowFlight">
-                            <img :src="icons.rocket" class="u-box-xs u-icon" />&nbsp;
-                            {{ build.codename }} {{ build.semester }}
-                        </span>
-                    </div>
-                    <!-- 版本号 -->
-                    <div class="number">{{ build.version }}</div>
-                    <!-- 分支 -->
-                    <div class="row" v-if="settings.isShowBranch">
-                        <img :src="icons.branch" class="u-box-xs u-icon"/>
-                        {{ build.branch }}
-                    </div>
-                </span>
+                </component>
             </Card>
         </div>
 </template>
 
 <style lang="less" scoped>
-@import url('@/styles/reset.less');
+@import url('@/styles/global.less');
 
 .block {
     margin: 1em 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 7px;
+
+    .u-catalog {
+        grid-column: 1 / -1;
+    }
 
     .card {
-        width: var(--card-width);
-        max-width: 400px;
-        margin-right: 5px;
         padding: 10px 5px 10px 20px;
         border-radius: 8px;
         box-shadow: @wu-layout-shadow;
@@ -145,23 +113,4 @@ request({ url: '/latestBuilds', method: 'get' })
 }
 /* 频道颜色变化 ----- END */
 
-/* 卡片多端适配 ----- BEGIN */
-// SEC 1 ------ 两列
-@media screen and (min-width: 1100px) {
-    .card {
-        --card-width: calc(31% - 5px * 3);
-    }
-}
-@media screen and (max-width: 1100px) {
-    .card {
-        --card-width: calc(46% - 5px * 2);
-    }
-}
-// SEC 2 ------ 一列
-@media screen and (max-width: 750px) {
-    .card {
-        --card-width: 100%;
-    }
-}
-/* 卡片多端适配 ----- END */
 </style>

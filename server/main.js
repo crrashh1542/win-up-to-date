@@ -1,7 +1,7 @@
 /**
  * Windows Up-to-Date 服务端脚本
  * @author crrashh1542
- * @version 2.0
+ * @version 3.0
  */
 
 import fs from 'node:fs/promises'
@@ -11,23 +11,11 @@ import { fileURLToPath } from 'node:url'
 
 const apiVersion = 1
 const port = 14726
+const cacheSize = 200
 
 const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const dataRoot = path.resolve(__dirname, 'data')
-const faviconPath = path.resolve(__dirname, 'favicon.ico')
+const dataRoot = path.resolve(path.dirname(__filename), 'data')
 const isSafeId = v => /^[A-Za-z0-9._-]+$/.test(v)
-
-const getTimestamp = () => {
-    const now = new Date()
-    const year = String(now.getFullYear()).slice(2)
-    const month = String(now.getMonth() + 1).padStart(2, '0')
-    const day = String(now.getDate()).padStart(2, '0')
-    const hours = String(now.getHours()).padStart(2, '0')
-    const minutes = String(now.getMinutes()).padStart(2, '0')
-    const seconds = String(now.getSeconds()).padStart(2, '0')
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
-}
 
 const sendJson = (res, status, payload) => {
     res.statusCode = status
@@ -45,31 +33,73 @@ const okPayload = (type, content) => ({
     content,
 })
 
-const errParam = res => {
-    sendJson(res, 400, { message: 'Parameter is invalid!' })
-}
+const errParam = res => sendJson(res, 400, { message: 'Parameter is invalid!' })
+const errValue = res => sendJson(res, 404, { message: 'Corresponding data is not found!' })
+const errServer = res => sendJson(res, 500, { message: 'Internal server error!' })
 
-const errValue = res => {
-    sendJson(res, 404, { message: 'Corresponding data of the value is not found!' })
-}
-
-const errServer = res => {
-    sendJson(res, 500, { message: 'Internal server error!' })
-}
-
-const readJsonFile = async filePath => {
+const readJson = async filePath => {
     const raw = await fs.readFile(filePath, 'utf-8')
     return JSON.parse(raw)
 }
 
+// 数据缓存
+const fileCache = new Map()
+const readCache = async filePath => {
+    const cached = fileCache.get(filePath)
+    const mtime = (await fs.stat(filePath)).mtimeMs
+    if (cached && mtime === cached.mtime) {
+        // 缓存命中，移到末尾
+        fileCache.delete(filePath)
+        fileCache.set(filePath, cached)
+        return cached.promise
+    }
+    if (fileCache.size >= cacheSize) {
+        // 处理缓存已满
+        fileCache.delete(fileCache.keys().next().value)
+    }
+    const entry = {
+        promise: readJson(filePath).catch(err => {
+            fileCache.delete(filePath)
+            throw err
+        }),
+        mtime,
+    }
+    fileCache.set(filePath, entry)
+    return entry.promise
+}
+
+// 路由处理函数
+const serveData = (file, type) => async (res, _params, reqUrl) => {
+    const filePath = typeof file === 'function'
+        ? file(reqUrl)
+        : path.join(dataRoot, file)
+    try {
+        const content = await readCache(filePath)
+        sendJson(res, 200, okPayload(type, content))
+    } catch {
+        errValue(res)
+    }
+}
+
+// 路由表
+const categoryPath = u =>
+    path.join(dataRoot, 'category', u.searchParams.get('platform') + '.json')
+const detailPath = u =>
+    path.join(dataRoot, 'detail', u.searchParams.get('platform'), u.searchParams.get('build') + '.json')
+const routes = new Map([
+    ['/', { handler: res => sendJson(res, 200, { message: 'Service is available!' }) }],
+    ['/latestBuilds', { handler: serveData('latest-builds.json', 'latest') }],
+    ['/category', { params: ['platform'], handler: serveData(categoryPath, 'category') }],
+    ['/detail', { params: ['platform', 'build'], handler: serveData(detailPath, 'detail') }],
+])
+
+// main server
 const server = http.createServer(async (req, res) => {
     const reqUrl = new URL(req.url || '/', 'http://127.0.0.1')
     const reqPath = reqUrl.pathname || '/'
 
     res.on('finish', () => {
-        const method = req.method || 'GET'
-        const urlText = req.url || '/'
-        console.log(`[${getTimestamp()}] ${res.statusCode} ${method} ${urlText}`)
+        console.log(`[${new Date().toLocaleString('sv-SE')}] ${res.statusCode} ${req.method} ${req.url}`)
     })
 
     if (req.method !== 'GET') {
@@ -77,71 +107,28 @@ const server = http.createServer(async (req, res) => {
     }
 
     try {
-        // (1) /favicon.ico → 站点图标
-        if (reqPath == '/favicon.ico'){
-            try {
-                const data = await fs.readFile(faviconPath)
-                res.statusCode = 200
-                res.setHeader('Content-Type', 'image/x-icon')
-                res.end(data)
-            } catch {
-                sendJson(res, 404, { message: 'Interface is not found!' })
-            }
-            return
-        }
-        // (2) / → 欢迎
-        if (reqPath == '/'){
-            sendJson(res, 200, { message: 'Service is available!' })
-            return
-        }
-        // (3) /latestBuilds → 最新构建
-        if (reqPath == '/latestBuilds'){
-            try {
-                const content = await readJsonFile(path.join(dataRoot, 'latest-builds.json'))
-                sendJson(res, 200, okPayload('latest', content))
-            } catch {
-                errValue(res)
-            }
-            return
-        }
-        // (4) /category → 版本列表
-        if (reqPath == '/category'){
-            const platform = reqUrl.searchParams.get('platform')
-            if (!platform || !isSafeId(platform)){
-                errParam(res)
-                return
-            }
-            try {
-                const content = await readJsonFile(path.join(dataRoot, 'category', platform + '.json'))
-                sendJson(res, 200, okPayload('category', content))
-            } catch {
-                errValue(res)
-            }
-            return
-        }
-        // (5) /detail → 详细信息
-        if (reqPath == '/detail'){
-            const platform = reqUrl.searchParams.get('platform')
-            const build = reqUrl.searchParams.get('build')
-            if (!platform || !build || !isSafeId(platform) || !isSafeId(build)){
-                errParam(res)
-                return
-            }
-            try {
-                const content = await readJsonFile(path.join(dataRoot, 'detail', platform, build + '.json'))
-                sendJson(res, 200, okPayload('detail', content))
-            } catch {
-                errValue(res)
-            }
-            return
+        const route = routes.get(reqPath)
+        if (!route) {
+            return sendJson(res, 404, { message: 'Interface is not found!' })
         }
 
-        sendJson(res, 404, { message: 'Interface is not found!' })
+        if (route.params) {
+            const missing = route.params.some(p => {
+                const v = reqUrl.searchParams.get(p)
+                return !v || !isSafeId(v)
+            })
+            if (missing) return errParam(res)
+        }
+
+        await route.handler(res, reqUrl.searchParams, reqUrl)
     } catch {
         errServer(res)
     }
 
 }).listen(port, () => {
-    console.log('服务运行于 http://127.0.0.1:' + port + '/')
-    console.log(`[${getTimestamp()}][Info] 数据目录：` + dataRoot)
+    console.log('========================================')
+    console.log('WUTD API v3.0\n')
+    console.log('[INFO] 服务运行于 http://127.0.0.1:' + port + '/')
+    console.log(`[INFO] 数据目录：` + dataRoot)
+    console.log('========================================')
 })

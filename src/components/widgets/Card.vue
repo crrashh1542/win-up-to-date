@@ -1,18 +1,11 @@
-<script setup>
-// 接收 mode 参数，inline，block，flex
-const props = defineProps(['mode'])
-// 默认为 inline
-let mode = 'inline'
-// 判断
-if(props.mode == 'block') {
-    mode = 'block'
-} else if(props.mode == 'flex') {
-    mode = 'flex'
-}
+<script setup lang="ts">
+const props = withDefaults(defineProps<{ mode?: 'inline' | 'block' | 'flex' }>(), {
+    mode: 'block'
+})
 </script>
 
 <template>
-    <div :class="'card ' + mode">
+    <div :class="['card', props.mode]">
         <slot></slot>
     </div>
 </template>
@@ -21,7 +14,6 @@ if(props.mode == 'block') {
 @import url('@/styles/global.less');
 
 .card {
-    margin: 3px 0;
     padding: 16px calc(12px + 1.2%);
     line-height: 1.2;
     border-radius: @wu-layout-radius;
@@ -34,9 +26,11 @@ if(props.mode == 'block') {
 }
 .card.block {
     display: block;
+    margin-bottom: 4px;
 }
 .card.flex {
     display: flex;
     align-items: center;
+    margin-bottom: 4px;
 }
 </style>

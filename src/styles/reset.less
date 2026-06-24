@@ -2,9 +2,9 @@
  * Date: 2024-11-30 / Version: 2.0-dev
  */
 
-// 全局变量
 @import url('./global.less');
-@import url('normalize.css/normalize.css');
+@import url('modern-normalize/modern-normalize.css');
+
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
 
 // 文档流初始化
@@ -55,6 +55,10 @@ body {
     color: #666;
     margin-bottom: 1em;
 }
+.u-para-code {
+    display: flex;
+    align-items: center;
+}
 .u-box-xs {
     width: 16px;
     height: 16px;
@@ -82,8 +86,6 @@ body {
 }
 .u-icon {
     fill: currentColor;
-    vertical-align: middle;
-    padding-bottom: 4px;
 }
 .u-grow {
     flex-grow: 1;

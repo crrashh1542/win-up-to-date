@@ -8,7 +8,7 @@ defineOptions({ name: 'WidgetButton' })
     </span>
 </template>
 
-<style lang="less">
+<style lang="less" scoped>
 @import url('@/styles/global.less');
 
 .button {

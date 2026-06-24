@@ -1,8 +1,12 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { Icon } from '@iconify/vue'
 import { version } from '../../package.json'
+
+import Info24RegularIcon from '@iconify-vue/fluent/info-24-regular'
+import Library24RegularIcon from '@iconify-vue/fluent/library-24-regular'
+import Settings24RegularIcon from '@iconify-vue/fluent/settings-24-regular'
+import Tag24RegularIcon from '@iconify-vue/fluent/tag-24-regular'
 
 import Foo from './Footer.vue'
 import Popup from './AboutPopup.vue'
@@ -33,7 +37,7 @@ const openAbout = () => {
         </div>
         <div class="u-grow"></div>
         <div class="about">
-            <Icon icon="fluent:info-24-regular" @click="openAbout" />
+            <Info24RegularIcon @click="openAbout" />
         </div>
     </div>
 
@@ -41,15 +45,15 @@ const openAbout = () => {
         <!-- Part 2 ---- 左侧（移动端底部）导航栏 -->
         <div class="navbar">
             <router-link to="/" class="section">
-                <Icon icon="fluent:tag-24-regular"></Icon>
+                <Tag24RegularIcon />
                 <div class="name">版本</div>
             </router-link>
             <router-link to="/category" class="section">
-                <Icon icon="fluent:library-24-regular" />
+                <Library24RegularIcon />
                 <div class="name">分类</div>
             </router-link>
             <router-link to="/settings" class="section">
-                <Icon icon="fluent:settings-24-regular" />
+                <Settings24RegularIcon />
                 <div class="name">设置</div>
             </router-link>
         </div>
@@ -75,7 +79,7 @@ const openAbout = () => {
 </template>
 
 <style lang="less">
-@import url('@/styles/reset.less');
+@import url('@/styles/global.less');
 
 .topbar {
     display: flex;
@@ -83,7 +87,7 @@ const openAbout = () => {
     position: absolute;
     top: 0;
     left: 0;
-    width: calc(100% - 2 * 14px);
+    width: 100%;
     height: 54px;
     padding: 0 14px;
     font-size: 18px;
@@ -122,7 +126,7 @@ const openAbout = () => {
 
     .section {
         width: 66px;
-        padding: 10px 0;
+        padding: 11px 0;
         border-radius: 6px;
         svg {
             width: 1.6em;
@@ -137,6 +141,7 @@ const openAbout = () => {
     .section.path-active {
         position: relative;
         background-color: @wu-color-main;
+        padding: 10px 0;
         border: 1px solid @wu-color-border;
         color: @wu-color-blue;
     }
@@ -176,11 +181,11 @@ main {
     // 设置 flex 是为了能让 footer 始终置于页面底部
     flex-direction: column;
     .container-outer {
-        min-height: calc(100% - 80px);
-        padding: 24px 0 56px; // 下边距 56px 为 Footer 组件高度
+        min-height: calc(100% - 54px);
+        padding-top: 24px;
         .container-inner {
             padding: 0 36px;
-            width: calc(100% - 72px);
+            width: 100%;
             min-height: calc(100% - 36px);
         }
     }
