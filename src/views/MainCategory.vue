@@ -46,14 +46,19 @@ fetchData()
 
             <!-- 内容卡片 -->
             <Card v-for="platform in cat.platforms" :key="platform.name">
+                <!-- 只有平台有多线开发时才显示子标题 -->
                 <template v-if="platform.multi">
                     <div class="sub-title">{{ platform.name }}</div>
                     <hr />
                 </template>
 
-                <template v-for="(item, index) in platform.items" :key="item.category">
+                <template v-for="(item, index) in platform.items">
                     <hr v-if="index > 0" />
-                    <router-link :to="`/category/${item.category}`" class="container">
+                    <component
+                        :is="item.category !== undefined ? 'router-link' : 'div'"
+                        v-bind="item.category !== undefined ? { to: `/category/${item.category}` } : {}"
+                        class="container"
+                    >
                         <div class="info">
                             <div class="codename">{{ item.name === 'default' ? platform.name : item.name }}</div>
                             <div class="version">{{ item.semester }} {{ item.latestBuild }}</div>
@@ -61,7 +66,7 @@ fetchData()
                         <div class="badges">
                             <Badge v-for="t in item.tag" :key="t.name" :color="t.color">{{ t.name }}</Badge>
                         </div>
-                    </router-link>
+                    </component>
                 </template>
             </Card>
         </template>
@@ -70,8 +75,6 @@ fetchData()
 </template>
 
 <style lang="less" scoped>
-@import url('@/styles/global.less');
-
 .category {
     display: flex;
     flex-direction: column;

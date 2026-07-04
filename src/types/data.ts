@@ -28,7 +28,7 @@ export interface MainCategoryTag {
 export interface MainCategoryItem {
     name: string
     semester: string
-    category: string
+    category?: string
     latestBuild: string
     continued: boolean
     tag: MainCategoryTag[]
