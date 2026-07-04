@@ -19,6 +19,34 @@ export interface Category {
     releases: Release[]
 }
 
+// MainCategory 页面数据
+export interface MainCategoryTag {
+    name: string
+    color: BuiltInColor
+}
+
+export interface MainCategoryItem {
+    name: string
+    semester: string
+    category: string
+    latestBuild: string
+    continued: boolean
+    tag: MainCategoryTag[]
+}
+
+export interface MainCategoryPlatform {
+    name: string
+    multi: boolean
+    items: MainCategoryItem[]
+}
+
+export interface MainCategory {
+    category: string
+    id: string
+    icon: string
+    platforms: MainCategoryPlatform[]
+}
+
 // Detail 页面数据
 export interface DetailBuild {
     number: string

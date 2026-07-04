@@ -90,6 +90,7 @@ const routes = new Map([
     ['/', { handler: res => sendJson(res, 200, { message: 'Service is available!' }) }],
     ['/latestBuilds', { handler: serveData('latest-builds.json', 'latest') }],
     ['/category', { params: ['platform'], handler: serveData(categoryPath, 'category') }],
+    ['/category/list', { handler: serveData('category.json', 'categoryList') }],
     ['/detail', { params: ['platform', 'build'], handler: serveData(detailPath, 'detail') }],
 ])
 

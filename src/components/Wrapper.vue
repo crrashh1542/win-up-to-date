@@ -49,7 +49,7 @@ const openAbout = () => {
             </router-link>
             <router-link to="/category" class="section">
                 <Library24RegularIcon />
-                <div class="name">分类</div>
+                <div class="name">平台</div>
             </router-link>
             <router-link to="/settings" class="section">
                 <Settings24RegularIcon />

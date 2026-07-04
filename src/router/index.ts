@@ -6,15 +6,34 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         // GROUP 1 ---- 基础设施
-        { path: '/', component: () => import('@/views/MainHome.vue') },
-        { path: '/about', component: () => import('@/views/MainAbout.vue'), meta: { title: '关于项目' } },
-        { path: '/settings', component: () => import('@/views/MainSettings.vue'), meta: { title: '设置' } },
+        {
+            path: '/',
+            name: 'home',
+            component: () => import('@/views/MainHome.vue')
+        },
+        {
+            path: '/about',
+            name: 'about',
+            component: () => import('@/views/MainAbout.vue'),
+            meta: { title: '关于项目' },
+        },
+        {
+            path: '/settings',
+            name: 'settings',
+            component: () => import('@/views/MainSettings.vue'),
+            meta: { title: '设置' },
+        },
 
         // GROUP 2 ---- 数据页面
-        { path: '/category', redirect: '/category/26H1-bromine' }, // 临时作为类型首页
+        {
+            path: '/category',
+            name: 'category',
+            component: () => import('@/views/MainCategory.vue'),
+            meta: { title: '数据分类' },
+        }, // 临时作为类型首页
         {
             path: '/category/:platform',
-            name: 'category',
+            name: 'categoryList',
             component: () => import('@/views/DataCategoryList.vue'),
             meta: { title: '版本列表' },
         },
@@ -33,8 +52,6 @@ const router = createRouter({
             meta: { title: '404' },
         },
         { path: '/:pathMatch(.*)', redirect: '/404' },
-
-        
     ],
 })
 
@@ -42,7 +59,7 @@ router.beforeEach(() => {
     clearTitle()
 })
 
-router.afterEach(to => {
+router.afterEach((to) => {
     applyRouteTitle(to.meta?.title)
 })
 

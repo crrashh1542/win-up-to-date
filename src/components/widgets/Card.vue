@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<{ mode?: 'inline' | 'block' | 'flex' }>()
 
 <style lang="less">
 .card {
-    padding: 16px calc(12px + 1.2%);
+    padding: @wu-layout-card-padding-y @wu-layout-card-padding-x;
     line-height: 1.2;
     border-radius: @wu-layout-radius;
     background-color: @wu-color-main;
