@@ -45,7 +45,7 @@ fetchData()
             </div>
 
             <!-- 内容卡片 -->
-            <Card v-for="platform in cat.platforms" :key="platform.name">
+            <Card v-for="platform in cat.platforms" :key="platform.name" :shadow="true">
                 <!-- 只有平台有多线开发时才显示子标题 -->
                 <template v-if="platform.multi">
                     <div class="sub-title">{{ platform.name }}</div>

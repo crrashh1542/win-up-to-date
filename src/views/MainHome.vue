@@ -31,7 +31,7 @@ useBuildsStore().fetchBuilds()
             </div>
 
             <!-- 内容卡片 -->
-            <Card v-for="build in c.releases" :key="build.version" mode="inline">
+            <Card v-for="build in c.releases" :key="build.version" mode="inline" :shadow="true">
                 <component :is="build.category !== undefined ? 'router-link' : 'span'"
                     v-bind="build.category !== undefined ? { to: `/detail/${build.category}/${build.version}` } : {}">
                     <div class="row">
@@ -74,7 +74,6 @@ useBuildsStore().fetchBuilds()
     .card {
         padding: 8px 18px;
         border-radius: 8px;
-        box-shadow: @wu-layout-shadow;
 
         .row {
             color: @wu-color-text-accent;
