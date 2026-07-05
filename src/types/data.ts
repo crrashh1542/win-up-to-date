@@ -19,6 +19,12 @@ export interface Category {
     releases: Release[]
 }
 
+// 数据仓库版本
+export interface DataVersion {
+    hash: string
+    date: string
+}
+
 // MainCategory 页面数据
 export interface MainCategoryTag {
     name: string

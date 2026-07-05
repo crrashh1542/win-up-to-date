@@ -1,13 +1,17 @@
 /**
  * Windows Up-to-Date 服务端脚本
  * @author crrashh1542
- * @version 3.0
+ * @version 3.1
  */
 
+import { execFile } from 'node:child_process'
 import fs from 'node:fs/promises'
 import http from 'node:http'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { promisify } from 'node:util'
+
+const execFileP = promisify(execFile)
 
 const apiVersion = 1
 const port = 14726
@@ -68,6 +72,45 @@ const readCache = async filePath => {
     return entry.promise
 }
 
+// 查询数据仓库版本
+// .git/logs/HEAD 的 mtime 判断是否有新提交
+const headLogPath = path.join(dataRoot, '.git', 'logs', 'HEAD')
+let versionCache = null
+const readDataVersion = async () => {
+    let mtime = 0
+    try {
+        mtime = (await fs.stat(headLogPath)).mtimeMs
+    } catch {
+        // HEAD 不存在时退回 30s TTL
+        mtime = Math.floor(Date.now() / 30000)
+    }
+    if (versionCache && versionCache.mtime === mtime) {
+        return versionCache.promise
+    }
+    // %h 短 hash，%cs 提交日期（YYYY-MM-DD）
+    const promise = execFileP('git', ['-C', dataRoot, 'log', '-1', '--format=%h%n%cs'])
+        .then(({ stdout }) => {
+            const [hash, date] = stdout.trim().split('\n')
+            return { hash, date }
+        })
+        .catch(err => {
+            // Git 不可用或非仓库时返回 unknown，而非报错
+            console.error('[WARN] 无法读取数据仓库版本：', err.message)
+            return { hash: 'unknown', date: 'unknown' }
+        })
+    versionCache = { promise, mtime }
+    return promise
+}
+
+const serveDataVersion = async res => {
+    try {
+        const content = await readDataVersion()
+        sendJson(res, 200, okPayload('dataVersion', content))
+    } catch {
+        errServer(res)
+    }
+}
+
 // 路由处理函数
 const serveData = (file, type) => async (res, _params, reqUrl) => {
     const filePath = typeof file === 'function'
@@ -89,6 +132,7 @@ const detailPath = u =>
 const routes = new Map([
     ['/', { handler: res => sendJson(res, 200, { message: 'Service is available!' }) }],
     ['/latestBuilds', { handler: serveData('latest-builds.json', 'latest') }],
+    ['/version', { handler: serveDataVersion }],
     ['/category', { params: ['platform'], handler: serveData(categoryPath, 'category') }],
     ['/category/list', { handler: serveData('category.json', 'categoryList') }],
     ['/detail', { params: ['platform', 'build'], handler: serveData(detailPath, 'detail') }],
