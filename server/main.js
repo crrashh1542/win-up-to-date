@@ -93,10 +93,15 @@ const readDataVersion = async () => {
             const [hash, date] = stdout.trim().split('\n')
             return { hash, date }
         })
-        .catch(err => {
-            // Git 不可用或非仓库时返回 unknown，而非报错
-            console.error('[WARN] 无法读取数据仓库版本：', err.message)
-            return { hash: 'unknown', date: 'unknown' }
+        .catch(async () => {
+            // Git 不可用（如生产环境仅有打包数据）时，读取打包生成的 version.json
+            try {
+                const v = await readJson(path.join(dataRoot, 'version.json'))
+                return { hash: v.hash ?? 'unknown', date: v.date ?? 'unknown' }
+            } catch {
+                console.error('[WARN] 无法读取数据仓库版本：Git 不可用且 version.json 缺失')
+                return { hash: 'unknown', date: 'unknown' }
+            }
         })
     versionCache = { promise, mtime }
     return promise
