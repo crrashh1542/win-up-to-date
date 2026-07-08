@@ -68,14 +68,14 @@ const settingsMenu: SettingsMenu = [
         <div class="u-catalog">{{ i.name }}</div>
 
         <!-- 卡片 -->
-        <card mode="flex" v-for="item in i.items" :key="item.value">
+        <Card mode="flex" v-for="item in i.items" :key="item.value">
             <span class="item">
                 <component :is="icons[item.icon]" width="24" height="24" />
                 {{ item.name }}
             </span>
             <span class="u-grow"></span>
             <Switch :is-disabled="!item.enabled" v-model="settings[item.value]" />
-        </card>
+        </Card>
     </div>
 </template>
 

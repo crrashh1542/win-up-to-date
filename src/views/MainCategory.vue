@@ -52,12 +52,19 @@ fetchData()
                     <hr />
                 </template>
 
+                <!-- 平台列表 -->
                 <template v-for="(item, index) in platform.items">
+                    <!-- 从第 1 项开始显示分割线 -->
                     <hr v-if="index > 0" />
+                    <!-- 如果 item 有 category，则使用 router-link 并添加 hover 效果，否则 div -->
                     <component
                         :is="item.category !== undefined ? 'router-link' : 'div'"
                         v-bind="item.category !== undefined ? { to: `/category/${item.category}` } : {}"
-                        class="container"
+                        :class="[
+                            'container',
+                            item.category !== undefined ? 'u-hoverable' : 'disabled',
+                            item.continued ? '' : 'uncontinued'
+                        ]"
                     >
                         <div class="info">
                             <div class="codename">{{ item.name === 'default' ? platform.name : item.name }}</div>
@@ -115,6 +122,13 @@ fetchData()
             display: flex;
             gap: 4px;
             margin-right: @wu-layout-card-padding-x;
+        }
+
+        &.disabled { // 没有 category
+            cursor: not-allowed;
+        }
+        &.uncontinued { // 已停止维护
+            opacity: .6;
         }
     }
 }

@@ -31,7 +31,7 @@ useBuildsStore().fetchBuilds()
             </div>
 
             <!-- 内容卡片 -->
-            <Card v-for="build in c.releases" :key="build.version" mode="inline" :shadow="true">
+            <Card v-for="build in c.releases" :key="build.version" mode="inline" :shadow="true" class="u-hoverable">
                 <component :is="build.category !== undefined ? 'router-link' : 'span'"
                     v-bind="build.category !== undefined ? { to: `/detail/${build.category}/${build.version}` } : {}">
                     <div class="row">
