@@ -16,17 +16,23 @@ const date = computed(() => dataVersion.value?.date ?? 'unknown')
     <div class="footer">
         <p>
             (C) 2023-2026 crrashh1542.
-            <a href="//beian.miit.gov.cn" target="_blank">蜀ICP备2022029657号-2</a>
+            <a href="//beian.miit.gov.cn" target="_blank"
+                >蜀ICP备2022029657号-2</a
+            >
         </p>
         <p v-if="dataVersion">
-            数据版本: {{ date }}
-            （Git: <a :href="`https://github.com/crrashh1542/win-up-to-date-data/commit/${hash}`">{{ hash }}</a>）
+            数据版本: {{ date }} （Git:
+            <a
+                :href="`https://github.com/crrashh1542/win-up-to-date-data/commit/${hash}`"
+                >{{ hash }}</a
+            >）
         </p>
     </div>
 </template>
 
 <style lang="less" scoped>
 .footer {
+    flex-shrink: 0;
     margin-top: @wu-layout-footer-margin;
     border-top: 1px solid @wu-color-border;
     padding: 1em 36px;
