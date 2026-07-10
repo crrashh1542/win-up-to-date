@@ -10,7 +10,7 @@
 @wu-color-base: #f5f5f5; // 上、左侧边栏底色
 @wu-color-main: #fbfbfb; // 主内容底色
 @wu-color-border: #e6e6e6; // 主内容边框
-@wu-color-shadow: rgba(0, 0, 0, .12); // 组件阴影颜色
+@wu-color-shadow: rgba(0, 0, 0, 0.12); // 组件阴影颜色
 // 其它颜色，部分借鉴自 Material Design 设计指南
 @wu-color-yellow: #ffeb3b;
 @wu-color-yellow-light: #fffde7;
@@ -26,7 +26,9 @@
 
 // 布局
 @wu-layout-radius: 4px;
-@wu-layout-shadow: 0 0 0 @wu-color-shadow, 0 0 2px @wu-color-shadow;
-@wu-layout-footer-margin: 32px;
+@wu-layout-shadow:
+    0 0 0 @wu-color-shadow,
+    0 0 2px @wu-color-shadow;
+@wu-layout-footer-margin: 11px;
 @wu-layout-card-padding-x: 16px;
 @wu-layout-card-padding-y: 12px;

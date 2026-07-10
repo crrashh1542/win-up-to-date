@@ -11,6 +11,9 @@ importers:
       '@iconify-vue/fluent':
         specifier: ^1.0.5
         version: 1.0.5(vue@3.5.38(typescript@6.0.3))
+      '@iconify-vue/fluent-color':
+        specifier: ^1.0.6
+        version: 1.0.6(vue@3.5.38(typescript@6.0.3))
       axios:
         specifier: ^1.18.1
         version: 1.18.1
@@ -682,6 +685,9 @@ packages:
   '@humanwhocodes/retry@0.4.3':
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
+
+  '@iconify-vue/fluent-color@1.0.6':
+    resolution: {integrity: sha512-kCFPhzqhjPgOozYrwNVSxR4enCc0cWEPYrmMPADTkMefsFNRvBVXydc76v1Btf4dRuWssdxPJhjdK3fGARfIwA==}
 
   '@iconify-vue/fluent@1.0.5':
     resolution: {integrity: sha512-z638X+IOcVFo+Yz/WWN0BZBTst+ZTNBBMEed2R28QPDyXijF52UA3y0jZxa7IvQQPTE20iurI1i218pDi/4Nwg==}
@@ -3708,6 +3714,12 @@ snapshots:
   '@humanwhocodes/module-importer@1.0.1': {}
 
   '@humanwhocodes/retry@0.4.3': {}
+
+  '@iconify-vue/fluent-color@1.0.6(vue@3.5.38(typescript@6.0.3))':
+    dependencies:
+      '@iconify/css-vue': 1.0.2(vue@3.5.38(typescript@6.0.3))
+    transitivePeerDependencies:
+      - vue
 
   '@iconify-vue/fluent@1.0.5(vue@3.5.38(typescript@6.0.3))':
     dependencies:

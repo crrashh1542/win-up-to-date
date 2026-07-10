@@ -47,6 +47,7 @@
     },
     "dependencies": {
         "@iconify-vue/fluent": "^1.0.5",
+        "@iconify-vue/fluent-color": "^1.0.6",
         "axios": "^1.18.1",
         "modern-normalize": "^3.0.1",
         "nprogress": "^0.2.0",

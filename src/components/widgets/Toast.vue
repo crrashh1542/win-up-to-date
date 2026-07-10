@@ -3,24 +3,18 @@
     参考：https://github.com/microsoft/fluentui/tree/@fluentui/react-components_v9.74.2/packages/react-components/react-toast/library/src/components/Toast
 -->
 <script setup lang="ts">
-import CheckmarkCircle24Filled from '@iconify-vue/fluent/checkmark-circle-24-filled'
-import DismissCircle24Filled from '@iconify-vue/fluent/dismiss-circle-24-filled'
-import Warning24Filled from '@iconify-vue/fluent/warning-24-filled'
-import Info24Regular from '@iconify-vue/fluent/info-24-regular'
+import CheckmarkCircle24Icon from '@iconify-vue/fluent-color/checkmark-circle-24'
+import DismissCircle24Icon from '@iconify-vue/fluent-color/dismiss-circle-24'
+import Warning24Icon from '@iconify-vue/fluent-color/warning-24'
+import Info24Filled from '@iconify-vue/fluent/info-24-filled'
 
 import type { ToastIntent } from '@/types'
 
-const intentIcons: Record<ToastIntent, typeof CheckmarkCircle24Filled> = {
-    success: CheckmarkCircle24Filled,
-    error: DismissCircle24Filled,
-    warning: Warning24Filled,
-    info: Info24Regular,
-}
-const intentColor: Record<ToastIntent, string> = {
-    success: '#0e700e',
-    error: '#b10e1c',
-    warning: '#bc4b09',
-    info: '#424242',
+const intentIcons: Record<ToastIntent, typeof CheckmarkCircle24Icon> = {
+    success: CheckmarkCircle24Icon,
+    error: DismissCircle24Icon,
+    warning: Warning24Icon,
+    info: Info24Filled,
 }
 
 const props = defineProps<{
@@ -32,8 +26,15 @@ const props = defineProps<{
 
 <template>
     <div :class="['toast', { 'title-only': !props.body }]">
-        <div class="toast-icon" :style="{ color: intentColor[props.intent ?? 'info'] }">
-            <component :is="intentIcons[props.intent ?? 'info']" width="24" height="24" />
+        <div
+            class="toast-icon"
+            :style="props.intent === 'info' ? { color: '#0f6cbd' } : {}"
+        >
+            <component
+                :is="intentIcons[props.intent ?? 'info']"
+                width="24"
+                height="24"
+            />
         </div>
         <div class="toast-content">
             <span class="toast-title">{{ props.title }}</span>
