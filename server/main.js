@@ -13,22 +13,26 @@ import { promisify } from 'node:util'
 
 const execFileP = promisify(execFile)
 
+const serverVersion = '3.1'
 const apiVersion = 1
 const port = 14726
 const cacheSize = 200
 
 const __filename = fileURLToPath(import.meta.url)
 const dataRoot = path.resolve(path.dirname(__filename), 'data')
-const isSafeId = v => /^[A-Za-z0-9._-]+$/.test(v)
+// 拒绝路径穿越符（. 与 ..），并只允许安全字符
+const isSafeId = (v) => /^[A-Za-z0-9._-]+$/.test(v) && v !== '.' && v !== '..'
 
 const sendJson = (res, status, payload) => {
     res.statusCode = status
     res.setHeader('Content-Type', 'application/json;charset=utf-8')
-    res.end(JSON.stringify({
-        code: status,
-        version: apiVersion,
-        ...payload,
-    }))
+    res.end(
+        JSON.stringify({
+            code: status,
+            version: apiVersion,
+            ...payload,
+        })
+    )
 }
 
 const okPayload = (type, content) => ({
@@ -37,18 +41,21 @@ const okPayload = (type, content) => ({
     content,
 })
 
-const errParam = res => sendJson(res, 400, { message: 'Parameter is invalid!' })
-const errValue = res => sendJson(res, 404, { message: 'Corresponding data is not found!' })
-const errServer = res => sendJson(res, 500, { message: 'Internal server error!' })
+const errParam = (res) =>
+    sendJson(res, 400, { message: 'Parameter is invalid!' })
+const errValue = (res) =>
+    sendJson(res, 404, { message: 'Corresponding data is not found!' })
+const errServer = (res) =>
+    sendJson(res, 500, { message: 'Internal server error!' })
 
-const readJson = async filePath => {
+const readJson = async (filePath) => {
     const raw = await fs.readFile(filePath, 'utf-8')
     return JSON.parse(raw)
 }
 
 // 数据缓存
 const fileCache = new Map()
-const readCache = async filePath => {
+const readCache = async (filePath) => {
     const cached = fileCache.get(filePath)
     const mtime = (await fs.stat(filePath)).mtimeMs
     if (cached && mtime === cached.mtime) {
@@ -62,7 +69,7 @@ const readCache = async filePath => {
         fileCache.delete(fileCache.keys().next().value)
     }
     const entry = {
-        promise: readJson(filePath).catch(err => {
+        promise: readJson(filePath).catch((err) => {
             fileCache.delete(filePath)
             throw err
         }),
@@ -77,7 +84,6 @@ const readCache = async filePath => {
 const headLogPath = path.join(dataRoot, '.git', 'logs', 'HEAD')
 let versionCache = null
 const readDataVersion = async () => {
-    let mtime = 0
     try {
         mtime = (await fs.stat(headLogPath)).mtimeMs
     } catch {
@@ -88,7 +94,13 @@ const readDataVersion = async () => {
         return versionCache.promise
     }
     // %h 短 hash，%cs 提交日期（YYYY-MM-DD）
-    const promise = execFileP('git', ['-C', dataRoot, 'log', '-1', '--format=%h%n%cs'])
+    const promise = execFileP('git', [
+        '-C',
+        dataRoot,
+        'log',
+        '-1',
+        '--format=%h%n%cs',
+    ])
         .then(({ stdout }) => {
             const [hash, date] = stdout.trim().split('\n')
             return { hash, date }
@@ -99,7 +111,9 @@ const readDataVersion = async () => {
                 const v = await readJson(path.join(dataRoot, 'version.json'))
                 return { hash: v.hash ?? 'unknown', date: v.date ?? 'unknown' }
             } catch {
-                console.error('[WARN] 无法读取数据仓库版本：Git 不可用且 version.json 缺失')
+                console.error(
+                    '[WARN] 无法读取数据仓库版本：Git 不可用且 version.json 缺失'
+                )
                 return { hash: 'unknown', date: 'unknown' }
             }
         })
@@ -107,7 +121,7 @@ const readDataVersion = async () => {
     return promise
 }
 
-const serveDataVersion = async res => {
+const serveDataVersion = async (res) => {
     try {
         const content = await readDataVersion()
         sendJson(res, 200, okPayload('dataVersion', content))
@@ -118,11 +132,15 @@ const serveDataVersion = async res => {
 
 // 路由处理函数
 const serveData = (file, type) => async (res, _params, reqUrl) => {
-    const filePath = typeof file === 'function'
-        ? file(reqUrl)
-        : path.join(dataRoot, file)
+    const filePath =
+        typeof file === 'function' ? file(reqUrl) : path.join(dataRoot, file)
+    // 注：解析后的路径必须仍位于数据目录内
+    const resolved = path.resolve(filePath)
+    if (resolved !== dataRoot && !resolved.startsWith(dataRoot + path.sep)) {
+        return errParam(res)
+    }
     try {
-        const content = await readCache(filePath)
+        const content = await readCache(resolved)
         sendJson(res, 200, okPayload(type, content))
     } catch {
         errValue(res)
@@ -130,26 +148,48 @@ const serveData = (file, type) => async (res, _params, reqUrl) => {
 }
 
 // 路由表
-const categoryPath = u =>
+const categoryPath = (u) =>
     path.join(dataRoot, 'category', u.searchParams.get('platform') + '.json')
-const detailPath = u =>
-    path.join(dataRoot, 'detail', u.searchParams.get('platform'), u.searchParams.get('build') + '.json')
+const detailPath = (u) =>
+    path.join(
+        dataRoot,
+        'detail',
+        u.searchParams.get('platform'),
+        u.searchParams.get('build') + '.json'
+    )
 const routes = new Map([
-    ['/', { handler: res => sendJson(res, 200, { message: 'Service is available!' }) }],
+    [
+        '/',
+        {
+            handler: (res) =>
+                sendJson(res, 200, { message: 'Service is available!' }),
+        },
+    ],
     ['/latestBuilds', { handler: serveData('latest-builds.json', 'latest') }],
     ['/version', { handler: serveDataVersion }],
-    ['/category', { params: ['platform'], handler: serveData(categoryPath, 'category') }],
+    [
+        '/category',
+        { params: ['platform'], handler: serveData(categoryPath, 'category') },
+    ],
     ['/category/list', { handler: serveData('category.json', 'categoryList') }],
-    ['/detail', { params: ['platform', 'build'], handler: serveData(detailPath, 'detail') }],
+    [
+        '/detail',
+        {
+            params: ['platform', 'build'],
+            handler: serveData(detailPath, 'detail'),
+        },
+    ],
 ])
 
 // main server
-const server = http.createServer(async (req, res) => {
+http.createServer(async (req, res) => {
     const reqUrl = new URL(req.url || '/', 'http://127.0.0.1')
     const reqPath = reqUrl.pathname || '/'
 
     res.on('finish', () => {
-        console.log(`[${new Date().toLocaleString('sv-SE')}] ${res.statusCode} ${req.method} ${req.url}`)
+        console.log(
+            `[${new Date().toLocaleString('sv-SE')}] ${res.statusCode} ${req.method} ${req.url}`
+        )
     })
 
     if (req.method !== 'GET') {
@@ -163,7 +203,7 @@ const server = http.createServer(async (req, res) => {
         }
 
         if (route.params) {
-            const missing = route.params.some(p => {
+            const missing = route.params.some((p) => {
                 const v = reqUrl.searchParams.get(p)
                 return !v || !isSafeId(v)
             })
@@ -174,10 +214,9 @@ const server = http.createServer(async (req, res) => {
     } catch {
         errServer(res)
     }
-
 }).listen(port, () => {
     console.log('========================================')
-    console.log('WUTD API v3.0\n')
+    console.log(`WUTD API v${serverVersion}\n`)
     console.log('[INFO] 服务运行于 http://127.0.0.1:' + port + '/')
     console.log(`[INFO] 数据目录：` + dataRoot)
     console.log('========================================')
