@@ -1,4 +1,11 @@
-export type BuiltInColor = 'amber' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'purple'
+export type BuiltInColor =
+    | 'amber'
+    | 'orange'
+    | 'yellow'
+    | 'green'
+    | 'teal'
+    | 'blue'
+    | 'purple'
 
 // 首页数据
 export interface Release {
@@ -26,18 +33,13 @@ export interface DataVersion {
 }
 
 // MainCategory 页面数据
-export interface MainCategoryTag {
-    name: string
-    color: BuiltInColor
-}
-
 export interface MainCategoryItem {
     name: string
     semester: string
     category?: string
     latestBuild: string
     continued: boolean
-    tag: MainCategoryTag[]
+    tags: string[]
 }
 
 export interface MainCategoryPlatform {

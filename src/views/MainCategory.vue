@@ -8,7 +8,21 @@ import Badge from '@/components/widgets/Badge.vue'
 import Card from '@/components/widgets/Card.vue'
 
 import icons from '@/assets/icons'
-import type { MainCategory } from '@/types/data'
+import type { MainCategory, BuiltInColor } from '@/types/data'
+
+// tag 名称到颜色的映射表（基于 category.json 中的实际数据）
+const tagColorMap: Record<string, BuiltInColor> = {
+    Experimental: 'yellow',
+    Canary: 'amber',
+    Beta: 'green',
+    RP: 'purple',
+    正式: 'blue',
+    Dev: 'orange',
+    LTSC: 'teal',
+    Fast: 'yellow',
+}
+
+const getTagColor = (tag: string): BuiltInColor => tagColorMap[tag] ?? 'blue'
 
 const pageData = reactive({
     data: [] as MainCategory[],
@@ -20,7 +34,10 @@ const fetchData = async () => {
     pageData.isLoading = true
     NProgress.start()
     try {
-        const { data: resp } = await request({ url: '/category/list', method: 'get' })
+        const { data: resp } = await request({
+            url: '/category/list',
+            method: 'get',
+        })
         pageData.data = resp.content
     } catch (error) {
         console.error(error)
@@ -36,16 +53,19 @@ fetchData()
     <div class="u-banner">平台</div>
 
     <div class="category" v-if="!pageData.isLoading">
-
         <template v-for="cat in pageData.data" :key="cat.id">
             <!-- 小标题 -->
             <div class="u-catalog">
-                <img :src="icons[cat.icon]" class="u-box-s u-icon">&nbsp;
+                <img :src="icons[cat.icon]" class="u-box-s u-icon" />&nbsp;
                 {{ cat.category }}
             </div>
 
             <!-- 内容卡片 -->
-            <Card v-for="platform in cat.platforms" :key="platform.name" :shadow="true">
+            <Card
+                v-for="platform in cat.platforms"
+                :key="platform.name"
+                :shadow="true"
+            >
                 <!-- 只有平台有多线开发时才显示子标题 -->
                 <template v-if="platform.multi">
                     <div class="sub-title">{{ platform.name }}</div>
@@ -53,32 +73,52 @@ fetchData()
                 </template>
 
                 <!-- 平台列表 -->
-                <template v-for="(item, index) in platform.items">
+                <template v-for="(item, index) in platform.items" :key="index">
                     <!-- 从第 1 项开始显示分割线 -->
                     <hr v-if="index > 0" />
                     <!-- 如果 item 有 category，则使用 router-link 并添加 hover 效果，否则 div -->
                     <component
-                        :is="item.category !== undefined ? 'router-link' : 'div'"
-                        v-bind="item.category !== undefined ? { to: `/category/${item.category}` } : {}"
+                        :is="
+                            item.category !== undefined ? 'router-link' : 'div'
+                        "
+                        v-bind="
+                            item.category !== undefined
+                                ? { to: `/category/${item.category}` }
+                                : {}
+                        "
                         :class="[
                             'container',
-                            item.category !== undefined ? 'u-hoverable' : 'disabled',
-                            item.continued ? '' : 'uncontinued'
+                            item.category !== undefined
+                                ? 'u-hoverable'
+                                : 'disabled',
+                            item.continued ? '' : 'uncontinued',
                         ]"
                     >
                         <div class="info">
-                            <div class="codename">{{ item.name === 'default' ? platform.name : item.name }}</div>
-                            <div class="version">{{ item.semester }} {{ item.latestBuild }}</div>
+                            <div class="codename">
+                                {{
+                                    item.name === 'default'
+                                        ? platform.name
+                                        : item.name
+                                }}
+                            </div>
+                            <div class="version">
+                                {{ item.semester }} {{ item.latestBuild }}
+                            </div>
                         </div>
                         <div class="badges">
-                            <Badge v-for="t in item.tag" :key="t.name" :color="t.color">{{ t.name }}</Badge>
+                            <Badge
+                                v-for="t in item.tags"
+                                :key="t"
+                                :color="getTagColor(t)"
+                                >{{ t }}</Badge
+                            >
                         </div>
                     </component>
                 </template>
             </Card>
         </template>
     </div>
-
 </template>
 
 <style lang="less" scoped>
@@ -124,11 +164,13 @@ fetchData()
             margin-right: @wu-layout-card-padding-x;
         }
 
-        &.disabled { // 没有 category
+        &.disabled {
+            // 没有 category
             cursor: not-allowed;
         }
-        &.uncontinued { // 已停止维护
-            opacity: .6;
+        &.uncontinued {
+            // 已停止维护
+            opacity: 0.6;
         }
     }
 }
