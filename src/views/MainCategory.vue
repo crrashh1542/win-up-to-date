@@ -8,21 +8,7 @@ import Badge from '@/components/widgets/Badge.vue'
 import Card from '@/components/widgets/Card.vue'
 
 import icons from '@/assets/icons'
-import type { MainCategory, BuiltInColor } from '@/types/data'
-
-// tag 名称到颜色的映射表（基于 category.json 中的实际数据）
-const tagColorMap: Record<string, BuiltInColor> = {
-    Experimental: 'yellow',
-    Canary: 'amber',
-    Beta: 'green',
-    RP: 'purple',
-    正式: 'blue',
-    Dev: 'orange',
-    LTSC: 'teal',
-    Fast: 'yellow',
-}
-
-const getTagColor = (tag: string): BuiltInColor => tagColorMap[tag] ?? 'blue'
+import type { MainCategory } from '@/types/data'
 
 const pageData = reactive({
     data: [] as MainCategory[],
@@ -73,7 +59,7 @@ fetchData()
                 </template>
 
                 <!-- 平台列表 -->
-                <template v-for="(item, index) in platform.items" :key="index">
+                <template v-for="(item, index) in platform.items">
                     <!-- 从第 1 项开始显示分割线 -->
                     <hr v-if="index > 0" />
                     <!-- 如果 item 有 category，则使用 router-link 并添加 hover 效果，否则 div -->
@@ -108,10 +94,10 @@ fetchData()
                         </div>
                         <div class="badges">
                             <Badge
-                                v-for="t in item.tags"
-                                :key="t"
-                                :color="getTagColor(t)"
-                                >{{ t }}</Badge
+                                v-for="t in item.tag"
+                                :key="t.name"
+                                :color="t.color"
+                                >{{ t.name }}</Badge
                             >
                         </div>
                     </component>

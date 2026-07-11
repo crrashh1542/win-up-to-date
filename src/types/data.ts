@@ -33,13 +33,18 @@ export interface DataVersion {
 }
 
 // MainCategory 页面数据
+export interface MainCategoryTag {
+    name: string
+    color: BuiltInColor
+}
+
 export interface MainCategoryItem {
     name: string
     semester: string
     category?: string
     latestBuild: string
     continued: boolean
-    tags: string[]
+    tag: MainCategoryTag[]
 }
 
 export interface MainCategoryPlatform {
