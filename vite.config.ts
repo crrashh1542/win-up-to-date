@@ -40,11 +40,11 @@ export default defineConfig({
         }),
     ],
     server: {
-        port: 14724,
+        port: 9883,
         host: true,
         proxy: {
             '/v1': {
-                target: 'http://localhost:14726',
+                target: 'http://localhost:9884',
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/v1/, ''),
             },

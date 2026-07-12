@@ -15,7 +15,7 @@ const execFileP = promisify(execFile)
 
 const serverVersion = '3.1'
 const apiVersion = 1
-const port = 14726
+const port = 9884
 const cacheSize = 200
 
 const __filename = fileURLToPath(import.meta.url)
