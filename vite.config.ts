@@ -71,14 +71,14 @@ export default defineConfig({
                 codeSplitting: {
                     groups: [
                         {
-                            name: 'vendor-vue',
-                            test: /@vue/,
+                            name: 'vendor-router',
+                            test: /router/,
                             priority: 10,
                         },
                         {
-                            name: 'vendor-iconify',
-                            test: /iconify/,
-                            priority: 10,
+                            name: 'vendor-vue',
+                            test: /@vue\/reactivity|runtime-core/,
+                            priority: 11,
                         },
                         {
                             name: 'vendor-axios',
@@ -86,13 +86,13 @@ export default defineConfig({
                             priority: 10,
                         },
                         {
-                            name: 'utils',
-                            test: /[\\/]src[\\/]utils[\\/]/,
-                            priority: 5,
+                            name: 'vendor-iconify',
+                            test: /node_modules/,
+                            priority: 9,
                         },
                         {
                             name: 'components',
-                            test: /[\\/]src[\\/]components[\\/]/,
+                            test: /[\\/]src[\\/]components[\\/]|utils[\\/]/,
                             priority: 5,
                         },
                         {
