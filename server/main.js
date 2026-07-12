@@ -84,6 +84,7 @@ const readCache = async (filePath) => {
 const headLogPath = path.join(dataRoot, '.git', 'logs', 'HEAD')
 let versionCache = null
 const readDataVersion = async () => {
+    let mtime
     try {
         mtime = (await fs.stat(headLogPath)).mtimeMs
     } catch {
@@ -105,7 +106,7 @@ const readDataVersion = async () => {
             const [hash, date] = stdout.trim().split('\n')
             return { hash, date }
         })
-        .catch(async () => {
+        .catch(async (err) => {
             // Git 不可用（如生产环境仅有打包数据）时，读取打包生成的 version.json
             try {
                 const v = await readJson(path.join(dataRoot, 'version.json'))
@@ -114,6 +115,9 @@ const readDataVersion = async () => {
                 console.error(
                     '[WARN] 无法读取数据仓库版本：Git 不可用且 version.json 缺失'
                 )
+                if (err) {
+                    console.error('[WARN] Git 错误详情：', err.message || err)
+                }
                 return { hash: 'unknown', date: 'unknown' }
             }
         })
