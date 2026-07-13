@@ -15,9 +15,9 @@
         "url": "https://github.com/crrashh1542/win-up-to-date/issues"
     },
     "scripts": {
-        "dev": "vite",
+        "dev": "concurrently -n web,api \"pnpm dev:web\" \"pnpm dev:api\"",
+        "dev:web": "vite",
         "dev:api": "node server/main.js",
-        "dev:all": "concurrently -n api,web \"pnpm dev:api\" \"pnpm dev\"",
         "build": "vite build",
         "preview": "vite preview",
         "lint": "eslint \"src/**/*.{js,ts,vue}\"",
