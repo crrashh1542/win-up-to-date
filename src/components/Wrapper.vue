@@ -81,6 +81,7 @@ const openAbout = () => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
     position: absolute;
     top: 0;
     left: 0;
@@ -91,6 +92,7 @@ const openAbout = () => {
     user-select: none;
 
     .title {
+        flex: 0 0 auto;
         .name {
             color: #222;
             font-weight: 600;
@@ -102,15 +104,24 @@ const openAbout = () => {
     }
 
     .search {
-        margin-right: 10em;
+        flex: 1 1 auto;
+        min-width: 0;
     }
 
     .about {
+        flex: 0 0 auto;
         cursor: pointer;
         svg {
             width: 1.2em;
             height: 1.2em;
         }
+    }
+}
+
+@media screen and (min-width: 700px) {
+    .topbar .search {
+        flex: 0 0 auto;
+        margin-right: 17.5%;
     }
 }
 

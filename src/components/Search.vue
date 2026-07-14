@@ -146,12 +146,12 @@ const onFocus = () => {
     <div ref="searchRef" class="build-search">
         <Input
             v-model="query"
-            placeholder="搜索 Build，如 26063.1"
+            placeholder="搜索 build ......"
             @keydown.enter.prevent="onEnter"
             @keydown="onKeyDown"
             @focusout="onFocusOut"
             @focus="onFocus"
-            :style="{ width: '30em' }"
+            :style="{ width: '100%' }"
         >
             <template #contentBefore>
                 <Search24RegularIcon width="18" height="18" />
@@ -184,7 +184,13 @@ const onFocus = () => {
 
 <style lang="less" scoped>
 .build-search {
-    width: 30em;
+    width: 100%;
+}
+
+@media screen and (min-width: 700px) {
+    .build-search {
+        width: 25em;
+    }
 }
 </style>
 
