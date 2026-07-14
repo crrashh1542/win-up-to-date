@@ -7,11 +7,10 @@ import Info24RegularIcon from '@iconify-vue/fluent/info-24-regular'
 import Library24RegularIcon from '@iconify-vue/fluent/library-24-regular'
 import Settings24RegularIcon from '@iconify-vue/fluent/settings-24-regular'
 import Tag24RegularIcon from '@iconify-vue/fluent/tag-24-regular'
-import Search20RegularIcon from '@iconify-vue/fluent/search-20-regular'
 
 import Foo from './Footer.vue'
-import Input from './widgets/Input.vue'
 import Popup from './AboutPopup.vue'
+import Search from './Search.vue'
 
 const router = useRouter()
 defineOptions({ name: 'MainWrapper' })
@@ -41,13 +40,8 @@ const openAbout = () => {
             <span class="version">v{{ appVersion }}</span>
         </div>
         <div class="search">
-            <Input placeholder="搜索版本或平台..." :style="{ width: '30em' }">
-                <template #contentBefore>
-                    <Search20RegularIcon width="18" height="18" />
-                </template>
-            </Input>
+            <Search />
         </div>
-        <div class="u-grow"></div>
         <div class="about">
             <Info24RegularIcon @click="openAbout" />
         </div>
@@ -85,6 +79,7 @@ const openAbout = () => {
 <style lang="less" scoped>
 .topbar {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     position: absolute;
     top: 0;
@@ -105,14 +100,9 @@ const openAbout = () => {
             font-size: 14px;
         }
     }
-    .search {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
 
-        :deep(.input-root) {
-            width: 320px;
-        }
+    .search {
+        margin-right: 10em;
     }
 
     .about {

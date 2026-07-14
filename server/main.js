@@ -134,6 +134,34 @@ const serveDataVersion = async (res) => {
     }
 }
 
+// 搜索接口逻辑
+const detailDir = path.join(dataRoot, 'detail')
+const serveSearch = async (res, _params, reqUrl) => {
+    const q = reqUrl.searchParams.get('build')
+    if (!q || !isSafeId(q)) return errParam(res)
+    try {
+        // 读取 detail 目录下所有 JSON 文件，提取平台和 build 信息
+        const files = await fs.readdir(detailDir, { recursive: true })
+        const matches = files
+            .filter(
+                (name) => typeof name === 'string' && name.endsWith('.json')
+            )
+            .map((name) => {
+                const full = name.replace(/\\/g, '/')
+                const lastSlash = full.lastIndexOf('/')
+                const platform = full.substring(0, lastSlash)
+                const build = path.basename(name, '.json')
+                return { platform, build }
+            })
+            // 过滤掉平台为 '.' 的项，并匹配 build 前缀
+            .filter((item) => item.platform !== '.' && item.build.startsWith(q))
+            .slice(0, 20)
+        sendJson(res, 200, okPayload('searchBuild', matches))
+    } catch {
+        errServer(res)
+    }
+}
+
 // 路由处理函数
 const serveData = (file, type) => async (res, _params, reqUrl) => {
     const filePath =
@@ -161,6 +189,7 @@ const detailPath = (u) =>
         u.searchParams.get('platform'),
         u.searchParams.get('build') + '.json'
     )
+
 const routes = new Map([
     [
         '/',
@@ -183,6 +212,7 @@ const routes = new Map([
             handler: serveData(detailPath, 'detail'),
         },
     ],
+    ['/search', { params: ['build'], handler: serveSearch }],
 ])
 
 // main server
