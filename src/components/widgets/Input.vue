@@ -90,7 +90,7 @@ const contentClasses = computed(() => [
     position: relative;
     box-sizing: border-box;
     vertical-align: middle;
-    min-height: 32px;
+    min-height: 34px;
     font-size: 14px;
     line-height: 1.43;
     border: 1px solid @wu-color-border;
