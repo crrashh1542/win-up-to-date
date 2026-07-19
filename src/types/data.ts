@@ -88,6 +88,7 @@ export interface DetailBelongsTo {
 export interface DetailUpdateId {
     arch: string
     id: string
+    available?: boolean
 }
 
 export interface DetailDownload {

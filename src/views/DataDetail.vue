@@ -13,6 +13,9 @@ import Search24RegularIcon from '@iconify-vue/fluent/search-24-regular'
 import Tag24RegularIcon from '@iconify-vue/fluent/tag-24-regular'
 import MegaphoneLoud24RegularIcon from '@iconify-vue/fluent/megaphone-loud-24-regular'
 
+import Open16RegularIcon from '@iconify-vue/fluent/open-16-regular'
+
+import Button from '@/components/widgets/Button.vue'
 import Card from '@/components/widgets/Card.vue'
 import Code from '@/components/widgets/Code.vue'
 import NProgress from '@/utils/progress'
@@ -21,14 +24,14 @@ import initDetailData from '@/utils/initDetailData'
 import type { DetailContent, NavData } from '@/types'
 
 defineOptions({
-    name: 'DataDetail'
+    name: 'DataDetail',
 })
 
 const pageData = reactive({
     data: { build: {} } as DetailContent,
     isLoading: true,
     isError: false,
-    nav: null as NavData | null
+    nav: null as NavData | null,
 })
 
 const route = useRoute()
@@ -40,7 +43,9 @@ const fetchData = async (platform: string, build: string) => {
     NProgress.start()
     try {
         const { data: resp } = await request({
-            url: '/detail', method: 'get', params: { platform, build }
+            url: '/detail',
+            method: 'get',
+            params: { platform, build },
         })
         initDetailData(resp, pageData)
     } catch (error: any) {
@@ -56,7 +61,9 @@ const fetchData = async (platform: string, build: string) => {
 
 watch(
     () => [route.params.platform, route.params.build] as string[],
-    ([platform, build]) => { if (platform && build) fetchData(platform, build) },
+    ([platform, build]) => {
+        if (platform && build) fetchData(platform, build)
+    },
     { immediate: true }
 )
 </script>
@@ -90,7 +97,9 @@ watch(
                 <p>
                     <DeveloperBoard24RegularIcon width="22" height="22" />
                     系统架构 /
-                    <span v-for="i in pageData.data.build.arch" :key="i">{{ i }}&nbsp;&nbsp;</span>
+                    <span v-for="i in pageData.data.build.arch" :key="i"
+                        >{{ i }}&nbsp;&nbsp;</span
+                    >
                 </p>
                 <p>
                     <Search24RegularIcon width="22" height="22" />
@@ -99,7 +108,9 @@ watch(
                 <p>
                     <Code24RegularIcon width="22" height="22" />
                     构建归属 /
-                    <router-link :to="'/category/' + pageData.data.belongsTo.path">
+                    <router-link
+                        :to="'/category/' + pageData.data.belongsTo.path"
+                    >
                         {{ pageData.data.belongsTo.name }}
                     </router-link>
                 </p>
@@ -123,12 +134,14 @@ watch(
                 <p v-if="pageData.data.release.url !== undefined">
                     官方发版日志：
                     <a target="_blank" :href="pageData.data.release.url">
-                        {{ pageData.data.release.announcePlace }}</a>
+                        {{ pageData.data.release.announcePlace }}</a
+                    >
                 </p>
                 <p v-if="pageData.data.featureIds !== undefined">
                     ViveID 列表：
                     <a target="_blank" :href="pageData.data.featureIds.url">
-                        {{ pageData.data.featureIds.fileName }}</a>
+                        {{ pageData.data.featureIds.fileName }}</a
+                    >
                 </p>
             </div>
             <div class="placeholder" v-else>
@@ -143,9 +156,38 @@ watch(
                 从 UUP 获取构建
             </div>
 
-            <div v-if="pageData.data.updateId !== undefined && pageData.data.updateId.length > 0">
-                <p class="u-para-code" v-for="id in pageData.data.updateId" :key="id.arch">
-                    {{ id.arch }}：<Code :value="id.id" is-copiable />
+            <div
+                v-if="
+                    pageData.data.updateId !== undefined &&
+                    pageData.data.updateId.length > 0
+                "
+            >
+                <p
+                    class="u-para-code"
+                    v-for="id in pageData.data.updateId"
+                    :key="id.arch"
+                >
+                    {{ id.arch }}：
+                    <Code
+                        v-if="id.available === false"
+                        :value="id.id"
+                        is-copiable
+                    />
+                    <template v-else>
+                        <Code :value="id.id" />
+                        <a
+                            :href="`https://uupdump.net/selectlang.php?id=${id.id}`"
+                            target="_blank"
+                        >
+                            <Button>
+                                <Open16RegularIcon
+                                    width="1.25em"
+                                    height="1.25em"
+                                />
+                                打开
+                            </Button>
+                        </a>
+                    </template>
                 </p>
             </div>
             <div class="placeholder" v-else>
@@ -160,19 +202,41 @@ watch(
                 下载 ISO / 更新包
             </div>
 
-            <div v-if="pageData.data.download !== undefined && Object.keys(pageData.data.download).length > 0">
+            <div
+                v-if="
+                    pageData.data.download !== undefined &&
+                    Object.keys(pageData.data.download).length > 0
+                "
+            >
                 <p>文件名称：{{ pageData.data.download.name }}</p>
                 <p>系统架构：{{ pageData.data.download.arch }}</p>
-                <p v-if="pageData.data.download.size">文件大小：{{ pageData.data.download.size }}</p>
+                <p v-if="pageData.data.download.size">
+                    文件大小：{{ pageData.data.download.size }}
+                </p>
                 <p>
                     下载地址：
-                    <span v-for="(l, index) in pageData.data.download.link" :key="index">
+                    <span
+                        v-for="(l, index) in pageData.data.download.link"
+                        :key="index"
+                    >
                         <a target="_blank" :href="l.url">{{ l.source }}</a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
                 </p>
-                <p class="u-para-code">MD5：<Code :value="pageData.data.download.md5" is-break-word is-copiable /></p>
-                <p class="u-para-code">SHA-256：<Code :value="pageData.data.download.sha256" is-break-word is-copiable /></p>
+                <p class="u-para-code">
+                    MD5：<Code
+                        :value="pageData.data.download.md5"
+                        is-break-word
+                        is-copiable
+                    />
+                </p>
+                <p class="u-para-code">
+                    SHA-256：<Code
+                        :value="pageData.data.download.sha256"
+                        is-break-word
+                        is-copiable
+                    />
+                </p>
             </div>
             <div class="placeholder" v-else>
                 <p>暂无可供下载的内容</p>
@@ -193,6 +257,7 @@ watch(
         gap: 6px;
     }
 }
+
 .placeholder {
     width: 100%;
     height: 8rem;
@@ -203,17 +268,18 @@ watch(
 
 // 响应式 ---- 移动端
 @media screen and (max-width: 700px) {
-   .wrapper { // v代表view
-      --v-detail-overview: block;
-      --v-detail-overview-width: 100%;
-   }
+    .wrapper {
+        // v代表view
+        --v-detail-overview: block;
+        --v-detail-overview-width: 100%;
+    }
 }
 
 // 响应式 ---- PC
 @media screen and (min-width: 700px) {
-   .wrapper {
-      --v-detail-overview: flex;
-      --v-detail-overview-width: 50%;
-   }
+    .wrapper {
+        --v-detail-overview: flex;
+        --v-detail-overview-width: 50%;
+    }
 }
 </style>

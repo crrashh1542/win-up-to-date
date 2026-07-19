@@ -14,33 +14,41 @@ body {
         color: #000;
         text-decoration: none;
     }
-    a:hover, a:active, a:visited {
+    a:hover,
+    a:active,
+    a:visited {
         color: #000;
     }
-    p a, li a {
+    p a,
+    li a {
         position: relative;
         margin-right: 1.2em;
     }
-    p a::after, li a::after {
+    p a::after,
+    li a::after {
         // 图标取自 fluent:open-xx-filled，大小为 15x15，颜色为 #999
         content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 24 24'%3E%3Cpath fill='%23999999' d='M6.25 5C5.56 5 5 5.56 5 6.25v11.5c0 .69.56 1.25 1.25 1.25h11.5c.69 0 1.25-.56 1.25-1.25V14a1 1 0 1 1 2 0v3.75A3.25 3.25 0 0 1 17.75 21H6.25A3.25 3.25 0 0 1 3 17.75V6.25A3.25 3.25 0 0 1 6.25 3H10a1 1 0 1 1 0 2zM14 5a1 1 0 1 1 0-2h6a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0V6.414l-4.293 4.293a1 1 0 0 1-1.414-1.414L17.586 5z'/%3E%3C/svg%3E");
         position: absolute;
-        top: .07em;
+        top: 0.07em;
         right: -1.1em;
     }
-    p a:hover, li a:hover {
+    p a:hover,
+    li a:hover {
         color: @wu-color-blue;
     }
-    p a:hover::after, li a:hover::after {
+    p a:hover::after,
+    li a:hover::after {
         // 图标取自 fluent:open-xx-filed，大小为 15x15，颜色为 #3078e2
         content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 24 24'%3E%3Cpath fill='%233078e2' d='M6.25 5C5.56 5 5 5.56 5 6.25v11.5c0 .69.56 1.25 1.25 1.25h11.5c.69 0 1.25-.56 1.25-1.25V14a1 1 0 1 1 2 0v3.75A3.25 3.25 0 0 1 17.75 21H6.25A3.25 3.25 0 0 1 3 17.75V6.25A3.25 3.25 0 0 1 6.25 3H10a1 1 0 1 1 0 2zM14 5a1 1 0 1 1 0-2h6a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0V6.414l-4.293 4.293a1 1 0 0 1-1.414-1.414L17.586 5z'/%3E%3C/svg%3E");
     }
 
     // 处理排版
-    p { line-height: 1.5; }
+    p {
+        line-height: 1.5;
+    }
     hr {
         margin: 0;
-        border: .5px solid @wu-color-border;
+        border: 0.5px solid @wu-color-border;
         box-shadow: 0;
     }
 
@@ -49,14 +57,13 @@ body {
         background: @wu-color-blue;
         height: 2px;
     }
-
 }
 
 // 常用类，类名以“u-”开头
 .u-banner {
     font-size: 32px;
     font-weight: 700;
-    margin-bottom: .6em;
+    margin-bottom: 0.6em;
 }
 .u-subbanner {
     font-size: 20px;
@@ -67,6 +74,15 @@ body {
 .u-para-code {
     display: flex;
     align-items: center;
+    a::after {
+        content: none;
+    }
+    a:hover::after {
+        content: none;
+    }
+    button {
+        margin-left: 0.4em;
+    }
 }
 .u-box-xs {
     width: 16px;
@@ -100,7 +116,7 @@ body {
     flex-grow: 1;
 }
 .u-hoverable {
-    transition: background-color .3s;
+    transition: background-color 0.3s;
     &:hover {
         background-color: @wu-color-base;
     }
