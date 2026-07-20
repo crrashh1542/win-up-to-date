@@ -223,14 +223,14 @@ watch(
                         &nbsp;&nbsp;&nbsp;
                     </span>
                 </p>
-                <p class="u-para-code">
+                <p class="u-para-code" v-if="pageData.data.download.md5">
                     MD5：<Code
                         :value="pageData.data.download.md5"
                         is-break-word
                         is-copiable
                     />
                 </p>
-                <p class="u-para-code">
+                <p class="u-para-code" v-if="pageData.data.download.sha256">
                     SHA-256：<Code
                         :value="pageData.data.download.sha256"
                         is-break-word
