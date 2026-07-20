@@ -1,18 +1,26 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
-import request from '@/utils/request'
-import NProgress from '@/utils/progress'
+import { computed, reactive, ref } from 'vue'
 
-// 引入组件
 import Badge from '@/components/widgets/Badge.vue'
 import Card from '@/components/widgets/Card.vue'
+import Tablist from '@/components/widgets/Tablist.vue'
+import Tab from '@/components/widgets/Tab.vue'
 
 import icons from '@/assets/icons'
+import request from '@/utils/request'
+import NProgress from '@/utils/progress'
 import type { MainCategory } from '@/types/data'
 
 const pageData = reactive({
     data: [] as MainCategory[],
     isLoading: true,
+})
+
+const selectedCategory = ref<string>()
+
+// 当前选中的分类数据
+const currentCategory = computed(() => {
+    return pageData.data.find((cat) => cat.id === selectedCategory.value)
 })
 
 // 请求数据
@@ -25,6 +33,10 @@ const fetchData = async () => {
             method: 'get',
         })
         pageData.data = resp.content
+        // 默认选中第一个分类
+        if (resp.content.length > 0 && !selectedCategory.value) {
+            selectedCategory.value = resp.content[0].id
+        }
     } catch (error) {
         console.error(error)
     } finally {
@@ -39,16 +51,21 @@ fetchData()
     <div class="u-banner">平台</div>
 
     <div class="category" v-if="!pageData.isLoading">
-        <template v-for="cat in pageData.data" :key="cat.id">
-            <!-- 小标题 -->
-            <div class="u-catalog">
-                <img :src="icons[cat.icon]" class="u-box-s u-icon" />&nbsp;
+        <!-- Tab 切换 -->
+        <Tablist v-model="selectedCategory">
+            <Tab v-for="cat in pageData.data" :value="cat.id" :key="cat.id">
+                <template #icon>
+                    <img :src="icons[cat.icon]" class="icon" />
+                </template>
                 {{ cat.category }}
-            </div>
+            </Tab>
+        </Tablist>
 
+        <!-- 当前分类内容 -->
+        <template v-if="currentCategory">
             <!-- 内容卡片 -->
             <Card
-                v-for="platform in cat.platforms"
+                v-for="platform in currentCategory.platforms"
                 :key="platform.name"
                 :shadow="true"
             >
@@ -74,10 +91,10 @@ fetchData()
                         "
                         :class="[
                             'container',
+                            item.continued ? '' : 'uncontinued',
                             item.category !== undefined
                                 ? 'u-hoverable'
                                 : 'disabled',
-                            item.continued ? '' : 'uncontinued',
                         ]"
                     >
                         <div class="info">
@@ -97,8 +114,9 @@ fetchData()
                                 v-for="t in item.tag"
                                 :key="t.name"
                                 :color="t.color"
-                                >{{ t.name }}</Badge
                             >
+                                {{ t.name }}
+                            </Badge>
                         </div>
                     </component>
                 </template>
@@ -112,6 +130,18 @@ fetchData()
     display: flex;
     flex-direction: column;
     gap: 6px;
+
+    .tablist {
+        margin-bottom: 1em;
+        justify-content: space-evenly;
+        .tab-button {
+            column-gap: 0.5em;
+        }
+        .icon {
+            width: 0.875em;
+            height: 0.875em;
+        }
+    }
 
     // 由于会出现多个 item 的情况，所以移除 card 上的 padding，放到 container 上
     // 否则 hr 宽度无法占满整个 card，且部分地方点击不到

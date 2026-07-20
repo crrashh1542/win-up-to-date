@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { version } from '../../package.json'
 
 import Info24RegularIcon from '@iconify-vue/fluent/info-24-regular'
@@ -11,12 +11,24 @@ import Tag24RegularIcon from '@iconify-vue/fluent/tag-24-regular'
 import Foo from './Footer.vue'
 import Popup from './AboutPopup.vue'
 import Search from './Search.vue'
+import Tablist from './widgets/Tablist.vue'
+import Tab from './widgets/Tab.vue'
 
 const router = useRouter()
+const route = useRoute()
 defineOptions({ name: 'MainWrapper' })
 
 const appVersion = ref(version)
 const isPopupVisible = ref(false)
+
+// 导航选中状态，与当前路由同步
+const selectedNav = ref(route.path)
+watch(
+    () => route.path,
+    (path) => {
+        selectedNav.value = path
+    }
+)
 
 const openAbout = () => {
     const mobileRegex =
@@ -48,20 +60,26 @@ const openAbout = () => {
     </div>
 
     <!-- Part 2 ---- 左侧（移动端底部）导航栏 -->
-    <div class="navbar">
-        <router-link to="/" class="section">
-            <Tag24RegularIcon />
-            <span class="name">版本</span>
-        </router-link>
-        <router-link to="/category" class="section">
-            <Library24RegularIcon />
-            <span class="name">平台</span>
-        </router-link>
-        <router-link to="/settings" class="section">
-            <Settings24RegularIcon />
-            <span class="name">设置</span>
-        </router-link>
-    </div>
+    <Tablist v-model="selectedNav" vertical>
+        <Tab value="/" to="/">
+            <template #icon>
+                <Tag24RegularIcon />
+            </template>
+            版本
+        </Tab>
+        <Tab value="/category" to="/category">
+            <template #icon>
+                <Library24RegularIcon />
+            </template>
+            平台
+        </Tab>
+        <Tab value="/settings" to="/settings">
+            <template #icon>
+                <Settings24RegularIcon />
+            </template>
+            设置
+        </Tab>
+    </Tablist>
 
     <!-- Part 3 ---- 主体部分 -->
     <main>
@@ -93,10 +111,12 @@ const openAbout = () => {
 
     .title {
         flex: 0 0 auto;
+
         .name {
             color: #222;
             font-weight: 600;
         }
+
         .version {
             color: #999;
             font-size: 14px;
@@ -106,6 +126,7 @@ const openAbout = () => {
     .about {
         flex: 0 0 auto;
         cursor: pointer;
+
         svg {
             width: 1.2em;
             height: 1.2em;
@@ -120,7 +141,8 @@ const openAbout = () => {
     }
 }
 
-.navbar {
+// 左侧导航栏
+.tablist {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -128,63 +150,64 @@ const openAbout = () => {
     position: absolute;
     height: calc(100% - @wu-layout-topbar-height);
     width: @wu-layout-navbar-width;
-    padding: @wu-layout-navbar-space 0;
+    padding: @wu-layout-navbar-space;
     text-align: center;
     left: 0;
-    // bottom: @wu-layout-navbar-space;
     bottom: 0;
     user-select: none;
+    flex-direction: column;
+    gap: @wu-layout-navbar-space;
+}
 
-    .section {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 0.8em;
-        width: (@wu-layout-navbar-width - @wu-layout-navbar-space * 2);
-        padding: @wu-layout-navbar-padding-x @wu-layout-navbar-padding-y;
-        border-radius: 6px;
+.tab-button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.8em;
+    width: (@wu-layout-navbar-width - @wu-layout-navbar-space * 2);
+    padding: @wu-layout-navbar-padding-x @wu-layout-navbar-padding-y;
+    border-radius: 6px;
+    font-size: 15px;
+
+    .tab-icon {
+        width: 1.4em;
+        height: 1.4em;
+        font-size: 1em;
+
         svg {
             width: 1.4em;
             height: 1.4em;
         }
-        .name {
-            color: @wu-color-text-accent;
-            font-size: 15px;
-        }
     }
 
-    // 被选中的 section
-    .section.path-active {
+    .tab-content {
+        padding: 0;
+    }
+
+    // 被选中的 tab
+    &.selected {
         position: relative;
         background-color: @wu-color-main;
         padding: (@wu-layout-navbar-padding-x - 1px)
             (@wu-layout-navbar-padding-y - 1px); // 由于被选中后会有个 1px 的 border，所以减去 1px
         border: 1px solid @wu-color-border;
         color: @wu-color-blue;
-        .name {
+        .tab-content {
             color: @wu-color-blue;
         }
     }
-    .section.path-active::before {
-        content: '';
-        position: absolute;
-        left: -2px;
-        top: 25%;
-        height: 50%;
-        width: 4px;
-        background-color: @wu-color-blue;
-        border-radius: 2px;
-    }
-
     // hover
-    .section:not(.path-active):hover {
+    &:hover {
+        background-color: @wu-color-main !important; // 去除 tablist 默认 hover 背景色
+    }
+    &:not(.selected):hover {
         background-color: darken(@wu-color-base, 3%);
     }
+}
 
-    // 使最后一个 child 置底
-    .section:last-child {
-        margin-top: auto;
-    }
+// 使最后一个 child 置底
+.tablist > :last-child {
+    margin-top: auto;
 }
 
 main {
@@ -206,6 +229,7 @@ main {
     scroll-behavior: smooth;
     overflow-y: scroll;
     flex-direction: column;
+
     .container {
         flex: 1 0 auto;
         padding: 24px var(--container-padding) 0;

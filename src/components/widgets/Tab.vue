@@ -12,6 +12,8 @@ import {
     useSlots,
     watch,
 } from 'vue'
+import type { RouteLocationRaw } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 export type TabValue = unknown
 
@@ -32,6 +34,8 @@ interface TabListContext {
 interface Props {
     disabled?: boolean
     value: TabValue
+    /** 提供 to 时渲染为 router-link 用于导航 */
+    to?: RouteLocationRaw
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -39,9 +43,11 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const slots = useSlots()
-const tabRef = ref<HTMLButtonElement | null>(null)
+const tabRef = ref<HTMLElement | null>(null)
 
 const context = inject<TabListContext>('tablist')!
+
+const router = useRouter()
 
 const selected = computed(() => context.selectedValue.value === props.value)
 const isDisabled = computed(() => context.disabled || props.disabled)
@@ -122,12 +128,18 @@ const classes = computed(() => [
 function handleClick() {
     if (!isDisabled.value) {
         context.selectTab(props.value)
+        if (props.to) {
+            router.push(props.to)
+        }
     }
 }
 
 function handleFocus() {
     if (context.selectTabOnFocus && !isDisabled.value) {
         context.selectTab(props.value)
+        if (props.to) {
+            router.push(props.to)
+        }
     }
 }
 
@@ -196,6 +208,7 @@ watch(
     position: relative;
     overflow: visible;
     text-transform: none;
+    text-decoration: none;
     background-color: transparent;
     justify-content: center;
     column-gap: 4px;
@@ -203,6 +216,14 @@ watch(
     font-size: 14px;
     font-weight: 400;
     color: @wu-color-text-accent;
+
+    &:enabled:hover {
+        background-color: @wu-color-base;
+    }
+
+    &:enabled:active {
+        background-color: darken(@wu-color-base, 5%);
+    }
 
     &:focus-visible {
         outline: 2px solid @wu-color-blue;
@@ -269,11 +290,10 @@ watch(
 }
 
 .vertical .tab-indicator {
-    bottom: 8px;
-    left: 0;
-    top: 8px;
-    width: 3px;
-    height: auto;
+    left: -2px;
+    top: 25%;
+    width: 4px;
+    height: 50%;
     transform-origin: top;
 }
 
