@@ -105,7 +105,7 @@ const openAbout = () => {
     left: 0;
     width: 100%;
     height: @wu-layout-topbar-height;
-    padding: 0 (@wu-layout-navbar-padding-y + @wu-layout-navbar-space);
+    padding: 0 (@wu-layout-sidenav-padding-y + @wu-layout-sidenav-space);
     font-size: 18px;
     user-select: none;
 
@@ -146,17 +146,17 @@ const openAbout = () => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: @wu-layout-navbar-space;
+    gap: @wu-layout-sidenav-space;
     position: absolute;
     height: calc(100% - @wu-layout-topbar-height);
-    width: @wu-layout-navbar-width;
-    padding: @wu-layout-navbar-space;
+    width: @wu-layout-sidenav-width;
+    padding: @wu-layout-sidenav-space;
     text-align: center;
     left: 0;
     bottom: 0;
     user-select: none;
     flex-direction: column;
-    gap: @wu-layout-navbar-space;
+    gap: @wu-layout-sidenav-space;
 }
 
 .tab-button {
@@ -164,8 +164,8 @@ const openAbout = () => {
     align-items: center;
     justify-content: flex-start;
     gap: 0.8em;
-    width: (@wu-layout-navbar-width - @wu-layout-navbar-space * 2);
-    padding: @wu-layout-navbar-padding-x @wu-layout-navbar-padding-y;
+    width: (@wu-layout-sidenav-width - @wu-layout-sidenav-space * 2);
+    padding: @wu-layout-sidenav-padding-x @wu-layout-sidenav-padding-y;
     border-radius: 6px;
     font-size: 15px;
 
@@ -188,8 +188,8 @@ const openAbout = () => {
     &.selected {
         position: relative;
         background-color: @wu-color-main;
-        padding: (@wu-layout-navbar-padding-x - 1px)
-            (@wu-layout-navbar-padding-y - 1px); // 由于被选中后会有个 1px 的 border，所以减去 1px
+        padding: (@wu-layout-sidenav-padding-x - 1px)
+            (@wu-layout-sidenav-padding-y - 1px); // 由于被选中后会有个 1px 的 border，所以减去 1px
         border: 1px solid @wu-color-border;
         color: @wu-color-blue;
         .tab-content {
@@ -217,9 +217,9 @@ main {
     position: absolute;
     right: 0;
     bottom: 0;
-    width: calc(100% - @wu-layout-navbar-width);
+    width: calc(100% - @wu-layout-sidenav-width);
     height: calc(100% - @wu-layout-topbar-height);
-    margin: @wu-layout-topbar-height 0 0 @wu-layout-navbar-width;
+    margin: @wu-layout-topbar-height 0 0 @wu-layout-sidenav-width;
     border-left: 1px solid @wu-color-border;
     border-top: 1px solid @wu-color-border;
     background-color: @wu-color-main;

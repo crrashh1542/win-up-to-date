@@ -110,7 +110,7 @@ useBuildsStore().fetchBuilds()
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            font-size: 15px;
+            font-size: 14px;
             color: @wu-color-text-accent;
             line-height: 1.6;
             gap: 4px;
