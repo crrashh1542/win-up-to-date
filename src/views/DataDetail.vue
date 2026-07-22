@@ -28,7 +28,17 @@ defineOptions({
 })
 
 const pageData = reactive({
-    data: { build: {} } as DetailContent,
+    data: {
+        build: {
+            number: '',
+            branch: '',
+            compileTime: '',
+            arch: [],
+            counterpart: '',
+        },
+        nav: {},
+        belongsTo: { path: '', name: '' },
+    } as DetailContent,
     isLoading: true,
     isError: false,
     nav: null as NavData | null,
