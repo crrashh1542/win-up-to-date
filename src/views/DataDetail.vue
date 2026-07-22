@@ -106,10 +106,7 @@ watch(
             <div>
                 <p>
                     <DeveloperBoard24RegularIcon width="22" height="22" />
-                    系统架构 /
-                    <span v-for="i in pageData.data.build.arch" :key="i"
-                        >{{ i }}&nbsp;&nbsp;</span
-                    >
+                    系统架构 / {{ pageData.data.build.arch.join(', ') }}
                 </p>
                 <p>
                     <Search24RegularIcon width="22" height="22" />
