@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { version } from '../../package.json'
@@ -18,11 +18,13 @@ const appVersion = ref(version)
 const isPopupVisible = ref(false)
 
 const openAbout = () => {
-    const ua = navigator.userAgent || window.opera
-    const mobileRegex = /android|iphone|ipad|ipod|blackberry|mobile|phone|webos|kindle|tablet/i
-    if(mobileRegex.test(ua.toLowerCase())) { // 如果匹配移动端规则，就前往单独的关于页面
+    const mobileRegex =
+        /android|iphone|ipad|ipod|blackberry|mobile|phone|webos|kindle|tablet/i
+    if (mobileRegex.test(navigator.userAgent.toLowerCase())) {
+        // 如果匹配移动端规则，就前往单独的关于页面
         router.push('/about')
-    } else { // 否则（即 PC 端则通过弹窗展示关于页面）
+    } else {
+        // 否则（即 PC 端则通过弹窗展示关于页面）
         isPopupVisible.value = true
     }
 }
@@ -32,7 +34,8 @@ const openAbout = () => {
     <!-- Part 1 ---- 顶部导航栏 -->
     <div class="topbar">
         <div class="title">
-            <router-link to="/" class="name">Windows Up-to-Date</router-link>&nbsp;
+            <router-link to="/" class="name">Windows Up-to-Date</router-link
+            >&nbsp;
             <span class="version">v{{ appVersion }}</span>
         </div>
         <div class="u-grow"></div>
@@ -41,46 +44,36 @@ const openAbout = () => {
         </div>
     </div>
 
+    <!-- Part 2 ---- 左侧（移动端底部）导航栏 -->
+    <div class="navbar">
+        <router-link to="/" class="section">
+            <Tag24RegularIcon />
+            <div class="name">版本</div>
+        </router-link>
+        <router-link to="/category" class="section">
+            <Library24RegularIcon />
+            <div class="name">平台</div>
+        </router-link>
+        <router-link to="/settings" class="section">
+            <Settings24RegularIcon />
+            <div class="name">设置</div>
+        </router-link>
+    </div>
 
-        <!-- Part 2 ---- 左侧（移动端底部）导航栏 -->
-        <div class="navbar">
-            <router-link to="/" class="section">
-                <Tag24RegularIcon />
-                <div class="name">版本</div>
-            </router-link>
-            <router-link to="/category" class="section">
-                <Library24RegularIcon />
-                <div class="name">分类</div>
-            </router-link>
-            <router-link to="/settings" class="section">
-                <Settings24RegularIcon />
-                <div class="name">设置</div>
-            </router-link>
+    <!-- Part 3 ---- 主体部分 -->
+    <main>
+        <!-- 此处 container 撑满 main 内的剩余空间，内容不足时 Footer 被推到页面底部 -->
+        <div class="container">
+            <slot />
         </div>
+        <Foo />
+    </main>
 
-        <!-- Part 3 ---- 主体部分 -->
-        <main>
-            <!--
-                此处 container 用于将内容包装在一个 div 内，保证 flex 中只有一个 div 和 footer，
-                以达到 footer 始终置底的效果。此处套用两层 div，是为了让内容能够获得完整高度；
-                若只套用一层 div，即使设置了 min-height，内容高度也只有 100% - 36px（见 L161）
-            -->
-            <div class="container-outer">
-                <div class="container-inner">
-                    <slot />
-                </div>
-                <Foo />
-            </div>
-        </main>
-
-        <!-- Part 4 ---- 右上角可触发的”关于”弹窗 -->
-        <Popup v-model:visibility="isPopupVisible" />
-
+    <!-- Part 4 ---- 右上角可触发的”关于”弹窗 -->
+    <Popup v-model:visibility="isPopupVisible" />
 </template>
 
-<style lang="less">
-@import url('@/styles/global.less');
-
+<style lang="less" scoped>
 .topbar {
     display: flex;
     align-items: center;
@@ -163,6 +156,8 @@ const openAbout = () => {
 }
 
 main {
+    --container-padding: 42px;
+
     display: flex;
     position: absolute;
     right: 0;
@@ -178,17 +173,16 @@ main {
     box-shadow: 0px 0px 8px #00000011;
     scroll-behavior: smooth;
     overflow-y: scroll;
-    // 设置 flex 是为了能让 footer 始终置于页面底部
     flex-direction: column;
-    .container-outer {
-        min-height: calc(100% - 54px);
-        padding-top: 24px;
-        .container-inner {
-            padding: 0 36px;
-            width: 100%;
-            min-height: calc(100% - 36px);
-        }
+    .container {
+        flex: 1 0 auto;
+        padding: 24px var(--container-padding) 0;
     }
 }
 
+@media screen and (min-width: 1400px) {
+    main {
+        --container-padding: 9%;
+    }
+}
 </style>

@@ -9,38 +9,24 @@ import SquareMultiple24RegularIcon from '@iconify-vue/fluent/square-multiple-24-
 import Tag24RegularIcon from '@iconify-vue/fluent/tag-24-regular'
 
 import Card from '@/components/widgets/Card.vue'
-import LoadAnim from '@/components/widgets/LoadAnim.vue'
-import TopNav from '@/components/widgets/TopNav.vue'
+import NProgress from '@/utils/progress'
+import TopNav from '@/components/TopNav.vue'
 import initDetailData from '@/utils/initDetailData'
+import type { CategoryContent, NavData } from '@/types'
 
 defineOptions({
     name: 'DataCategoryList'
 })
 
-interface CategoryData {
-    name: string
-    codename: string
-    semester: string
-    belonging: string
-    range: [string, string | null]
-    list: [string, string][]
-}
-
-interface NavData {
-    type: 'detail' | 'categoryList'
-    prev?: { route: string; build: string; platform: string }
-    next?: { route: string; build: string; platform: string }
-}
-
 const pageData = reactive({
-    data: {} as CategoryData,
+    data: {} as CategoryContent,
     isLoading: true,
     versionRange: null as string | null,
     nav: null as NavData | null
 })
 
-const router = useRouter()
 const route = useRoute()
+const router = useRouter()
 
 // utils
 const formatVersionRange = (range: [string, string | null]) => {
@@ -52,20 +38,20 @@ const getPath = (build: string) => {
 // 请求数据
 const fetchData = async (platform: string) => {
     pageData.isLoading = true
+    NProgress.start()
     try {
         const { data: resp } = await request({
             url: '/category', method: 'get', params: { platform }
         })
         initDetailData(resp, pageData)
         pageData.versionRange = formatVersionRange(resp.content.range)
-    } catch (err: any) {
-        if (err.response?.status === 404) {
+    } catch (error: any) {
+        if (error.response?.status === 404) {
             router.replace('/404')
-        } else {
-            console.error('加载数据失败:', err)
         }
     } finally {
         pageData.isLoading = false
+        NProgress.done()
     }
 }
 
@@ -81,9 +67,6 @@ watch(
     <!-- 横幅 -->
     <div class="u-banner">版本列表</div>
     <div class="u-subbanner">{{ pageData.data.name }}</div>
-
-    <!-- 加载动画 -->
-    <LoadAnim v-if="pageData.isLoading" mode="filled" />
 
     <div class="wrapper" v-if="!pageData.isLoading">
         <!-- 快速导航 -->
@@ -128,9 +111,7 @@ watch(
     </div>
 </template>
 
-<style lang="less" scoped>
-@import url('@/styles/global.less');
-.overview {
+<style lang="less" scoped>.overview {
     display: var(--v-detail-overview);
     .line-left {
         width: var(--v-detail-overview-width);

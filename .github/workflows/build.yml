@@ -17,7 +17,7 @@ jobs:
         steps:
             - name: 🧐 Checkout
               id: checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v7
               with:
                   fetch-depth: '0'
 
@@ -26,16 +26,14 @@ jobs:
               run: |
                   # 此处通过 jq 从 package.json 获取版本，否则在 depth 
                   # 为 1 时通过 git tag 所读取的版本不准确
-                  sudo apt-get install jq
                   VERSION=$(jq -r '.version' ./package.json)
-
                   COMMIT_COUNT=$(git rev-list --count HEAD)
                   BUILD_DATE=$(date "+%y%m%d")
                   HEAD_SHA=$(git rev-parse --short HEAD)
                   echo "DIST_SUFFIX=v${VERSION}-${COMMIT_COUNT}-${BUILD_DATE}-${HEAD_SHA}" >> $GITHUB_OUTPUT
 
     build:
-        name: Build Production Page
+        name: Build Production App
         needs: setup
         env:
             DIST_NAME: dist-${{ needs.setup.outputs.DIST_SUFFIX }}
@@ -43,26 +41,23 @@ jobs:
         steps:
             - name: 🧐 Checkout
               id: checkout
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: '1'
+              uses: actions/checkout@v7
 
             - name: 🛠️ Setup environment
               id: setup
-              uses: pnpm/action-setup@v3
+              uses: pnpm/action-setup@v6
               with:
-                  version: 8
+                  version: 11
+                  run_install: true
 
             - name: ⚙️ Build production pages
               id: build
               run: |
-                  pnpm install
-                  pnpm add @vue/cli
                   pnpm build
 
             - name: 🌐 Upload the build
               id: upload
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v7
               with:
                   name: ${{ env.DIST_NAME }}
                   path: dist

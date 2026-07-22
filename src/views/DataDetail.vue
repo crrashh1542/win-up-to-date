@@ -15,53 +15,42 @@ import MegaphoneLoud24RegularIcon from '@iconify-vue/fluent/megaphone-loud-24-re
 
 import Card from '@/components/widgets/Card.vue'
 import Code from '@/components/widgets/Code.vue'
-import LoadAnim from '@/components/widgets/LoadAnim.vue'
-import TopNav from '@/components/widgets/TopNav.vue'
+import NProgress from '@/utils/progress'
+import TopNav from '@/components/TopNav.vue'
 import initDetailData from '@/utils/initDetailData'
+import type { DetailContent, NavData } from '@/types'
 
 defineOptions({
     name: 'DataDetail'
 })
 
-interface DetailData {
-    build: {
-        number: string
-        branch: string
-        compileTime: string
-        arch: string[]
-        counterpart: string
-    }
-    belongsTo: { name: string; path: string }
-    release?: { channel: string; time: string; url: string; announcePlace: string }
-    featureIds?: { url: string; fileName: string }
-    updateId?: { arch: string; id: string }[]
-    download?: { name: string; arch: string; size?: string; link: { url: string; source: string }[]; md5: string; sha256: string }
-}
-
 const pageData = reactive({
-    data: { build: {} } as DetailData,
+    data: { build: {} } as DetailContent,
     isLoading: true,
-    nav: null as any
+    isError: false,
+    nav: null as NavData | null
 })
 
-const router = useRouter()
 const route = useRoute()
+const router = useRouter()
 
 const fetchData = async (platform: string, build: string) => {
     pageData.isLoading = true
+    pageData.isError = false
+    NProgress.start()
     try {
         const { data: resp } = await request({
             url: '/detail', method: 'get', params: { platform, build }
         })
         initDetailData(resp, pageData)
-    } catch (err: any) {
-        if (err.response?.status === 404) {
+    } catch (error: any) {
+        if (error.response?.status === 404) {
             router.replace('/404')
-        } else {
-            console.error('加载数据失败:', err)
         }
+        pageData.isError = true
     } finally {
         pageData.isLoading = false
+        NProgress.done()
     }
 }
 
@@ -70,10 +59,6 @@ watch(
     ([platform, build]) => { if (platform && build) fetchData(platform, build) },
     { immediate: true }
 )
-
-const getBelongingRoute = (value: string) => {
-    return '/category/' + value
-}
 </script>
 
 <template>
@@ -81,10 +66,7 @@ const getBelongingRoute = (value: string) => {
     <div class="u-banner">版本详情</div>
     <div class="u-subbanner">{{ pageData.data.build.number }}</div>
 
-    <!-- 加载动画 -->
-    <LoadAnim v-if="pageData.isLoading" mode="filled" />
-
-    <div class="wrapper" v-if="!pageData.isLoading">
+    <div class="wrapper" v-if="!pageData.isLoading && !pageData.isError">
         <!-- 快速导航 -->
         <TopNav :data="pageData.nav" />
 
@@ -117,7 +99,7 @@ const getBelongingRoute = (value: string) => {
                 <p>
                     <Code24RegularIcon width="22" height="22" />
                     构建归属 /
-                    <router-link :to="getBelongingRoute(pageData.data.belongsTo.path)">
+                    <router-link :to="'/category/' + pageData.data.belongsTo.path">
                         {{ pageData.data.belongsTo.name }}
                     </router-link>
                 </p>
@@ -135,7 +117,7 @@ const getBelongingRoute = (value: string) => {
                 <p v-if="pageData.data.release.channel !== undefined">
                     推送频道：{{ pageData.data.release.channel }}
                 </p>
-                <p v-if="pageData.data.release.channel !== undefined">
+                <p v-if="pageData.data.release.time !== undefined">
                     推送时间：{{ pageData.data.release.time }} (UTC)
                 </p>
                 <p v-if="pageData.data.release.url !== undefined">
@@ -163,7 +145,7 @@ const getBelongingRoute = (value: string) => {
 
             <div v-if="pageData.data.updateId !== undefined && pageData.data.updateId.length > 0">
                 <p class="u-para-code" v-for="id in pageData.data.updateId" :key="id.arch">
-                    {{ id.arch }}：<Code :value="id.id" is-copiable=true />
+                    {{ id.arch }}：<Code :value="id.id" is-copiable />
                 </p>
             </div>
             <div class="placeholder" v-else>
@@ -189,8 +171,8 @@ const getBelongingRoute = (value: string) => {
                         &nbsp;&nbsp;&nbsp;
                     </span>
                 </p>
-                <p class="u-para-code">MD5：<Code :value="pageData.data.download.md5" is-break-word=true is-copiable=true /></p>
-                <p class="u-para-code">SHA-256：<Code :value="pageData.data.download.sha256" is-break-word=true is-copiable=true /></p>
+                <p class="u-para-code">MD5：<Code :value="pageData.data.download.md5" is-break-word is-copiable /></p>
+                <p class="u-para-code">SHA-256：<Code :value="pageData.data.download.sha256" is-break-word is-copiable /></p>
             </div>
             <div class="placeholder" v-else>
                 <p>暂无可供下载的内容</p>
@@ -200,8 +182,6 @@ const getBelongingRoute = (value: string) => {
 </template>
 
 <style lang="less" scoped>
-@import url('@/styles/global.less');
-
 .overview {
     display: var(--v-detail-overview);
     .line-left {

@@ -37,46 +37,70 @@ export default defineConfig({
                     },
                 ],
             },
-        })
+        }),
     ],
     server: {
         port: 14724,
         host: true,
         proxy: {
-           '/v1': {
-              target: 'http://localhost:14726',
-              changeOrigin: true,
-              rewrite: path => path.replace(/^\/v1/, ''),
-           },
-        }
+            '/v1': {
+                target: 'http://localhost:14726',
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/v1/, ''),
+            },
+        },
     },
     build: {
         assetsInlineLimit: 6144,
-        rollupOptions: {
+        rolldownOptions: {
             output: {
-                hashCharacters: 'hex',
-                assetFileNames: '_wu/[name]-[hash].[ext]',
-                chunkFileNames: chunk => {
+                minify: true,
+                assetFileNames: (asset) => {
+                    if (asset.name.startsWith('vendor-')) {
+                        return '_wu/vendor/[hash].[ext]'
+                    }
+                    return '_wu/[name]-[hash].[ext]'
+                },
+                chunkFileNames: (chunk) => {
                     if (chunk.name.startsWith('vendor-')) {
                         return '_wu/vendor/[hash].js'
                     }
                     return '_wu/[name]-[hash].js'
                 },
                 entryFileNames: '_wu/[name]-[hash].js',
-                minifyInternalExports: true,
-                manualChunks: id => {
-                    // vendor
-                    if (id.includes('@vue')) {
-                        return 'vendor-vue'
-                    } else if (id.includes('vue-router')) {
-                        return 'vendor-router'
-                    } else if (id.includes('axios')) {
-                        return 'vendor-axios'
-                    }
-                    // 主要页面
-                    else if (id.includes('src/views/Main') || id.includes('NotFound')) {
-                        return 'MainViews'
-                    }
+                codeSplitting: {
+                    groups: [
+                        {
+                            name: 'vendor-router',
+                            test: /router/,
+                            priority: 10,
+                        },
+                        {
+                            name: 'vendor-vue',
+                            test: /@vue\/reactivity|runtime-core/,
+                            priority: 11,
+                        },
+                        {
+                            name: 'vendor-axios',
+                            test: /axios/,
+                            priority: 10,
+                        },
+                        {
+                            name: 'vendor-iconify',
+                            test: /node_modules/,
+                            priority: 9,
+                        },
+                        {
+                            name: 'components',
+                            test: /[\\/]src[\\/]components[\\/]|utils[\\/]/,
+                            priority: 5,
+                        },
+                        {
+                            name: 'MainViews',
+                            test: /[\\/]src[\\/]views[\\/]/,
+                            priority: 5,
+                        },
+                    ],
                 },
             },
         },
@@ -85,13 +109,14 @@ export default defineConfig({
         preprocessorOptions: {
             less: {
                 javascriptEnabled: true,
+                additionalData: `@import "${resolve(__dirname, 'src/styles/global.less')}";`,
             },
         },
     },
     // 引入@作为./src的alias
     resolve: {
         alias: {
-            '@': resolve(__dirname, './src')
+            '@': resolve(__dirname, './src'),
         },
     },
 })

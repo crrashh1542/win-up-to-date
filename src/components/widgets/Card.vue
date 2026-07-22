@@ -1,24 +1,26 @@
 <script setup lang="ts">
-const props = withDefaults(defineProps<{ mode?: 'inline' | 'block' | 'flex' }>(), {
-    mode: 'block'
+const props = withDefaults(defineProps<{
+    mode?: 'inline' | 'block' | 'flex'
+    shadow?: boolean
+}>(), {
+    mode: 'block',
+    shadow: false
 })
 </script>
 
 <template>
-    <div :class="['card', props.mode]">
+    <div :class="['card', props.mode, shadow ? 'shadow' : '']">
         <slot></slot>
     </div>
 </template>
 
 <style lang="less">
-@import url('@/styles/global.less');
-
 .card {
-    padding: 16px calc(12px + 1.2%);
+    padding: @wu-layout-card-padding-y @wu-layout-card-padding-x;
     line-height: 1.2;
     border-radius: @wu-layout-radius;
     background-color: @wu-color-main;
-    border: 1px solid #e6e6e6;
+    border: 1px solid @wu-color-border;
     font-size: 17px;
 }
 .card.inline {
@@ -32,5 +34,8 @@ const props = withDefaults(defineProps<{ mode?: 'inline' | 'block' | 'flex' }>()
     display: flex;
     align-items: center;
     margin-bottom: 4px;
+}
+.card.shadow {
+    box-shadow: @wu-layout-shadow;
 }
 </style>

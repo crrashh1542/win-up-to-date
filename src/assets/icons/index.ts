@@ -1,21 +1,19 @@
-// 此文件用于中转图标文件，图标均来自 amicons 与 iconfont。
-// 本目录下图标来自 iconfont，见 https://www.iconfont.cn/manage/index?manage_type=myprojects&projectId=4217937
+// 此文件用于中转图标文件，本目录下图标来自 iconfont，见 https://www.iconfont.cn/manage/index?manage_type=myprojects&projectId=4217937
 
-import { aiAzure, aiCompactDisc, aiServer, aiWindows } from '@studio384/amicons'
-import branch from './branch.svg'
-import rocket from './rocket.svg'
+import azure from './azure.svg'
+import insider from './insider.svg'
+import iso from './disc.svg'
+import server from './server.svg'
 import windows10 from './windows10.svg'
+import windows11 from './windows11.svg'
 
-const toSvgDataUri = (svg: string) => `data:image/svg+xml,${encodeURIComponent(svg)}`
-
-const icons = {
-    azure: toSvgDataUri(aiAzure.data),
-    branch,
-    iso: toSvgDataUri(aiCompactDisc.data),
-    server: toSvgDataUri(aiServer.data),
-    rocket,
+const icons: Record<string, string> = {
+    azure,
+    iso,
+    insider,
+    server,
     windows10,
-    windows11: toSvgDataUri(aiWindows.data)
+    windows11
 }
 
 export default icons

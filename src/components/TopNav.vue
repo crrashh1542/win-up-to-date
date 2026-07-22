@@ -2,18 +2,7 @@
 import { computed } from 'vue'
 import ArrowLeft20FilledIcon from '@iconify-vue/fluent/arrow-left-20-filled'
 import ArrowRight20FilledIcon from '@iconify-vue/fluent/arrow-right-20-filled'
-
-interface NavItem {
-    route: string
-    build: string
-    platform: string
-}
-
-interface NavData {
-    type: 'detail' | 'categoryList'
-    prev?: NavItem
-    next?: NavItem
-}
+import type { NavItem, NavData } from '@/types'
 
 const props = defineProps<{ data: NavData | null }>()
 const isDetail = computed(() => props.data?.type === 'detail')
@@ -21,7 +10,7 @@ const buildLink = (source?: NavItem) => {
     if (!source) return null
     return {
         route: source.route,
-        text: isDetail.value ? source.build : source.platform
+        text: isDetail.value ? source.build ?? source.platform : source.platform
     }
 }
 
@@ -47,8 +36,6 @@ const next = computed(() => buildLink(props.data?.next))
 </template>
 
 <style lang="less" scoped>
-@import url('@/styles/global.less');
-
 .nav {
     display: flex;
     color: #666;

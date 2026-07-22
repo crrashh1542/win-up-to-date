@@ -1,16 +1,19 @@
-<script setup>
+<script setup lang="ts">
 import { useRouter } from 'vue-router'
+import CloudDismiss48Icon from '@iconify-vue/fluent-color/cloud-dismiss-48'
+
+import Button from '@/components/widgets/Button.vue'
+
 const router = useRouter()
-
-import Button from '../components/widgets/Button.vue'
-
 defineOptions({ name: 'ViewNotFound' })
 </script>
 
 <template>
     <div class="error">
-        <h1>404 NOT Found</h1>
-        <p>( > < )&nbsp;&nbsp;Error！这样我会出现困扰的！</p><br/>
+        <CloudDismiss48Icon height="96px" />
+        <h1>404 Not Found</h1>
+        <p>( &gt; &lt; )&nbsp;&nbsp;Error！请求的内容不见了！</p>
+        <br />
         <p>
             <Button @click="router.back()">返回上级</Button>
             &nbsp;&nbsp;&nbsp;&nbsp;
