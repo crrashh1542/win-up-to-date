@@ -153,8 +153,8 @@ const serveSearch = async (res, _params, reqUrl) => {
                 const build = path.basename(name, '.json')
                 return { platform, build }
             })
-            // 过滤掉平台为 '.' 的项，并匹配 build 前缀
-            .filter((item) => item.platform !== '.' && item.build.startsWith(q))
+            // 过滤掉平台为 '.' 的项，并匹配 build 子串（乱序搜索）
+            .filter((item) => item.platform !== '.' && item.build.includes(q))
             .slice(0, 20)
         sendJson(res, 200, okPayload('searchBuild', matches))
     } catch {
