@@ -17,7 +17,7 @@
     "scripts": {
         "dev": "concurrently -n web,api \"pnpm dev:web\" \"pnpm dev:api\"",
         "dev:web": "vite",
-        "dev:api": "node server/main.js",
+        "dev:api": "node server/main.mjs",
         "build": "vite build",
         "preview": "vite preview",
         "lint": "eslint \"src/**/*.{js,ts,vue}\"",

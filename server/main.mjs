@@ -1,7 +1,7 @@
 /**
  * Windows Up-to-Date 服务端脚本
  * @author crrashh1542
- * @version 3.1
+ * @version 3.3
  */
 
 import { execFile } from 'node:child_process'
@@ -11,9 +11,11 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
 
+import { handleDeploy } from './admin.js'
+
 const execFileP = promisify(execFile)
 
-const serverVersion = '3.1'
+const serverVersion = '3.3'
 const apiVersion = 1
 const port = 9884
 const cacheSize = 200
@@ -215,6 +217,11 @@ const routes = new Map([
     ['/search', { params: ['build'], handler: serveSearch }],
 ])
 
+// POST 路由表（管理接口）
+const postRoutes = new Map([
+    ['/admin/deploy', { handler: handleDeploy }],
+])
+
 // main server
 http.createServer(async (req, res) => {
     const reqUrl = new URL(req.url || '/', 'http://127.0.0.1')
@@ -226,25 +233,31 @@ http.createServer(async (req, res) => {
         )
     })
 
-    if (req.method !== 'GET') {
-        return sendJson(res, 405, { message: 'Method is not allowed!' })
-    }
-
     try {
-        const route = routes.get(reqPath)
-        if (!route) {
-            return sendJson(res, 404, { message: 'Interface is not found!' })
-        }
+        if (req.method === 'GET') {
+            const route = routes.get(reqPath)
+            if (!route) {
+                return sendJson(res, 404, { message: 'Interface is not found!' })
+            }
 
-        if (route.params) {
-            const missing = route.params.some((p) => {
-                const v = reqUrl.searchParams.get(p)
-                return !v || !isSafeId(v)
-            })
-            if (missing) return errParam(res)
-        }
+            if (route.params) {
+                const missing = route.params.some((p) => {
+                    const v = reqUrl.searchParams.get(p)
+                    return !v || !isSafeId(v)
+                })
+                if (missing) return errParam(res)
+            }
 
-        await route.handler(res, reqUrl.searchParams, reqUrl)
+            await route.handler(res, reqUrl.searchParams, reqUrl)
+        } else if (req.method === 'POST') {
+            const route = postRoutes.get(reqPath)
+            if (!route) {
+                return sendJson(res, 404, { message: 'Interface is not found!' })
+            }
+            await route.handler(req, res)
+        } else {
+            return sendJson(res, 405, { message: 'Method is not allowed!' })
+        }
     } catch {
         errServer(res)
     }
