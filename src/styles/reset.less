@@ -41,6 +41,15 @@ body {
         // 图标取自 fluent:open-xx-filed，大小为 15x15，颜色为 #3078e2
         content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 24 24'%3E%3Cpath fill='%233078e2' d='M6.25 5C5.56 5 5 5.56 5 6.25v11.5c0 .69.56 1.25 1.25 1.25h11.5c.69 0 1.25-.56 1.25-1.25V14a1 1 0 1 1 2 0v3.75A3.25 3.25 0 0 1 17.75 21H6.25A3.25 3.25 0 0 1 3 17.75V6.25A3.25 3.25 0 0 1 6.25 3H10a1 1 0 1 1 0 2zM14 5a1 1 0 1 1 0-2h6a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0V6.414l-4.293 4.293a1 1 0 0 1-1.414-1.414L17.586 5z'/%3E%3C/svg%3E");
     }
+    // 当 a 标签内包含 button 时，不应用 after 和 hover 样式
+    p a:has(button),
+    li a:has(button) {
+        margin-right: 0;
+        &::after,
+        &:hover::after {
+            content: none;
+        }
+    }
 
     // 处理排版
     p {
@@ -74,12 +83,6 @@ body {
 .u-para-code {
     display: flex;
     align-items: center;
-    a::after {
-        content: none;
-    }
-    a:hover::after {
-        content: none;
-    }
     button {
         margin-left: 0.4em;
     }

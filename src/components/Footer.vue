@@ -24,6 +24,7 @@ const date = computed(() => dataVersion.value?.date ?? 'unknown')
             数据版本: {{ date }} （Git:
             <a
                 :href="`https://github.com/crrashh1542/win-up-to-date-data/commit/${hash}`"
+                target="_blank"
                 >{{ hash }}</a
             >）
         </p>

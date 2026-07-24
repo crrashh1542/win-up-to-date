@@ -226,8 +226,9 @@ watch(
                         v-for="(l, index) in pageData.data.download.link"
                         :key="index"
                     >
-                        <a target="_blank" :href="l.url">{{ l.source }}</a>
-                        &nbsp;&nbsp;&nbsp;
+                        <a target="_blank" :href="l.url">
+                            <Button>{{ l.source }}</Button> </a
+                        >&nbsp;
                     </span>
                 </p>
                 <p class="u-para-code" v-if="pageData.data.download.md5">
