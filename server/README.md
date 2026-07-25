@@ -19,8 +19,7 @@ pnpm dev:all
 | `GET` | `/` | 无 | 服务可用性检测 |
 | `GET` | `/latestBuilds` | 无 | 获取首页最新 Build 列表 |
 | `GET` | `/version` | 无 | 获取数据仓库版本信息 |
-| `GET` | `/category/list` | 无 | 获取平台分类总览 |
-| `GET` | `/category` | `platform` | 获取某个平台下的 Build 列表 |
+| `GET` | `/category` | 无 / `platform` | 获取平台分类总览，或指定平台下的 Build 列表 |
 | `GET` | `/detail` | `platform`、`build` | 获取某个 Build 的详情 |
 | `GET` | `/search` | `build` | 按 Build 号前缀搜索 |
 
@@ -53,13 +52,10 @@ pnpm dev:all
 }
 ```
 
-### `/category/list`
+### `/category`
 
-返回 [category.json](https://github.com/crrashh1542/win-up-to-date-data/blob/data/index/category.json) 的完整内容，用于平台分类页面。
-
-### `/category?platform={platform}`
-
-返回 `category/{platform}.json` 的内容，例如 `/category?platform=24H2-germanium`。
+- 无参数时返回 [category.json](https://github.com/crrashh1542/win-up-to-date-data/blob/data/index/category.json) 的完整内容，用于平台分类页面。
+- 带 `platform` 参数时返回 `category/{platform}.json` 的内容，例如 `/category?platform=24H2-germanium`。
 
 ### `/detail?platform={platform}&build={build}`
 
@@ -70,7 +66,7 @@ pnpm dev:all
 按 Build 号前缀搜索 `detail/` 目录下的所有 JSON 文件。
 
 ```bash
-curl "http://127.0.0.1:14726/search?build=26063.1"
+curl "http://127.0.0.1:9884/search?build=26063.1"
 ```
 
 返回：

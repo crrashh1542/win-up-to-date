@@ -165,6 +165,21 @@ const serveSearch = async (res, _params, reqUrl) => {
 }
 
 // 路由处理函数
+const serveCategory = async (res, _params, reqUrl) => {
+    const platform = reqUrl.searchParams.get('platform')
+    if (!platform) {
+        return serveData('index/category.json', 'categoryList')(
+            res,
+            _params,
+            reqUrl
+        )
+    }
+    if (!isSafeId(platform)) {
+        return errParam(res)
+    }
+    return serveData(categoryPath, 'category')(res, _params, reqUrl)
+}
+
 const serveData = (file, type) => async (res, _params, reqUrl) => {
     const filePath =
         typeof file === 'function' ? file(reqUrl) : path.join(dataRoot, file)
@@ -202,11 +217,7 @@ const routes = new Map([
     ],
     ['/latestBuilds', { handler: serveData('index/latest-builds.json', 'latest') }],
     ['/version', { handler: serveDataVersion }],
-    [
-        '/category',
-        { params: ['platform'], handler: serveData(categoryPath, 'category') },
-    ],
-    ['/category/list', { handler: serveData('index/category.json', 'categoryList') }],
+    ['/category', { handler: serveCategory }],
     [
         '/detail',
         {
