@@ -200,13 +200,13 @@ const routes = new Map([
                 sendJson(res, 200, { message: 'Service is available!' }),
         },
     ],
-    ['/latestBuilds', { handler: serveData('latest-builds.json', 'latest') }],
+    ['/latestBuilds', { handler: serveData('index/latest-builds.json', 'latest') }],
     ['/version', { handler: serveDataVersion }],
     [
         '/category',
         { params: ['platform'], handler: serveData(categoryPath, 'category') },
     ],
-    ['/category/list', { handler: serveData('category.json', 'categoryList') }],
+    ['/category/list', { handler: serveData('index/category.json', 'categoryList') }],
     [
         '/detail',
         {

@@ -40,7 +40,7 @@ pnpm dev:all
 
 ### `/latestBuilds`
 
-返回 [latest-builds.json](https://github.com/crrashh1542/win-up-to-date-data/blob/data/latest-builds.json) 的完整内容，用于首页展示。
+返回 [latest-builds.json](https://github.com/crrashh1542/win-up-to-date-data/blob/data/index/latest-builds.json) 的完整内容，用于首页展示。
 
 ### `/version`
 
@@ -55,7 +55,7 @@ pnpm dev:all
 
 ### `/category/list`
 
-返回 [category.json](https://github.com/crrashh1542/win-up-to-date-data/blob/data/category.json) 的完整内容，用于平台分类页面。
+返回 [category.json](https://github.com/crrashh1542/win-up-to-date-data/blob/data/index/category.json) 的完整内容，用于平台分类页面。
 
 ### `/category?platform={platform}`
 
