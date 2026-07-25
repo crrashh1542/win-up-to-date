@@ -16,7 +16,7 @@ import { handleDeploy } from './admin.js'
 const execFileP = promisify(execFile)
 
 const serverVersion = '3.4'
-const apiVersion = 1
+const apiVersion = 2
 const port = 9884
 const cacheSize = 200
 

@@ -43,10 +43,10 @@ export default defineConfig({
         port: 9883,
         host: true,
         proxy: {
-            '/v1': {
+            '/v2': {
                 target: 'http://localhost:9884',
                 changeOrigin: true,
-                rewrite: (path) => path.replace(/^\/v1/, ''),
+                rewrite: (path) => path.replace(/^\/v2/, ''),
             },
         },
     },
