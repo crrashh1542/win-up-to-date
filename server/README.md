@@ -19,8 +19,9 @@ pnpm dev:all
 | `GET` | `/` | 无 | 服务可用性检测 |
 | `GET` | `/latestBuilds` | 无 | 获取首页最新 Build 列表 |
 | `GET` | `/version` | 无 | 获取数据仓库版本信息 |
-| `GET` | `/category` | 无 / `platform` | 获取平台分类总览，或指定平台下的 Build 列表 |
-| `GET` | `/detail` | `platform`、`build` | 获取某个 Build 的详情 |
+| `GET` | `/category` | 无 | 获取平台分类总览 |
+| `GET` | `/category/:platform` | 路径参数 `platform` | 获取指定平台下的 Build 列表 |
+| `GET` | `/detail/:platform/:build` | 路径参数 `platform`、`build` | 获取某个 Build 的详情 |
 | `GET` | `/search` | `build` | 按 Build 号前缀搜索 |
 
 所有接口均只接受 `GET` 请求，响应格式统一为：
@@ -54,12 +55,15 @@ pnpm dev:all
 
 ### `/category`
 
-- 无参数时返回 [category.json](https://github.com/crrashh1542/win-up-to-date-data/blob/data/index/category.json) 的完整内容，用于平台分类页面。
-- 带 `platform` 参数时返回 `category/{platform}.json` 的内容，例如 `/category?platform=24H2-germanium`。
+返回 [category.json](https://github.com/crrashh1542/win-up-to-date-data/blob/data/index/category.json) 的完整内容，用于平台分类页面。
 
-### `/detail?platform={platform}&build={build}`
+### `/category/:platform`
 
-返回 `detail/{platform}/{build}.json` 的内容，例如 `/detail?platform=24H2-germanium&build=26063.1`。
+返回 `category/{platform}.json` 的内容，例如 `/category/24H2-germanium`。
+
+### `/detail/:platform/:build`
+
+返回 `detail/{platform}/{build}.json` 的内容，例如 `/detail/24H2-germanium/26063.1`。
 
 ### `/search?build={build}`
 

@@ -53,9 +53,8 @@ const fetchData = async (platform: string, build: string) => {
     NProgress.start()
     try {
         const { data: resp } = await request({
-            url: '/detail',
+            url: `/detail/${platform}/${build}`,
             method: 'get',
-            params: { platform, build },
         })
         initDetailData(resp, pageData)
     } catch (error: any) {

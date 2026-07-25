@@ -1,7 +1,7 @@
 /**
  * Windows Up-to-Date 服务端脚本
  * @author crrashh1542
- * @version 3.3
+ * @version 3.4
  */
 
 import { execFile } from 'node:child_process'
@@ -15,7 +15,7 @@ import { handleDeploy } from './admin.js'
 
 const execFileP = promisify(execFile)
 
-const serverVersion = '3.3'
+const serverVersion = '3.4'
 const apiVersion = 1
 const port = 9884
 const cacheSize = 200
@@ -166,7 +166,7 @@ const serveSearch = async (res, _params, reqUrl) => {
 
 // 路由处理函数
 const serveCategory = async (res, _params, reqUrl) => {
-    const platform = reqUrl.searchParams.get('platform')
+    const platform = reqUrl.pathname.slice('/category/'.length)
     if (!platform) {
         return serveData('index/category.json', 'categoryList')(
             res,
@@ -196,15 +196,27 @@ const serveData = (file, type) => async (res, _params, reqUrl) => {
     }
 }
 
+const serveDetail = async (res, _params, reqUrl) => {
+    const segments = reqUrl.pathname.slice('/detail/'.length).split('/')
+    const [platform, build] = segments
+    if (!platform || !build || segments.length > 2) {
+        return errParam(res)
+    }
+    if (!isSafeId(platform) || !isSafeId(build)) {
+        return errParam(res)
+    }
+    return serveData(detailPath, 'detail')(res, _params, reqUrl)
+}
+
 // 路由表
 const categoryPath = (u) =>
-    path.join(dataRoot, 'category', u.searchParams.get('platform') + '.json')
+    path.join(dataRoot, 'category', u.pathname.slice('/category/'.length) + '.json')
 const detailPath = (u) =>
     path.join(
         dataRoot,
         'detail',
-        u.searchParams.get('platform'),
-        u.searchParams.get('build') + '.json'
+        u.pathname.split('/')[2],
+        u.pathname.split('/')[3] + '.json'
     )
 
 const routes = new Map([
@@ -218,13 +230,8 @@ const routes = new Map([
     ['/latestBuilds', { handler: serveData('index/latest-builds.json', 'latest') }],
     ['/version', { handler: serveDataVersion }],
     ['/category', { handler: serveCategory }],
-    [
-        '/detail',
-        {
-            params: ['platform', 'build'],
-            handler: serveData(detailPath, 'detail'),
-        },
-    ],
+    ['/category/', { handler: serveCategory, prefix: true }],
+    ['/detail/', { handler: serveDetail, prefix: true }],
     ['/search', { params: ['build'], handler: serveSearch }],
 ])
 
@@ -246,7 +253,15 @@ http.createServer(async (req, res) => {
 
     try {
         if (req.method === 'GET') {
-            const route = routes.get(reqPath)
+            let route = routes.get(reqPath)
+            if (!route) {
+                for (const [path, r] of routes) {
+                    if (r.prefix && reqPath.startsWith(path)) {
+                        route = r
+                        break
+                    }
+                }
+            }
             if (!route) {
                 return sendJson(res, 404, { message: 'Interface is not found!' })
             }
