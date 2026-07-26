@@ -51,12 +51,14 @@ const breakWord = computed(() => (props.isBreakWord ? 'break-word' : ''))
 
     <!-- 复制按钮 -->
     <Button @click="copy" v-if="isCopiable">
-        <Checkmark16RegularIcon
-            v-if="isCopied"
-            width="1.25em"
-            height="1.25em"
-        />
-        <Copy16RegularIcon v-else width="1.25em" height="1.25em" />
+        <template #before>
+            <Checkmark16RegularIcon
+                v-if="isCopied"
+                width="1.25em"
+                height="1.25em"
+            />
+            <Copy16RegularIcon v-else width="1.25em" height="1.25em" />
+        </template>
         {{ isCopied ? '已复制' : '复制' }}
     </Button>
 </template>

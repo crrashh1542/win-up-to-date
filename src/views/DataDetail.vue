@@ -6,10 +6,10 @@ import request from '@/utils/request'
 import Box24RegularIcon from '@iconify-vue/fluent/box-24-regular'
 import Branch24RegularIcon from '@iconify-vue/fluent/branch-24-regular'
 import Clock24RegularIcon from '@iconify-vue/fluent/clock-24-regular'
-import Code24RegularIcon from '@iconify-vue/fluent/code-24-regular'
 import DesktopArrowDown24RegularIcon from '@iconify-vue/fluent/desktop-arrow-down-24-regular'
 import DeveloperBoard24RegularIcon from '@iconify-vue/fluent/developer-board-24-regular'
 import Search24RegularIcon from '@iconify-vue/fluent/search-24-regular'
+import SquareMultiple24RegularIcon from '@iconify-vue/fluent/square-multiple-24-regular'
 import Tag24RegularIcon from '@iconify-vue/fluent/tag-24-regular'
 import MegaphoneLoud24RegularIcon from '@iconify-vue/fluent/megaphone-loud-24-regular'
 
@@ -112,7 +112,7 @@ watch(
                     推送平台 / {{ pageData.data.build.counterpart }}
                 </p>
                 <p>
-                    <Code24RegularIcon width="22" height="22" />
+                    <SquareMultiple24RegularIcon width="22" height="22" />
                     构建归属 /
                     <router-link
                         :to="'/category/' + pageData.data.belongsTo.path"
@@ -186,10 +186,12 @@ watch(
                             target="_blank"
                         >
                             <Button>
-                                <Open16RegularIcon
-                                    width="1.25em"
-                                    height="1.25em"
-                                />
+                                <template #before>
+                                    <Open16RegularIcon
+                                        width="1.25em"
+                                        height="1.25em"
+                                    />
+                                </template>
                                 打开
                             </Button>
                         </a>
