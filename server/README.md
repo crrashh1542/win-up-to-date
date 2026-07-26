@@ -22,6 +22,8 @@ pnpm dev:all
 | `GET` | `/category` | 无 | 获取平台分类总览 |
 | `GET` | `/category/:platform` | 路径参数 `platform` | 获取指定平台下的 Build 列表 |
 | `GET` | `/detail/:platform/:build` | 路径参数 `platform`、`build` | 获取某个 Build 的详情 |
+| `GET` | `/id` | 无 | 获取 Vive ID 分类总览 |
+| `GET` | `/id/:category` | 路径参数 `category` | 获取指定分类的 Vive ID 列表 |
 | `GET` | `/search` | `build` | 按 Build 号前缀搜索 |
 
 所有接口均只接受 `GET` 请求，响应格式统一为：
@@ -29,7 +31,7 @@ pnpm dev:all
 ```json
 {
   "code": 200,
-  "version": 1,
+  "version": 2,
   "message": "Successfully requested data!",
   "dataType": "...",
   "content": { ... }
@@ -64,6 +66,14 @@ pnpm dev:all
 ### `/detail/:platform/:build`
 
 返回 `detail/{platform}/{build}.json` 的内容，例如 `/detail/24H2-germanium/26063.1`。
+
+### `/id`
+
+返回 [viveid.json](https://github.com/crrashh1542/win-up-to-date-data/blob/data/index/viveid.json) 的完整内容，用于 Vive ID 分类总览。
+
+### `/id/:category`
+
+返回 `viveid/{category}.json` 的内容，例如 `/id/germanium`。
 
 ### `/search?build={build}`
 

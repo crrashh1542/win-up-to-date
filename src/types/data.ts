@@ -126,6 +126,26 @@ export interface CategoryContent {
     list: [string, string][]
 }
 
+// Feature ID 页面数据
+export interface FeatureIdItem {
+    id: string[]
+    variant: string[] | null
+    title: string
+    description: string
+}
+
+export interface FeatureIdCategory {
+    name: string
+    id: string
+}
+
+export interface FeatureIdContent {
+    codename: string
+    belonging: string
+    range: [string, string]
+    list: FeatureIdItem[]
+}
+
 // 页面导航
 export interface NavItem {
     platform: string

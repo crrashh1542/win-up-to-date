@@ -196,6 +196,17 @@ const serveData = (file, type) => async (res, _params, reqUrl) => {
     }
 }
 
+const serveId = async (res, _params, reqUrl) => {
+    const category = reqUrl.pathname.slice('/id/'.length)
+    if (!category) {
+        return serveData('index/viveid.json', 'idList')(res, _params, reqUrl)
+    }
+    if (!isSafeId(category)) {
+        return errParam(res)
+    }
+    return serveData(idPath, 'id')(res, _params, reqUrl)
+}
+
 const serveDetail = async (res, _params, reqUrl) => {
     const segments = reqUrl.pathname.slice('/detail/'.length).split('/')
     const [platform, build] = segments
@@ -218,6 +229,8 @@ const detailPath = (u) =>
         u.pathname.split('/')[2],
         u.pathname.split('/')[3] + '.json'
     )
+const idPath = (u) =>
+    path.join(dataRoot, 'viveid', u.pathname.slice('/id/'.length) + '.json')
 
 const routes = new Map([
     [
@@ -232,6 +245,8 @@ const routes = new Map([
     ['/category', { handler: serveCategory }],
     ['/category/', { handler: serveCategory, prefix: true }],
     ['/detail/', { handler: serveDetail, prefix: true }],
+    ['/id', { handler: serveId }],
+    ['/id/', { handler: serveId, prefix: true }],
     ['/search', { params: ['build'], handler: serveSearch }],
 ])
 

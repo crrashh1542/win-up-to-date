@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { version } from '../../package.json'
 
+import Code24RegularIcon from '@iconify-vue/fluent/code-24-regular'
 import Info24RegularIcon from '@iconify-vue/fluent/info-24-regular'
 import Library24RegularIcon from '@iconify-vue/fluent/library-24-regular'
 import Settings24RegularIcon from '@iconify-vue/fluent/settings-24-regular'
@@ -21,14 +22,13 @@ defineOptions({ name: 'MainWrapper' })
 const appVersion = ref(version)
 const isPopupVisible = ref(false)
 
-// 导航选中状态，与当前路由同步
-const selectedNav = ref(route.path)
-watch(
-    () => route.path,
-    (path) => {
-        selectedNav.value = path
-    }
-)
+// 导航选中状态，与当前路由前缀同步
+const selectedNav = computed(() => {
+    const path = route.path
+    if (path.startsWith('/feature-id')) return '/feature-id'
+    if (path.startsWith('/category')) return '/category'
+    return path
+})
 
 const openAbout = () => {
     const mobileRegex =
@@ -72,6 +72,12 @@ const openAbout = () => {
                 <Library24RegularIcon />
             </template>
             平台
+        </Tab>
+        <Tab value="/feature-id" to="/feature-id">
+            <template #icon>
+                <Code24RegularIcon />
+            </template>
+            功能 ID
         </Tab>
         <Tab value="/settings" to="/settings">
             <template #icon>
