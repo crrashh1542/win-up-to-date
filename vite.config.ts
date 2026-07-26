@@ -109,14 +109,14 @@ export default defineConfig({
         preprocessorOptions: {
             less: {
                 javascriptEnabled: true,
-                additionalData: `@import "${resolve(__dirname, 'src/styles/global.less')}";`,
+                additionalData: `@import "${resolve(import.meta.dirname, 'src/styles/global.less')}";`,
             },
         },
     },
     // 引入@作为./src的alias
     resolve: {
         alias: {
-            '@': resolve(__dirname, './src'),
+            '@': resolve(import.meta.dirname, './src'),
         },
     },
 })

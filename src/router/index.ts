@@ -1,6 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { applyRouteTitle, clearTitle } from '@/utils/title'
 
+declare module 'vue-router' {
+    interface RouteMeta {
+        title?: string
+    }
+}
+
 const router = createRouter({
     linkActiveClass: 'path-active',
     history: createWebHistory(),
