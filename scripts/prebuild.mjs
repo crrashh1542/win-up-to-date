@@ -2,7 +2,7 @@
 /**
  * 此脚本用于在开始打包前处理配置信息
  * @author crrashh1542
- * @version 2.1
+ * @version 2.2
  */
 
 // STEP1 -------- 导入依赖
@@ -82,6 +82,11 @@ const writeInfo = () => {
         hash: getHash(),
         build: getBuild(),
         branch: getBranch(),
+    }
+
+    // 当构建命令带有 --ci 参数时，标记当前构建为 CI 构建
+    if (process.env.WU_ENV_CI === 'true') {
+        content.ci = true
     }
 
     // 将 buildInfo 内容写入文件
