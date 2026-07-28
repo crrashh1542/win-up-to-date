@@ -9,6 +9,7 @@
 import fs from 'node:fs'
 import childProcess from 'node:child_process'
 import path from 'node:path'
+import packageInfo from '../package.json' with { type: 'json' }
 
 const execCmd = (command) => {
     try {
@@ -87,6 +88,11 @@ const writeInfo = () => {
     // 当构建命令带有 --ci 参数时，标记当前构建为 CI 构建
     if (process.env.WU_ENV_CI === 'true') {
         content.ci = true
+    }
+
+    // 当版本号不是干净的 semver（x.y.z）时，标记当前构建为 Beta 构建
+    if (!/^\d+\.\d+\.\d+$/.test(packageInfo.version)) {
+        content.beta = true
     }
 
     // 将 buildInfo 内容写入文件
