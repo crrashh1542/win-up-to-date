@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, watch } from 'vue'
+import { computed, reactive, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import request from '@/utils/request'
 
@@ -36,8 +36,14 @@ const pageData = reactive({
             arch: [],
             counterpart: '',
         },
+        release: {
+            channel: '',
+            time: '',
+        },
         nav: {},
         belongsTo: { path: '', name: '' },
+        updateId: [],
+        download: [],
     } as DetailContent,
     isLoading: true,
     isError: false,
@@ -46,6 +52,9 @@ const pageData = reactive({
 
 const route = useRoute()
 const router = useRouter()
+
+// 下载列表
+const downloads = computed(() => pageData.data.download ?? [])
 
 const fetchData = async (platform: string, build: string) => {
     pageData.isLoading = true
@@ -210,43 +219,32 @@ watch(
                 下载 ISO / 更新包
             </div>
 
-            <div
-                v-if="
-                    pageData.data.download !== undefined &&
-                    Object.keys(pageData.data.download).length > 0
-                "
-            >
-                <p>文件名称：{{ pageData.data.download.name }}</p>
-                <p>系统架构：{{ pageData.data.download.arch }}</p>
-                <p v-if="pageData.data.download.size">
-                    文件大小：{{ pageData.data.download.size }}
-                </p>
-                <p>
-                    下载地址：
-                    <span
-                        v-for="(l, index) in pageData.data.download.link"
-                        :key="index"
-                    >
-                        <a target="_blank" :href="l.url">
-                            <Button>{{ l.source }}</Button> </a
-                        >&nbsp;
-                    </span>
-                </p>
-                <p class="u-para-code" v-if="pageData.data.download.md5">
-                    MD5：<Code
-                        :value="pageData.data.download.md5"
-                        is-break-word
-                        is-copiable
-                    />
-                </p>
-                <p class="u-para-code" v-if="pageData.data.download.sha256">
-                    SHA-256：<Code
-                        :value="pageData.data.download.sha256"
-                        is-break-word
-                        is-copiable
-                    />
-                </p>
-            </div>
+            <template v-if="downloads.length > 0">
+                <template v-for="(dl, dlIndex) in downloads" :key="dlIndex">
+                    <div v-if="dlIndex > 0" class="download-separator"></div>
+                    <p>文件名称：{{ dl.name }}</p>
+                    <p>系统架构：{{ dl.arch }}</p>
+                    <p v-if="dl.size">文件大小：{{ dl.size }}</p>
+                    <p>
+                        下载地址：
+                        <span v-for="(l, index) in dl.link" :key="index">
+                            <a target="_blank" :href="l.url">
+                                <Button>{{ l.source }}</Button> </a
+                            >&nbsp;
+                        </span>
+                    </p>
+                    <p class="u-para-code" v-if="dl.md5">
+                        MD5：<Code :value="dl.md5" is-break-word is-copiable />
+                    </p>
+                    <p class="u-para-code" v-if="dl.sha256">
+                        SHA-256：<Code
+                            :value="dl.sha256"
+                            is-break-word
+                            is-copiable
+                        />
+                    </p>
+                </template>
+            </template>
             <div class="placeholder" v-else>
                 <p>暂无可供下载的内容</p>
             </div>
@@ -265,6 +263,13 @@ watch(
         align-items: center;
         gap: 6px;
     }
+}
+
+// 多个下载项之间的分隔符
+.download-separator {
+    height: 1px;
+    background-color: @wu-color-border;
+    margin: 16px 0;
 }
 
 .placeholder {

@@ -42,6 +42,12 @@ const router = createRouter({
             meta: { title: '功能 ID' },
         },
         {
+            path: '/download',
+            name: 'download',
+            component: () => import('@/views/MainDownload.vue'),
+            meta: { title: '下载' },
+        },
+        {
             path: '/feature-id',
             redirect: '/feature-id/germanium-25h2',
         },

@@ -76,8 +76,8 @@ export interface DetailBuild {
 export interface DetailRelease {
     channel: string
     time: string
-    url: string
-    announcePlace: string
+    url?: string
+    announcePlace?: string
 }
 
 export interface DetailFeatureIds {
@@ -112,12 +112,12 @@ export interface DetailDownload {
 
 export interface DetailContent {
     build: DetailBuild
-    release?: DetailRelease
+    release: DetailRelease
     featureIds?: DetailFeatureIds
     nav: { previous?: DetailNavRef; next?: DetailNavRef }
     belongsTo: DetailBelongsTo
-    updateId?: DetailUpdateId[]
-    download?: DetailDownload
+    updateId: DetailUpdateId[]
+    download: DetailDownload[]
 }
 
 // CategoryList 页面数据
