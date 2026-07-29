@@ -98,6 +98,12 @@ const openAbout = () => {
             </template>
             功能 ID
         </Tab>
+        <Tab value="/download" to="/download">
+            <template #icon>
+                <CloudDownload24RegularIcon />
+            </template>
+            下载
+        </Tab>
         <Tab value="/settings" to="/settings">
             <template #icon>
                 <Settings24RegularIcon />

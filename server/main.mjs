@@ -241,6 +241,7 @@ const routes = new Map([
         },
     ],
     ['/latestBuilds', { handler: serveData('index/latest-builds.json', 'latest') }],
+    ['/download', { handler: serveData('index/download.json', 'download') }],
     ['/version', { handler: serveDataVersion }],
     ['/category', { handler: serveCategory }],
     ['/category/', { handler: serveCategory, prefix: true }],

@@ -185,3 +185,33 @@ export interface SearchBuildItem {
     platform: string
     build: string
 }
+
+// 下载页面数据
+export interface DownloadLink {
+    name: string
+    url: string
+}
+
+export interface DownloadBadge {
+    text: string
+    color: BuiltInColor
+}
+
+export interface SelfBuildItem {
+    name: string
+    build: string
+    semester: string
+    badge?: DownloadBadge
+}
+
+export interface DownloadContent {
+    iso: DownloadLink[]
+    self: {
+        mainline: SelfBuildItem[]
+        baseline: SelfBuildItem[]
+    }
+    esd: {
+        name: string
+        links: DownloadLink[]
+    }[]
+}
