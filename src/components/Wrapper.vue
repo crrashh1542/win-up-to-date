@@ -1,26 +1,39 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { version } from '../../package.json'
 
 import Code24RegularIcon from '@iconify-vue/fluent/code-24-regular'
+import CloudDownload24RegularIcon from '@iconify-vue/fluent/cloud-download-24-regular'
 import Info24RegularIcon from '@iconify-vue/fluent/info-24-regular'
 import Library24RegularIcon from '@iconify-vue/fluent/library-24-regular'
 import Settings24RegularIcon from '@iconify-vue/fluent/settings-24-regular'
 import Tag24RegularIcon from '@iconify-vue/fluent/tag-24-regular'
 
+import Badge from './widgets/Badge.vue'
+import Tab from './widgets/Tab.vue'
+import Tablist from './widgets/Tablist.vue'
 import Foo from './Footer.vue'
 import Popup from './AboutPopup.vue'
 import Search from './Search.vue'
-import Tablist from './widgets/Tablist.vue'
-import Tab from './widgets/Tab.vue'
+
+import type { BuildInfo, BuiltInColor } from '@/types'
+import buildInfo from '../../scripts/buildInfo.json'
 
 const router = useRouter()
 const route = useRoute()
 defineOptions({ name: 'MainWrapper' })
 
-const appVersion = ref(version)
 const isPopupVisible = ref(false)
+
+// 标题旁的 badge
+const buildBadge = computed<{ text: string; color: BuiltInColor } | null>(
+    () => {
+        const meta = buildInfo as BuildInfo
+        if (meta.ci) return { text: 'CI', color: 'blue' }
+        if (meta.beta) return { text: 'Beta', color: 'green' }
+        return null
+    }
+)
 
 // 导航选中状态，与当前路由前缀同步
 const selectedNav = computed(() => {
@@ -47,9 +60,15 @@ const openAbout = () => {
     <!-- Part 1 ---- 顶部导航栏 -->
     <div class="topbar">
         <div class="title">
-            <router-link to="/" class="name">Windows Up-to-Date</router-link
-            >&nbsp;
-            <span class="version">v{{ appVersion }}</span>
+            <router-link to="/" class="name">Windows Up-to-Date</router-link>
+            <Badge
+                v-if="buildBadge"
+                class="build-badge"
+                :color="buildBadge.color"
+                variant="outlined"
+            >
+                {{ buildBadge.text }}
+            </Badge>
         </div>
         <div class="search">
             <Search />
@@ -123,9 +142,8 @@ const openAbout = () => {
             font-weight: 600;
         }
 
-        .version {
-            color: #999;
-            font-size: 14px;
+        .build-badge {
+            margin-left: 8px;
         }
     }
 
