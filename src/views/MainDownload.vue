@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import ArrowDown20RegularIcon from '@iconify-vue/fluent/arrow-down-20-regular'
+import NProgress from '@/utils/progress'
+import ArrowDown16RegularIcon from '@iconify-vue/fluent/arrow-down-16-regular'
+import ArrowRight16RegularIcon from '@iconify-vue/fluent/arrow-right-16-regular'
 import Open20RegularIcon from '@iconify-vue/fluent/open-20-regular'
 
+import DownloadEsd from '@/components/DownloadEsd.vue'
 import Badge from '@/components/widgets/Badge.vue'
-import Button from '@/components/widgets/Button.vue'
 import Card from '@/components/widgets/Card.vue'
+
 import request from '@/utils/request'
-import NProgress from '@/utils/progress'
 import type { DownloadContent, SelfBuildItem } from '@/types'
 
 defineOptions({ name: 'MainDownload' })
@@ -111,7 +113,7 @@ const selfPath = (item: SelfBuildItem) =>
             <span
                 >点击{{ isBaselineExpanded ? '收起' : '展开' }} Base 版本</span
             >
-            <ArrowDown20RegularIcon
+            <ArrowDown16RegularIcon
                 class="arrow"
                 :class="{ expanded: isBaselineExpanded }"
                 width="16"
@@ -120,26 +122,16 @@ const selfPath = (item: SelfBuildItem) =>
         </Card>
 
         <!-- PART 3 官方 ESD -->
-        <div class="u-catalog">官方 ESD</div>
-        <div class="grid esd-grid">
-            <Card v-for="item in download.esd" :key="item.name" mode="flex">
-                <div class="data">
-                    <div class="title">{{ item.name }}</div>
-                </div>
-                <div class="links">
-                    <a
-                        v-for="link in item.links"
-                        :key="link.name"
-                        :href="link.url"
-                        target="_blank"
-                    >
-                        <Button variant="outlined" color="blue">{{
-                            link.name
-                        }}</Button>
-                    </a>
-                </div>
-            </Card>
+        <div class="u-catalog">
+            <span>官方 ESD</span>
+            <router-link to="/download/esd" class="u-link">
+                <Card mode="flex" class="catalog-card u-hoverable">
+                    查看更多&nbsp;
+                    <ArrowRight16RegularIcon width="16" height="16" />
+                </Card>
+            </router-link>
         </div>
+        <DownloadEsd :esd="download.esd" />
     </template>
 
     <div v-else-if="isError" class="placeholder">加载失败，请稍后重试</div>
@@ -164,8 +156,15 @@ const selfPath = (item: SelfBuildItem) =>
         font-size: 14px;
         color: #666;
     }
+    // ESD 小标题的查看更多按钮
+    &.catalog-card {
+        padding: 0.5em 1em;
+        font-weight: 400;
+        font-size: 14px;
+        color: #666;
+    }
 }
-
+// 官方 ISO 的卡片添加一个 hover 效果
 .hover-outline {
     transition: all 0.1s ease;
     &:hover {
@@ -175,6 +174,10 @@ const selfPath = (item: SelfBuildItem) =>
             color: @wu-color-blue !important;
         }
     }
+}
+.u-catalog {
+    padding: 0.4em 0 0;
+    justify-content: space-between;
 }
 
 // 自构建 ISO
@@ -200,14 +203,6 @@ const selfPath = (item: SelfBuildItem) =>
             font-size: 14px;
             margin-top: 1em;
         }
-    }
-}
-
-// 官方 ESD
-.esd-grid {
-    grid-template-columns: 1fr;
-    button {
-        margin-left: 0.33em;
     }
 }
 

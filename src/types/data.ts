@@ -205,14 +205,21 @@ export interface SelfBuildItem {
     badge?: DownloadBadge
 }
 
+export interface DownloadEsdItem {
+    name: string
+    links: DownloadLink[]
+}
+
+export interface DownloadEsdCategory {
+    name: string
+    value: string
+}
+
 export interface DownloadContent {
     iso: DownloadLink[]
     self: {
         mainline: SelfBuildItem[]
         baseline: SelfBuildItem[]
     }
-    esd: {
-        name: string
-        links: DownloadLink[]
-    }[]
+    esd: DownloadEsdItem[]
 }

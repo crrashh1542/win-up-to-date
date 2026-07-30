@@ -235,6 +235,27 @@ const serveDownload = async (res) => {
     }
 }
 
+// 官方 ESD 下载页
+// /download/esd 返回分类列表，/download/esd/:value 返回对应 json
+const serveDownloadEsd = async (res, _params, reqUrl) => {
+    const value = reqUrl.pathname.slice('/download/esd/'.length)
+    if (!value) {
+        return serveData('index/download-esd.json', 'downloadEsdList')(
+            res,
+            _params,
+            reqUrl
+        )
+    }
+    if (!isSafeId(value)) {
+        return errParam(res)
+    }
+    return serveData(path.join('download', `${value}.json`), 'downloadEsd')(
+        res,
+        _params,
+        reqUrl
+    )
+}
+
 const serveDetail = async (res, _params, reqUrl) => {
     const segments = reqUrl.pathname.slice('/detail/'.length).split('/')
     const [platform, build] = segments
@@ -270,6 +291,8 @@ const routes = new Map([
     ],
     ['/latestBuilds', { handler: serveData('index/latest-builds.json', 'latest') }],
     ['/download', { handler: serveDownload }],
+    ['/download/esd', { handler: serveDownloadEsd }],
+    ['/download/esd/', { handler: serveDownloadEsd, prefix: true }],
     ['/version', { handler: serveDataVersion }],
     ['/category', { handler: serveCategory }],
     ['/category/', { handler: serveCategory, prefix: true }],

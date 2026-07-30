@@ -48,6 +48,12 @@ const router = createRouter({
             meta: { title: '下载' },
         },
         {
+            path: '/download/esd',
+            name: 'downloadEsd',
+            component: () => import('@/views/MainDownloadEsd.vue'),
+            meta: { title: '下载官方 ESD' },
+        },
+        {
             path: '/feature-id',
             redirect: '/feature-id/germanium-25h2',
         },
