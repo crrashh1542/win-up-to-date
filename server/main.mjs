@@ -1,7 +1,7 @@
 /**
  * Windows Up-to-Date 服务端脚本
  * @author crrashh1542
- * @version 3.4
+ * @version 3.5
  */
 
 import { execFile } from 'node:child_process'
@@ -15,7 +15,7 @@ import { handleDeploy } from './admin.js'
 
 const execFileP = promisify(execFile)
 
-const serverVersion = '3.4'
+const serverVersion = '3.5'
 const apiVersion = 2
 const port = 9884
 const cacheSize = 200
@@ -207,6 +207,34 @@ const serveId = async (res, _params, reqUrl) => {
     return serveData(idPath, 'id')(res, _params, reqUrl)
 }
 
+// 主下载页
+// 读取 Win11- 前 3 个 + Win10- 第 1 个 json 的前 2 项，作为 esd 字段
+const serveDownload = async (res) => {
+    try {
+        const base = await readCache(
+            path.join(dataRoot, 'index', 'download.json')
+        )
+        // 文件名降序遍历 download 目录
+        const names = (await fs.readdir(path.join(dataRoot, 'download')))
+            .filter((name) => name.endsWith('.json'))
+            .sort()
+            .reverse()
+        // 取 Win11- 前 3 个 + Win10- 第 1 个（最新的消费者版 + 商业版）
+        const targets = [
+            ...names.filter((name) => name.startsWith('Win11-')).slice(0, 3),
+            ...names.filter((name) => name.startsWith('Win10-')).slice(0, 1),
+        ]
+        const esd = []
+        for (const name of targets) {
+            const arr = await readCache(path.join(dataRoot, 'download', name))
+            if (Array.isArray(arr)) esd.push(...arr.slice(0, 2))
+        }
+        sendJson(res, 200, okPayload('download', { ...base, esd }))
+    } catch {
+        errValue(res)
+    }
+}
+
 const serveDetail = async (res, _params, reqUrl) => {
     const segments = reqUrl.pathname.slice('/detail/'.length).split('/')
     const [platform, build] = segments
@@ -241,7 +269,7 @@ const routes = new Map([
         },
     ],
     ['/latestBuilds', { handler: serveData('index/latest-builds.json', 'latest') }],
-    ['/download', { handler: serveData('index/download.json', 'download') }],
+    ['/download', { handler: serveDownload }],
     ['/version', { handler: serveDataVersion }],
     ['/category', { handler: serveCategory }],
     ['/category/', { handler: serveCategory, prefix: true }],

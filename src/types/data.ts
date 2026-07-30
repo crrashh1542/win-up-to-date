@@ -189,6 +189,7 @@ export interface SearchBuildItem {
 // 下载页面数据
 export interface DownloadLink {
     name: string
+    description: string
     url: string
 }
 

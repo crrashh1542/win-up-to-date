@@ -44,8 +44,9 @@ const selfPath = (item: SelfBuildItem) =>
     <div class="u-banner">下载</div>
 
     <template v-if="download">
+        <!-- PART 1 官方 ISO -->
         <div class="u-catalog">官方 ISO 镜像</div>
-        <div class="iso-grid">
+        <div class="grid iso-grid">
             <a
                 v-for="item in download.iso"
                 :key="item.url"
@@ -55,20 +56,23 @@ const selfPath = (item: SelfBuildItem) =>
                 <Card mode="flex" class="hover-outline">
                     <div class="data">
                         <div class="title">{{ item.name }}</div>
+                        <div class="desc">{{ item.description }}</div>
                     </div>
                     <Open20RegularIcon width="20" height="20" />
                 </Card>
             </a>
         </div>
 
+        <!-- PART 2 自构建 ISO -->
         <div class="u-catalog">自构建 ISO</div>
-        <div class="self-grid">
+        <!-- 主线 -->
+        <div class="grid self-grid mainline">
             <a
                 v-for="item in download.self.mainline"
                 :key="item.build"
                 :href="selfPath(item)"
             >
-                <Card mode="flex" class="self-card u-hoverable">
+                <Card mode="flex" class="grid self-card u-hoverable">
                     <div class="name">{{ item.name }}</div>
                     <div class="title">
                         <span>{{ item.build }}</span>
@@ -80,8 +84,8 @@ const selfPath = (item: SelfBuildItem) =>
                 </Card>
             </a>
         </div>
-
-        <div v-show="isBaselineExpanded" class="self-grid">
+        <!-- 基线 -->
+        <div v-show="isBaselineExpanded" class="grid self-grid">
             <a
                 v-for="item in download.self.baseline"
                 :key="item.build"
@@ -108,15 +112,16 @@ const selfPath = (item: SelfBuildItem) =>
                 >点击{{ isBaselineExpanded ? '收起' : '展开' }} Base 版本</span
             >
             <ArrowDown20RegularIcon
-                class="dropdown-arrow"
-                :class="{ 'is-expanded': isBaselineExpanded }"
+                class="arrow"
+                :class="{ expanded: isBaselineExpanded }"
                 width="16"
                 height="16"
             />
         </Card>
 
+        <!-- PART 3 官方 ESD -->
         <div class="u-catalog">官方 ESD</div>
-        <div class="esd-grid">
+        <div class="grid esd-grid">
             <Card v-for="item in download.esd" :key="item.name" mode="flex">
                 <div class="data">
                     <div class="title">{{ item.name }}</div>
@@ -143,30 +148,37 @@ const selfPath = (item: SelfBuildItem) =>
 <style lang="less" scoped>
 @card-spacing: 6px;
 
-.iso-grid,
-.esd-grid {
+.grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: @card-spacing;
     margin-bottom: @card-spacing;
+}
 
-    .card {
-        align-items: center;
-        justify-content: space-between;
-        margin: 0;
-    }
-
-    button {
-        margin-left: 0.33em;
+.card {
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+    .desc {
+        margin-top: 0.5em;
+        font-size: 14px;
+        color: #666;
     }
 }
 
-.self-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: @card-spacing;
-    margin-bottom: @card-spacing;
+.hover-outline {
+    transition: all 0.1s ease;
+    &:hover {
+        border: 1px solid @wu-color-blue;
+        color: @wu-color-blue;
+        * {
+            color: @wu-color-blue !important;
+        }
+    }
+}
 
+// 自构建 ISO
+.self-grid {
     .self-card {
         flex-direction: column;
         align-items: flex-start;
@@ -191,26 +203,26 @@ const selfPath = (item: SelfBuildItem) =>
     }
 }
 
+// 官方 ESD
+.esd-grid {
+    grid-template-columns: 1fr;
+    button {
+        margin-left: 0.33em;
+    }
+}
+
+// 自构建 ISO 展开 Base 版本
 .dropdown {
     justify-content: center;
     gap: 4px;
     cursor: pointer;
     user-select: none;
     font-size: 15px;
-
-    .dropdown-arrow {
+    .arrow {
         transition: transform 0.2s ease;
     }
-    .dropdown-arrow.is-expanded {
+    .arrow.expanded {
         transform: rotate(180deg);
-    }
-}
-
-.hover-outline {
-    transition: all 0.1s ease;
-    &:hover {
-        border: 1px solid @wu-color-blue;
-        color: @wu-color-blue;
     }
 }
 
@@ -221,10 +233,10 @@ const selfPath = (item: SelfBuildItem) =>
     color: #999;
 }
 
-// 桌面端官方 iso 链接固定为 3 个
+// 桌面端自构建 iso 链接固定为 2 个
 @media screen and (min-width: @wu-mobile-breakpoint) {
-    .iso-grid {
-        grid-template-columns: repeat(3, 1fr);
+    .self-grid.mainline {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 </style>
