@@ -21,17 +21,13 @@ import buildInfo from '../../scripts/buildInfo.json'
 const route = useRoute()
 defineOptions({ name: 'MainWrapper' })
 
-const isPopupVisible = ref(false)
-
 // 标题旁的 badge
-const buildBadge = computed<{ text: string; color: BuiltInColor } | null>(
-    () => {
-        const meta = buildInfo as BuildInfo
-        if (meta.ci) return { text: 'CI', color: 'blue' }
-        if (meta.beta) return { text: 'Beta', color: 'green' }
-        return null
-    }
-)
+const buildBadge = computed<{ text: string; color: BuiltInColor } | null>(() => {
+    const meta = buildInfo as BuildInfo
+    if (meta.ci) return { text: 'CI', color: 'blue' }
+    if (meta.beta) return { text: 'Beta', color: 'green' }
+    return null
+})
 
 // 导航选中状态，与当前路由前缀同步
 const selectedNav = computed(() => {
@@ -106,9 +102,6 @@ const selectedNav = computed(() => {
         </div>
         <Foo />
     </main>
-
-    <!-- Part 4 ---- 右上角可触发的”关于”弹窗 -->
-    <Popup v-model:visibility="isPopupVisible" />
 </template>
 
 <style lang="less" scoped>
@@ -204,8 +197,7 @@ const selectedNav = computed(() => {
     &.selected {
         position: relative;
         background-color: @wu-color-main;
-        padding: (@wu-layout-sidenav-padding-x - 1px)
-            (@wu-layout-sidenav-padding-y - 1px); // 由于被选中后会有个 1px 的 border，所以减去 1px
+        padding: (@wu-layout-sidenav-padding-x - 1px) (@wu-layout-sidenav-padding-y - 1px); // 由于被选中后会有个 1px 的 border，所以减去 1px
         border: 1px solid @wu-color-border;
         color: @wu-color-blue;
         .tab-content {
