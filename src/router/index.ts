@@ -18,12 +18,6 @@ const router = createRouter({
             component: () => import('@/views/MainHome.vue'),
         },
         {
-            path: '/about',
-            name: 'about',
-            component: () => import('@/views/MainAbout.vue'),
-            meta: { title: '关于项目' },
-        },
-        {
             path: '/settings',
             name: 'settings',
             component: () => import('@/views/MainSettings.vue'),

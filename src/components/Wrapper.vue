@@ -13,13 +13,11 @@ import Badge from './widgets/Badge.vue'
 import Tab from './widgets/Tab.vue'
 import Tablist from './widgets/Tablist.vue'
 import Foo from './Footer.vue'
-import Popup from './AboutPopup.vue'
 import Search from './Search.vue'
 
 import type { BuildInfo, BuiltInColor } from '@/types'
 import buildInfo from '../../scripts/buildInfo.json'
 
-const router = useRouter()
 const route = useRoute()
 defineOptions({ name: 'MainWrapper' })
 
@@ -42,18 +40,6 @@ const selectedNav = computed(() => {
     if (path.startsWith('/category')) return '/category'
     return path
 })
-
-const openAbout = () => {
-    const mobileRegex =
-        /android|iphone|ipad|ipod|blackberry|mobile|phone|webos|kindle|tablet/i
-    if (mobileRegex.test(navigator.userAgent.toLowerCase())) {
-        // 如果匹配移动端规则，就前往单独的关于页面
-        router.push('/about')
-    } else {
-        // 否则（即 PC 端则通过弹窗展示关于页面）
-        isPopupVisible.value = true
-    }
-}
 </script>
 
 <template>
@@ -74,7 +60,7 @@ const openAbout = () => {
             <Search />
         </div>
         <div class="about">
-            <Info24RegularIcon @click="openAbout" />
+            <!-- <Info24RegularIcon @click="openAbout" /> -->
         </div>
     </div>
 
