@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useBuildsStore } from '@/stores/latestBuilds'
+import { useBuildsStore } from '@/stores/apiLatestBuilds'
 
 defineOptions({ name: 'MainFooter' })
 

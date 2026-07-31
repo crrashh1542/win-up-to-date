@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
+import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
 
 import Badge from '@/components/widgets/Badge.vue'
 import Card from '@/components/widgets/Card.vue'
@@ -7,53 +8,24 @@ import Tablist from '@/components/widgets/Tablist.vue'
 import Tab from '@/components/widgets/Tab.vue'
 
 import icons from '@/assets/icons'
-import request from '@/utils/request'
-import NProgress from '@/utils/progress'
-import type { MainCategory } from '@/types/data'
+import { useCategoryStore } from '@/stores/apiCategory'
 
-const pageData = reactive({
-    data: [] as MainCategory[],
-    isLoading: true,
-})
-
-const selectedCategory = ref<string>()
+const { list, isLoading, selectedCategory } = storeToRefs(useCategoryStore())
+useCategoryStore().fetchCategories()
 
 // 当前选中的分类数据
 const currentCategory = computed(() => {
-    return pageData.data.find((cat) => cat.id === selectedCategory.value)
+    return list.value.find((cat) => cat.id === selectedCategory.value)
 })
-
-// 请求数据
-const fetchData = async () => {
-    pageData.isLoading = true
-    NProgress.start()
-    try {
-        const { data: resp } = await request({
-            url: '/category',
-            method: 'get',
-        })
-        pageData.data = resp.content
-        // 默认选中第一个分类
-        if (resp.content.length > 0 && !selectedCategory.value) {
-            selectedCategory.value = resp.content[0].id
-        }
-    } catch (error) {
-        console.error(error)
-    } finally {
-        pageData.isLoading = false
-        NProgress.done()
-    }
-}
-fetchData()
 </script>
 
 <template>
     <div class="u-banner">平台</div>
 
-    <div class="category" v-if="!pageData.isLoading">
+    <div class="category" v-if="!isLoading">
         <!-- Tab 切换 -->
         <Tablist v-model="selectedCategory">
-            <Tab v-for="cat in pageData.data" :value="cat.id" :key="cat.id">
+            <Tab v-for="cat in list" :value="cat.id" :key="cat.id">
                 <template #icon>
                     <img :src="icons[cat.icon]" class="icon" />
                 </template>
