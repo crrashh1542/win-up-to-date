@@ -12,11 +12,7 @@ export default defineConfig({
     plugins: [
         vue(),
         VitePWA({
-            includeAssets: [
-                'favicon.ico',
-                'apple-touch-icon.png',
-                'mask-icon.svg',
-            ],
+            includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
             injectRegister: 'script-defer',
             manifest: {
                 name: 'Windows Up-to-Date',
@@ -55,14 +51,14 @@ export default defineConfig({
         rolldownOptions: {
             output: {
                 minify: true,
-                assetFileNames: (asset) => {
-                    if (asset.name.startsWith('vendor-')) {
+                assetFileNames: ({ names }) => {
+                    if (names[0].startsWith('vendor-')) {
                         return '_wu/vendor/[hash].[ext]'
                     }
                     return '_wu/[name]-[hash].[ext]'
                 },
-                chunkFileNames: (chunk) => {
-                    if (chunk.name.startsWith('vendor-')) {
+                chunkFileNames: ({ name }) => {
+                    if (name.startsWith('vendor-')) {
                         return '_wu/vendor/[hash].js'
                     }
                     return '_wu/[name]-[hash].js'
