@@ -1,35 +1,46 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { Component } from 'vue'
 import { storeToRefs } from 'pinia'
 
+import AlignBottom24RegularIcon from '@iconify-vue/fluent/align-bottom-24-regular'
 import Branch24RegularIcon from '@iconify-vue/fluent/branch-24-regular'
 import Calendar24RegularIcon from '@iconify-vue/fluent/calendar-24-regular'
 import Chat24RegularIcon from '@iconify-vue/fluent/chat-24-regular'
 import Code24RegularIcon from '@iconify-vue/fluent/code-24-regular'
+import Info24RegularIcon from '@iconify-vue/fluent/info-24-regular'
 import LaptopSettings24RegularIcon from '@iconify-vue/fluent/laptop-settings-24-regular'
-import Search24RegularIcon from '@iconify-vue/fluent/search-24-regular'
 import WeatherMoon24RegularIcon from '@iconify-vue/fluent/weather-moon-24-regular'
 
 import Card from '@/components/widgets/Card.vue'
 import Switch from '@/components/widgets/Switch.vue'
 import repoInfo from '@/utils/parseRepoInfo'
+
+import { useBuildsStore } from '@/stores/apiLatestBuilds'
 import { useSettingsStore } from '@/stores/settings'
-import type { SettingsMenu } from '@/types'
+import type { SettingsMenu, AboutMenu } from '@/types'
 
 const icons: Record<string, Component> = {
-    'weather-moon': WeatherMoon24RegularIcon,
-    'laptop-settings': LaptopSettings24RegularIcon,
     branch: Branch24RegularIcon,
     calendar: Calendar24RegularIcon,
-    search: Search24RegularIcon,
-    code: Code24RegularIcon,
     chat: Chat24RegularIcon,
+    chart: AlignBottom24RegularIcon,
+    code: Code24RegularIcon,
+    info: Info24RegularIcon,
+    'laptop-settings': LaptopSettings24RegularIcon,
+    'weather-moon': WeatherMoon24RegularIcon,
 }
 
+// 获取网站数据版本
 const settingsStore = useSettingsStore()
 const { settings } = storeToRefs(settingsStore)
+const { dataVersion } = storeToRefs(useBuildsStore())
+useBuildsStore().fetchDataVersion()
 
-const settingsMenu: SettingsMenu = [
+const dataHash = computed(() => dataVersion.value?.hash ?? 'unknown')
+const dataDate = computed(() => dataVersion.value?.date ?? 'unknown')
+
+const settingsMenu: SettingsMenu[] = [
     {
         name: '全局设置',
         id: 0,
@@ -68,11 +79,18 @@ const settingsMenu: SettingsMenu = [
     },
 ]
 
-const aboutMenu = [
+// 依赖 dataVersion（异步加载），需要 computed 才能在数据就绪后刷新
+const aboutMenu = computed<AboutMenu[]>(() => [
     {
-        name: '项目版本',
-        icon: 'search',
+        name: '应用版本',
+        icon: 'info',
         value: `v${repoInfo.version} (build ${repoInfo.build})`,
+    },
+    {
+        name: '当前数据版本',
+        icon: 'chart',
+        value: `${dataDate.value} (${dataHash.value})`,
+        link: `https://github.com/crrashh1542/win-up-to-date-data/commit/${dataHash.value}`,
     },
     {
         name: '开源地址',
@@ -81,12 +99,12 @@ const aboutMenu = [
         link: repoInfo.repo,
     },
     {
-        name: '交流群组',
+        name: '交流 QQ 群',
         icon: 'chat',
         value: '442133970',
         link: 'https://qm.qq.com/q/UAI4de5OM0',
     },
-]
+])
 </script>
 
 <template>
@@ -110,10 +128,7 @@ const aboutMenu = [
 
     <p>
         如你所见，这是一个反映 Windows
-        系统各版本情况实时进展的统计<s>和一堆其它莫名其妙功能混一起的</s>站点。
-    </p>
-    <p>
-        作者云萧自身也是一个 Windows Insider 爱好者，若你喜欢这个项目，给项目点个小星星吧！=≡Σ(((
+        系统各版本情况实时进展的统计<s>和一堆其它莫名其妙功能的</s>站点。如果觉得不错，给项目点个小星星吧！=≡Σ(((
         つ•̀ω•́)つ
     </p>
 
@@ -125,7 +140,7 @@ const aboutMenu = [
         :href="item.link"
         :target="item.link ? '_blank' : undefined"
     >
-        <Card mode="flex">
+        <Card mode="flex" :class="item.link ? 'u-hoverable' : ''">
             <span class="item">
                 <component :is="icons[item.icon]" width="24" height="24" />
                 {{ item.name }}
@@ -135,18 +150,10 @@ const aboutMenu = [
     </component>
 
     <p>
-        本项目数据托管于<a
-            href="https://github.com/crr0.ashh1542/win-up-to-date/tree/data"
-            target="_blank"
-            >公共维护的仓库</a
-        >。 项目遵循
+        本项目遵循
         <a href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank">GPL-3.0 开源协议</a
-        >，并仅限于作展示和交流学习用途。
-    </p>
-
-    <p>
-        本项目与 Microsoft Corporation 无关，Windows 为 Microsoft Corporation
-        的注册商标。项目首页采用的图标来自
+        >，并仅限于作展示和交流学习用途。本项目与 Microsoft Corporation 无关，Windows 为 Microsoft
+        Corporation 的注册商标。项目首页采用的图标来自
         <a href="https://www.iconfont.cn">iconfont</a>，其余所有图标均来自
         <a href="https://github.com/microsoft/fluentui-system-icons">Fluent UI System Icons</a>。
     </p>

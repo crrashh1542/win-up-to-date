@@ -4,7 +4,7 @@
 
 import packageInfo from '../../package.json'
 import buildInfo from '../../scripts/buildInfo.json'
-// import type { AboutItem } from '@/types'
+import type { RepoInfo } from '@/types'
 
 // 项目信息相关
 const pkgRepo = packageInfo.repository.url.split('+')[1] // 项目地址
@@ -28,7 +28,7 @@ const buildTag = (() => {
     return buildNum + '.' + buildBranch + '.' + buildTime
 })()
 
-const repoInfo = {
+const repoInfo: RepoInfo = {
     version: packageInfo.version,
     build: buildInfo.build,
     hash: buildInfo.hash,
