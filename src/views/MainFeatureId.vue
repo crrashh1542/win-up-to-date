@@ -76,7 +76,7 @@ watch(
         </Card>
 
         <Card :shadow="true" v-if="currentPage">
-            <component v-for="(item, index) in currentPage.list" :key="index">
+            <template v-for="(item, index) in currentPage.list" :key="index">
                 <hr v-if="index > 0" />
                 <div class="list-item u-hoverable">
                     <div class="id">
@@ -86,14 +86,11 @@ watch(
                         <div class="title">{{ item.title }}</div>
                         <div class="description">{{ item.description }}</div>
                     </div>
-                    <div
-                        class="variant"
-                        v-if="item.variant && item.variant.length > 0"
-                    >
+                    <div class="variant" v-if="item.variant && item.variant.length > 0">
                         variant: {{ item.variant.join(', ') }}
                     </div>
                 </div>
-            </component>
+            </template>
         </Card>
     </div>
 </template>
