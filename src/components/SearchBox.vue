@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
 
 import Search24RegularIcon from '@iconify-vue/fluent/search-24-regular'
 
@@ -62,13 +63,15 @@ const doSearch = debounce(async (q: string) => {
         results.value = Array.isArray(resp.content) ? resp.content : []
         activeIndex.value = -1
         isOpen.value = results.value.length > 0
-    } catch (err: any) {
+    } catch (err) {
         console.log(err)
-        toast.show({
-            title: '搜索失败',
-            body: err.response?.data?.message ?? '网络异常',
-            intent: 'error',
-        })
+        if (axios.isAxiosError(err)) {
+            toast.show({
+                title: '搜索失败',
+                body: err.response?.data?.message ?? '网络异常',
+                intent: 'error',
+            })
+        }
         results.value = []
         isOpen.value = false
     }

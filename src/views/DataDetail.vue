@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import axios from 'axios'
 import request from '@/utils/request'
 
 import Box24RegularIcon from '@iconify-vue/fluent/box-24-regular'
@@ -66,8 +67,8 @@ const fetchData = async (platform: string, build: string) => {
             method: 'get',
         })
         initDetailData(resp, pageData)
-    } catch (error: any) {
-        if (error.response?.status === 404) {
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response?.status === 404) {
             router.replace('/404')
         }
         pageData.isError = true
@@ -123,9 +124,7 @@ watch(
                 <p>
                     <SquareMultiple24RegularIcon width="22" height="22" />
                     构建归属 /
-                    <router-link
-                        :to="'/category/' + pageData.data.belongsTo.path"
-                    >
+                    <router-link :to="'/category/' + pageData.data.belongsTo.path">
                         {{ pageData.data.belongsTo.name }}
                     </router-link>
                 </p>
@@ -171,35 +170,16 @@ watch(
                 从 UUP 获取构建
             </div>
 
-            <div
-                v-if="
-                    pageData.data.updateId !== undefined &&
-                    pageData.data.updateId.length > 0
-                "
-            >
-                <p
-                    class="u-para-code"
-                    v-for="id in pageData.data.updateId"
-                    :key="id.arch"
-                >
+            <div v-if="pageData.data.updateId !== undefined && pageData.data.updateId.length > 0">
+                <p class="u-para-code" v-for="id in pageData.data.updateId" :key="id.arch">
                     {{ id.arch }}：
-                    <Code
-                        v-if="id.available === false"
-                        :value="id.id"
-                        is-copiable
-                    />
+                    <Code v-if="id.available === false" :value="id.id" is-copiable />
                     <template v-else>
                         <Code :value="id.id" />
-                        <a
-                            :href="`https://uupdump.net/selectlang.php?id=${id.id}`"
-                            target="_blank"
-                        >
+                        <a :href="`https://uupdump.net/selectlang.php?id=${id.id}`" target="_blank">
                             <Button>
                                 <template #before>
-                                    <Open16RegularIcon
-                                        width="1.25em"
-                                        height="1.25em"
-                                    />
+                                    <Open16RegularIcon width="1.25em" height="1.25em" />
                                 </template>
                                 打开
                             </Button>
@@ -237,11 +217,7 @@ watch(
                         MD5：<Code :value="dl.md5" is-break-word is-copiable />
                     </p>
                     <p class="u-para-code" v-if="dl.sha256">
-                        SHA-256：<Code
-                            :value="dl.sha256"
-                            is-break-word
-                            is-copiable
-                        />
+                        SHA-256：<Code :value="dl.sha256" is-break-word is-copiable />
                     </p>
                 </template>
             </template>

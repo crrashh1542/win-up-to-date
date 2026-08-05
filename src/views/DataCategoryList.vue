@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import request from '@/utils/request'
+import axios from 'axios'
 
 import Code24RegularIcon from '@iconify-vue/fluent/code-24-regular'
 import Laptop24RegularIcon from '@iconify-vue/fluent/laptop-24-regular'
@@ -11,7 +11,10 @@ import Tag24RegularIcon from '@iconify-vue/fluent/tag-24-regular'
 import Card from '@/components/widgets/Card.vue'
 import NProgress from '@/utils/progress'
 import TopNav from '@/components/TopNav.vue'
+
+import request from '@/utils/request'
 import initDetailData from '@/utils/initDetailData'
+
 import type { CategoryContent, NavData } from '@/types'
 
 defineOptions({
@@ -46,8 +49,8 @@ const fetchData = async (platform: string) => {
         })
         initDetailData(resp, pageData)
         pageData.versionRange = formatVersionRange(resp.content.range)
-    } catch (error: any) {
-        if (error.response?.status === 404) {
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response?.status === 404) {
             router.replace('/404')
         }
     } finally {
