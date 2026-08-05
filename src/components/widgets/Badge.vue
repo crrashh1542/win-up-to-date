@@ -15,11 +15,7 @@ const props = withDefaults(
     }
 )
 
-const classes = computed(() => [
-    'badge',
-    `badge-${props.variant}`,
-    `badge-${props.color}`,
-])
+const classes = computed(() => ['badge', `badge-${props.variant}`, `badge-${props.color}`])
 </script>
 
 <template>

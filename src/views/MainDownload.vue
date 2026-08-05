@@ -22,8 +22,7 @@ const { download, isError } = storeToRefs(useDownloadStore())
 useDownloadStore().fetchDownload()
 
 // 自构建卡片详情页路径
-const selfPath = (item: SelfBuildItem) =>
-    `/detail/${item.semester}/${item.build}`
+const selfPath = (item: SelfBuildItem) => `/detail/${item.semester}/${item.build}`
 </script>
 
 <template>
@@ -33,12 +32,7 @@ const selfPath = (item: SelfBuildItem) =>
         <!-- PART 1 官方 ISO -->
         <div class="u-catalog">官方 ISO 镜像</div>
         <div class="grid iso-grid">
-            <a
-                v-for="item in download.iso"
-                :key="item.url"
-                :href="item.url"
-                target="_blank"
-            >
+            <a v-for="item in download.iso" :key="item.url" :href="item.url" target="_blank">
                 <Card mode="flex" class="hover-outline">
                     <div class="data">
                         <div class="title">{{ item.name }}</div>
@@ -53,11 +47,7 @@ const selfPath = (item: SelfBuildItem) =>
         <div class="u-catalog">自构建 ISO 镜像</div>
         <!-- 主线 -->
         <div class="grid self-grid mainline">
-            <a
-                v-for="item in download.self.mainline"
-                :key="item.build"
-                :href="selfPath(item)"
-            >
+            <a v-for="item in download.self.mainline" :key="item.build" :href="selfPath(item)">
                 <Card mode="flex" class="grid self-card u-hoverable">
                     <div class="name">{{ item.name }}</div>
                     <div class="title">
@@ -72,11 +62,7 @@ const selfPath = (item: SelfBuildItem) =>
         </div>
         <!-- 基线 -->
         <div v-show="isBaselineExpanded" class="grid self-grid">
-            <a
-                v-for="item in download.self.baseline"
-                :key="item.build"
-                :href="selfPath(item)"
-            >
+            <a v-for="item in download.self.baseline" :key="item.build" :href="selfPath(item)">
                 <Card mode="flex" class="self-card u-hoverable">
                     <div class="name">{{ item.name }}</div>
                     <div class="title">
@@ -94,9 +80,7 @@ const selfPath = (item: SelfBuildItem) =>
             class="dropdown u-hoverable"
             @click="isBaselineExpanded = !isBaselineExpanded"
         >
-            <span
-                >点击{{ isBaselineExpanded ? '收起' : '展开' }} Base 版本</span
-            >
+            <span>点击{{ isBaselineExpanded ? '收起' : '展开' }} Base 版本</span>
             <ArrowDown16RegularIcon
                 class="arrow"
                 :class="{ expanded: isBaselineExpanded }"

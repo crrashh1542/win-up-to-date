@@ -13,7 +13,7 @@ const icons: Record<string, string> = {
     insider,
     server,
     windows10,
-    windows11
+    windows11,
 }
 
 export default icons

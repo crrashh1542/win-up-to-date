@@ -43,12 +43,9 @@ const okPayload = (type, content) => ({
     content,
 })
 
-const errParam = (res) =>
-    sendJson(res, 400, { message: 'Parameter is invalid!' })
-const errValue = (res) =>
-    sendJson(res, 404, { message: 'Corresponding data is not found!' })
-const errServer = (res) =>
-    sendJson(res, 500, { message: 'Internal server error!' })
+const errParam = (res) => sendJson(res, 400, { message: 'Parameter is invalid!' })
+const errValue = (res) => sendJson(res, 404, { message: 'Corresponding data is not found!' })
+const errServer = (res) => sendJson(res, 500, { message: 'Internal server error!' })
 
 const readJson = async (filePath) => {
     const raw = await fs.readFile(filePath, 'utf-8')
@@ -97,13 +94,7 @@ const readDataVersion = async () => {
         return versionCache.promise
     }
     // %h 短 hash，%cs 提交日期（YYYY-MM-DD）
-    const promise = execFileP('git', [
-        '-C',
-        dataRoot,
-        'log',
-        '-1',
-        '--format=%h%n%cs',
-    ])
+    const promise = execFileP('git', ['-C', dataRoot, 'log', '-1', '--format=%h%n%cs'])
         .then(({ stdout }) => {
             const [hash, date] = stdout.trim().split('\n')
             return { hash, date }
@@ -114,9 +105,7 @@ const readDataVersion = async () => {
                 const v = await readJson(path.join(dataRoot, 'version.json'))
                 return { hash: v.hash ?? 'unknown', date: v.date ?? 'unknown' }
             } catch {
-                console.error(
-                    '[WARN] 无法读取数据仓库版本：Git 不可用且 version.json 缺失'
-                )
+                console.error('[WARN] 无法读取数据仓库版本：Git 不可用且 version.json 缺失')
                 if (err) {
                     console.error('[WARN] Git 错误详情：', err.message || err)
                 }
@@ -145,9 +134,7 @@ const serveSearch = async (res, _params, reqUrl) => {
         // 读取 detail 目录下所有 JSON 文件，提取平台和 build 信息
         const files = await fs.readdir(detailDir, { recursive: true })
         const matches = files
-            .filter(
-                (name) => typeof name === 'string' && name.endsWith('.json')
-            )
+            .filter((name) => typeof name === 'string' && name.endsWith('.json'))
             .map((name) => {
                 const full = name.replace(/\\/g, '/')
                 const lastSlash = full.lastIndexOf('/')
@@ -168,11 +155,7 @@ const serveSearch = async (res, _params, reqUrl) => {
 const serveCategory = async (res, _params, reqUrl) => {
     const platform = reqUrl.pathname.slice('/category/'.length)
     if (!platform) {
-        return serveData('index/category.json', 'categoryList')(
-            res,
-            _params,
-            reqUrl
-        )
+        return serveData('index/category.json', 'categoryList')(res, _params, reqUrl)
     }
     if (!isSafeId(platform)) {
         return errParam(res)
@@ -181,8 +164,7 @@ const serveCategory = async (res, _params, reqUrl) => {
 }
 
 const serveData = (file, type) => async (res, _params, reqUrl) => {
-    const filePath =
-        typeof file === 'function' ? file(reqUrl) : path.join(dataRoot, file)
+    const filePath = typeof file === 'function' ? file(reqUrl) : path.join(dataRoot, file)
     // 注：解析后的路径必须仍位于数据目录内
     const resolved = path.resolve(filePath)
     if (resolved !== dataRoot && !resolved.startsWith(dataRoot + path.sep)) {
@@ -211,9 +193,7 @@ const serveId = async (res, _params, reqUrl) => {
 // 读取 Win11- 前 3 个 + Win10- 第 1 个 json 的前 2 项，作为 esd 字段
 const serveDownload = async (res) => {
     try {
-        const base = await readCache(
-            path.join(dataRoot, 'index', 'download.json')
-        )
+        const base = await readCache(path.join(dataRoot, 'index', 'download.json'))
         // 文件名降序遍历 download 目录
         const names = (await fs.readdir(path.join(dataRoot, 'download')))
             .filter((name) => name.endsWith('.json'))
@@ -240,20 +220,12 @@ const serveDownload = async (res) => {
 const serveDownloadEsd = async (res, _params, reqUrl) => {
     const value = reqUrl.pathname.slice('/download/esd/'.length)
     if (!value) {
-        return serveData('index/download-esd.json', 'downloadEsdList')(
-            res,
-            _params,
-            reqUrl
-        )
+        return serveData('index/download-esd.json', 'downloadEsdList')(res, _params, reqUrl)
     }
     if (!isSafeId(value)) {
         return errParam(res)
     }
-    return serveData(path.join('download', `${value}.json`), 'downloadEsd')(
-        res,
-        _params,
-        reqUrl
-    )
+    return serveData(path.join('download', `${value}.json`), 'downloadEsd')(res, _params, reqUrl)
 }
 
 const serveDetail = async (res, _params, reqUrl) => {
@@ -272,21 +244,14 @@ const serveDetail = async (res, _params, reqUrl) => {
 const categoryPath = (u) =>
     path.join(dataRoot, 'category', u.pathname.slice('/category/'.length) + '.json')
 const detailPath = (u) =>
-    path.join(
-        dataRoot,
-        'detail',
-        u.pathname.split('/')[2],
-        u.pathname.split('/')[3] + '.json'
-    )
-const idPath = (u) =>
-    path.join(dataRoot, 'viveid', u.pathname.slice('/id/'.length) + '.json')
+    path.join(dataRoot, 'detail', u.pathname.split('/')[2], u.pathname.split('/')[3] + '.json')
+const idPath = (u) => path.join(dataRoot, 'viveid', u.pathname.slice('/id/'.length) + '.json')
 
 const routes = new Map([
     [
         '/',
         {
-            handler: (res) =>
-                sendJson(res, 200, { message: 'Service is available!' }),
+            handler: (res) => sendJson(res, 200, { message: 'Service is available!' }),
         },
     ],
     ['/latestBuilds', { handler: serveData('index/latest-builds.json', 'latest') }],
@@ -303,9 +268,7 @@ const routes = new Map([
 ])
 
 // POST 路由表（管理接口）
-const postRoutes = new Map([
-    ['/admin/deploy', { handler: handleDeploy }],
-])
+const postRoutes = new Map([['/admin/deploy', { handler: handleDeploy }]])
 
 // main server
 http.createServer(async (req, res) => {

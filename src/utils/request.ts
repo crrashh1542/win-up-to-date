@@ -9,10 +9,14 @@ const http = axios.create({
 })
 
 http.interceptors.response.use(
-    res => res,
-    error => {
+    (res) => res,
+    (error) => {
         const toast = useToastStore()
-        toast.show({ title: '请求失败', body: error.response?.data?.message ?? '网络异常', intent: 'error' })
+        toast.show({
+            title: '请求失败',
+            body: error.response?.data?.message ?? '网络异常',
+            intent: 'error',
+        })
         return Promise.reject(error)
     }
 )

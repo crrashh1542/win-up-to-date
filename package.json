@@ -22,8 +22,8 @@
         "preview": "vite preview",
         "lint": "eslint \"src/**/*.{js,ts,vue}\"",
         "lint:fix": "pnpm lint -- --fix",
-        "p:check": "prettier . --check",
-        "p:write": "prettier . --write",
+        "format": "prettier . --check",
+        "format:write": "prettier . --write",
         "prepare": "husky"
     },
     "devDependencies": {

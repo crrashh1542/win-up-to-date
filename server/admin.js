@@ -14,11 +14,7 @@ import { promisify } from 'node:util'
 const execFileP = promisify(execFile)
 
 const maxUploadSize = 2 * 1024 * 1024
-const requiredFiles = [
-    'version.json',
-    'index/category.json',
-    'index/latest-builds.json',
-]
+const requiredFiles = ['version.json', 'index/category.json', 'index/latest-builds.json']
 
 /**
  * 发送 JSON 响应
@@ -43,8 +39,7 @@ const errBadRequest = (res, msg) => sendJson(res, 400, { message: msg })
 /**
  * 服务器错误响应
  */
-const errServer = (res, msg) =>
-    sendJson(res, 500, { message: msg || 'Internal server error' })
+const errServer = (res, msg) => sendJson(res, 500, { message: msg || 'Internal server error' })
 
 /**
  * 校验 Bearer Token
@@ -52,9 +47,7 @@ const errServer = (res, msg) =>
 const authenticate = (req) => {
     const expectedToken = process.env.WUTD_ADMIN_TOKEN
     if (!expectedToken) {
-        console.error(
-            '[ERROR] WUTD_ADMIN_TOKEN environment variable is not set'
-        )
+        console.error('[ERROR] WUTD_ADMIN_TOKEN environment variable is not set')
         return false
     }
     const authHeader = req.headers['authorization']
@@ -225,10 +218,7 @@ export const handleDeploy = async (req, res) => {
         // data 目录可能不存在（首次部署）
         if (err.code !== 'ENOENT') {
             await fs.unlink(tmpFile).catch(() => {})
-            return errServer(
-                res,
-                `Failed to backup existing data: ${err.message}`
-            )
+            return errServer(res, `Failed to backup existing data: ${err.message}`)
         }
     }
 

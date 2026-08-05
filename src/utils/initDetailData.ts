@@ -31,17 +31,17 @@ export default (respOrigin: RespOrigin, data: PageData) => {
 
     // 3. 设置导航栏和标题
     if (dataType === 'detail') {
-        data.nav = buildNav(content.nav, 'detail', ref => ({
+        data.nav = buildNav(content.nav, 'detail', (ref) => ({
             platform: ref.category,
             build: ref.build,
-            route: `/detail/${ref.category}/${ref.build}`
+            route: `/detail/${ref.category}/${ref.build}`,
         }))
         setTitle(content.build.number)
     } else {
-        data.nav = buildNav(content.nav, 'categoryList', ref => ({
+        data.nav = buildNav(content.nav, 'categoryList', (ref) => ({
             platform: ref.name,
             path: ref.path,
-            route: `/category/${ref.path}`
+            route: `/category/${ref.path}`,
         }))
         setTitle(content.name)
     }
