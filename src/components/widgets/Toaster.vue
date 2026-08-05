@@ -10,12 +10,14 @@ import { computed } from 'vue'
 import { useToastStore } from '@/stores/toast'
 import Toast from './Toast.vue'
 
+defineOptions({ name: 'WidgetToaster' })
+
 const store = useToastStore()
 const positions = ['top', 'top-end', 'top-start', 'bottom', 'bottom-end', 'bottom-start'] as const
 const grouped = computed(() => {
     const map: Record<string, typeof store.toasts> = {}
     for (const pos of positions) {
-        map[pos] = store.toasts.filter(t => t.position === pos)
+        map[pos] = store.toasts.filter((t) => t.position === pos)
     }
     return map
 })
@@ -28,21 +30,17 @@ function onEnter(el: Element, done: () => void) {
     htmlEl.style.maxHeight = '0'
     htmlEl.style.opacity = '0'
     requestAnimationFrame(() => {
-        const expand = htmlEl.animate(
-            [
-                { maxHeight: '0px' },
-                { maxHeight: height + 'px' },
-            ],
-            { duration: 200, easing: 'cubic-bezier(0.33, 0, 0.67, 1)', fill: 'forwards' },
-        )
+        const expand = htmlEl.animate([{ maxHeight: '0px' }, { maxHeight: height + 'px' }], {
+            duration: 200,
+            easing: 'cubic-bezier(0.33, 0, 0.67, 1)',
+            fill: 'forwards',
+        })
         expand.onfinish = () => {
-            htmlEl.animate(
-                [
-                    { opacity: '0' },
-                    { opacity: '1' },
-                ],
-                { duration: 400, easing: 'cubic-bezier(0.33, 0, 0.67, 1)', fill: 'forwards' },
-            ).onfinish = () => {
+            htmlEl.animate([{ opacity: '0' }, { opacity: '1' }], {
+                duration: 400,
+                easing: 'cubic-bezier(0.33, 0, 0.67, 1)',
+                fill: 'forwards',
+            }).onfinish = () => {
                 htmlEl.style.removeProperty('overflow')
                 htmlEl.style.removeProperty('max-height')
                 htmlEl.style.removeProperty('opacity')
@@ -57,37 +55,24 @@ function onLeave(el: Element, done: () => void) {
     const htmlEl = el as HTMLElement
     const height = htmlEl.scrollHeight
     htmlEl.style.overflow = 'hidden'
-    htmlEl.animate(
-        [
-            { opacity: '1' },
-            { opacity: '0' },
-        ],
-        { duration: 400, easing: 'cubic-bezier(0.33, 0, 0.67, 1)', fill: 'forwards' },
-    ).onfinish = () => {
-        htmlEl.animate(
-            [
-                { maxHeight: height + 'px' },
-                { maxHeight: '0px' },
-            ],
-            { duration: 200, easing: 'cubic-bezier(0.33, 0, 0.67, 1)', fill: 'forwards' },
-        ).onfinish = done
+    htmlEl.animate([{ opacity: '1' }, { opacity: '0' }], {
+        duration: 400,
+        easing: 'cubic-bezier(0.33, 0, 0.67, 1)',
+        fill: 'forwards',
+    }).onfinish = () => {
+        htmlEl.animate([{ maxHeight: height + 'px' }, { maxHeight: '0px' }], {
+            duration: 200,
+            easing: 'cubic-bezier(0.33, 0, 0.67, 1)',
+            fill: 'forwards',
+        }).onfinish = done
     }
 }
 </script>
 
 <template>
     <Teleport to="body">
-        <div
-            v-for="pos in positions"
-            :key="pos"
-            :class="['toaster', `pos-${pos}`]"
-        >
-            <TransitionGroup
-                name="toast"
-                :css="false"
-                @enter="onEnter"
-                @leave="onLeave"
-            >
+        <div v-for="pos in positions" :key="pos" :class="['toaster', `pos-${pos}`]">
+            <TransitionGroup name="toast" :css="false" @enter="onEnter" @leave="onLeave">
                 <Toast
                     v-for="toast in grouped[pos]"
                     :key="toast.id"

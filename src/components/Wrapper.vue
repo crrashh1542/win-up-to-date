@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
 import Code24RegularIcon from '@iconify-vue/fluent/code-24-regular'
 import CloudDownload24RegularIcon from '@iconify-vue/fluent/cloud-download-24-regular'
-import Info24RegularIcon from '@iconify-vue/fluent/info-24-regular'
 import Library24RegularIcon from '@iconify-vue/fluent/library-24-regular'
 import Settings24RegularIcon from '@iconify-vue/fluent/settings-24-regular'
 import Tag24RegularIcon from '@iconify-vue/fluent/tag-24-regular'
@@ -13,13 +12,13 @@ import Badge from './widgets/Badge.vue'
 import Tab from './widgets/Tab.vue'
 import Tablist from './widgets/Tablist.vue'
 import Foo from './Footer.vue'
-import Search from './Search.vue'
+import Search from './SearchBox.vue'
 
 import type { BuildInfo, BuiltInColor } from '@/types'
 import buildInfo from '../../scripts/buildInfo.json'
 
 const route = useRoute()
-defineOptions({ name: 'MainWrapper' })
+defineOptions({ name: 'PageWrapper' })
 
 // 标题旁的 badge
 const buildBadge = computed<{ text: string; color: BuiltInColor } | null>(() => {

@@ -10,16 +10,17 @@ const buildLink = (source?: NavItem) => {
     if (!source) return null
     return {
         route: source.route,
-        text: isDetail.value ? source.build ?? source.platform : source.platform
+        text: isDetail.value ? (source.build ?? source.platform) : source.platform,
     }
 }
+
+defineOptions({ name: 'PageTopNav' })
 
 const prev = computed(() => buildLink(props.data?.prev))
 const next = computed(() => buildLink(props.data?.next))
 </script>
 
 <template>
-    
     <div class="nav">
         <RouterLink class="icon-left" v-if="prev" :to="prev.route">
             <ArrowLeft20FilledIcon width="1em" height="1em" />
@@ -44,16 +45,17 @@ const next = computed(() => buildLink(props.data?.next))
     margin: 24px 0 12px;
     width: 100%;
 
-    .icon-left, .icon-right {
+    .icon-left,
+    .icon-right {
         display: flex;
         align-items: center;
     }
     .icon-left svg {
-        margin-right: .25em;
+        margin-right: 0.25em;
         display: flex;
     }
     .icon-right svg {
-        margin-left: .25em;
+        margin-left: 0.25em;
         display: flex;
     }
 

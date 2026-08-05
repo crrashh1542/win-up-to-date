@@ -1,3 +1,7 @@
+<script lang="ts" setup>
+defineOptions({ name: 'PageFooter' })
+</script>
+
 <template>
     <div class="footer">
         <p>

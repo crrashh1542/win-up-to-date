@@ -10,6 +10,8 @@ import debounce from '@/utils/debounce'
 import { useToastStore } from '@/stores/toast'
 import type { SearchBuildItem } from '@/types/data'
 
+defineOptions({ name: 'PageSearchBox' })
+
 const router = useRouter()
 const toast = useToastStore()
 
@@ -105,10 +107,7 @@ const onKeyDown = (e: KeyboardEvent) => {
         e.preventDefault()
         if (results.value.length === 0) return
         if (!isOpen.value) isOpen.value = true
-        activeIndex.value = Math.min(
-            activeIndex.value + 1,
-            results.value.length - 1
-        )
+        activeIndex.value = Math.min(activeIndex.value + 1, results.value.length - 1)
         scrollToActive()
     } else if (e.key === 'ArrowUp') {
         e.preventDefault()
@@ -158,11 +157,7 @@ const onFocus = () => {
             </template>
         </Input>
         <Teleport to="body">
-            <div
-                v-if="isOpen"
-                class="build-search-dropdown"
-                :style="dropdownStyle"
-            >
+            <div v-if="isOpen" class="build-search-dropdown" :style="dropdownStyle">
                 <div
                     v-for="(item, index) in results"
                     :key="`${item.platform}/${item.build}`"

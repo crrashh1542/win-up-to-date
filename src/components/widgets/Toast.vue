@@ -10,6 +10,8 @@ import Info24Filled from '@iconify-vue/fluent/info-24-filled'
 
 import type { ToastIntent } from '@/types'
 
+defineOptions({ name: 'WidgetToast' })
+
 const intentIcons: Record<ToastIntent, typeof CheckmarkCircle24Icon> = {
     success: CheckmarkCircle24Icon,
     error: DismissCircle24Icon,
@@ -26,15 +28,8 @@ const props = defineProps<{
 
 <template>
     <div :class="['toast', { 'title-only': !props.body }]">
-        <div
-            class="toast-icon"
-            :style="props.intent === 'info' ? { color: '#0f6cbd' } : {}"
-        >
-            <component
-                :is="intentIcons[props.intent ?? 'info']"
-                width="24"
-                height="24"
-            />
+        <div class="toast-icon" :style="props.intent === 'info' ? { color: '#0f6cbd' } : {}">
+            <component :is="intentIcons[props.intent ?? 'info']" width="24" height="24" />
         </div>
         <div class="toast-content">
             <span class="toast-title">{{ props.title }}</span>

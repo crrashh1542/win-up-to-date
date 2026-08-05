@@ -1,11 +1,16 @@
 <script setup lang="ts">
-const props = withDefaults(defineProps<{
-    mode?: 'inline' | 'block' | 'flex'
-    shadow?: boolean
-}>(), {
-    mode: 'block',
-    shadow: false
-})
+defineOptions({ name: 'WidgetCard' })
+
+const props = withDefaults(
+    defineProps<{
+        mode?: 'inline' | 'block' | 'flex'
+        shadow?: boolean
+    }>(),
+    {
+        mode: 'block',
+        shadow: false,
+    }
+)
 </script>
 
 <template>
