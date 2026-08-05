@@ -36,11 +36,7 @@ const currentCategory = computed(() => {
         <!-- 当前分类内容 -->
         <template v-if="currentCategory">
             <!-- 内容卡片 -->
-            <Card
-                v-for="platform in currentCategory.platforms"
-                :key="platform.name"
-                :shadow="true"
-            >
+            <Card v-for="platform in currentCategory.platforms" :key="platform.name" :shadow="true">
                 <!-- 只有平台有多线开发时才显示子标题 -->
                 <template v-if="platform.multi">
                     <div class="sub-title">{{ platform.name }}</div>
@@ -48,45 +44,29 @@ const currentCategory = computed(() => {
                 </template>
 
                 <!-- 平台列表 -->
-                <template v-for="(item, index) in platform.items">
+                <template v-for="(item, index) in platform.items" :key="item.name">
                     <!-- 从第 1 项开始显示分割线 -->
                     <hr v-if="index > 0" />
                     <!-- 如果 item 有 category，则使用 router-link 并添加 hover 效果，否则 div -->
                     <component
-                        :is="
-                            item.category !== undefined ? 'router-link' : 'div'
-                        "
+                        :is="item.category !== undefined ? 'router-link' : 'div'"
                         v-bind="
-                            item.category !== undefined
-                                ? { to: `/category/${item.category}` }
-                                : {}
+                            item.category !== undefined ? { to: `/category/${item.category}` } : {}
                         "
                         :class="[
                             'container',
                             item.continued ? '' : 'uncontinued',
-                            item.category !== undefined
-                                ? 'u-hoverable'
-                                : 'disabled',
+                            item.category !== undefined ? 'u-hoverable' : 'disabled',
                         ]"
                     >
                         <div class="info">
                             <div class="codename">
-                                {{
-                                    item.name === 'default'
-                                        ? platform.name
-                                        : item.name
-                                }}
+                                {{ item.name === 'default' ? platform.name : item.name }}
                             </div>
-                            <div class="version">
-                                {{ item.semester }} {{ item.latestBuild }}
-                            </div>
+                            <div class="version">{{ item.semester }} {{ item.latestBuild }}</div>
                         </div>
                         <div class="badges">
-                            <Badge
-                                v-for="t in item.tag"
-                                :key="t.name"
-                                :color="t.color"
-                            >
+                            <Badge v-for="t in item.tag" :key="t.name" :color="t.color">
                                 {{ t.name }}
                             </Badge>
                         </div>
