@@ -9,11 +9,11 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
 
-import { version } from './package.json'
+import pkgInfo from './package.json' with { type: 'json' }
 import { handleDeploy } from './admin.js'
 
 const execFileP = promisify(execFile)
-
+const { version } = pkgInfo
 const apiVersion = 2
 const port = 9884
 const cacheSize = 200
@@ -73,6 +73,37 @@ const readCache = async (filePath) => {
         mtime,
     }
     fileCache.set(filePath, entry)
+    return entry.promise
+}
+
+// 派生数据缓存
+// 失效键为所有输入（文件/目录）的 mtime 组合，任一输入变化即重算
+const derivedCache = new Map()
+const readDerived = async (inputs, compute) => {
+    const key = inputs.join('|')
+    const sig = (
+        await Promise.all(
+            inputs.map((input) => fs.stat(input).then((s) => s.mtimeMs))
+        )
+    ).join('|')
+    const cached = derivedCache.get(key)
+    if (cached && cached.sig === sig) {
+        // 缓存命中，移到末尾
+        derivedCache.delete(key)
+        derivedCache.set(key, cached)
+        return cached.promise
+    }
+    if (derivedCache.size >= cacheSize) {
+        derivedCache.delete(derivedCache.keys().next().value)
+    }
+    const entry = {
+        promise: compute().catch((err) => {
+            derivedCache.delete(key)
+            throw err
+        }),
+        sig,
+    }
+    derivedCache.set(key, entry)
     return entry.promise
 }
 
@@ -188,25 +219,40 @@ const serveId = async (res, _params, reqUrl) => {
 }
 
 // 主下载页
-// 读取 Win11- 前 3 个 + Win10- 第 1 个 json 的前 2 项，作为 esd 字段
+const downloadDir = path.join(dataRoot, 'download')
+
+// 选取展示的构建：Win11前3个 & Win10第1个（最新的消费者版 + 商业版）
+// 只依赖 download 目录的 mtime（新增/删除文件时变化），故单独缓存
+const selectDownloadTargets = async () => {
+    const names = (await fs.readdir(downloadDir))
+        .filter((name) => name.endsWith('.json'))
+        .sort()
+        .reverse()
+    return [
+        ...names.filter((name) => name.startsWith('Win11-')).slice(0, 3),
+        ...names.filter((name) => name.startsWith('Win10-')).slice(0, 1),
+    ]
+}
+
 const serveDownload = async (res) => {
     try {
         const base = await readCache(path.join(dataRoot, 'index', 'download.json'))
-        // 文件名降序遍历 download 目录
-        const names = (await fs.readdir(path.join(dataRoot, 'download')))
-            .filter((name) => name.endsWith('.json'))
-            .sort()
-            .reverse()
-        // 取 Win11- 前 3 个 + Win10- 第 1 个（最新的消费者版 + 商业版）
-        const targets = [
-            ...names.filter((name) => name.startsWith('Win11-')).slice(0, 3),
-            ...names.filter((name) => name.startsWith('Win10-')).slice(0, 1),
-        ]
-        const esd = []
-        for (const name of targets) {
-            const arr = await readCache(path.join(dataRoot, 'download', name))
-            if (Array.isArray(arr)) esd.push(...arr.slice(0, 2))
-        }
+        const targets = await readDerived([downloadDir], selectDownloadTargets)
+        // esd 拼接依赖目录和所选各文件的内容，二者任一变化即失效
+        const esd = await readDerived(
+            [
+                downloadDir,
+                ...targets.map((name) => path.join(downloadDir, name)),
+            ],
+            async () => {
+                const out = []
+                for (const name of targets) {
+                    const arr = await readCache(path.join(downloadDir, name))
+                    if (Array.isArray(arr)) out.push(...arr.slice(0, 2))
+                }
+                return out
+            }
+        )
         sendJson(res, 200, okPayload('download', { ...base, esd }))
     } catch {
         errValue(res)
