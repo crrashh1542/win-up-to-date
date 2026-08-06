@@ -50,6 +50,13 @@ jobs:
                   version: 11
                   run_install: true
 
+            - name: 🧪 Checks
+              id: typecheck
+              run: |
+                  pnpm type-check
+                  pnpm lint
+                  
+
             - name: ⚙️ Build production pages
               id: build
               run: |
