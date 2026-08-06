@@ -1,7 +1,5 @@
 /**
- * Windows Up-to-Date 服务端脚本
- * @author crrashh1542
- * @version 3.5
+ * Windows Up-to-Date 服务端主脚本
  */
 
 import { execFile } from 'node:child_process'
@@ -11,11 +9,11 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
 
+import { version } from './package.json'
 import { handleDeploy } from './admin.js'
 
 const execFileP = promisify(execFile)
 
-const serverVersion = '3.5'
 const apiVersion = 2
 const port = 9884
 const cacheSize = 200
@@ -319,7 +317,7 @@ http.createServer(async (req, res) => {
     }
 }).listen(port, () => {
     console.log('========================================')
-    console.log(`WUTD API v${serverVersion}\n`)
+    console.log(`WUTD API v${version}\n`)
     console.log('[INFO] 服务运行于 http://127.0.0.1:' + port + '/')
     console.log(`[INFO] 数据目录：` + dataRoot)
     console.log('========================================')

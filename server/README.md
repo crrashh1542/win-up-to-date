@@ -3,14 +3,39 @@
 `main.js` 是 Windows Up-to-Date 项目的数据服务端文件，默认端口为 9884。
 
 ## 运行方式
-首先需要在本目录下克隆本项目的 [数据仓库](https://github.com/crrashh1542/win-up-to-date-data)，目录名称改为 `data`，然后就可以启动服务端了。
+
+`server/` 是一个独立的 npm 子包，用于运行本项目的服务端。
+
+首先安装依赖，并克隆本项目的[数据仓库](https://github.com/crrashh1542/win-up-to-date-data)到 `data` 目录：
+
+```bash
+# 在 server/ 目录下安装依赖
+pnpm install
+# 克隆数据仓库
+git clone https://github.com/crrashh1542/win-up-to-date-data data
+```
+
+然后就可以启动服务端了：
 
 ```bash
 # 单独启动 API 服务
 pnpm dev:api
 # 同时启动 API 与前端
-pnpm dev:all
+pnpm dev
+# 直接在 server/ 目录启动
+pnpm start
 ```
+
+### 部署
+
+```bash
+# 上传 server/ 目录后，在服务器上执行（只安装 production 依赖）
+cd server && pnpm install --prod
+# 之后用进程管理器（systemd / pm2）启动
+node server/main.mjs
+```
+
+> 注：运行产生的 `server/node_modules`、`server/.tmp` 均在 `.gitignore` 中。
 
 ## 接口列表
 
@@ -40,11 +65,11 @@ pnpm dev:all
 
 ## 路由与参数
 
-### `/latestBuilds`
+### `GET /latestBuilds`
 
 返回 [latest-builds.json](https://github.com/crrashh1542/win-up-to-date-data/blob/data/index/latest-builds.json) 的完整内容，用于首页展示。
 
-### `/version`
+### `GET /version`
 
 返回数据仓库的版本信息，优先从 Git 提交记录读取；Git 不可用时回退到 `version.json`。
 
@@ -55,27 +80,35 @@ pnpm dev:all
 }
 ```
 
-### `/category`
+### `GET /category`
 
 返回 [category.json](https://github.com/crrashh1542/win-up-to-date-data/blob/data/index/category.json) 的完整内容，用于平台分类页面。
 
-### `/category/:platform`
+### `GET /category/:platform`
 
 返回 `category/{platform}.json` 的内容，例如 `/category/24H2-germanium`。
 
-### `/detail/:platform/:build`
+### `GET /detail/:platform/:build`
 
 返回 `detail/{platform}/{build}.json` 的内容，例如 `/detail/24H2-germanium/26063.1`。
 
-### `/id`
+### `GET /id`
 
 返回 [viveid.json](https://github.com/crrashh1542/win-up-to-date-data/blob/data/index/viveid.json) 的完整内容，用于 Vive ID 分类总览。
 
-### `/id/:category`
+### `GET /id/:category`
 
 返回 `viveid/{category}.json` 的内容，例如 `/id/germanium`。
 
-### `/search?build={build}`
+### `GET /version`
+
+ 通过以下顺序获取数据仓库版本：
+
+1. 尝试执行 `git -C <dataRoot> log -1 --format=%h%n%cs`。
+2. 如果 Git 不可用或不在仓库环境，读取 `<dataRoot>/version.json`。
+3. 如果两者都失败，返回 `{ hash: 'unknown', date: 'unknown' }`。
+
+### `GET /search?build={build}`
 
 按 Build 号前缀搜索 `detail/` 目录下的所有 JSON 文件。
 
@@ -107,16 +140,8 @@ curl "http://127.0.0.1:9884/search?build=26063.1"
 - 缓存项同时记录文件 `mtime`，文件变更时自动失效并重新读取。
 - 缓存容量达到 `cacheSize` 时自动清理。
 
-## 数据版本
-
-`/version` 通过以下顺序获取数据仓库版本：
-
-1. 尝试执行 `git -C <dataRoot> log -1 --format=%h%n%cs`。
-2. 如果 Git 不可用或不在仓库环境，读取 `<dataRoot>/version.json`。
-3. 如果两者都失败，返回 `{ hash: 'unknown', date: 'unknown' }`。
-
 ## 开发提示
 
-- 修改 [main.js](main.js) 后需要重启 `dev:api` 才能生效（Node 原生服务无热更新）。
+- 修改服务端代码需要重启 `dev:api` 才能生效。
 - 若数据仓库有更新但接口返回旧数据，可能是缓存命中，可检查文件 `mtime` 或重启服务。
 - 新增接口时，请保持 `dataType` 命名风格，并在本 README 中同步更新。
