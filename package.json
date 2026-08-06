@@ -20,6 +20,7 @@
         "dev:api": "node server/main.mjs",
         "build": "node scripts/build.mjs",
         "preview": "vite preview",
+        "type-check": "vue-tsc --noEmit",
         "lint": "eslint \"src/**/*.{js,ts,vue}\"",
         "lint:fix": "pnpm lint -- --fix",
         "format": "prettier . --check",
@@ -43,7 +44,8 @@
         "typescript": "^6.0.3",
         "vite": "^8.2.1",
         "vite-plugin-pwa": "^1.3.0",
-        "vue-eslint-parser": "^10.4.1"
+        "vue-eslint-parser": "^10.4.1",
+        "vue-tsc": "^3.3.10"
     },
     "dependencies": {
         "@iconify-vue/fluent": "^1.0.5",
@@ -63,6 +65,7 @@
         "not ie 11"
     ],
     "lint-staged": {
-        "*.{js,ts,css,less,vue}": "prettier --write"
+        "*.{js,ts,vue}": ["eslint --fix", "prettier --write"],
+        "*.{css,less}": "prettier --write"
     }
 }

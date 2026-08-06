@@ -9,6 +9,7 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
+        "strict": true,
         "lib": ["ES2022", "DOM"],
         "skipLibCheck": true
     },
