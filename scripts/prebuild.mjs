@@ -9,6 +9,7 @@
 import fs from 'node:fs'
 import childProcess from 'node:child_process'
 import path from 'node:path'
+import { pathToFileURL } from 'node:url'
 import packageInfo from '../package.json' with { type: 'json' }
 
 const execCmd = (command) => {
@@ -108,3 +109,7 @@ const writeInfo = () => {
 
 // STEP7 -------- 导出函数
 export default writeInfo
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+    writeInfo()
+}
