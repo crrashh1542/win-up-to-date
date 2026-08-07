@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
 
 import pkgInfo from './package.json' with { type: 'json' }
-import { handleDeploy } from './admin.js'
+import { handleDeploy, setOnDeploySuccess } from './admin.js'
 
 const execFileP = promisify(execFile)
 const { version } = pkgInfo
@@ -144,6 +144,15 @@ const readDataVersion = async () => {
     versionCache = { promise, mtime }
     return promise
 }
+
+// 部署成功后数据已整体替换：清空全部缓存（文件/派生/版本），
+// 否则旧 mtime 引用可能读到已删除的文件，版本缓存也会最多陈旧 30s
+const resetAllCaches = () => {
+    fileCache.clear()
+    derivedCache.clear()
+    versionCache = null
+}
+setOnDeploySuccess(resetAllCaches)
 
 const serveDataVersion = async (res) => {
     try {

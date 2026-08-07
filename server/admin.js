@@ -248,6 +248,13 @@ const cleanupBackups = async (dataRoot) => {
     }
 }
 
+// 部署成功时的通知钩子：由服务端主脚本（main.mjs）注册，
+// 用于在数据整体替换后重置其内部缓存（文件/派生/版本缓存）
+let onDeploySuccess = () => {}
+export const setOnDeploySuccess = (callback) => {
+    onDeploySuccess = typeof callback === 'function' ? callback : () => {}
+}
+
 // 部署处理函数
 export const handleDeploy = async (req, res) => {
     // 1. 认证
@@ -338,7 +345,10 @@ export const handleDeploy = async (req, res) => {
     await fs.unlink(tmpFile).catch(() => {})
     await cleanupBackups(dataRoot)
 
-    // 11. 返回成功响应
+    // 11. 通知主脚本重置缓存（新数据已生效）
+    onDeploySuccess()
+
+    // 12. 返回成功响应
     sendJson(res, 200, {
         message: 'Deployment successful!',
         data: {
