@@ -9,11 +9,9 @@ on:
             - '.github/**'
             - '!.github/workflows/**'
 jobs:
-    setup:
-        name: Setup Project Info
+    build:
+        name: Build Production App
         runs-on: ubuntu-latest
-        outputs:
-            DIST_SUFFIX: ${{ steps.get-suffix.outputs.DIST_SUFFIX }}
         steps:
             - name: 🧐 Checkout
               id: checkout
@@ -24,24 +22,13 @@ jobs:
             - name: 📙 Get Package Suffix
               id: get-suffix
               run: |
-                  # 此处通过 jq 从 package.json 获取版本，否则在 depth 
+                  # 此处通过 jq 从 package.json 获取版本，否则在 depth
                   # 为 1 时通过 git tag 所读取的版本不准确
                   VERSION=$(jq -r '.version' ./package.json)
                   COMMIT_COUNT=$(git rev-list --count HEAD)
                   BUILD_DATE=$(date "+%y%m%d")
                   HEAD_SHA=$(git rev-parse --short HEAD)
                   echo "DIST_SUFFIX=v${VERSION}-${COMMIT_COUNT}-${BUILD_DATE}-${HEAD_SHA}" >> $GITHUB_OUTPUT
-
-    build:
-        name: Build Production App
-        needs: setup
-        env:
-            DIST_NAME: dist-${{ needs.setup.outputs.DIST_SUFFIX }}
-        runs-on: ubuntu-latest
-        steps:
-            - name: 🧐 Checkout
-              id: checkout
-              uses: actions/checkout@v7
 
             - name: 🛠️ Setup environment
               id: setup
@@ -55,7 +42,6 @@ jobs:
               run: |
                   pnpm type-check
                   pnpm lint
-                  
 
             - name: ⚙️ Build production pages
               id: build
@@ -66,5 +52,5 @@ jobs:
               id: upload
               uses: actions/upload-artifact@v7
               with:
-                  name: ${{ env.DIST_NAME }}
+                  name: dist-${{ steps.get-suffix.outputs.DIST_SUFFIX }}
                   path: dist
