@@ -23,20 +23,35 @@ useBuildsStore().fetchBuilds()
     <!-- 内容块 BEGIN -->
     <template v-for="c in list" :key="c.id">
         <div class="block" v-if="!isLoading">
-
             <!-- 标题 -->
             <div class="u-catalog">
-                <img :src="icons[c.icon]" class="u-box-s u-icon">&nbsp;
+                <img :src="icons[c.icon]" class="u-box-s u-icon" />&nbsp;
                 {{ c.category }}
             </div>
 
             <!-- 内容卡片 -->
-            <Card v-for="build in c.releases" :key="build.version" mode="inline" :shadow="true" class="u-hoverable">
-                <component :is="build.category !== undefined ? 'router-link' : 'span'"
-                    v-bind="build.category !== undefined ? { to: `/detail/${build.category}/${build.version}` } : {}">
+            <Card
+                v-for="build in c.releases"
+                :key="build.version"
+                mode="inline"
+                :shadow="true"
+                class="u-hoverable"
+            >
+                <component
+                    :is="build.category !== undefined ? 'router-link' : 'span'"
+                    v-bind="
+                        build.category !== undefined
+                            ? {
+                                  to: `/detail/${build.category}/${build.version}`,
+                              }
+                            : {}
+                    "
+                >
                     <div class="row">
                         <!-- 左上标签 -->
-                        <span :class="['channel', `color-${build.color}`]">{{ build.channel }}</span>
+                        <span :class="['channel', `color-${build.color}`]">{{
+                            build.channel
+                        }}</span>
                         <!-- 右上代号 & 周期 -->
                         <span class="info" v-if="settings.isShowFlight">
                             <Rocket24RegularIcon width="22px" />
@@ -64,7 +79,7 @@ useBuildsStore().fetchBuilds()
 .block {
     margin: 1em 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
     gap: 6px;
 
     .u-catalog {
@@ -89,13 +104,13 @@ useBuildsStore().fetchBuilds()
         .number {
             font-size: 24px;
             font-weight: 600;
-            margin: 0 0 .4em;
+            margin: 0 0 0.4em;
         }
         .info {
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            font-size: 15px;
+            font-size: 14px;
             color: @wu-color-text-accent;
             line-height: 1.6;
             gap: 4px;
@@ -126,5 +141,4 @@ useBuildsStore().fetchBuilds()
     color: @wu-color-purple;
 }
 /* 频道颜色变化 ----- END */
-
 </style>

@@ -1,11 +1,5 @@
 export type BuiltInColor =
-    | 'amber'
-    | 'orange'
-    | 'yellow'
-    | 'green'
-    | 'teal'
-    | 'blue'
-    | 'purple'
+    'amber' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'purple'
 
 // 首页数据
 export interface Release {
@@ -94,6 +88,7 @@ export interface DetailBelongsTo {
 export interface DetailUpdateId {
     arch: string
     id: string
+    available?: boolean
 }
 
 export interface DetailDownload {
@@ -154,3 +149,9 @@ export interface PageData {
 export type RespOrigin =
     | { dataType: 'detail'; content: DetailContent }
     | { dataType: 'categoryList'; content: CategoryContent }
+
+// 搜索结果
+export interface SearchBuildItem {
+    platform: string
+    build: string
+}

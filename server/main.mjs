@@ -1,7 +1,7 @@
 /**
  * Windows Up-to-Date 服务端脚本
  * @author crrashh1542
- * @version 3.1
+ * @version 3.3
  */
 
 import { execFile } from 'node:child_process'
@@ -11,11 +11,13 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
 
+import { handleDeploy } from './admin.js'
+
 const execFileP = promisify(execFile)
 
-const serverVersion = '3.1'
+const serverVersion = '3.3'
 const apiVersion = 1
-const port = 14726
+const port = 9884
 const cacheSize = 200
 
 const __filename = fileURLToPath(import.meta.url)
@@ -84,6 +86,7 @@ const readCache = async (filePath) => {
 const headLogPath = path.join(dataRoot, '.git', 'logs', 'HEAD')
 let versionCache = null
 const readDataVersion = async () => {
+    let mtime
     try {
         mtime = (await fs.stat(headLogPath)).mtimeMs
     } catch {
@@ -105,7 +108,7 @@ const readDataVersion = async () => {
             const [hash, date] = stdout.trim().split('\n')
             return { hash, date }
         })
-        .catch(async () => {
+        .catch(async (err) => {
             // Git 不可用（如生产环境仅有打包数据）时，读取打包生成的 version.json
             try {
                 const v = await readJson(path.join(dataRoot, 'version.json'))
@@ -114,6 +117,9 @@ const readDataVersion = async () => {
                 console.error(
                     '[WARN] 无法读取数据仓库版本：Git 不可用且 version.json 缺失'
                 )
+                if (err) {
+                    console.error('[WARN] Git 错误详情：', err.message || err)
+                }
                 return { hash: 'unknown', date: 'unknown' }
             }
         })
@@ -125,6 +131,34 @@ const serveDataVersion = async (res) => {
     try {
         const content = await readDataVersion()
         sendJson(res, 200, okPayload('dataVersion', content))
+    } catch {
+        errServer(res)
+    }
+}
+
+// 搜索接口逻辑
+const detailDir = path.join(dataRoot, 'detail')
+const serveSearch = async (res, _params, reqUrl) => {
+    const q = reqUrl.searchParams.get('build')
+    if (!q || !isSafeId(q)) return errParam(res)
+    try {
+        // 读取 detail 目录下所有 JSON 文件，提取平台和 build 信息
+        const files = await fs.readdir(detailDir, { recursive: true })
+        const matches = files
+            .filter(
+                (name) => typeof name === 'string' && name.endsWith('.json')
+            )
+            .map((name) => {
+                const full = name.replace(/\\/g, '/')
+                const lastSlash = full.lastIndexOf('/')
+                const platform = full.substring(0, lastSlash)
+                const build = path.basename(name, '.json')
+                return { platform, build }
+            })
+            // 过滤掉平台为 '.' 的项，并匹配 build 子串（乱序搜索）
+            .filter((item) => item.platform !== '.' && item.build.includes(q))
+            .slice(0, 20)
+        sendJson(res, 200, okPayload('searchBuild', matches))
     } catch {
         errServer(res)
     }
@@ -157,6 +191,7 @@ const detailPath = (u) =>
         u.searchParams.get('platform'),
         u.searchParams.get('build') + '.json'
     )
+
 const routes = new Map([
     [
         '/',
@@ -179,6 +214,12 @@ const routes = new Map([
             handler: serveData(detailPath, 'detail'),
         },
     ],
+    ['/search', { params: ['build'], handler: serveSearch }],
+])
+
+// POST 路由表（管理接口）
+const postRoutes = new Map([
+    ['/admin/deploy', { handler: handleDeploy }],
 ])
 
 // main server
@@ -192,25 +233,31 @@ http.createServer(async (req, res) => {
         )
     })
 
-    if (req.method !== 'GET') {
-        return sendJson(res, 405, { message: 'Method is not allowed!' })
-    }
-
     try {
-        const route = routes.get(reqPath)
-        if (!route) {
-            return sendJson(res, 404, { message: 'Interface is not found!' })
-        }
+        if (req.method === 'GET') {
+            const route = routes.get(reqPath)
+            if (!route) {
+                return sendJson(res, 404, { message: 'Interface is not found!' })
+            }
 
-        if (route.params) {
-            const missing = route.params.some((p) => {
-                const v = reqUrl.searchParams.get(p)
-                return !v || !isSafeId(v)
-            })
-            if (missing) return errParam(res)
-        }
+            if (route.params) {
+                const missing = route.params.some((p) => {
+                    const v = reqUrl.searchParams.get(p)
+                    return !v || !isSafeId(v)
+                })
+                if (missing) return errParam(res)
+            }
 
-        await route.handler(res, reqUrl.searchParams, reqUrl)
+            await route.handler(res, reqUrl.searchParams, reqUrl)
+        } else if (req.method === 'POST') {
+            const route = postRoutes.get(reqPath)
+            if (!route) {
+                return sendJson(res, 404, { message: 'Interface is not found!' })
+            }
+            await route.handler(req, res)
+        } else {
+            return sendJson(res, 405, { message: 'Method is not allowed!' })
+        }
     } catch {
         errServer(res)
     }

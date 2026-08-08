@@ -15,8 +15,8 @@ import type { SettingsMenu } from '@/types'
 const icons: Record<string, Component> = {
     'weather-moon': WeatherMoon24RegularIcon,
     'laptop-settings': LaptopSettings24RegularIcon,
-    'branch': Branch24RegularIcon,
-    'calendar': Calendar24RegularIcon,
+    branch: Branch24RegularIcon,
+    calendar: Calendar24RegularIcon,
 }
 
 const settingsStore = useSettingsStore()
@@ -26,42 +26,44 @@ const settingsMenu: SettingsMenu = [
     {
         name: '全局设置',
         id: 0,
-        items: [{
-            name: '启用深色模式 (TODO)',
-            icon: 'weather-moon',
-            value: 'isDarkMode',
-            enabled: false
-        }]
+        items: [
+            {
+                name: '启用深色模式 (TODO)',
+                icon: 'weather-moon',
+                value: 'isDarkMode',
+                enabled: false,
+            },
+        ],
     },
     {
         name: '主页设置',
         id: 1,
-        items: [{
-            name: '显示开发周期及代号',
-            icon: 'laptop-settings',
-            value: 'isShowFlight',
-            enabled: true
-        },
-        {
-            name: '显示分支',
-            icon: 'branch',
-            value: 'isShowBranch',
-            enabled: true
-        },
-        {
-            name: '显示发布日期',
-            icon: 'calendar',
-            value: 'isShowDate',
-            enabled: true
-        }]
+        items: [
+            {
+                name: '显示开发周期及代号',
+                icon: 'laptop-settings',
+                value: 'isShowFlight',
+                enabled: true,
+            },
+            {
+                name: '显示分支',
+                icon: 'branch',
+                value: 'isShowBranch',
+                enabled: true,
+            },
+            {
+                name: '显示发布日期',
+                icon: 'calendar',
+                value: 'isShowDate',
+                enabled: true,
+            },
+        ],
     },
 ]
 </script>
 
-
 <template>
     <div class="u-banner">设置</div>
-
 
     <div v-for="i in settingsMenu" :key="i.id">
         <!-- 小标题 -->
@@ -74,7 +76,10 @@ const settingsMenu: SettingsMenu = [
                 {{ item.name }}
             </span>
             <span class="u-grow"></span>
-            <Switch :is-disabled="!item.enabled" v-model="settings[item.value]" />
+            <Switch
+                :is-disabled="!item.enabled"
+                v-model="settings[item.value]"
+            />
         </Card>
     </div>
 </template>
@@ -84,6 +89,7 @@ const settingsMenu: SettingsMenu = [
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: .8em;
+    gap: 0.8em;
+    font-size: 15px;
 }
 </style>
