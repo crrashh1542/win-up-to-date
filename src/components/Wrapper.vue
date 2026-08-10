@@ -15,17 +15,16 @@ import Foo from './Footer.vue'
 import Search from './SearchBox.vue'
 
 import icons from '@/assets/icons'
-import type { BuildInfo, BuiltInColor } from '@/types'
-import buildInfo from '../../scripts/buildInfo.json'
+import { isCi, isBeta } from '@/utils/parseRepoInfo'
+import type { BuiltInColor } from '@/types'
 
 const route = useRoute()
 defineOptions({ name: 'PageWrapper' })
 
 // 标题旁的 badge
 const buildBadge = computed<{ text: string; color: BuiltInColor } | null>(() => {
-    const meta = buildInfo as BuildInfo
-    if (meta.ci) return { text: 'CI', color: 'blue' }
-    if (meta.beta) return { text: 'Beta', color: 'green' }
+    if (isCi) return { text: 'CI', color: 'blue' }
+    if (isBeta) return { text: 'Beta', color: 'green' }
     return null
 })
 

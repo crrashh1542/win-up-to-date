@@ -14,7 +14,7 @@ import WeatherMoon24RegularIcon from '@iconify-vue/fluent/weather-moon-24-regula
 
 import Card from '@/components/widgets/Card.vue'
 import Switch from '@/components/widgets/Switch.vue'
-import repoInfo from '@/utils/parseRepoInfo'
+import { repoVersion, build, repoUrl, repoName } from '@/utils/parseRepoInfo'
 
 import { useBuildsStore } from '@/stores/apiLatestBuilds'
 import { useSettingsStore } from '@/stores/settings'
@@ -84,7 +84,7 @@ const aboutMenu = computed<AboutMenu[]>(() => [
     {
         name: '应用版本',
         icon: 'info',
-        value: `v${repoInfo.version} (build ${repoInfo.build})`,
+        value: `v${repoVersion} (build ${build})`,
     },
     {
         name: '当前数据版本',
@@ -95,8 +95,8 @@ const aboutMenu = computed<AboutMenu[]>(() => [
     {
         name: '开源地址',
         icon: 'code',
-        value: repoInfo.repoName,
-        link: repoInfo.repo,
+        value: repoName,
+        link: repoUrl,
     },
     {
         name: '交流 QQ 群',

@@ -4,7 +4,7 @@
 
 import packageInfo from '../../package.json'
 import _buildInfo from '../../scripts/buildInfo.json'
-import type { RepoInfo, BuildInfo } from '@/types'
+import type { BuildInfo } from '@/types'
 
 const buildInfo = _buildInfo as BuildInfo
 
@@ -30,14 +30,12 @@ const buildTag = (() => {
     return buildNum + '.' + buildBranch + '.' + buildTime
 })()
 
-const repoInfo: RepoInfo = {
-    version: packageInfo.version,
-    build: buildInfo.build,
-    hash: buildInfo.hash,
-    isCi: buildInfo.ci,
-    isBeta: buildInfo.beta,
-    repo: pkgRepo,
-    repoName: pkgRepoName,
-    buildTag: buildTag,
-}
-export default repoInfo
+// 单独导出各个字段
+export const build = buildInfo.build
+export const hash = buildInfo.hash
+export const isCi = buildInfo.ci
+export const isBeta = buildInfo.beta
+export const repoUrl = pkgRepo
+export const repoVersion = packageInfo.version
+export const repoName = pkgRepoName
+export { buildTag }

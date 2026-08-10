@@ -3,7 +3,7 @@ import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 import router from './router'
-import repoInfo from './utils/parseRepoInfo'
+import { repoVersion, hash, buildTag } from './utils/parseRepoInfo'
 
 import App from './App.vue'
 
@@ -27,5 +27,5 @@ const styleVerValue = `font-size: 14px;
                      padding: 5px 9px;
                      border-radius: 0 3px 3px 0;
                      margin: 6px 0; `
-console.log('%c%s%c%s', styleVerName, 'wutd', styleVerValue, 'v' + repoInfo.version)
-console.log(`Build Tag: ${repoInfo.buildTag} (g${repoInfo.hash})`)
+console.log('%c%s%c%s', styleVerName, 'wutd', styleVerValue, 'v' + repoVersion)
+console.log(`Build Tag: ${buildTag} (g${hash})`)
