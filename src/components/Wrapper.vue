@@ -14,6 +14,7 @@ import Tablist from './widgets/Tablist.vue'
 import Foo from './Footer.vue'
 import Search from './SearchBox.vue'
 
+import icons from '@/assets/icons'
 import type { BuildInfo, BuiltInColor } from '@/types'
 import buildInfo from '../../scripts/buildInfo.json'
 
@@ -54,8 +55,10 @@ const selectedNav = computed(() => {
         <div class="search">
             <Search />
         </div>
-        <div class="about">
-            <!-- <Info24RegularIcon @click="openAbout" /> -->
+        <div class="link">
+            <a href="https://github.com/crrashh1542/win-up-to-date" target="_blank">
+                <img :src="icons.github" />
+            </a>
         </div>
     </div>
 
@@ -131,11 +134,10 @@ const selectedNav = computed(() => {
         }
     }
 
-    .about {
+    .link {
         flex: 0 0 auto;
         cursor: pointer;
-
-        svg {
+        img {
             width: 1.2em;
             height: 1.2em;
         }
