@@ -2,6 +2,8 @@ export interface RepoInfo {
     version: string
     build: number
     hash: string
+    isCi: boolean
+    isBeta: boolean
     repo: string
     repoName: string
     buildTag: string

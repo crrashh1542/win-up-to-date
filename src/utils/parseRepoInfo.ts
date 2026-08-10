@@ -3,8 +3,10 @@
  */
 
 import packageInfo from '../../package.json'
-import buildInfo from '../../scripts/buildInfo.json'
-import type { RepoInfo } from '@/types'
+import _buildInfo from '../../scripts/buildInfo.json'
+import type { RepoInfo, BuildInfo } from '@/types'
+
+const buildInfo = _buildInfo as BuildInfo
 
 // 项目信息相关
 const pkgRepo = packageInfo.repository.url.split('+')[1] // 项目地址
@@ -32,6 +34,8 @@ const repoInfo: RepoInfo = {
     version: packageInfo.version,
     build: buildInfo.build,
     hash: buildInfo.hash,
+    isCi: buildInfo.ci,
+    isBeta: buildInfo.beta,
     repo: pkgRepo,
     repoName: pkgRepoName,
     buildTag: buildTag,

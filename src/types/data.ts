@@ -6,8 +6,8 @@ export interface BuildInfo {
     hash: string
     build: number
     branch: string
-    ci?: boolean
-    beta?: boolean
+    ci: boolean
+    beta: boolean
 }
 
 // 首页数据

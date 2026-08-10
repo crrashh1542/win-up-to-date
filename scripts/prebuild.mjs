@@ -87,14 +87,10 @@ const writeInfo = () => {
     }
 
     // 当构建命令带有 --ci 参数时，标记当前构建为 CI 构建
-    if (process.env.WU_ENV_CI === 'true') {
-        content.ci = true
-    }
+    content.ci = process.env.WU_ENV_CI === 'true'
 
     // 当版本号不是干净的 semver（x.y.z）时，标记当前构建为 Beta 构建
-    if (!/^\d+\.\d+\.\d+$/.test(packageInfo.version)) {
-        content.beta = true
-    }
+    content.beta = !/^\d+\.\d+\.\d+$/.test(packageInfo.version)
 
     // 将 buildInfo 内容写入文件
     // 由于执行者是 /vite.config.js，所以执行目录在项目的根目录，故此处使用 ./scripts/ 来导引路径
