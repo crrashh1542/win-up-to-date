@@ -47,7 +47,11 @@ const selfPath = (item: SelfBuildItem) => `/detail/${item.semester}/${item.build
         <div class="u-catalog">自构建 ISO 镜像</div>
         <!-- 主线 -->
         <div class="grid self-grid mainline">
-            <a v-for="item in download.self.mainline" :key="item.build" :href="selfPath(item)">
+            <router-link
+                v-for="item in download.self.mainline"
+                :key="item.build"
+                :to="selfPath(item)"
+            >
                 <Card mode="flex" class="grid self-card u-hoverable">
                     <div class="name">{{ item.name }}</div>
                     <div class="title">
@@ -58,11 +62,15 @@ const selfPath = (item: SelfBuildItem) => `/detail/${item.semester}/${item.build
                     </div>
                     <div class="desc">{{ item.semester }}</div>
                 </Card>
-            </a>
+            </router-link>
         </div>
         <!-- 基线 -->
         <div v-show="isBaselineExpanded" class="grid self-grid">
-            <a v-for="item in download.self.baseline" :key="item.build" :href="selfPath(item)">
+            <router-link
+                v-for="item in download.self.baseline"
+                :key="item.build"
+                :to="selfPath(item)"
+            >
                 <Card mode="flex" class="self-card u-hoverable">
                     <div class="name">{{ item.name }}</div>
                     <div class="title">
@@ -73,7 +81,7 @@ const selfPath = (item: SelfBuildItem) => `/detail/${item.semester}/${item.build
                     </div>
                     <div class="desc">{{ item.semester }}</div>
                 </Card>
-            </a>
+            </router-link>
         </div>
         <Card
             mode="flex"
