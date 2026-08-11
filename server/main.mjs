@@ -82,9 +82,7 @@ const derivedCache = new Map()
 const readDerived = async (inputs, compute) => {
     const key = inputs.join('|')
     const sig = (
-        await Promise.all(
-            inputs.map((input) => fs.stat(input).then((s) => s.mtimeMs))
-        )
+        await Promise.all(inputs.map((input) => fs.stat(input).then((s) => s.mtimeMs)))
     ).join('|')
     const cached = derivedCache.get(key)
     if (cached && cached.sig === sig) {
@@ -249,10 +247,7 @@ const serveDownload = async (res) => {
         const targets = await readDerived([downloadDir], selectDownloadTargets)
         // esd 拼接依赖目录和所选各文件的内容，二者任一变化即失效
         const esd = await readDerived(
-            [
-                downloadDir,
-                ...targets.map((name) => path.join(downloadDir, name)),
-            ],
+            [downloadDir, ...targets.map((name) => path.join(downloadDir, name))],
             async () => {
                 const out = []
                 for (const name of targets) {

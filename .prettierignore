@@ -1,8 +1,0 @@
-.claude/
-.github/
-.vscode/
-scripts/
-data/
-
-*.md
-pnpm-lock.yaml

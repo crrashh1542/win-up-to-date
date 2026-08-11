@@ -1,19 +1,19 @@
 {
     "name": "win-up-to-date",
     "version": "1.0.0-rc.1",
+    "private": true,
     "description": "A website project showing the latest status of Windows Insider versions.",
-    "author": "crrashh1542 <1542@crrashh.com>",
     "homepage": "https://wutd.crrashh.com",
-    "type": "module",
+    "bugs": {
+        "url": "https://github.com/crrashh1542/win-up-to-date/issues"
+    },
+    "license": "GPL-3.0",
+    "author": "crrashh1542 <1542@crrashh.com>",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/crrashh1542/win-up-to-date"
     },
-    "license": "GPL-3.0",
-    "private": true,
-    "bugs": {
-        "url": "https://github.com/crrashh1542/win-up-to-date/issues"
-    },
+    "type": "module",
     "scripts": {
         "dev": "concurrently -n web,api \"pnpm dev:web\" \"pnpm dev:api\"",
         "dev:web": "vite",
@@ -23,9 +23,20 @@
         "type-check": "node scripts/prebuild.mjs && vue-tsc --noEmit",
         "lint": "eslint \"src/**/*.{js,ts,vue}\"",
         "lint:fix": "pnpm lint -- --fix",
-        "format": "prettier . --check",
-        "format:write": "prettier . --write",
+        "format": "oxfmt --check",
+        "format:write": "oxfmt",
         "prepare": "husky"
+    },
+    "dependencies": {
+        "@iconify-vue/fluent": "^1.0.5",
+        "@iconify-vue/fluent-color": "^1.0.6",
+        "axios": "^1.19.0",
+        "modern-normalize": "^3.0.1",
+        "nprogress": "^0.2.0",
+        "pinia": "^4.0.3",
+        "pinia-plugin-persistedstate": "^4.7.1",
+        "vue": "^3.5.41",
+        "vue-router": "^5.2.0"
     },
     "devDependencies": {
         "@eslint/js": "^10.0.1",
@@ -40,32 +51,24 @@
         "husky": "^9.1.7",
         "less": "^4.9.0",
         "lint-staged": "^17.3.0",
-        "prettier": "^3.9.6",
+        "oxfmt": "^0.64.0",
         "typescript": "^6.0.3",
         "vite": "^8.2.1",
         "vite-plugin-pwa": "^1.3.0",
         "vue-eslint-parser": "^10.4.1",
         "vue-tsc": "^3.3.10"
     },
-    "dependencies": {
-        "@iconify-vue/fluent": "^1.0.5",
-        "@iconify-vue/fluent-color": "^1.0.6",
-        "axios": "^1.19.0",
-        "modern-normalize": "^3.0.1",
-        "nprogress": "^0.2.0",
-        "pinia": "^4.0.3",
-        "pinia-plugin-persistedstate": "^4.7.1",
-        "vue": "^3.5.41",
-        "vue-router": "^5.2.0"
+    "lint-staged": {
+        "*.{js,ts,vue}": [
+            "eslint --fix",
+            "oxfmt"
+        ],
+        "*.{css,less}": "oxfmt"
     },
     "browserslist": [
         "> 1%",
         "last 2 versions",
         "not dead",
         "not ie 11"
-    ],
-    "lint-staged": {
-        "*.{js,ts,vue}": ["eslint --fix", "prettier --write"],
-        "*.{css,less}": "prettier --write"
-    }
+    ]
 }
