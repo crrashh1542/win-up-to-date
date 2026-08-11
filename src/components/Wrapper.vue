@@ -55,7 +55,11 @@ const selectedNav = computed(() => {
             <Search />
         </div>
         <div class="link">
-            <a href="https://github.com/crrashh1542/win-up-to-date" target="_blank">
+            <a
+                href="https://github.com/crrashh1542/win-up-to-date"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
                 <img :src="icons.github" />
             </a>
         </div>

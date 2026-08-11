@@ -147,13 +147,17 @@ watch(
                 </p>
                 <p v-if="pageData.data.release.url !== undefined">
                     官方发版日志：
-                    <a target="_blank" :href="pageData.data.release.url">
+                    <a target="_blank" rel="noopener noreferrer" :href="pageData.data.release.url">
                         {{ pageData.data.release.announcePlace }}</a
                     >
                 </p>
                 <p v-if="pageData.data.featureIds !== undefined">
                     ViveID 列表：
-                    <a target="_blank" :href="pageData.data.featureIds.url">
+                    <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        :href="pageData.data.featureIds.url"
+                    >
                         {{ pageData.data.featureIds.fileName }}</a
                     >
                 </p>
@@ -176,7 +180,11 @@ watch(
                     <Code v-if="id.available === false" :value="id.id" is-copiable />
                     <template v-else>
                         <Code :value="id.id" />
-                        <a :href="`https://uupdump.net/selectlang.php?id=${id.id}`" target="_blank">
+                        <a
+                            :href="`https://uupdump.net/selectlang.php?id=${id.id}`"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             <Button>
                                 <template #before>
                                     <Open16RegularIcon width="1.25em" height="1.25em" />
@@ -208,7 +216,7 @@ watch(
                     <p>
                         下载地址：
                         <span v-for="(l, index) in dl.link" :key="index">
-                            <a target="_blank" :href="l.url">
+                            <a target="_blank" rel="noopener noreferrer" :href="l.url">
                                 <Button>{{ l.source }}</Button> </a
                             >&nbsp;
                         </span>

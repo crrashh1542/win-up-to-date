@@ -32,7 +32,13 @@ const selfPath = (item: SelfBuildItem) => `/detail/${item.semester}/${item.build
         <!-- PART 1 官方 ISO -->
         <div class="u-catalog">官方 ISO 镜像</div>
         <div class="grid iso-grid">
-            <a v-for="item in download.iso" :key="item.url" :href="item.url" target="_blank">
+            <a
+                v-for="item in download.iso"
+                :key="item.url"
+                :href="item.url"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
                 <Card mode="flex" class="hover-outline">
                     <div class="data">
                         <div class="title">{{ item.name }}</div>

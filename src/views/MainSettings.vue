@@ -139,6 +139,7 @@ const aboutMenu = computed<AboutMenu[]>(() => [
         :is="item.link ? 'a' : 'div'"
         :href="item.link"
         :target="item.link ? '_blank' : undefined"
+        :rel="item.link ? 'noopener noreferrer' : undefined"
     >
         <Card mode="flex" :class="item.link ? 'u-hoverable' : ''">
             <span class="item">
@@ -151,11 +152,21 @@ const aboutMenu = computed<AboutMenu[]>(() => [
 
     <p>
         本项目遵循
-        <a href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank">GPL-3.0 开源协议</a
-        >，并仅限于作展示和交流学习用途。本项目与 Microsoft Corporation 无关，Windows 为 Microsoft
+        <a
+            href="https://www.gnu.org/licenses/gpl-3.0.en.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GPL-3.0 开源协议</a
+        >，仅限用作展示和交流学习。本项目与 Microsoft Corporation 无关，Windows 是 Microsoft
         Corporation 的注册商标。项目首页采用的图标来自
-        <a href="https://www.iconfont.cn">iconfont</a>，其余所有图标均来自
-        <a href="https://github.com/microsoft/fluentui-system-icons">Fluent UI System Icons</a>。
+        <a href="https://www.iconfont.cn" target="_blank" rel="noopener noreferrer">iconfont</a
+        >，其余图标均来自
+        <a
+            href="https://github.com/microsoft/fluentui-system-icons"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Fluent UI System Icons</a
+        >。
     </p>
 </template>
 

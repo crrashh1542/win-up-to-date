@@ -18,7 +18,13 @@ const props = defineProps<{
                 <div class="title">{{ item.name }}</div>
             </div>
             <div class="links">
-                <a v-for="link in item.links" :key="link.name" :href="link.url" target="_blank">
+                <a
+                    v-for="link in item.links"
+                    :key="link.name"
+                    :href="link.url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
                     <Button variant="outlined" color="blue">{{ link.name }}</Button>
                 </a>
             </div>
