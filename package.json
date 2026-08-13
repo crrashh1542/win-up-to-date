@@ -21,8 +21,8 @@
         "build": "node scripts/build.mjs",
         "preview": "vite preview",
         "type-check": "node scripts/prebuild.mjs && vue-tsc --noEmit",
-        "lint": "eslint \"src/**/*.{js,ts,vue}\"",
-        "lint:fix": "pnpm lint -- --fix",
+        "lint": "oxlint && eslint",
+        "lint:fix": "oxlint --fix && eslint --fix",
         "format": "oxfmt --check",
         "format:write": "oxfmt",
         "prepare": "husky"
@@ -52,6 +52,7 @@
         "less": "^4.9.0",
         "lint-staged": "^17.3.0",
         "oxfmt": "^0.64.0",
+        "oxlint": "^1.79.0",
         "typescript": "^6.0.3",
         "vite": "^8.2.1",
         "vite-plugin-pwa": "^1.3.0",
