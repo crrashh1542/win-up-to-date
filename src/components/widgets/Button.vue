@@ -25,13 +25,20 @@ const classes = computed(() => {
 
 <template>
     <button :class="classes">
+        <span v-if="$slots.before" class="btn-before">
+            <slot name="before" />
+        </span>
         <slot />
+        <span v-if="$slots.after" class="btn-after">
+            <slot name="after" />
+        </span>
     </button>
 </template>
 
 <style lang="less" scoped>
 button {
     display: inline-flex;
+    align-items: center;
     gap: 0.25em;
     padding: 0.45em 0.7em;
     border: 1px solid darken(@wu-color-border, 5%);
@@ -43,6 +50,11 @@ button {
 }
 button:hover {
     background-color: @wu-color-base;
+}
+
+.btn-before,
+.btn-after {
+    display: contents;
 }
 
 // Outlined

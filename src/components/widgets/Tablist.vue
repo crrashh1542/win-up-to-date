@@ -27,6 +27,8 @@ const selectedValue = ref<TabValue>(
     model.value ?? props.selectedValue ?? props.defaultSelectedValue
 )
 
+const tablistRef = ref<HTMLElement | null>(null)
+
 watch(model, (val) => {
     selectedValue.value = val
 })
@@ -36,6 +38,20 @@ watch(selectedValue, (val) => {
         model.value = val
     }
 })
+
+function handleWheel(event: WheelEvent) {
+    if (props.vertical || !tablistRef.value) return
+    const el = tablistRef.value
+    const canScrollLeft = el.scrollLeft > 0
+    const canScrollRight = el.scrollLeft < el.scrollWidth - el.clientWidth
+    if (
+        (event.deltaY < 0 && canScrollLeft) ||
+        (event.deltaY > 0 && canScrollRight)
+    ) {
+        event.preventDefault()
+        el.scrollLeft += event.deltaY
+    }
+}
 
 const registeredTabs = ref<Map<string, { value: TabValue; el: HTMLElement }>>(
     new Map()
@@ -92,10 +108,12 @@ provide('tablist', {
 
 <template>
     <div
+        ref="tablistRef"
         class="tablist"
         role="tablist"
         :aria-orientation="vertical ? 'vertical' : 'horizontal'"
         :aria-disabled="disabled"
+        @wheel="handleWheel"
     >
         <slot />
     </div>
@@ -109,6 +127,26 @@ provide('tablist', {
     flex-wrap: nowrap;
     align-items: stretch;
     position: relative;
-    overflow: visible;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: @wu-color-border transparent;
+}
+
+.tablist::-webkit-scrollbar {
+    height: 6px;
+}
+.tablist::-webkit-scrollbar-button {
+    display: none;
+}
+.tablist::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 9999px;
+}
+.tablist::-webkit-scrollbar-thumb {
+    background-color: @wu-color-border;
+    border-radius: 9999px;
+}
+.tablist::-webkit-scrollbar-thumb:hover {
+    background-color: @wu-color-text-accent;
 }
 </style>

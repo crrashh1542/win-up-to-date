@@ -53,7 +53,7 @@ jobs:
             - name: ⚙️ Build production pages
               id: build
               run: |
-                  pnpm build
+                  pnpm build --ci
 
             - name: 🌐 Upload the build
               id: upload

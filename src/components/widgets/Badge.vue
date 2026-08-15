@@ -4,13 +4,16 @@ import type { BuiltInColor } from '@/types/data'
 
 defineOptions({ name: 'WidgetBadge' })
 
-const props = withDefaults(defineProps<{
-    variant?: 'filled' | 'outlined'
-    color?: BuiltInColor
-}>(), {
-    variant: 'filled',
-    color: 'blue',
-})
+const props = withDefaults(
+    defineProps<{
+        variant?: 'filled' | 'outlined'
+        color?: BuiltInColor
+    }>(),
+    {
+        variant: 'filled',
+        color: 'blue',
+    }
+)
 
 const classes = computed(() => [
     'badge',
@@ -71,32 +74,32 @@ const classes = computed(() => [
     border: 1px solid;
 
     &.badge-yellow {
-        border-color: @wu-color-yellow-dark;
-        color: @wu-color-yellow-dark;
+        border-color: darken(@wu-color-yellow-dark, 7%);
+        color: darken(@wu-color-yellow-dark, 7%);
     }
     &.badge-amber {
-        border-color: @wu-color-amber;
-        color: @wu-color-amber;
+        border-color: darken(@wu-color-amber, 7%);
+        color: darken(@wu-color-amber, 7%);
     }
     &.badge-orange {
-        border-color: @wu-color-orange;
-        color: @wu-color-orange;
+        border-color: darken(@wu-color-orange, 7%);
+        color: darken(@wu-color-orange, 7%);
     }
     &.badge-green {
-        border-color: @wu-color-green;
-        color: @wu-color-green;
+        border-color: darken(@wu-color-green, 7%);
+        color: darken(@wu-color-green, 7%);
     }
     &.badge-teal {
-        border-color: @wu-color-teal;
-        color: @wu-color-teal;
+        border-color: darken(@wu-color-teal, 7%);
+        color: darken(@wu-color-teal, 7%);
     }
     &.badge-blue {
-        border-color: @wu-color-blue;
-        color: @wu-color-blue;
+        border-color: darken(@wu-color-blue, 7%);
+        color: darken(@wu-color-blue, 7%);
     }
     &.badge-purple {
-        border-color: @wu-color-purple;
-        color: @wu-color-purple;
+        border-color: darken(@wu-color-purple, 7%);
+        color: darken(@wu-color-purple, 7%);
     }
 }
 </style>

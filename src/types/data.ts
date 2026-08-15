@@ -1,6 +1,16 @@
 export type BuiltInColor =
     'amber' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'purple'
 
+// 构建信息（scripts/buildInfo.json）
+export interface BuildInfo {
+    time: string
+    hash: string
+    build: number
+    branch: string
+    ci?: boolean
+    beta?: boolean
+}
+
 // 首页数据
 export interface Release {
     channel: string
@@ -66,8 +76,8 @@ export interface DetailBuild {
 export interface DetailRelease {
     channel: string
     time: string
-    url: string
-    announcePlace: string
+    url?: string
+    announcePlace?: string
 }
 
 export interface DetailFeatureIds {
@@ -102,12 +112,12 @@ export interface DetailDownload {
 
 export interface DetailContent {
     build: DetailBuild
-    release?: DetailRelease
+    release: DetailRelease
     featureIds?: DetailFeatureIds
     nav: { previous?: DetailNavRef; next?: DetailNavRef }
     belongsTo: DetailBelongsTo
-    updateId?: DetailUpdateId[]
-    download?: DetailDownload
+    updateId: DetailUpdateId[]
+    download: DetailDownload[]
 }
 
 // CategoryList 页面数据
@@ -124,6 +134,26 @@ export interface CategoryContent {
     range: [string, string]
     nav: { previous?: CategoryNavRef; next?: CategoryNavRef }
     list: [string, string][]
+}
+
+// Feature ID 页面数据
+export interface FeatureIdItem {
+    id: string[]
+    variant: string[] | null
+    title: string
+    description: string
+}
+
+export interface FeatureIdCategory {
+    name: string
+    id: string
+}
+
+export interface FeatureIdContent {
+    codename: string
+    belonging: string
+    range: [string, string]
+    list: FeatureIdItem[]
 }
 
 // 页面导航
@@ -154,4 +184,42 @@ export type RespOrigin =
 export interface SearchBuildItem {
     platform: string
     build: string
+}
+
+// 下载页面数据
+export interface DownloadLink {
+    name: string
+    description: string
+    url: string
+}
+
+export interface DownloadBadge {
+    text: string
+    color: BuiltInColor
+}
+
+export interface SelfBuildItem {
+    name: string
+    build: string
+    semester: string
+    badge?: DownloadBadge
+}
+
+export interface DownloadEsdItem {
+    name: string
+    links: DownloadLink[]
+}
+
+export interface DownloadEsdCategory {
+    name: string
+    value: string
+}
+
+export interface DownloadContent {
+    iso: DownloadLink[]
+    self: {
+        mainline: SelfBuildItem[]
+        baseline: SelfBuildItem[]
+    }
+    esd: DownloadEsdItem[]
 }

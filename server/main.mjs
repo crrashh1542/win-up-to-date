@@ -1,7 +1,7 @@
 /**
  * Windows Up-to-Date 服务端脚本
  * @author crrashh1542
- * @version 3.3
+ * @version 3.5
  */
 
 import { execFile } from 'node:child_process'
@@ -15,8 +15,8 @@ import { handleDeploy } from './admin.js'
 
 const execFileP = promisify(execFile)
 
-const serverVersion = '3.3'
-const apiVersion = 1
+const serverVersion = '3.5'
+const apiVersion = 2
 const port = 9884
 const cacheSize = 200
 
@@ -165,6 +165,21 @@ const serveSearch = async (res, _params, reqUrl) => {
 }
 
 // 路由处理函数
+const serveCategory = async (res, _params, reqUrl) => {
+    const platform = reqUrl.pathname.slice('/category/'.length)
+    if (!platform) {
+        return serveData('index/category.json', 'categoryList')(
+            res,
+            _params,
+            reqUrl
+        )
+    }
+    if (!isSafeId(platform)) {
+        return errParam(res)
+    }
+    return serveData(categoryPath, 'category')(res, _params, reqUrl)
+}
+
 const serveData = (file, type) => async (res, _params, reqUrl) => {
     const filePath =
         typeof file === 'function' ? file(reqUrl) : path.join(dataRoot, file)
@@ -181,16 +196,90 @@ const serveData = (file, type) => async (res, _params, reqUrl) => {
     }
 }
 
+const serveId = async (res, _params, reqUrl) => {
+    const category = reqUrl.pathname.slice('/id/'.length)
+    if (!category) {
+        return serveData('index/viveid.json', 'idList')(res, _params, reqUrl)
+    }
+    if (!isSafeId(category)) {
+        return errParam(res)
+    }
+    return serveData(idPath, 'id')(res, _params, reqUrl)
+}
+
+// 主下载页
+// 读取 Win11- 前 3 个 + Win10- 第 1 个 json 的前 2 项，作为 esd 字段
+const serveDownload = async (res) => {
+    try {
+        const base = await readCache(
+            path.join(dataRoot, 'index', 'download.json')
+        )
+        // 文件名降序遍历 download 目录
+        const names = (await fs.readdir(path.join(dataRoot, 'download')))
+            .filter((name) => name.endsWith('.json'))
+            .sort()
+            .reverse()
+        // 取 Win11- 前 3 个 + Win10- 第 1 个（最新的消费者版 + 商业版）
+        const targets = [
+            ...names.filter((name) => name.startsWith('Win11-')).slice(0, 3),
+            ...names.filter((name) => name.startsWith('Win10-')).slice(0, 1),
+        ]
+        const esd = []
+        for (const name of targets) {
+            const arr = await readCache(path.join(dataRoot, 'download', name))
+            if (Array.isArray(arr)) esd.push(...arr.slice(0, 2))
+        }
+        sendJson(res, 200, okPayload('download', { ...base, esd }))
+    } catch {
+        errValue(res)
+    }
+}
+
+// 官方 ESD 下载页
+// /download/esd 返回分类列表，/download/esd/:value 返回对应 json
+const serveDownloadEsd = async (res, _params, reqUrl) => {
+    const value = reqUrl.pathname.slice('/download/esd/'.length)
+    if (!value) {
+        return serveData('index/download-esd.json', 'downloadEsdList')(
+            res,
+            _params,
+            reqUrl
+        )
+    }
+    if (!isSafeId(value)) {
+        return errParam(res)
+    }
+    return serveData(path.join('download', `${value}.json`), 'downloadEsd')(
+        res,
+        _params,
+        reqUrl
+    )
+}
+
+const serveDetail = async (res, _params, reqUrl) => {
+    const segments = reqUrl.pathname.slice('/detail/'.length).split('/')
+    const [platform, build] = segments
+    if (!platform || !build || segments.length > 2) {
+        return errParam(res)
+    }
+    if (!isSafeId(platform) || !isSafeId(build)) {
+        return errParam(res)
+    }
+    return serveData(detailPath, 'detail')(res, _params, reqUrl)
+}
+
 // 路由表
 const categoryPath = (u) =>
-    path.join(dataRoot, 'category', u.searchParams.get('platform') + '.json')
+    path.join(dataRoot, 'category', u.pathname.slice('/category/'.length) + '.json')
 const detailPath = (u) =>
     path.join(
         dataRoot,
         'detail',
-        u.searchParams.get('platform'),
-        u.searchParams.get('build') + '.json'
+        u.pathname.split('/')[2],
+        u.pathname.split('/')[3] + '.json'
     )
+const idPath = (u) =>
+    path.join(dataRoot, 'viveid', u.pathname.slice('/id/'.length) + '.json')
 
 const routes = new Map([
     [
@@ -200,20 +289,16 @@ const routes = new Map([
                 sendJson(res, 200, { message: 'Service is available!' }),
         },
     ],
-    ['/latestBuilds', { handler: serveData('latest-builds.json', 'latest') }],
+    ['/latestBuilds', { handler: serveData('index/latest-builds.json', 'latest') }],
+    ['/download', { handler: serveDownload }],
+    ['/download/esd', { handler: serveDownloadEsd }],
+    ['/download/esd/', { handler: serveDownloadEsd, prefix: true }],
     ['/version', { handler: serveDataVersion }],
-    [
-        '/category',
-        { params: ['platform'], handler: serveData(categoryPath, 'category') },
-    ],
-    ['/category/list', { handler: serveData('category.json', 'categoryList') }],
-    [
-        '/detail',
-        {
-            params: ['platform', 'build'],
-            handler: serveData(detailPath, 'detail'),
-        },
-    ],
+    ['/category', { handler: serveCategory }],
+    ['/category/', { handler: serveCategory, prefix: true }],
+    ['/detail/', { handler: serveDetail, prefix: true }],
+    ['/id', { handler: serveId }],
+    ['/id/', { handler: serveId, prefix: true }],
     ['/search', { params: ['build'], handler: serveSearch }],
 ])
 
@@ -235,7 +320,15 @@ http.createServer(async (req, res) => {
 
     try {
         if (req.method === 'GET') {
-            const route = routes.get(reqPath)
+            let route = routes.get(reqPath)
+            if (!route) {
+                for (const [path, r] of routes) {
+                    if (r.prefix && reqPath.startsWith(path)) {
+                        route = r
+                        break
+                    }
+                }
+            }
             if (!route) {
                 return sendJson(res, 404, { message: 'Interface is not found!' })
             }

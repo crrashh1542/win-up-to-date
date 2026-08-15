@@ -14,7 +14,11 @@ import { promisify } from 'node:util'
 const execFileP = promisify(execFile)
 
 const maxUploadSize = 2 * 1024 * 1024
-const requiredFiles = ['version.json', 'category.json', 'latest-builds.json']
+const requiredFiles = [
+    'version.json',
+    'index/category.json',
+    'index/latest-builds.json',
+]
 
 /**
  * 发送 JSON 响应

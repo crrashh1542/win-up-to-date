@@ -43,10 +43,10 @@ export default defineConfig({
         port: 9883,
         host: true,
         proxy: {
-            '/v1': {
+            '/v2': {
                 target: 'http://localhost:9884',
                 changeOrigin: true,
-                rewrite: (path) => path.replace(/^\/v1/, ''),
+                rewrite: (path) => path.replace(/^\/v2/, ''),
             },
         },
     },
@@ -109,14 +109,14 @@ export default defineConfig({
         preprocessorOptions: {
             less: {
                 javascriptEnabled: true,
-                additionalData: `@import "${resolve(__dirname, 'src/styles/global.less')}";`,
+                additionalData: `@import "${resolve(import.meta.dirname, 'src/styles/global.less')}";`,
             },
         },
     },
     // 引入@作为./src的alias
     resolve: {
         alias: {
-            '@': resolve(__dirname, './src'),
+            '@': resolve(import.meta.dirname, './src'),
         },
     },
 })

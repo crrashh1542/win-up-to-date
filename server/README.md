@@ -19,9 +19,11 @@ pnpm dev:all
 | `GET` | `/` | 无 | 服务可用性检测 |
 | `GET` | `/latestBuilds` | 无 | 获取首页最新 Build 列表 |
 | `GET` | `/version` | 无 | 获取数据仓库版本信息 |
-| `GET` | `/category/list` | 无 | 获取平台分类总览 |
-| `GET` | `/category` | `platform` | 获取某个平台下的 Build 列表 |
-| `GET` | `/detail` | `platform`、`build` | 获取某个 Build 的详情 |
+| `GET` | `/category` | 无 | 获取平台分类总览 |
+| `GET` | `/category/:platform` | 路径参数 `platform` | 获取指定平台下的 Build 列表 |
+| `GET` | `/detail/:platform/:build` | 路径参数 `platform`、`build` | 获取某个 Build 的详情 |
+| `GET` | `/id` | 无 | 获取 Vive ID 分类总览 |
+| `GET` | `/id/:category` | 路径参数 `category` | 获取指定分类的 Vive ID 列表 |
 | `GET` | `/search` | `build` | 按 Build 号前缀搜索 |
 
 所有接口均只接受 `GET` 请求，响应格式统一为：
@@ -29,7 +31,7 @@ pnpm dev:all
 ```json
 {
   "code": 200,
-  "version": 1,
+  "version": 2,
   "message": "Successfully requested data!",
   "dataType": "...",
   "content": { ... }
@@ -40,7 +42,7 @@ pnpm dev:all
 
 ### `/latestBuilds`
 
-返回 [latest-builds.json](https://github.com/crrashh1542/win-up-to-date-data/blob/data/latest-builds.json) 的完整内容，用于首页展示。
+返回 [latest-builds.json](https://github.com/crrashh1542/win-up-to-date-data/blob/data/index/latest-builds.json) 的完整内容，用于首页展示。
 
 ### `/version`
 
@@ -53,24 +55,32 @@ pnpm dev:all
 }
 ```
 
-### `/category/list`
+### `/category`
 
-返回 [category.json](https://github.com/crrashh1542/win-up-to-date-data/blob/data/category.json) 的完整内容，用于平台分类页面。
+返回 [category.json](https://github.com/crrashh1542/win-up-to-date-data/blob/data/index/category.json) 的完整内容，用于平台分类页面。
 
-### `/category?platform={platform}`
+### `/category/:platform`
 
-返回 `category/{platform}.json` 的内容，例如 `/category?platform=24H2-germanium`。
+返回 `category/{platform}.json` 的内容，例如 `/category/24H2-germanium`。
 
-### `/detail?platform={platform}&build={build}`
+### `/detail/:platform/:build`
 
-返回 `detail/{platform}/{build}.json` 的内容，例如 `/detail?platform=24H2-germanium&build=26063.1`。
+返回 `detail/{platform}/{build}.json` 的内容，例如 `/detail/24H2-germanium/26063.1`。
+
+### `/id`
+
+返回 [viveid.json](https://github.com/crrashh1542/win-up-to-date-data/blob/data/index/viveid.json) 的完整内容，用于 Vive ID 分类总览。
+
+### `/id/:category`
+
+返回 `viveid/{category}.json` 的内容，例如 `/id/germanium`。
 
 ### `/search?build={build}`
 
 按 Build 号前缀搜索 `detail/` 目录下的所有 JSON 文件。
 
 ```bash
-curl "http://127.0.0.1:14726/search?build=26063.1"
+curl "http://127.0.0.1:9884/search?build=26063.1"
 ```
 
 返回：

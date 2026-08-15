@@ -15,14 +15,14 @@ import initDetailData from '@/utils/initDetailData'
 import type { CategoryContent, NavData } from '@/types'
 
 defineOptions({
-    name: 'DataCategoryList'
+    name: 'DataCategoryList',
 })
 
 const pageData = reactive({
     data: {} as CategoryContent,
     isLoading: true,
     versionRange: null as string | null,
-    nav: null as NavData | null
+    nav: null as NavData | null,
 })
 
 const route = useRoute()
@@ -41,7 +41,8 @@ const fetchData = async (platform: string) => {
     NProgress.start()
     try {
         const { data: resp } = await request({
-            url: '/category', method: 'get', params: { platform }
+            url: '/category/' + platform,
+            method: 'get',
         })
         initDetailData(resp, pageData)
         pageData.versionRange = formatVersionRange(resp.content.range)
@@ -58,7 +59,9 @@ const fetchData = async (platform: string) => {
 // 监听路由参数，重新请求数据
 watch(
     () => route.params.platform as string,
-    platform => { if (platform) fetchData(platform) },
+    (platform) => {
+        if (platform) fetchData(platform)
+    },
     { immediate: true }
 )
 </script>
@@ -102,16 +105,21 @@ watch(
                 <span class="left">版本</span>
                 <span class="right">发布日期</span>
             </div>
-            <router-link class="row" v-for="r in pageData.data.list" :key="r[0]" :to="getPath(r[0])">
+            <router-link
+                class="row"
+                v-for="r in pageData.data.list"
+                :key="r[0]"
+                :to="getPath(r[0])"
+            >
                 <span class="left">{{ r[0] }}</span>
                 <span class="right">{{ r[1] }}</span>
             </router-link>
         </Card>
-
     </div>
 </template>
 
-<style lang="less" scoped>.overview {
+<style lang="less" scoped>
+.overview {
     display: var(--v-detail-overview);
     .line-left {
         width: var(--v-detail-overview-width);
@@ -131,8 +139,12 @@ watch(
         display: flex;
         border-bottom: 1px solid @wu-color-border;
         transition: background-color 0.2s ease;
-        .left { flex: 0 0 40%; }
-        .right { flex: 0 0 60%; }
+        .left {
+            flex: 0 0 40%;
+        }
+        .right {
+            flex: 0 0 60%;
+        }
     }
     a.row:hover {
         background-color: @wu-color-base;
@@ -141,17 +153,18 @@ watch(
 
 // 响应式 ---- 移动端
 @media screen and (max-width: 700px) {
-   .wrapper { // v代表view
-      --v-detail-overview: block;
-      --v-detail-overview-width: 100%;
-   }
+    .wrapper {
+        // v代表view
+        --v-detail-overview: block;
+        --v-detail-overview-width: 100%;
+    }
 }
 
 // 响应式 ---- PC
 @media screen and (min-width: 700px) {
-   .wrapper {
-      --v-detail-overview: flex;
-      --v-detail-overview-width: 50%;
-   }
+    .wrapper {
+        --v-detail-overview: flex;
+        --v-detail-overview-width: 50%;
+    }
 }
 </style>

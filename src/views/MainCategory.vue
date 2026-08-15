@@ -29,7 +29,7 @@ const fetchData = async () => {
     NProgress.start()
     try {
         const { data: resp } = await request({
-            url: '/category/list',
+            url: '/category',
             method: 'get',
         })
         pageData.data = resp.content

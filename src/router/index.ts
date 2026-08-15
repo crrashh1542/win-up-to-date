@@ -1,6 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { applyRouteTitle, clearTitle } from '@/utils/title'
 
+declare module 'vue-router' {
+    interface RouteMeta {
+        title?: string
+    }
+}
+
 const router = createRouter({
     linkActiveClass: 'path-active',
     history: createWebHistory(),
@@ -9,7 +15,7 @@ const router = createRouter({
         {
             path: '/',
             name: 'home',
-            component: () => import('@/views/MainHome.vue')
+            component: () => import('@/views/MainHome.vue'),
         },
         {
             path: '/about',
@@ -23,14 +29,36 @@ const router = createRouter({
             component: () => import('@/views/MainSettings.vue'),
             meta: { title: '设置' },
         },
-
-        // GROUP 2 ---- 数据页面
         {
             path: '/category',
             name: 'category',
             component: () => import('@/views/MainCategory.vue'),
-            meta: { title: '数据分类' },
-        }, // 临时作为类型首页
+            meta: { title: '平台分类' },
+        },
+        {
+            path: '/feature-id/:id',
+            name: 'featureId',
+            component: () => import('@/views/MainFeatureId.vue'),
+            meta: { title: '功能 ID' },
+        },
+        {
+            path: '/download',
+            name: 'download',
+            component: () => import('@/views/MainDownload.vue'),
+            meta: { title: '下载' },
+        },
+        {
+            path: '/download/esd',
+            name: 'downloadEsd',
+            component: () => import('@/views/MainDownloadEsd.vue'),
+            meta: { title: '下载官方 ESD' },
+        },
+        {
+            path: '/feature-id',
+            redirect: '/feature-id/germanium-25h2',
+        },
+
+        // GROUP 2 ---- 数据页面
         {
             path: '/category/:platform',
             name: 'categoryList',
