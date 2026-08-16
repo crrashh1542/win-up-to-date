@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, reactive, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 
-import Badge from '@/components/widgets/Badge.vue'
 import Card from '@/components/widgets/Card.vue'
+import Dropdown from '@/components/widgets/Dropdown.vue'
+import MainCategoryItem from './MainCategoryItem.vue'
 import Tablist from '@/components/widgets/Tablist.vue'
 import Tab from '@/components/widgets/Tab.vue'
 
@@ -16,6 +17,16 @@ useCategoryStore().fetchCategories()
 // 当前选中的分类数据
 const currentCategory = computed(() => {
     return list.value.find((cat) => cat.id === selectedCategory.value)
+})
+
+// 多版本平台的展开状态：数据就绪后默认全部展开，保留原"平台列表"整体可见的体验
+const expandedMap = reactive<Record<string, boolean>>({})
+watchEffect(() => {
+    for (const platform of currentCategory.value?.platforms ?? []) {
+        if (platform.multi && expandedMap[platform.name] === undefined) {
+            expandedMap[platform.name] = true
+        }
+    }
 })
 </script>
 
@@ -33,46 +44,34 @@ const currentCategory = computed(() => {
             </Tab>
         </Tablist>
 
-        <!-- 当前分类内容 -->
         <template v-if="currentCategory">
-            <!-- 内容卡片 -->
-            <Card v-for="platform in currentCategory.platforms" :key="platform.name" :shadow="true">
-                <!-- 只有平台有多线开发时才显示子标题 -->
-                <template v-if="platform.multi">
-                    <div class="sub-title">{{ platform.name }}</div>
-                    <hr />
-                </template>
+            <!-- 按原始平台顺序渲染：多版本用 Dropdown 折叠，单版本直接平铺条目 -->
+            <template v-for="platform in currentCategory.platforms" :key="platform.name">
+                <Dropdown
+                    v-if="platform.multi"
+                    v-model="expandedMap[platform.name]"
+                    :items="platform.items"
+                    class="platform-dropdown"
+                >
+                    <!-- Header：平台名（左）+ 版本数（右） -->
+                    <span class="platform-name">{{ platform.name }}</span>
+                    <span class="item-count" v-if="platform.items.length > 1">
+                        {{ platform.items.length }} 个版本
+                    </span>
 
-                <!-- 平台列表 -->
-                <template v-for="(item, index) in platform.items" :key="item.name">
-                    <!-- 从第 1 项开始显示分割线 -->
-                    <hr v-if="index > 0" />
-                    <!-- 如果 item 有 category，则使用 router-link 并添加 hover 效果，否则 div -->
-                    <component
-                        :is="item.category !== undefined ? 'router-link' : 'div'"
-                        v-bind="
-                            item.category !== undefined ? { to: `/category/${item.category}` } : {}
-                        "
-                        :class="[
-                            'container',
-                            item.continued ? '' : 'uncontinued',
-                            item.category !== undefined ? 'u-hoverable' : 'disabled',
-                        ]"
-                    >
-                        <div class="info">
-                            <div class="codename">
-                                {{ item.name === 'default' ? platform.name : item.name }}
-                            </div>
-                            <div class="version">{{ item.semester }} {{ item.latestBuild }}</div>
-                        </div>
-                        <div class="badges">
-                            <Badge v-for="t in item.tag" :key="t.name" :color="t.color">
-                                {{ t.name }}
-                            </Badge>
-                        </div>
-                    </component>
-                </template>
-            </Card>
+                    <!-- Body 每一项 -->
+                    <template #item="{ item }">
+                        <MainCategoryItem :platform="platform" :item="item" />
+                    </template>
+                </Dropdown>
+
+                <Card v-else class="platform-card">
+                    <template v-for="(item, index) in platform.items" :key="index">
+                        <hr v-if="index > 0" />
+                        <MainCategoryItem :platform="platform" :item="item" />
+                    </template>
+                </Card>
+            </template>
         </template>
     </div>
 </template>
@@ -95,50 +94,24 @@ const currentCategory = computed(() => {
         }
     }
 
-    // 由于会出现多个 item 的情况，所以移除 card 上的 padding，放到 container 上
-    // 否则 hr 宽度无法占满整个 card，且部分地方点击不到
-    .card {
-        margin: 0;
+    // 单版本平台卡片：直接平铺条目，覆盖 Card 默认 padding/间距，让条目自身控制行高
+    .card.platform-card {
         padding: 0;
+        margin-bottom: 0;
     }
 
-    .sub-title {
-        font-size: 18px;
-        font-weight: 500;
-        margin: @wu-layout-card-padding-y @wu-layout-card-padding-x;
-    }
-
-    .container {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: @wu-layout-card-padding-y @wu-layout-card-padding-x;
-        line-height: 1.6;
-
-        .codename {
+    // 多版本平台 Dropdown
+    .platform-dropdown {
+        // Header：平台名（左）+ 版本数（右，由 indicator 的 margin-left:auto 推到最右）
+        .platform-name {
             font-size: 18px;
             font-weight: 500;
         }
 
-        .version {
-            font-size: 15px;
+        .item-count {
+            margin-right: 0.5em;
+            font-size: 13px;
             color: @wu-color-text-accent;
-        }
-
-        .badges {
-            display: flex;
-            gap: 4px;
-            margin-right: @wu-layout-card-padding-x;
-        }
-
-        &.disabled {
-            // 没有 category
-            cursor: not-allowed;
-        }
-        &.uncontinued {
-            // 已停止维护
-            opacity: 0.6;
         }
     }
 }
