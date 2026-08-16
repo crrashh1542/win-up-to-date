@@ -62,6 +62,9 @@ const classes = computed(() => ['badge', `badge-${props.variant}`, `badge-${prop
     &.badge-purple {
         background-color: @wu-color-purple;
     }
+    &.badge-gray {
+        background-color: @wu-color-gray;
+    }
 }
 
 // Outlined
