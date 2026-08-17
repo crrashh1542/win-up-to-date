@@ -140,5 +140,8 @@ useBuildsStore().fetchBuilds()
 .channel.color-purple {
     color: @wu-color-purple;
 }
+.channel.color-gray {
+    color: @wu-color-gray;
+}
 /* 频道颜色变化 ----- END */
 </style>
