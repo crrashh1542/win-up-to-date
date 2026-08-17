@@ -26,6 +26,16 @@ pnpm dev
 pnpm start
 ```
 
+### 端口配置
+
+默认端口为 `9884`，可通过 `WUTD_PORT` 环境变量覆盖（仅接受合法端口号，非法值回退到默认端口并告警）：
+
+```bash
+WUTD_PORT=9000 pnpm start
+```
+
+注意：前端开发服务器的代理目标默认指向 `9884`（见 [vite.config.ts](../vite.config.ts)），自定义端口后需同步修改代理配置。
+
 ### 部署
 
 ```bash

@@ -15,7 +15,18 @@ import { handleDeploy, setOnDeploySuccess } from './admin.js'
 const execFileP = promisify(execFile)
 const { version } = pkgInfo
 const apiVersion = 2
-const port = 9884
+// 端口：默认 9884，可通过 WUTD_PORT 环境变量覆盖（仅接受合法端口号）
+const defaultPort = 9884
+const envPort = Number(process.env.WUTD_PORT)
+const port =
+    Number.isInteger(envPort) && envPort > 0 && envPort <= 65535
+        ? envPort
+        : defaultPort
+if (process.env.WUTD_PORT && port !== envPort) {
+    console.warn(
+        `[WARN] WUTD_PORT 无效（${process.env.WUTD_PORT}），已回退到默认端口 ${defaultPort}`
+    )
+}
 const cacheSize = 200
 
 const __filename = fileURLToPath(import.meta.url)
