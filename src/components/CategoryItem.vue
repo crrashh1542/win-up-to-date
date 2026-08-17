@@ -66,7 +66,7 @@ const classes = computed(() => [
     }
 
     .version {
-        font-size: 15px;
+        font-size: 14px;
         color: @wu-color-text-accent;
     }
 

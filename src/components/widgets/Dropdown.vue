@@ -6,7 +6,7 @@
 -->
 <script setup lang="ts" generic="T">
 import { computed, useSlots } from 'vue'
-import ArrowDown16RegularIcon from '@iconify-vue/fluent/arrow-down-16-regular'
+import ChevronDown24RegularIcon from '@iconify-vue/fluent/chevron-down-24-regular'
 
 import Card from './Card.vue'
 
@@ -17,9 +17,12 @@ const expanded = defineModel<boolean>({ default: false })
 
 const props = withDefaults(
     defineProps<{
+        /** body 数据列表，配合 #item 插槽逐项渲染 */
         items?: T[]
+        /** 是否带阴影，透传给 Card */
+        shadow?: boolean
     }>(),
-    { items: () => [] }
+    { items: () => [], shadow: false }
 )
 
 const slots = useSlots()
@@ -31,7 +34,7 @@ const hasContent = computed(() => props.items.length > 0 || Boolean(slots.body))
 
 <template>
     <!-- 整体复用 Card 组件作为一体卡片容器，header 与 body 连接为一体 -->
-    <Card class="dropdown">
+    <Card class="dropdown" :shadow="shadow">
         <!-- Header：默认 slot，点击展开/收起 -->
         <div
             class="dropdown-header u-hoverable"
@@ -45,7 +48,7 @@ const hasContent = computed(() => props.items.length > 0 || Boolean(slots.body))
             <slot />
             <span class="indicator" :class="{ expanded }">
                 <slot name="indicator">
-                    <ArrowDown16RegularIcon width="16" height="16" />
+                    <ChevronDown24RegularIcon width="24" height="24" />
                 </slot>
             </span>
         </div>

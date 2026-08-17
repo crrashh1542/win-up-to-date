@@ -37,7 +37,12 @@ const currentCategory = computed(() => {
         <template v-if="currentCategory">
             <!-- multi为true -> Dropdown，false直接传入 -->
             <template v-for="platform in currentCategory.platforms" :key="platform.name">
-                <Dropdown v-if="platform.multi" :items="platform.items" class="platform-dropdown">
+                <Dropdown
+                    v-if="platform.multi"
+                    :items="platform.items"
+                    :shadow="true"
+                    class="platform-dropdown"
+                >
                     <CategoryItem
                         :platform="platform"
                         :item="platform.items[0]"
@@ -51,7 +56,7 @@ const currentCategory = computed(() => {
                     </template>
                 </Dropdown>
 
-                <Card v-else class="platform-card">
+                <Card v-else :shadow="true" class="platform-card">
                     <template v-for="(item, index) in platform.items" :key="index">
                         <hr v-if="index > 0" />
                         <CategoryItem :platform="platform" :item="item" />
