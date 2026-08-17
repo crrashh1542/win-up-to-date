@@ -6,7 +6,7 @@ import tsPlugin from '@typescript-eslint/eslint-plugin'
 
 export default [
     {
-        ignores: ['dist/**', 'node_modules/**', 'server/**'],
+        ignores: ['dist/**', 'node_modules/**', 'server/**', 'scripts/**'],
     },
     js.configs.recommended,
     ...vue.configs['flat/essential'],

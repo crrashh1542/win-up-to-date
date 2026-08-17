@@ -2,11 +2,8 @@
     "name": "win-up-to-date-server",
     "version": "2.0.0",
     "private": true,
-    "type": "module",
     "description": "Windows Up-to-Date 数据 API 服务端",
-    "engines": {
-        "node": ">=20"
-    },
+    "type": "module",
     "scripts": {
         "start": "node main.mjs",
         "check": "node --check main.mjs && node --check admin.js",
@@ -14,5 +11,8 @@
     },
     "dependencies": {
         "yauzl": "^2.10.0"
+    },
+    "engines": {
+        "node": ">=20"
     }
 }
