@@ -19,19 +19,8 @@ const maxEntrySize = 16 * 1024 * 1024
 const maxTotalUncompressed = 128 * 1024 * 1024
 const requiredFiles = ['version.json', 'index/category.json', 'index/latest-builds.json']
 
-// Node < 20.15 的 zlib 没有 crc32，提供表驱动回退实现
-const crc32Of = (buf) => {
-    if (typeof zlibCrc32 === 'function') return zlibCrc32(buf) >>> 0
-    const table = new Uint32Array(256)
-    for (let n = 0; n < 256; n++) {
-        let c = n
-        for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1
-        table[n] = c >>> 0
-    }
-    let c = 0xffffffff
-    for (const b of buf) c = table[(c ^ b) & 0xff] ^ (c >>> 8)
-    return (c ^ 0xffffffff) >>> 0
-}
+// zlib.crc32 自 Node 20.15 起可用，engines 已要求 >= 24，无需回退实现
+const crc32Of = (buf) => zlibCrc32(buf) >>> 0
 
 // 定义 server 运行目录
 // 用 import.meta.url 而非 process.argv[1]：argv[1] 相对 cwd，若从非预期目录启动，
