@@ -1,6 +1,6 @@
 # Windows Up-to-Date API Server
 
-`main.js` 是 Windows Up-to-Date 项目的数据服务端文件，默认端口为 9884。
+`main.js` 是 Windows Up-to-Date 项目的数据服务端文件，默认端口为 9884。当前服务端版本详见 [package.json](./package.json)，API 设计版本为 v2
 
 ## 运行方式
 
@@ -39,10 +39,8 @@ WUTD_PORT=9000 pnpm start
 ### 部署
 
 ```bash
-# 上传 server/ 目录后，在服务器上执行（只安装 production 依赖）
 cd server && pnpm install --prod
-# 之后用进程管理器（systemd / pm2）启动
-node server/main.mjs
+node main.mjs
 ```
 
 > 注：运行产生的 `server/node_modules`、`server/.tmp` 均在 `.gitignore` 中。
@@ -131,7 +129,7 @@ curl "http://127.0.0.1:9884/search?build=26063.1"
 ```json
 {
   "code": 200,
-  "version": 1,
+  "version": 2,
   "message": "Successfully requested data!",
   "dataType": "searchBuild",
   "content": [

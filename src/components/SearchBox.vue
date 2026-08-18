@@ -185,7 +185,7 @@ const onFocus = () => {
     width: 100%;
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: @wu-mobile-breakpoint) {
     .build-search {
         width: 25em;
     }

@@ -53,7 +53,7 @@ const getHash = () => {
     return buildHash
 }
 
-// STEP5 -------- 获取构建次数
+// STEP4 -------- 获取构建次数
 const getBuild = () => {
     const buildStr =
         execCmd('git rev-list HEAD --count') ||
@@ -64,7 +64,7 @@ const getBuild = () => {
     return Number.isNaN(buildTime) ? 0 : buildTime
 }
 
-// STEP4 -------- 获取构建分支
+// STEP5 -------- 获取构建分支
 const getBranch = () => {
     let buildBranch =
         execCmd('git rev-parse --abbrev-ref HEAD') ||

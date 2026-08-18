@@ -6,7 +6,7 @@ defineOptions({ name: 'PageFooter' })
     <div class="footer">
         <p>
             (C) 2023-2026 crrashh1542.
-            <a href="//beian.miit.gov.cn" target="_blank" rel="noopener noreferrer"
+            <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer"
                 >蜀ICP备2022029657号-2</a
             >
         </p>

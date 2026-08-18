@@ -11,7 +11,7 @@ import Tag24RegularIcon from '@iconify-vue/fluent/tag-24-regular'
 import Badge from './widgets/Badge.vue'
 import Tab from './widgets/Tab.vue'
 import Tablist from './widgets/Tablist.vue'
-import Foo from './Footer.vue'
+import Footer from './Footer.vue'
 import Search from './SearchBox.vue'
 
 import icons from '@/assets/icons'
@@ -105,7 +105,7 @@ const selectedNav = computed(() => {
         <div class="container">
             <slot />
         </div>
-        <Foo />
+        <Footer />
     </main>
 </template>
 
@@ -147,7 +147,7 @@ const selectedNav = computed(() => {
     }
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: @wu-mobile-breakpoint) {
     .topbar .search {
         flex: 0 0 auto;
         margin-right: 10%;
@@ -168,8 +168,6 @@ const selectedNav = computed(() => {
     left: 0;
     bottom: 0;
     user-select: none;
-    flex-direction: column;
-    gap: @wu-layout-sidenav-space;
 }
 
 .tab-button {

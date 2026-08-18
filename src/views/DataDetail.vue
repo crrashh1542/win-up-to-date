@@ -68,10 +68,10 @@ const fetchData = async (platform: string, build: string) => {
         })
         initDetailData(resp, pageData)
     } catch (error) {
+        pageData.isError = true
         if (axios.isAxiosError(error) && error.response?.status === 404) {
             router.replace('/404')
         }
-        pageData.isError = true
     } finally {
         pageData.isLoading = false
         NProgress.done()
@@ -265,7 +265,7 @@ watch(
 }
 
 // 响应式 ---- 移动端
-@media screen and (max-width: 700px) {
+@media screen and (max-width: @wu-mobile-breakpoint) {
     .wrapper {
         // v代表view
         --v-detail-overview: block;
@@ -274,7 +274,7 @@ watch(
 }
 
 // 响应式 ---- PC
-@media screen and (min-width: 700px) {
+@media screen and (min-width: @wu-mobile-breakpoint) {
     .wrapper {
         --v-detail-overview: flex;
         --v-detail-overview-width: 50%;
