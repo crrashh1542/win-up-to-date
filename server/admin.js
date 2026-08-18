@@ -7,11 +7,16 @@ import fs from 'node:fs/promises'
 import { createWriteStream } from 'node:fs'
 import path from 'node:path'
 import { pipeline } from 'node:stream/promises'
+import { fileURLToPath } from 'node:url'
 import { crc32 as zlibCrc32 } from 'node:zlib'
 
 import yauzl from 'yauzl'
 
 const maxUploadSize = 2 * 1024 * 1024
+// zip 解压防护上限
+const maxEntryCount = 10000
+const maxEntrySize = 16 * 1024 * 1024
+const maxTotalUncompressed = 128 * 1024 * 1024
 const requiredFiles = ['version.json', 'index/category.json', 'index/latest-builds.json']
 
 // Node < 20.15 的 zlib 没有 crc32，提供表驱动回退实现
@@ -29,7 +34,9 @@ const crc32Of = (buf) => {
 }
 
 // 定义 server 运行目录
-const serverDir = path.resolve(path.dirname(process.argv[1]))
+// 用 import.meta.url 而非 process.argv[1]：argv[1] 相对 cwd，若从非预期目录启动，
+// 会与 main.mjs 的 dataRoot（基于 import.meta.url）指向不同目录，导致部署操作到错误的数据目录
+const serverDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)))
 const tmpDir = path.join(serverDir, '.tmp')
 
 // 发送 JSON 响应
@@ -158,6 +165,9 @@ export const extractZip = async (zipPath, targetDir) => {
         )
     })
 
+    let entryCount = 0
+    let totalBytes = 0
+
     await new Promise((resolve, reject) => {
         const fail = (err) => {
             zip.close()
@@ -166,6 +176,10 @@ export const extractZip = async (zipPath, targetDir) => {
         zip.on('entry', (entry) => {
             Promise.resolve()
                 .then(async () => {
+                    entryCount++
+                    if (entryCount > maxEntryCount) {
+                        throw new Error(`zip 条目数超过上限（${maxEntryCount}）`)
+                    }
                     const { rel, target } = resolveEntry(targetDir, entry.fileName)
                     if (isSymlink(entry)) {
                         throw new Error(`zip 包含符号链接，已拒绝：${entry.fileName}`)
@@ -183,9 +197,45 @@ export const extractZip = async (zipPath, targetDir) => {
                             zip.openReadStream(entry, (err, rs) => {
                                 if (err) return rej(err)
                                 const chunks = []
-                                rs.on('data', (c) => chunks.push(c))
-                                rs.on('error', rej)
-                                rs.on('end', () => res(Buffer.concat(chunks)))
+                                let entryBytes = 0
+                                let failed = false
+                                // 流式累计实际解压字节数（非 zip 头声明的值），
+                                // 超限立即中止，避免单条目或总量打满内存 / 磁盘（zip bomb 防护）
+                                rs.on('data', (c) => {
+                                    if (failed) return
+                                    entryBytes += c.length
+                                    totalBytes += c.length
+                                    if (entryBytes > maxEntrySize) {
+                                        failed = true
+                                        // 先 rej 再 destroy：destroy 会触发 error 事件，
+                                        // 若后于 rej 则被忽略，避免错误信息被覆盖
+                                        rej(
+                                            new Error(
+                                                `zip 单条目超过大小上限（${maxEntrySize} 字节）：${entry.fileName}`
+                                            )
+                                        )
+                                        rs.destroy()
+                                        return
+                                    }
+                                    if (totalBytes > maxTotalUncompressed) {
+                                        failed = true
+                                        rej(
+                                            new Error(
+                                                `zip 解压总量超过上限（${maxTotalUncompressed} 字节）`
+                                            )
+                                        )
+                                        rs.destroy()
+                                        return
+                                    }
+                                    chunks.push(c)
+                                })
+                                // 已主动失败时忽略后续 error 事件
+                                rs.on('error', (e) => {
+                                    if (!failed) rej(e)
+                                })
+                                rs.on('end', () => {
+                                    if (!failed) res(Buffer.concat(chunks))
+                                })
                             })
                         })
                         if (crc32Of(data) !== entry.crc32 >>> 0) {
