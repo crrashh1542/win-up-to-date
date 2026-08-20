@@ -287,15 +287,33 @@ const cleanupBackups = async (dataRoot) => {
     }
 }
 
-// 部署成功时的通知钩子：由服务端主脚本（main.mjs）注册，
-// 用于在数据整体替换后重置其内部缓存（文件/派生/版本缓存）
+// 部署成功时的通知钩子
+// 用于在数据整体替换后重置其内部缓存
 let onDeploySuccess = () => {}
 export const setOnDeploySuccess = (callback) => {
     onDeploySuccess = typeof callback === 'function' ? callback : () => {}
 }
 
-// 部署处理函数
+// 部署互斥锁
+// 防止并发 deploy 同时替换 dataRoot 导致数据错乱，忙时 409 避免请求长时间挂起
+let deployLock = false
+
+// 部署处理函数：入口加互斥，实际逻辑在 runDeploy
 export const handleDeploy = async (req, res) => {
+    if (deployLock) {
+        return sendJson(res, 409, {
+            message: 'Another deployment is in progress, please retry later',
+        })
+    }
+    deployLock = true
+    try {
+        await runDeploy(req, res)
+    } finally {
+        deployLock = false
+    }
+}
+
+const runDeploy = async (req, res) => {
     // 1. 认证
     if (!authenticate(req)) {
         return errUnauthorized(res)
