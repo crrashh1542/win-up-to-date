@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import Code24RegularIcon from '@iconify-vue/fluent/code-24-regular'
@@ -29,12 +29,20 @@ const buildBadge = computed<{ text: string; color: BuiltInColor } | null>(() => 
 })
 
 // 导航选中状态，与当前路由前缀同步
-const selectedNav = computed(() => {
-    const path = route.path
+const selectedNav = ref(getSelectedNav(route.path))
+watch(
+    () => route.path,
+    (path) => {
+        selectedNav.value = getSelectedNav(path)
+    }
+)
+
+function getSelectedNav(path: string): string {
     if (path.startsWith('/feature-id')) return '/feature-id'
+    if (path.startsWith('/download')) return '/download'
     if (path.startsWith('/category')) return '/category'
     return path
-})
+}
 </script>
 
 <template>
