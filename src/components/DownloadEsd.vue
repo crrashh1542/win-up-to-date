@@ -23,10 +23,9 @@ const props = defineProps<{
                     :key="link.name"
                     :href="link.url"
                     target="_blank"
+                    rel="noopener noreferrer"
                 >
-                    <Button variant="outlined" color="blue">{{
-                        link.name
-                    }}</Button>
+                    <Button variant="outlined" color="blue">{{ link.name }}</Button>
                 </a>
             </div>
         </Card>

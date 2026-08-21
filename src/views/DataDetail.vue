@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import axios from 'axios'
 import request from '@/utils/request'
 
 import Box24RegularIcon from '@iconify-vue/fluent/box-24-regular'
@@ -66,11 +67,11 @@ const fetchData = async (platform: string, build: string) => {
             method: 'get',
         })
         initDetailData(resp, pageData)
-    } catch (error: any) {
-        if (error.response?.status === 404) {
+    } catch (error) {
+        pageData.isError = true
+        if (axios.isAxiosError(error) && error.response?.status === 404) {
             router.replace('/404')
         }
-        pageData.isError = true
     } finally {
         pageData.isLoading = false
         NProgress.done()
@@ -123,9 +124,7 @@ watch(
                 <p>
                     <SquareMultiple24RegularIcon width="22" height="22" />
                     构建归属 /
-                    <router-link
-                        :to="'/category/' + pageData.data.belongsTo.path"
-                    >
+                    <router-link :to="'/category/' + pageData.data.belongsTo.path">
                         {{ pageData.data.belongsTo.name }}
                     </router-link>
                 </p>
@@ -148,13 +147,17 @@ watch(
                 </p>
                 <p v-if="pageData.data.release.url !== undefined">
                     官方发版日志：
-                    <a target="_blank" :href="pageData.data.release.url">
+                    <a target="_blank" rel="noopener noreferrer" :href="pageData.data.release.url">
                         {{ pageData.data.release.announcePlace }}</a
                     >
                 </p>
                 <p v-if="pageData.data.featureIds !== undefined">
                     ViveID 列表：
-                    <a target="_blank" :href="pageData.data.featureIds.url">
+                    <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        :href="pageData.data.featureIds.url"
+                    >
                         {{ pageData.data.featureIds.fileName }}</a
                     >
                 </p>
@@ -171,35 +174,20 @@ watch(
                 从 UUP 获取构建
             </div>
 
-            <div
-                v-if="
-                    pageData.data.updateId !== undefined &&
-                    pageData.data.updateId.length > 0
-                "
-            >
-                <p
-                    class="u-para-code"
-                    v-for="id in pageData.data.updateId"
-                    :key="id.arch"
-                >
+            <div v-if="pageData.data.updateId !== undefined && pageData.data.updateId.length > 0">
+                <p class="u-para-code" v-for="id in pageData.data.updateId" :key="id.arch">
                     {{ id.arch }}：
-                    <Code
-                        v-if="id.available === false"
-                        :value="id.id"
-                        is-copiable
-                    />
+                    <Code v-if="id.available === false" :value="id.id" is-copiable />
                     <template v-else>
                         <Code :value="id.id" />
                         <a
                             :href="`https://uupdump.net/selectlang.php?id=${id.id}`"
                             target="_blank"
+                            rel="noopener noreferrer"
                         >
                             <Button>
                                 <template #before>
-                                    <Open16RegularIcon
-                                        width="1.25em"
-                                        height="1.25em"
-                                    />
+                                    <Open16RegularIcon width="1.25em" height="1.25em" />
                                 </template>
                                 打开
                             </Button>
@@ -228,7 +216,7 @@ watch(
                     <p>
                         下载地址：
                         <span v-for="(l, index) in dl.link" :key="index">
-                            <a target="_blank" :href="l.url">
+                            <a target="_blank" rel="noopener noreferrer" :href="l.url">
                                 <Button>{{ l.source }}</Button> </a
                             >&nbsp;
                         </span>
@@ -237,11 +225,7 @@ watch(
                         MD5：<Code :value="dl.md5" is-break-word is-copiable />
                     </p>
                     <p class="u-para-code" v-if="dl.sha256">
-                        SHA-256：<Code
-                            :value="dl.sha256"
-                            is-break-word
-                            is-copiable
-                        />
+                        SHA-256：<Code :value="dl.sha256" is-break-word is-copiable />
                     </p>
                 </template>
             </template>
@@ -281,7 +265,7 @@ watch(
 }
 
 // 响应式 ---- 移动端
-@media screen and (max-width: 700px) {
+@media screen and (max-width: @wu-mobile-breakpoint) {
     .wrapper {
         // v代表view
         --v-detail-overview: block;
@@ -290,7 +274,7 @@ watch(
 }
 
 // 响应式 ---- PC
-@media screen and (min-width: 700px) {
+@media screen and (min-width: @wu-mobile-breakpoint) {
     .wrapper {
         --v-detail-overview: flex;
         --v-detail-overview-width: 50%;

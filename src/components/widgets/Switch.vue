@@ -5,18 +5,28 @@
 <script setup lang="ts">
 import Circle20FilledIcon from '@iconify-vue/fluent/circle-20-filled'
 
+defineOptions({ name: 'WidgetSwitch' })
+
 const model = defineModel<boolean>()
-const props = withDefaults(defineProps<{
-    isDisabled?: boolean
-}>(), {
-    isDisabled: false
-})
+withDefaults(
+    defineProps<{
+        isDisabled?: boolean
+    }>(),
+    {
+        isDisabled: false,
+    }
+)
 </script>
 
 <template>
     <div class="switch">
-        <input class="input-box" role="switch" type="checkbox"
-               v-model="model" :disabled="isDisabled" />
+        <input
+            class="input-box"
+            role="switch"
+            type="checkbox"
+            v-model="model"
+            :disabled="isDisabled"
+        />
         <div aria-hidden="true" class="indicator">
             <Circle20FilledIcon width="18" height="18" />
         </div>
@@ -57,7 +67,7 @@ const props = withDefaults(defineProps<{
         width: 40px;
         * {
             transition-duration: 200ms;
-            transition-timing-function: cubic-bezier(0.33, 0 ,0.67, 1);
+            transition-timing-function: cubic-bezier(0.33, 0, 0.67, 1);
             transition-property: transform;
         }
     }
@@ -107,5 +117,4 @@ const props = withDefaults(defineProps<{
         border-color: transparent;
     }
 }
-
 </style>

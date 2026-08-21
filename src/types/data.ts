@@ -1,5 +1,5 @@
 export type BuiltInColor =
-    'amber' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'purple'
+    'amber' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'purple' | 'gray'
 
 // 构建信息（scripts/buildInfo.json）
 export interface BuildInfo {
@@ -7,8 +7,8 @@ export interface BuildInfo {
     hash: string
     build: number
     branch: string
-    ci?: boolean
-    beta?: boolean
+    ci: boolean
+    beta: boolean
 }
 
 // 首页数据

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
 
 import Search24RegularIcon from '@iconify-vue/fluent/search-24-regular'
 
@@ -9,6 +10,8 @@ import request from '@/utils/request'
 import debounce from '@/utils/debounce'
 import { useToastStore } from '@/stores/toast'
 import type { SearchBuildItem } from '@/types/data'
+
+defineOptions({ name: 'PageSearchBox' })
 
 const router = useRouter()
 const toast = useToastStore()
@@ -60,13 +63,15 @@ const doSearch = debounce(async (q: string) => {
         results.value = Array.isArray(resp.content) ? resp.content : []
         activeIndex.value = -1
         isOpen.value = results.value.length > 0
-    } catch (err: any) {
+    } catch (err) {
         console.log(err)
-        toast.show({
-            title: '搜索失败',
-            body: err.response?.data?.message ?? '网络异常',
-            intent: 'error',
-        })
+        if (axios.isAxiosError(err)) {
+            toast.show({
+                title: '搜索失败',
+                body: err.response?.data?.message ?? '网络异常',
+                intent: 'error',
+            })
+        }
         results.value = []
         isOpen.value = false
     }
@@ -105,10 +110,7 @@ const onKeyDown = (e: KeyboardEvent) => {
         e.preventDefault()
         if (results.value.length === 0) return
         if (!isOpen.value) isOpen.value = true
-        activeIndex.value = Math.min(
-            activeIndex.value + 1,
-            results.value.length - 1
-        )
+        activeIndex.value = Math.min(activeIndex.value + 1, results.value.length - 1)
         scrollToActive()
     } else if (e.key === 'ArrowUp') {
         e.preventDefault()
@@ -158,11 +160,7 @@ const onFocus = () => {
             </template>
         </Input>
         <Teleport to="body">
-            <div
-                v-if="isOpen"
-                class="build-search-dropdown"
-                :style="dropdownStyle"
-            >
+            <div v-if="isOpen" class="build-search-dropdown" :style="dropdownStyle">
                 <div
                     v-for="(item, index) in results"
                     :key="`${item.platform}/${item.build}`"
@@ -187,7 +185,7 @@ const onFocus = () => {
     width: 100%;
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: @wu-mobile-breakpoint) {
     .build-search {
         width: 25em;
     }

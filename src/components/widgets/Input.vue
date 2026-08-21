@@ -5,6 +5,8 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue'
 
+defineOptions({ name: 'WidgetInput' })
+
 interface Props {
     disabled?: boolean
     invalid?: boolean
@@ -52,10 +54,7 @@ const contentClasses = computed(() => [
 
 <template>
     <div :class="rootClasses">
-        <span
-            v-if="hasContentBefore"
-            :class="[...contentClasses, 'content-before']"
-        >
+        <span v-if="hasContentBefore" :class="[...contentClasses, 'content-before']">
             <slot name="contentBefore" />
         </span>
         <input
@@ -66,10 +65,7 @@ const contentClasses = computed(() => [
             :aria-invalid="invalid"
             :placeholder="placeholder"
         />
-        <span
-            v-if="hasContentAfter"
-            :class="[...contentClasses, 'content-after']"
-        >
+        <span v-if="hasContentAfter" :class="[...contentClasses, 'content-after']">
             <slot name="contentAfter" />
         </span>
     </div>

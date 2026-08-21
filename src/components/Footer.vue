@@ -1,32 +1,14 @@
-<script setup lang="ts">
-import { computed } from 'vue'
-import { storeToRefs } from 'pinia'
-import { useBuildsStore } from '@/stores/latestBuilds'
-
-defineOptions({ name: 'MainFooter' })
-
-const { dataVersion } = storeToRefs(useBuildsStore())
-useBuildsStore().fetchDataVersion()
-
-const hash = computed(() => dataVersion.value?.hash ?? 'unknown')
-const date = computed(() => dataVersion.value?.date ?? 'unknown')
+<script lang="ts" setup>
+defineOptions({ name: 'PageFooter' })
 </script>
 
 <template>
     <div class="footer">
         <p>
             (C) 2023-2026 crrashh1542.
-            <a href="//beian.miit.gov.cn" target="_blank"
+            <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer"
                 >蜀ICP备2022029657号-2</a
             >
-        </p>
-        <p v-if="dataVersion">
-            数据版本: {{ date }} （Git:
-            <a
-                :href="`https://github.com/crrashh1542/win-up-to-date-data/commit/${hash}`"
-                target="_blank"
-                >{{ hash }}</a
-            >）
         </p>
     </div>
 </template>

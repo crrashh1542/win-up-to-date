@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 
 import Tag20RegularIcon from '@iconify-vue/fluent/tag-20-regular'
 import Laptop20RegularIcon from '@iconify-vue/fluent/laptop-20-regular'
@@ -9,82 +10,33 @@ import Card from '@/components/widgets/Card.vue'
 import Tablist from '@/components/widgets/Tablist.vue'
 import Tab from '@/components/widgets/Tab.vue'
 
-import request from '@/utils/request'
-import NProgress from '@/utils/progress'
-import type { FeatureIdCategory, FeatureIdContent } from '@/types/data'
+import { useFeatureIdStore } from '@/stores/apiFeatureId'
 
 const route = useRoute()
 const router = useRouter()
 
-const menuData = reactive({
-    data: [] as FeatureIdCategory[],
-    isLoading: true,
-})
+const store = useFeatureIdStore()
+const { menu, isMenuLoading, selectedCategory, pages } = storeToRefs(store)
 
-const pageData = reactive({
-    data: {} as FeatureIdContent,
-    isLoading: true,
-})
-
-const selectedCategory = ref<string>()
+// 当前选中的分类数据
 const currentCategoryName = computed(() => {
-    return menuData.data.find((cat) => cat.id === selectedCategory.value)?.name
+    return menu.value.find((cat) => cat.id === selectedCategory.value)?.name
 })
-
-// request menu
-const fetchMenu = async () => {
-    menuData.isLoading = true
-    NProgress.start()
-    try {
-        const { data: resp } = await request({
-            url: '/id',
-            method: 'get',
-        })
-        menuData.data = resp.content
-        const routeId = route.params.id as string
-        if (
-            routeId &&
-            resp.content.some((cat: FeatureIdCategory) => cat.id === routeId)
-        ) {
-            selectedCategory.value = routeId
-        } else if (resp.content.length > 0) {
-            selectedCategory.value = resp.content[0].id
-        }
-    } catch (error) {
-        console.error(error)
-    } finally {
-        menuData.isLoading = false
-        NProgress.done()
-    }
-}
-
-// request data
-const fetchData = async (category: string) => {
-    pageData.isLoading = true
-    NProgress.start()
-    try {
-        const { data: resp } = await request({
-            url: `/id/${category}`,
-            method: 'get',
-        })
-        pageData.data = resp.content
-    } catch (error) {
-        console.error(error)
-    } finally {
-        pageData.isLoading = false
-        NProgress.done()
-    }
-}
+const currentPage = computed(() => {
+    if (!selectedCategory.value) return undefined
+    return pages.value[selectedCategory.value]
+})
 
 // Tab 切换时同步更新 URL
 const handleTabChange = (value: string) => {
     router.push(`/feature-id/${value}`)
 }
-fetchMenu()
+
+store.fetchMenu(route.params.id as string)
 
 // 监听 selectedCategory 的变化，更新页面数据
 watch(selectedCategory, (category) => {
-    if (category) fetchData(category)
+    if (category) store.fetchData(category)
 })
 watch(
     () => route.params.id,
@@ -100,31 +52,31 @@ watch(
     <div class="u-banner">功能 ID</div>
     <div class="u-subbanner">{{ currentCategoryName }}</div>
 
-    <div class="feature-id" v-if="!menuData.isLoading">
+    <div class="feature-id" v-if="!isMenuLoading">
         <Tablist
             v-model="selectedCategory"
             @update:modelValue="(value) => handleTabChange(value as string)"
         >
-            <Tab v-for="cat in menuData.data" :value="cat.id" :key="cat.id">
+            <Tab v-for="cat in menu" :value="cat.id" :key="cat.id">
                 {{ cat.name }}
             </Tab>
         </Tablist>
 
-        <Card :shadow="true" v-if="!pageData.isLoading" class="range">
+        <Card :shadow="true" v-if="currentPage" class="range">
             <p>
                 <Laptop20RegularIcon width="20" height="20" />
-                Build 类别：{{ pageData.data.belonging }}
+                Build 类别：{{ currentPage.belonging }}
             </p>
             <p>
                 <Tag20RegularIcon width="20" height="20" />
                 版本范围：
-                {{ pageData.data.range[0] || '?' }} ~
-                {{ pageData.data.range[1] || '?' }}
+                {{ currentPage.range[0] || '?' }} ~
+                {{ currentPage.range[1] || '?' }}
             </p>
         </Card>
 
-        <Card :shadow="true" v-if="!pageData.isLoading">
-            <component v-for="(item, index) in pageData.data.list" :key="index">
+        <Card :shadow="true" v-if="currentPage">
+            <template v-for="(item, index) in currentPage.list" :key="index">
                 <hr v-if="index > 0" />
                 <div class="list-item u-hoverable">
                     <div class="id">
@@ -134,14 +86,11 @@ watch(
                         <div class="title">{{ item.title }}</div>
                         <div class="description">{{ item.description }}</div>
                     </div>
-                    <div
-                        class="variant"
-                        v-if="item.variant && item.variant.length > 0"
-                    >
+                    <div class="variant" v-if="item.variant && item.variant.length > 0">
                         variant: {{ item.variant.join(', ') }}
                     </div>
                 </div>
-            </component>
+            </template>
         </Card>
     </div>
 </template>

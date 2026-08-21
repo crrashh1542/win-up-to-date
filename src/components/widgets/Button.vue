@@ -110,6 +110,13 @@ button:hover {
             background-color: fade(@wu-color-purple, 7%);
         }
     }
+    &.btn-gray {
+        border-color: @wu-color-gray;
+        color: @wu-color-gray;
+        &:hover {
+            background-color: fade(@wu-color-gray, 7%);
+        }
+    }
 }
 
 // Filled

@@ -4,9 +4,10 @@
 -->
 
 <script setup lang="ts">
+defineOptions({ name: 'WidgetSpinner' })
 // 接收 filled 参数，若为 true 则在整个 div 居中显示，否则仅内联显示
-const props = defineProps({
-    filled: { type: Boolean, default: false }
+defineProps({
+    filled: { type: Boolean, default: false },
 })
 </script>
 
@@ -15,9 +16,7 @@ const props = defineProps({
         <div class="load-anim">
             <div class="tail"></div>
         </div>
-        <div class="tip" v-if="filled">
-            数据正在玩命加载中 ᕕ( ᐛ )ᕗ
-        </div>
+        <div class="tip" v-if="filled">数据正在玩命加载中 ᕕ( ᐛ )ᕗ</div>
     </div>
 
     <!--
@@ -28,7 +27,6 @@ const props = defineProps({
 </template>
 
 <style lang="less" scoped>
-
 .load-anim {
     --spinner-size: 42px;
     --spinner-stroke-width: 4px;

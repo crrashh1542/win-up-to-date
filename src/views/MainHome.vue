@@ -9,7 +9,7 @@ import Card from '@/components/widgets/Card.vue'
 import Spinner from '@/components/widgets/Spinner.vue'
 
 import { useSettingsStore } from '@/stores/settings'
-import { useBuildsStore } from '@/stores/latestBuilds'
+import { useBuildsStore } from '@/stores/apiLatestBuilds'
 
 const { settings } = storeToRefs(useSettingsStore())
 const { list, isLoading } = storeToRefs(useBuildsStore())
@@ -139,6 +139,9 @@ useBuildsStore().fetchBuilds()
 }
 .channel.color-purple {
     color: @wu-color-purple;
+}
+.channel.color-gray {
+    color: @wu-color-gray;
 }
 /* 频道颜色变化 ----- END */
 </style>

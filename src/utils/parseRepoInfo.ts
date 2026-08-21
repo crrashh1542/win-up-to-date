@@ -3,11 +3,12 @@
  */
 
 import packageInfo from '../../package.json'
-import buildInfo from '../../scripts/buildInfo.json'
-import type { AboutItem } from '@/types'
+import _buildInfo from '../../scripts/buildInfo.json'
+import type { BuildInfo } from '@/types'
+
+const buildInfo = _buildInfo as BuildInfo
 
 // 项目信息相关
-const pkgVersion = 'v' + packageInfo.version + ' (build ' + buildInfo.build + ')' // 项目版本号
 const pkgRepo = packageInfo.repository.url.split('+')[1] // 项目地址
 const pkgRepoName = pkgRepo.split('https://github.com/')[1] // 项目名
 
@@ -29,24 +30,12 @@ const buildTag = (() => {
     return buildNum + '.' + buildBranch + '.' + buildTime
 })()
 
-const styleVerName = `font-size: 14px;
-                    color: #000;
-                    background-color: #8ad5b3;
-                    padding: 5px 9px;
-                    border-radius: 3px 0 0 3px;
-                    margin: 10px 0; `
-const styleVerValue = `font-size: 14px;
-                     color: #fff;
-                     background-color: #607d8b;
-                     padding: 5px 9px;
-                     border-radius: 0 3px 3px 0;
-                     margin: 6px 0; `
-console.log('%c%s%c%s', styleVerName, 'wutd', styleVerValue, 'v' + packageInfo.version)
-console.log(`Build Tag: ${ buildTag } (g${ buildInfo.hash })`)
-
-const aboutInfo: AboutItem[] = [
-    { label: '站点版本', icon: 'search', value: pkgVersion },
-    { label: '项目地址', icon: 'code', value: pkgRepoName, link: pkgRepo },
-    { label: '交流群组', icon: 'chat', value: '442133970', link: 'https://qm.qq.com/q/UAI4de5OM0' },
-]
-export default aboutInfo
+// 单独导出各个字段
+export const build = buildInfo.build
+export const hash = buildInfo.hash
+export const isCi = buildInfo.ci
+export const isBeta = buildInfo.beta
+export const repoUrl = pkgRepo
+export const repoVersion = packageInfo.version
+export const repoName = pkgRepoName
+export { buildTag }

@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { computed, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 import Code24RegularIcon from '@iconify-vue/fluent/code-24-regular'
 import CloudDownload24RegularIcon from '@iconify-vue/fluent/cloud-download-24-regular'
-import Info24RegularIcon from '@iconify-vue/fluent/info-24-regular'
 import Library24RegularIcon from '@iconify-vue/fluent/library-24-regular'
 import Settings24RegularIcon from '@iconify-vue/fluent/settings-24-regular'
 import Tag24RegularIcon from '@iconify-vue/fluent/tag-24-regular'
@@ -12,47 +11,37 @@ import Tag24RegularIcon from '@iconify-vue/fluent/tag-24-regular'
 import Badge from './widgets/Badge.vue'
 import Tab from './widgets/Tab.vue'
 import Tablist from './widgets/Tablist.vue'
-import Foo from './Footer.vue'
-import Popup from './AboutPopup.vue'
-import Search from './Search.vue'
+import Footer from './Footer.vue'
+import Search from './SearchBox.vue'
 
-import type { BuildInfo, BuiltInColor } from '@/types'
-import buildInfo from '../../scripts/buildInfo.json'
+import icons from '@/assets/icons'
+import { isCi, isBeta } from '@/utils/parseRepoInfo'
+import type { BuiltInColor } from '@/types'
 
-const router = useRouter()
 const route = useRoute()
-defineOptions({ name: 'MainWrapper' })
-
-const isPopupVisible = ref(false)
+defineOptions({ name: 'PageWrapper' })
 
 // 标题旁的 badge
-const buildBadge = computed<{ text: string; color: BuiltInColor } | null>(
-    () => {
-        const meta = buildInfo as BuildInfo
-        if (meta.ci) return { text: 'CI', color: 'blue' }
-        if (meta.beta) return { text: 'Beta', color: 'green' }
-        return null
+const buildBadge = computed<{ text: string; color: BuiltInColor } | null>(() => {
+    if (isCi) return { text: 'CI', color: 'blue' }
+    if (isBeta) return { text: 'Beta', color: 'green' }
+    return null
+})
+
+// 导航选中状态，与当前路由前缀同步
+const selectedNav = ref(getSelectedNav(route.path))
+watch(
+    () => route.path,
+    (path) => {
+        selectedNav.value = getSelectedNav(path)
     }
 )
 
-// 导航选中状态，与当前路由前缀同步
-const selectedNav = computed(() => {
-    const path = route.path
+function getSelectedNav(path: string): string {
     if (path.startsWith('/feature-id')) return '/feature-id'
+    if (path.startsWith('/download')) return '/download'
     if (path.startsWith('/category')) return '/category'
     return path
-})
-
-const openAbout = () => {
-    const mobileRegex =
-        /android|iphone|ipad|ipod|blackberry|mobile|phone|webos|kindle|tablet/i
-    if (mobileRegex.test(navigator.userAgent.toLowerCase())) {
-        // 如果匹配移动端规则，就前往单独的关于页面
-        router.push('/about')
-    } else {
-        // 否则（即 PC 端则通过弹窗展示关于页面）
-        isPopupVisible.value = true
-    }
 }
 </script>
 
@@ -73,8 +62,14 @@ const openAbout = () => {
         <div class="search">
             <Search />
         </div>
-        <div class="about">
-            <Info24RegularIcon @click="openAbout" />
+        <div class="link">
+            <a
+                href="https://github.com/crrashh1542/win-up-to-date"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <img :src="icons.github" />
+            </a>
         </div>
     </div>
 
@@ -118,11 +113,8 @@ const openAbout = () => {
         <div class="container">
             <slot />
         </div>
-        <Foo />
+        <Footer />
     </main>
-
-    <!-- Part 4 ---- 右上角可触发的”关于”弹窗 -->
-    <Popup v-model:visibility="isPopupVisible" />
 </template>
 
 <style lang="less" scoped>
@@ -153,18 +145,17 @@ const openAbout = () => {
         }
     }
 
-    .about {
+    .link {
         flex: 0 0 auto;
         cursor: pointer;
-
-        svg {
+        img {
             width: 1.2em;
             height: 1.2em;
         }
     }
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: @wu-mobile-breakpoint) {
     .topbar .search {
         flex: 0 0 auto;
         margin-right: 10%;
@@ -185,8 +176,6 @@ const openAbout = () => {
     left: 0;
     bottom: 0;
     user-select: none;
-    flex-direction: column;
-    gap: @wu-layout-sidenav-space;
 }
 
 .tab-button {
@@ -218,8 +207,7 @@ const openAbout = () => {
     &.selected {
         position: relative;
         background-color: @wu-color-main;
-        padding: (@wu-layout-sidenav-padding-x - 1px)
-            (@wu-layout-sidenav-padding-y - 1px); // 由于被选中后会有个 1px 的 border，所以减去 1px
+        padding: (@wu-layout-sidenav-padding-x - 1px) (@wu-layout-sidenav-padding-y - 1px); // 由于被选中后会有个 1px 的 border，所以减去 1px
         border: 1px solid @wu-color-border;
         color: @wu-color-blue;
         .tab-content {

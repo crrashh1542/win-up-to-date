@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import NProgress from '@/utils/progress'
+import { storeToRefs } from 'pinia'
 import ArrowDown16RegularIcon from '@iconify-vue/fluent/arrow-down-16-regular'
 import ArrowRight16RegularIcon from '@iconify-vue/fluent/arrow-right-16-regular'
 import Open20RegularIcon from '@iconify-vue/fluent/open-20-regular'
@@ -9,8 +9,8 @@ import DownloadEsd from '@/components/DownloadEsd.vue'
 import Badge from '@/components/widgets/Badge.vue'
 import Card from '@/components/widgets/Card.vue'
 
-import request from '@/utils/request'
-import type { DownloadContent, SelfBuildItem } from '@/types'
+import { useDownloadStore } from '@/stores/apiDownload'
+import type { SelfBuildItem } from '@/types'
 
 defineOptions({ name: 'MainDownload' })
 
@@ -18,28 +18,11 @@ defineOptions({ name: 'MainDownload' })
 const isBaselineExpanded = ref(false)
 
 // 下载页面数据
-const download = ref<DownloadContent | null>(null)
-const isError = ref(false)
-
-const fetchData = async () => {
-    NProgress.start()
-    try {
-        const { data: resp } = await request({
-            url: '/download',
-            method: 'get',
-        })
-        download.value = resp.content
-    } catch {
-        isError.value = true
-    } finally {
-        NProgress.done()
-    }
-}
-fetchData()
+const { download, isError } = storeToRefs(useDownloadStore())
+useDownloadStore().fetchDownload()
 
 // 自构建卡片详情页路径
-const selfPath = (item: SelfBuildItem) =>
-    `/detail/${item.semester}/${item.build}`
+const selfPath = (item: SelfBuildItem) => `/detail/${item.semester}/${item.build}`
 </script>
 
 <template>
@@ -54,6 +37,7 @@ const selfPath = (item: SelfBuildItem) =>
                 :key="item.url"
                 :href="item.url"
                 target="_blank"
+                rel="noopener noreferrer"
             >
                 <Card mode="flex" class="hover-outline">
                     <div class="data">
@@ -66,13 +50,13 @@ const selfPath = (item: SelfBuildItem) =>
         </div>
 
         <!-- PART 2 自构建 ISO -->
-        <div class="u-catalog">自构建 ISO</div>
+        <div class="u-catalog">自构建 ISO 镜像</div>
         <!-- 主线 -->
         <div class="grid self-grid mainline">
-            <a
+            <router-link
                 v-for="item in download.self.mainline"
                 :key="item.build"
-                :href="selfPath(item)"
+                :to="selfPath(item)"
             >
                 <Card mode="flex" class="grid self-card u-hoverable">
                     <div class="name">{{ item.name }}</div>
@@ -84,14 +68,14 @@ const selfPath = (item: SelfBuildItem) =>
                     </div>
                     <div class="desc">{{ item.semester }}</div>
                 </Card>
-            </a>
+            </router-link>
         </div>
         <!-- 基线 -->
         <div v-show="isBaselineExpanded" class="grid self-grid">
-            <a
+            <router-link
                 v-for="item in download.self.baseline"
                 :key="item.build"
-                :href="selfPath(item)"
+                :to="selfPath(item)"
             >
                 <Card mode="flex" class="self-card u-hoverable">
                     <div class="name">{{ item.name }}</div>
@@ -103,16 +87,14 @@ const selfPath = (item: SelfBuildItem) =>
                     </div>
                     <div class="desc">{{ item.semester }}</div>
                 </Card>
-            </a>
+            </router-link>
         </div>
         <Card
             mode="flex"
             class="dropdown u-hoverable"
             @click="isBaselineExpanded = !isBaselineExpanded"
         >
-            <span
-                >点击{{ isBaselineExpanded ? '收起' : '展开' }} Base 版本</span
-            >
+            <span>点击{{ isBaselineExpanded ? '收起' : '展开' }} Base 版本</span>
             <ArrowDown16RegularIcon
                 class="arrow"
                 :class="{ expanded: isBaselineExpanded }"

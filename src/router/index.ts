@@ -8,7 +8,6 @@ declare module 'vue-router' {
 }
 
 const router = createRouter({
-    linkActiveClass: 'path-active',
     history: createWebHistory(),
     routes: [
         // GROUP 1 ---- 基础设施
@@ -16,12 +15,6 @@ const router = createRouter({
             path: '/',
             name: 'home',
             component: () => import('@/views/MainHome.vue'),
-        },
-        {
-            path: '/about',
-            name: 'about',
-            component: () => import('@/views/MainAbout.vue'),
-            meta: { title: '关于项目' },
         },
         {
             path: '/settings',

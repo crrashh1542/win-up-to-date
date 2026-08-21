@@ -17,7 +17,7 @@ export type SettingsMenu = {
         value: keyof Settings // 对应的设置项
         enabled: boolean // 是否启用
     }[]
-}[]
+}
 
 export type ToastIntent = 'success' | 'error' | 'warning' | 'info'
 export type ToastPosition =

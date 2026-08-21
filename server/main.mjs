@@ -1,7 +1,5 @@
 /**
- * Windows Up-to-Date 服务端脚本
- * @author crrashh1542
- * @version 3.5
+ * Windows Up-to-Date 服务端主脚本
  */
 
 import { execFile } from 'node:child_process'
@@ -11,13 +9,24 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
 
-import { handleDeploy } from './admin.js'
+import pkgInfo from './package.json' with { type: 'json' }
+import { handleDeploy, setOnDeploySuccess } from './admin.js'
 
 const execFileP = promisify(execFile)
-
-const serverVersion = '3.5'
+const { version } = pkgInfo
 const apiVersion = 2
-const port = 9884
+// 端口：默认 9884，可通过 WUTD_PORT 环境变量覆盖（仅接受合法端口号）
+const defaultPort = 9884
+const envPort = Number(process.env.WUTD_PORT)
+const port =
+    Number.isInteger(envPort) && envPort > 0 && envPort <= 65535
+        ? envPort
+        : defaultPort
+if (process.env.WUTD_PORT && port !== envPort) {
+    console.warn(
+        `[WARN] WUTD_PORT 无效（${process.env.WUTD_PORT}），已回退到默认端口 ${defaultPort}`
+    )
+}
 const cacheSize = 200
 
 const __filename = fileURLToPath(import.meta.url)
@@ -43,12 +52,9 @@ const okPayload = (type, content) => ({
     content,
 })
 
-const errParam = (res) =>
-    sendJson(res, 400, { message: 'Parameter is invalid!' })
-const errValue = (res) =>
-    sendJson(res, 404, { message: 'Corresponding data is not found!' })
-const errServer = (res) =>
-    sendJson(res, 500, { message: 'Internal server error!' })
+const errParam = (res) => sendJson(res, 400, { message: 'Parameter is invalid!' })
+const errValue = (res) => sendJson(res, 404, { message: 'Corresponding data is not found!' })
+const errServer = (res) => sendJson(res, 500, { message: 'Internal server error!' })
 
 const readJson = async (filePath) => {
     const raw = await fs.readFile(filePath, 'utf-8')
@@ -81,6 +87,35 @@ const readCache = async (filePath) => {
     return entry.promise
 }
 
+// 派生数据缓存
+// 失效键为所有输入（文件/目录）的 mtime 组合，任一输入变化即重算
+const derivedCache = new Map()
+const readDerived = async (inputs, compute) => {
+    const key = inputs.join('|')
+    const sig = (
+        await Promise.all(inputs.map((input) => fs.stat(input).then((s) => s.mtimeMs)))
+    ).join('|')
+    const cached = derivedCache.get(key)
+    if (cached && cached.sig === sig) {
+        // 缓存命中，移到末尾
+        derivedCache.delete(key)
+        derivedCache.set(key, cached)
+        return cached.promise
+    }
+    if (derivedCache.size >= cacheSize) {
+        derivedCache.delete(derivedCache.keys().next().value)
+    }
+    const entry = {
+        promise: compute().catch((err) => {
+            derivedCache.delete(key)
+            throw err
+        }),
+        sig,
+    }
+    derivedCache.set(key, entry)
+    return entry.promise
+}
+
 // 查询数据仓库版本
 // .git/logs/HEAD 的 mtime 判断是否有新提交
 const headLogPath = path.join(dataRoot, '.git', 'logs', 'HEAD')
@@ -97,13 +132,7 @@ const readDataVersion = async () => {
         return versionCache.promise
     }
     // %h 短 hash，%cs 提交日期（YYYY-MM-DD）
-    const promise = execFileP('git', [
-        '-C',
-        dataRoot,
-        'log',
-        '-1',
-        '--format=%h%n%cs',
-    ])
+    const promise = execFileP('git', ['-C', dataRoot, 'log', '-1', '--format=%h%n%cs'])
         .then(({ stdout }) => {
             const [hash, date] = stdout.trim().split('\n')
             return { hash, date }
@@ -114,9 +143,7 @@ const readDataVersion = async () => {
                 const v = await readJson(path.join(dataRoot, 'version.json'))
                 return { hash: v.hash ?? 'unknown', date: v.date ?? 'unknown' }
             } catch {
-                console.error(
-                    '[WARN] 无法读取数据仓库版本：Git 不可用且 version.json 缺失'
-                )
+                console.error('[WARN] 无法读取数据仓库版本：Git 不可用且 version.json 缺失')
                 if (err) {
                     console.error('[WARN] Git 错误详情：', err.message || err)
                 }
@@ -126,6 +153,15 @@ const readDataVersion = async () => {
     versionCache = { promise, mtime }
     return promise
 }
+
+// 部署成功后数据已整体替换：清空全部缓存（文件/派生/版本），
+// 否则旧 mtime 引用可能读到已删除的文件，版本缓存也会最多陈旧 30s
+const resetAllCaches = () => {
+    fileCache.clear()
+    derivedCache.clear()
+    versionCache = null
+}
+setOnDeploySuccess(resetAllCaches)
 
 const serveDataVersion = async (res) => {
     try {
@@ -138,25 +174,37 @@ const serveDataVersion = async (res) => {
 
 // 搜索接口逻辑
 const detailDir = path.join(dataRoot, 'detail')
+
+// 全量扫描 detail 目录，构建 {platform, build} 索引（仅生成，不在此处过滤查询）
+const buildSearchIndex = async () => {
+    const files = await fs.readdir(detailDir, { recursive: true })
+    return files
+        .filter((name) => typeof name === 'string' && name.endsWith('.json'))
+        .map((name) => {
+            const full = name.replace(/\\/g, '/')
+            const lastSlash = full.lastIndexOf('/')
+            const platform = full.substring(0, lastSlash)
+            const build = path.basename(name, '.json')
+            return { platform, build }
+        })
+        .filter((item) => item.platform !== '.')
+}
+
 const serveSearch = async (res, _params, reqUrl) => {
     const q = reqUrl.searchParams.get('build')
     if (!q || !isSafeId(q)) return errParam(res)
     try {
-        // 读取 detail 目录下所有 JSON 文件，提取平台和 build 信息
-        const files = await fs.readdir(detailDir, { recursive: true })
-        const matches = files
-            .filter(
-                (name) => typeof name === 'string' && name.endsWith('.json')
-            )
-            .map((name) => {
-                const full = name.replace(/\\/g, '/')
-                const lastSlash = full.lastIndexOf('/')
-                const platform = full.substring(0, lastSlash)
-                const build = path.basename(name, '.json')
-                return { platform, build }
-            })
-            // 过滤掉平台为 '.' 的项，并匹配 build 子串（乱序搜索）
-            .filter((item) => item.platform !== '.' && item.build.includes(q))
+        // 索引缓存失效输入：detail 顶层 + 各平台子目录。
+        // 平台子目录下新增/删除 build 文件只会改变该子目录 mtime，顶层不会变，
+        // 因此必须把子目录也作为输入，任一 mtime 变化即触发重建。
+        // 命中缓存时只需顶层 readdir + 各平台目录 stat，避免每次全量递归扫描。
+        const entries = await fs.readdir(detailDir, { withFileTypes: true })
+        const platformDirs = entries
+            .filter((e) => e.isDirectory())
+            .map((e) => path.join(detailDir, e.name))
+        const index = await readDerived([detailDir, ...platformDirs], buildSearchIndex)
+        const matches = index
+            .filter((item) => item.build.includes(q))
             .slice(0, 20)
         sendJson(res, 200, okPayload('searchBuild', matches))
     } catch {
@@ -168,11 +216,7 @@ const serveSearch = async (res, _params, reqUrl) => {
 const serveCategory = async (res, _params, reqUrl) => {
     const platform = reqUrl.pathname.slice('/category/'.length)
     if (!platform) {
-        return serveData('index/category.json', 'categoryList')(
-            res,
-            _params,
-            reqUrl
-        )
+        return serveData('index/category.json', 'categoryList')(res, _params, reqUrl)
     }
     if (!isSafeId(platform)) {
         return errParam(res)
@@ -181,8 +225,7 @@ const serveCategory = async (res, _params, reqUrl) => {
 }
 
 const serveData = (file, type) => async (res, _params, reqUrl) => {
-    const filePath =
-        typeof file === 'function' ? file(reqUrl) : path.join(dataRoot, file)
+    const filePath = typeof file === 'function' ? file(reqUrl) : path.join(dataRoot, file)
     // 注：解析后的路径必须仍位于数据目录内
     const resolved = path.resolve(filePath)
     if (resolved !== dataRoot && !resolved.startsWith(dataRoot + path.sep)) {
@@ -208,27 +251,37 @@ const serveId = async (res, _params, reqUrl) => {
 }
 
 // 主下载页
-// 读取 Win11- 前 3 个 + Win10- 第 1 个 json 的前 2 项，作为 esd 字段
+const downloadDir = path.join(dataRoot, 'download')
+
+// 选取展示的构建：Win11前3个 & Win10第1个（最新的消费者版 + 商业版）
+// 只依赖 download 目录的 mtime（新增/删除文件时变化），故单独缓存
+const selectDownloadTargets = async () => {
+    const names = (await fs.readdir(downloadDir))
+        .filter((name) => name.endsWith('.json'))
+        .sort()
+        .reverse()
+    return [
+        ...names.filter((name) => name.startsWith('Win11-')).slice(0, 3),
+        ...names.filter((name) => name.startsWith('Win10-')).slice(0, 1),
+    ]
+}
+
 const serveDownload = async (res) => {
     try {
-        const base = await readCache(
-            path.join(dataRoot, 'index', 'download.json')
+        const base = await readCache(path.join(dataRoot, 'index', 'download.json'))
+        const targets = await readDerived([downloadDir], selectDownloadTargets)
+        // esd 拼接依赖目录和所选各文件的内容，二者任一变化即失效
+        const esd = await readDerived(
+            [downloadDir, ...targets.map((name) => path.join(downloadDir, name))],
+            async () => {
+                const out = []
+                for (const name of targets) {
+                    const arr = await readCache(path.join(downloadDir, name))
+                    if (Array.isArray(arr)) out.push(...arr.slice(0, 2))
+                }
+                return out
+            }
         )
-        // 文件名降序遍历 download 目录
-        const names = (await fs.readdir(path.join(dataRoot, 'download')))
-            .filter((name) => name.endsWith('.json'))
-            .sort()
-            .reverse()
-        // 取 Win11- 前 3 个 + Win10- 第 1 个（最新的消费者版 + 商业版）
-        const targets = [
-            ...names.filter((name) => name.startsWith('Win11-')).slice(0, 3),
-            ...names.filter((name) => name.startsWith('Win10-')).slice(0, 1),
-        ]
-        const esd = []
-        for (const name of targets) {
-            const arr = await readCache(path.join(dataRoot, 'download', name))
-            if (Array.isArray(arr)) esd.push(...arr.slice(0, 2))
-        }
         sendJson(res, 200, okPayload('download', { ...base, esd }))
     } catch {
         errValue(res)
@@ -240,20 +293,12 @@ const serveDownload = async (res) => {
 const serveDownloadEsd = async (res, _params, reqUrl) => {
     const value = reqUrl.pathname.slice('/download/esd/'.length)
     if (!value) {
-        return serveData('index/download-esd.json', 'downloadEsdList')(
-            res,
-            _params,
-            reqUrl
-        )
+        return serveData('index/download-esd.json', 'downloadEsdList')(res, _params, reqUrl)
     }
     if (!isSafeId(value)) {
         return errParam(res)
     }
-    return serveData(path.join('download', `${value}.json`), 'downloadEsd')(
-        res,
-        _params,
-        reqUrl
-    )
+    return serveData(path.join('download', `${value}.json`), 'downloadEsd')(res, _params, reqUrl)
 }
 
 const serveDetail = async (res, _params, reqUrl) => {
@@ -272,21 +317,14 @@ const serveDetail = async (res, _params, reqUrl) => {
 const categoryPath = (u) =>
     path.join(dataRoot, 'category', u.pathname.slice('/category/'.length) + '.json')
 const detailPath = (u) =>
-    path.join(
-        dataRoot,
-        'detail',
-        u.pathname.split('/')[2],
-        u.pathname.split('/')[3] + '.json'
-    )
-const idPath = (u) =>
-    path.join(dataRoot, 'viveid', u.pathname.slice('/id/'.length) + '.json')
+    path.join(dataRoot, 'detail', u.pathname.split('/')[2], u.pathname.split('/')[3] + '.json')
+const idPath = (u) => path.join(dataRoot, 'viveid', u.pathname.slice('/id/'.length) + '.json')
 
 const routes = new Map([
     [
         '/',
         {
-            handler: (res) =>
-                sendJson(res, 200, { message: 'Service is available!' }),
+            handler: (res) => sendJson(res, 200, { message: 'Service is available!' }),
         },
     ],
     ['/latestBuilds', { handler: serveData('index/latest-builds.json', 'latest') }],
@@ -303,9 +341,7 @@ const routes = new Map([
 ])
 
 // POST 路由表（管理接口）
-const postRoutes = new Map([
-    ['/admin/deploy', { handler: handleDeploy }],
-])
+const postRoutes = new Map([['/admin/deploy', { handler: handleDeploy }]])
 
 // main server
 http.createServer(async (req, res) => {
@@ -356,7 +392,7 @@ http.createServer(async (req, res) => {
     }
 }).listen(port, () => {
     console.log('========================================')
-    console.log(`WUTD API v${serverVersion}\n`)
+    console.log(`WUTD API v${version}\n`)
     console.log('[INFO] 服务运行于 http://127.0.0.1:' + port + '/')
     console.log(`[INFO] 数据目录：` + dataRoot)
     console.log('========================================')

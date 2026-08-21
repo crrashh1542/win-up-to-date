@@ -15,11 +15,7 @@ const props = withDefaults(
     }
 )
 
-const classes = computed(() => [
-    'badge',
-    `badge-${props.variant}`,
-    `badge-${props.color}`,
-])
+const classes = computed(() => ['badge', `badge-${props.variant}`, `badge-${props.color}`])
 </script>
 
 <template>
@@ -66,6 +62,9 @@ const classes = computed(() => [
     &.badge-purple {
         background-color: @wu-color-purple;
     }
+    &.badge-gray {
+        background-color: @wu-color-gray;
+    }
 }
 
 // Outlined
@@ -100,6 +99,10 @@ const classes = computed(() => [
     &.badge-purple {
         border-color: darken(@wu-color-purple, 7%);
         color: darken(@wu-color-purple, 7%);
+    }
+    &.badge-gray {
+        border-color: @wu-color-gray;
+        color: @wu-color-gray;
     }
 }
 </style>

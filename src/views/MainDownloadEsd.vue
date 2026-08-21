@@ -73,11 +73,7 @@ watch(selectedValue, (value) => {
 
     <div class="esd" v-if="!menuData.isLoading">
         <Tablist v-model="selectedValue">
-            <Tab
-                v-for="cat in menuData.data"
-                :value="cat.value"
-                :key="cat.value"
-            >
+            <Tab v-for="cat in menuData.data" :value="cat.value" :key="cat.value">
                 {{ cat.name }}
             </Tab>
         </Tablist>

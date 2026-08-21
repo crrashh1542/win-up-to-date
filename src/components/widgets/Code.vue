@@ -11,6 +11,8 @@ import Checkmark16RegularIcon from '@iconify-vue/fluent/checkmark-16-regular'
 import Button from './Button.vue'
 import { useToastStore } from '@/stores/toast'
 
+defineOptions({ name: 'WidgetCode' })
+
 const props = withDefaults(
     defineProps<{
         value?: string
@@ -52,11 +54,7 @@ const breakWord = computed(() => (props.isBreakWord ? 'break-word' : ''))
     <!-- 复制按钮 -->
     <Button @click="copy" v-if="isCopiable">
         <template #before>
-            <Checkmark16RegularIcon
-                v-if="isCopied"
-                width="1.25em"
-                height="1.25em"
-            />
+            <Checkmark16RegularIcon v-if="isCopied" width="1.25em" height="1.25em" />
             <Copy16RegularIcon v-else width="1.25em" height="1.25em" />
         </template>
         {{ isCopied ? '已复制' : '复制' }}

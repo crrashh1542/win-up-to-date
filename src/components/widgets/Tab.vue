@@ -3,17 +3,11 @@
     参考：https://github.com/microsoft/fluentui/tree/@fluentui/react-components_v9.74.4/packages/react-components/react-tabs/library/src/components/Tab
 -->
 <script setup lang="ts">
-import {
-    computed,
-    inject,
-    onBeforeUnmount,
-    onMounted,
-    ref,
-    useSlots,
-    watch,
-} from 'vue'
+import { computed, inject, onBeforeUnmount, onMounted, ref, useSlots, watch } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
 import { useRouter } from 'vue-router'
+
+defineOptions({ name: 'WidgetTab' })
 
 export type TabValue = unknown
 
@@ -69,18 +63,12 @@ function calculateIndicatorTransform(): string {
 watch(
     () => context.selectedValue.value,
     (newVal, oldVal) => {
-        if (
-            selected.value &&
-            context.isValueDefined(oldVal) &&
-            lastAnimatedFrom.value !== oldVal
-        ) {
+        if (selected.value && context.isValueDefined(oldVal) && lastAnimatedFrom.value !== oldVal) {
             const prevRect = context.getRegisteredTabRect(oldVal)
             const currRect = context.getRegisteredTabRect(newVal)
 
             if (prevRect && currRect) {
-                const offset = isVertical.value
-                    ? prevRect.y - currRect.y
-                    : prevRect.x - currRect.x
+                const offset = isVertical.value ? prevRect.y - currRect.y : prevRect.x - currRect.x
 
                 const scale = isVertical.value
                     ? prevRect.height / currRect.height
@@ -96,10 +84,7 @@ watch(
                     animationValues.value = { offset: 0, scale: 1 }
                 })
             }
-        } else if (
-            !selected.value &&
-            context.isValueDefined(lastAnimatedFrom.value)
-        ) {
+        } else if (!selected.value && context.isValueDefined(lastAnimatedFrom.value)) {
             lastAnimatedFrom.value = undefined
         }
     }

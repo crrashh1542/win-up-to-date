@@ -5,6 +5,8 @@
 <script setup lang="ts">
 import { provide, ref, watch } from 'vue'
 
+defineOptions({ name: 'WidgetTablist' })
+
 export type TabValue = unknown
 
 interface Props {
@@ -44,18 +46,13 @@ function handleWheel(event: WheelEvent) {
     const el = tablistRef.value
     const canScrollLeft = el.scrollLeft > 0
     const canScrollRight = el.scrollLeft < el.scrollWidth - el.clientWidth
-    if (
-        (event.deltaY < 0 && canScrollLeft) ||
-        (event.deltaY > 0 && canScrollRight)
-    ) {
+    if ((event.deltaY < 0 && canScrollLeft) || (event.deltaY > 0 && canScrollRight)) {
         event.preventDefault()
         el.scrollLeft += event.deltaY
     }
 }
 
-const registeredTabs = ref<Map<string, { value: TabValue; el: HTMLElement }>>(
-    new Map()
-)
+const registeredTabs = ref<Map<string, { value: TabValue; el: HTMLElement }>>(new Map())
 
 function getKey(value: TabValue): string {
     return JSON.stringify(value)
