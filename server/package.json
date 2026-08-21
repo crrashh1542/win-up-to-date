@@ -1,6 +1,6 @@
 {
     "name": "win-up-to-date-server",
-    "version": "2.0.0",
+    "version": "2.0.3",
     "private": true,
     "description": "Windows Up-to-Date 数据 API 服务端",
     "type": "module",
@@ -13,6 +13,6 @@
         "yauzl": "^2.10.0"
     },
     "engines": {
-        "node": ">=20"
+        "node": ">=24"
     }
 }

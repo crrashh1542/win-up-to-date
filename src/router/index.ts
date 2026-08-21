@@ -8,7 +8,6 @@ declare module 'vue-router' {
 }
 
 const router = createRouter({
-    linkActiveClass: 'path-active',
     history: createWebHistory(),
     routes: [
         // GROUP 1 ---- 基础设施

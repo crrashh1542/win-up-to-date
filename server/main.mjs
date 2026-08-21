@@ -15,7 +15,18 @@ import { handleDeploy, setOnDeploySuccess } from './admin.js'
 const execFileP = promisify(execFile)
 const { version } = pkgInfo
 const apiVersion = 2
-const port = 9884
+// 端口：默认 9884，可通过 WUTD_PORT 环境变量覆盖（仅接受合法端口号）
+const defaultPort = 9884
+const envPort = Number(process.env.WUTD_PORT)
+const port =
+    Number.isInteger(envPort) && envPort > 0 && envPort <= 65535
+        ? envPort
+        : defaultPort
+if (process.env.WUTD_PORT && port !== envPort) {
+    console.warn(
+        `[WARN] WUTD_PORT 无效（${process.env.WUTD_PORT}），已回退到默认端口 ${defaultPort}`
+    )
+}
 const cacheSize = 200
 
 const __filename = fileURLToPath(import.meta.url)
@@ -163,23 +174,37 @@ const serveDataVersion = async (res) => {
 
 // 搜索接口逻辑
 const detailDir = path.join(dataRoot, 'detail')
+
+// 全量扫描 detail 目录，构建 {platform, build} 索引（仅生成，不在此处过滤查询）
+const buildSearchIndex = async () => {
+    const files = await fs.readdir(detailDir, { recursive: true })
+    return files
+        .filter((name) => typeof name === 'string' && name.endsWith('.json'))
+        .map((name) => {
+            const full = name.replace(/\\/g, '/')
+            const lastSlash = full.lastIndexOf('/')
+            const platform = full.substring(0, lastSlash)
+            const build = path.basename(name, '.json')
+            return { platform, build }
+        })
+        .filter((item) => item.platform !== '.')
+}
+
 const serveSearch = async (res, _params, reqUrl) => {
     const q = reqUrl.searchParams.get('build')
     if (!q || !isSafeId(q)) return errParam(res)
     try {
-        // 读取 detail 目录下所有 JSON 文件，提取平台和 build 信息
-        const files = await fs.readdir(detailDir, { recursive: true })
-        const matches = files
-            .filter((name) => typeof name === 'string' && name.endsWith('.json'))
-            .map((name) => {
-                const full = name.replace(/\\/g, '/')
-                const lastSlash = full.lastIndexOf('/')
-                const platform = full.substring(0, lastSlash)
-                const build = path.basename(name, '.json')
-                return { platform, build }
-            })
-            // 过滤掉平台为 '.' 的项，并匹配 build 子串（乱序搜索）
-            .filter((item) => item.platform !== '.' && item.build.includes(q))
+        // 索引缓存失效输入：detail 顶层 + 各平台子目录。
+        // 平台子目录下新增/删除 build 文件只会改变该子目录 mtime，顶层不会变，
+        // 因此必须把子目录也作为输入，任一 mtime 变化即触发重建。
+        // 命中缓存时只需顶层 readdir + 各平台目录 stat，避免每次全量递归扫描。
+        const entries = await fs.readdir(detailDir, { withFileTypes: true })
+        const platformDirs = entries
+            .filter((e) => e.isDirectory())
+            .map((e) => path.join(detailDir, e.name))
+        const index = await readDerived([detailDir, ...platformDirs], buildSearchIndex)
+        const matches = index
+            .filter((item) => item.build.includes(q))
             .slice(0, 20)
         sendJson(res, 200, okPayload('searchBuild', matches))
     } catch {

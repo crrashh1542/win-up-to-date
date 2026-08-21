@@ -14,22 +14,30 @@ export default defineConfig({
         VitePWA({
             includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
             injectRegister: 'script-defer',
+            registerType: 'autoUpdate',
             manifest: {
                 name: 'Windows Up-to-Date',
-                short_name: 'Winutd',
+                short_name: 'wutd',
+                lang: 'zh-CN',
                 description:
                     "一个 Windows 系统版本实时统计站点 / A site showing latest status of Windows' development",
                 theme_color: '#f6f8fe',
                 icons: [
                     {
-                        src: 'pwa-128.jpg',
-                        sizes: '48x48 72x72 96x96 128x128',
-                        type: 'image/jpeg',
+                        src: 'pwa-192.png',
+                        sizes: '192x192',
+                        type: 'image/png',
                     },
                     {
-                        src: 'pwa-256.jpg',
-                        sizes: '144x144 192x192 256x256',
-                        type: 'image/jpeg',
+                        src: 'pwa-512.png',
+                        sizes: '512x512',
+                        type: 'image/png',
+                    },
+                    {
+                        src: 'pwa-512-maskable.png',
+                        sizes: '512x512',
+                        type: 'image/png',
+                        purpose: 'maskable',
                     },
                 ],
             },

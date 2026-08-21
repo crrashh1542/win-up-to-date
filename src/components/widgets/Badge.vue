@@ -100,5 +100,9 @@ const classes = computed(() => ['badge', `badge-${props.variant}`, `badge-${prop
         border-color: darken(@wu-color-purple, 7%);
         color: darken(@wu-color-purple, 7%);
     }
+    &.badge-gray {
+        border-color: @wu-color-gray;
+        color: @wu-color-gray;
+    }
 }
 </style>

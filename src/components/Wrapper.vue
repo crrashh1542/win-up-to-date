@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import Code24RegularIcon from '@iconify-vue/fluent/code-24-regular'
@@ -11,7 +11,7 @@ import Tag24RegularIcon from '@iconify-vue/fluent/tag-24-regular'
 import Badge from './widgets/Badge.vue'
 import Tab from './widgets/Tab.vue'
 import Tablist from './widgets/Tablist.vue'
-import Foo from './Footer.vue'
+import Footer from './Footer.vue'
 import Search from './SearchBox.vue'
 
 import icons from '@/assets/icons'
@@ -29,12 +29,20 @@ const buildBadge = computed<{ text: string; color: BuiltInColor } | null>(() => 
 })
 
 // 导航选中状态，与当前路由前缀同步
-const selectedNav = computed(() => {
-    const path = route.path
+const selectedNav = ref(getSelectedNav(route.path))
+watch(
+    () => route.path,
+    (path) => {
+        selectedNav.value = getSelectedNav(path)
+    }
+)
+
+function getSelectedNav(path: string): string {
     if (path.startsWith('/feature-id')) return '/feature-id'
+    if (path.startsWith('/download')) return '/download'
     if (path.startsWith('/category')) return '/category'
     return path
-})
+}
 </script>
 
 <template>
@@ -105,7 +113,7 @@ const selectedNav = computed(() => {
         <div class="container">
             <slot />
         </div>
-        <Foo />
+        <Footer />
     </main>
 </template>
 
@@ -147,7 +155,7 @@ const selectedNav = computed(() => {
     }
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: @wu-mobile-breakpoint) {
     .topbar .search {
         flex: 0 0 auto;
         margin-right: 10%;
@@ -168,8 +176,6 @@ const selectedNav = computed(() => {
     left: 0;
     bottom: 0;
     user-select: none;
-    flex-direction: column;
-    gap: @wu-layout-sidenav-space;
 }
 
 .tab-button {

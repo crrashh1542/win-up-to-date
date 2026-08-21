@@ -155,7 +155,7 @@ watch(
 }
 
 // 响应式 ---- 移动端
-@media screen and (max-width: 700px) {
+@media screen and (max-width: @wu-mobile-breakpoint) {
     .wrapper {
         // v代表view
         --v-detail-overview: block;
