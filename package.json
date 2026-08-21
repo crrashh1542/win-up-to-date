@@ -1,6 +1,6 @@
 {
     "name": "win-up-to-date",
-    "version": "1.0.0-rc.1",
+    "version": "1.0.0",
     "private": true,
     "description": "A website project showing the latest status of Windows Insider versions.",
     "homepage": "https://wutd.crrashh.com",
