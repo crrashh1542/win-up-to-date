@@ -79,10 +79,11 @@ const classes = computed(() => [
     &.disabled {
         // 没有 category 数据
         cursor: not-allowed;
-    }
-    &.uncontinued {
-        // 已停止维护
         opacity: 0.6;
+    }
+    &.uncontinued:not(.unpadded) {
+        // 已停止维护
+        background-color: @wu-color-base;
     }
     // header 场景
     &.unpadded {
