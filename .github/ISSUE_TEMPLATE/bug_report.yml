@@ -1,6 +1,6 @@
 name: 🐛 Bug 反馈
 description: 遇到的任何问题都可以反馈！
-labels: ['Bug']
+labels: ['Type: Bug']
 title: '【BUG】'
 body:
     - type: dropdown
@@ -8,19 +8,19 @@ body:
           label: 出现位置
           description: 你可以在此处指出该 Bug 出现于本项目的哪个位置。
           options:
-              - 构建过程（Node）
-              - 生产模式页面（Browser）
-              - 开发模式页面（Browser）
-              - 操作逻辑
+              - 构建过程
+              - 页面
+              - 页面组件
+              - 代码逻辑
               - 其它，请在后续详细补充
       validations:
           required: true
 
     - type: input
       attributes:
-          label: 项目版本
-          description: 你可以在此处输入 Bug 出现时项目的版本。若不填写则默认为 `dev` 分支最新版本。
-          placeholder: 格式为“包版本@hash (Build 构建数)”
+          label: Bug 出现的版本
+          description: 在此处输入 Bug 出现时项目的版本或分支，若不填写则默认为网站生产环境的版本。
+          placeholder: 分支可直接写分支名称，版本直接写 commit hash 即可。如果填版本号，则默认按照网站生产环境分支处理。
 
     - type: textarea
       attributes:

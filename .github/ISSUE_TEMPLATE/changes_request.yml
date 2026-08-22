@@ -1,7 +1,7 @@
-name: 🚀 新功能提议
-description: 想要啥新功能都可以建议！
-labels: ['Type: Feature']
-title: '【FEAT】'
+name: ⚙️ 功能变更请求
+description: 可以在这里请求对现有的一些东西进行修改
+labels: ['Type: Change']
+title: '【CHANGE】'
 body:
     - type: dropdown
       attributes:
