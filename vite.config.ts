@@ -3,12 +3,15 @@ import { resolve } from 'path'
 import { VitePWA } from 'vite-plugin-pwa'
 import vue from '@vitejs/plugin-vue'
 
-// 导入预启动项目脚本
+// 获取构建信息
 import prebuild from './scripts/prebuild.mjs'
-prebuild()
+const buildInfo = prebuild()
 
 // https://vitejs.dev/config/
 export default defineConfig({
+    define: {
+        __BUILD_INFO__: JSON.stringify(buildInfo),
+    },
     plugins: [
         vue(),
         VitePWA({

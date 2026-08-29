@@ -2,14 +2,11 @@
 /**
  * 此脚本用于在开始打包前处理配置信息
  * @author crrashh1542
- * @version 2.2
+ * @version 2.3
  */
 
 // STEP1 -------- 导入依赖
-import fs from 'node:fs'
 import childProcess from 'node:child_process'
-import path from 'node:path'
-import { pathToFileURL } from 'node:url'
 import packageInfo from '../package.json' with { type: 'json' }
 
 const execCmd = (command) => {
@@ -76,8 +73,8 @@ const getBranch = () => {
     return buildBranch
 }
 
-// STEP6 -------- 组装并输出到文件
-const writeInfo = () => {
+// STEP6 -------- 组装构建信息
+const assembleInfo = () => {
     // 组装要输出的内容
     const content = {
         time: getTime(),
@@ -92,20 +89,9 @@ const writeInfo = () => {
     // 当版本号不是干净的 semver（x.y.z）时，标记当前构建为 Beta 构建
     content.beta = !/^\d+\.\d+\.\d+$/.test(packageInfo.version)
 
-    // 将 buildInfo 内容写入文件
-    // 由于执行者是 /vite.config.js，所以执行目录在项目的根目录，故此处使用 ./scripts/ 来导引路径
-    const outputPath = path.resolve('scripts/buildInfo.json')
-    try {
-        fs.writeFileSync(outputPath, JSON.stringify(content, null, 3) + '\n')
-        console.log('[buildInfo] 构建信息写入成功！')
-    } catch (err) {
-        console.log('[buildInfo] 构建信息写入失败，详情请参阅：\n' + err)
-    }
+    return content
 }
 
 // STEP7 -------- 导出函数
-export default writeInfo
-
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-    writeInfo()
-}
+// 注入方式由消费方（vite.config.ts）决定：通过 define 注入为全局常量 __BUILD_INFO__
+export default assembleInfo

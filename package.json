@@ -20,7 +20,7 @@
         "dev:api": "node server/main.mjs",
         "build": "node scripts/build.mjs",
         "preview": "vite preview",
-        "type-check": "node scripts/prebuild.mjs && vue-tsc --noEmit",
+        "type-check": "vue-tsc --noEmit",
         "lint": "oxlint && eslint",
         "lint:fix": "oxlint --fix && eslint --fix",
         "format": "oxfmt --check",

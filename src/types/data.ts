@@ -1,7 +1,14 @@
 export type BuiltInColor =
-    'amber' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'purple' | 'gray'
+    | 'amber'
+    | 'orange'
+    | 'yellow'
+    | 'green'
+    | 'teal'
+    | 'blue'
+    | 'purple'
+    | 'gray'
 
-// 构建信息（scripts/buildInfo.json）
+// 构建信息
 export interface BuildInfo {
     time: string
     hash: string

@@ -3,10 +3,11 @@
  */
 
 import packageInfo from '../../package.json'
-import _buildInfo from '../../scripts/buildInfo.json'
 import type { BuildInfo } from '@/types'
 
-const buildInfo = _buildInfo as BuildInfo
+// 构建信息由 vite.config.ts 在构建时通过 define 注入
+declare const __BUILD_INFO__: BuildInfo
+const buildInfo = __BUILD_INFO__
 
 // 项目信息相关
 const pkgRepo = packageInfo.repository.url.split('+')[1] // 项目地址
