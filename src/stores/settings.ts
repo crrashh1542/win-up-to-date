@@ -12,6 +12,8 @@ export const useSettingsStore = defineStore(
             isShowFlight: true, // 显示开发周期及代号
             isShowBranch: true, // 显示分支
             isShowDate: true, // 显示发布日期
+            // 下载设置
+            isEsdHttps: false, // ESD 下载启用 HTTPS
         })
         return { settings }
     },

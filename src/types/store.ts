@@ -6,6 +6,8 @@ export type Settings = {
     isShowFlight: boolean // 显示开发周期及代号
     isShowBranch: boolean // 显示分支
     isShowDate: boolean // 显示发布日期
+    // 下载设置
+    isEsdHttps: boolean // ESD 下载启用 HTTPS
 }
 // 设置菜单
 export type SettingsMenu = {

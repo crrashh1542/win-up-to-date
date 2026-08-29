@@ -7,6 +7,7 @@ import AlignBottom24RegularIcon from '@iconify-vue/fluent/align-bottom-24-regula
 import Branch24RegularIcon from '@iconify-vue/fluent/branch-24-regular'
 import Calendar24RegularIcon from '@iconify-vue/fluent/calendar-24-regular'
 import Chat24RegularIcon from '@iconify-vue/fluent/chat-24-regular'
+import LockClosed24RegularIcon from '@iconify-vue/fluent/lock-closed-24-regular'
 import Code24RegularIcon from '@iconify-vue/fluent/code-24-regular'
 import Info24RegularIcon from '@iconify-vue/fluent/info-24-regular'
 import LaptopSettings24RegularIcon from '@iconify-vue/fluent/laptop-settings-24-regular'
@@ -26,6 +27,7 @@ const icons: Record<string, Component> = {
     chat: Chat24RegularIcon,
     chart: AlignBottom24RegularIcon,
     code: Code24RegularIcon,
+    lock: LockClosed24RegularIcon,
     info: Info24RegularIcon,
     'laptop-settings': LaptopSettings24RegularIcon,
     'weather-moon': WeatherMoon24RegularIcon,
@@ -42,7 +44,7 @@ const dataDate = computed(() => dataVersion.value?.date ?? 'unknown')
 
 const settingsMenu: SettingsMenu[] = [
     {
-        name: '全局设置',
+        name: '全局',
         id: 0,
         items: [
             {
@@ -54,7 +56,7 @@ const settingsMenu: SettingsMenu[] = [
         ],
     },
     {
-        name: '主页设置',
+        name: '主页',
         id: 1,
         items: [
             {
@@ -73,6 +75,18 @@ const settingsMenu: SettingsMenu[] = [
                 name: '显示发布日期',
                 icon: 'calendar',
                 value: 'isShowDate',
+                enabled: true,
+            },
+        ],
+    },
+    {
+        name: '下载',
+        id: 2,
+        items: [
+            {
+                name: 'ESD 下载链接启用 HTTPS',
+                icon: 'lock',
+                value: 'isEsdHttps',
                 enabled: true,
             },
         ],
