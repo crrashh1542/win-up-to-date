@@ -9,10 +9,11 @@ import Branch24RegularIcon from '@iconify-vue/fluent/branch-24-regular'
 import Clock24RegularIcon from '@iconify-vue/fluent/clock-24-regular'
 import DesktopArrowDown24RegularIcon from '@iconify-vue/fluent/desktop-arrow-down-24-regular'
 import DeveloperBoard24RegularIcon from '@iconify-vue/fluent/developer-board-24-regular'
+import MegaphoneLoud24RegularIcon from '@iconify-vue/fluent/megaphone-loud-24-regular'
 import Search24RegularIcon from '@iconify-vue/fluent/search-24-regular'
 import SquareMultiple24RegularIcon from '@iconify-vue/fluent/square-multiple-24-regular'
 import Tag24RegularIcon from '@iconify-vue/fluent/tag-24-regular'
-import MegaphoneLoud24RegularIcon from '@iconify-vue/fluent/megaphone-loud-24-regular'
+import Warning24RegularIcon from '@iconify-vue/fluent/warning-24-regular'
 
 import Open16RegularIcon from '@iconify-vue/fluent/open-16-regular'
 
@@ -208,6 +209,13 @@ watch(
             </div>
 
             <template v-if="downloads.length > 0">
+                <div class="download-note">
+                    <Warning24RegularIcon width="32" height="32" />
+                    请您确认下载的文件的架构是否与需要的一致，下载后请校验文件以免文件损坏。本站提供的
+                    MSU 均为微软官方直链，绝大多数 ISO 为自构建。本站和 Microsoft Corporation
+                    无任何关联，我们提供的文件仅限您用于个人学习和使用交流，请在下载后 24
+                    小时内删除。
+                </div>
                 <template v-for="(dl, dlIndex) in downloads" :key="dlIndex">
                     <div v-if="dlIndex > 0" class="download-separator"></div>
                     <p>文件名称：{{ dl.name }}</p>
@@ -247,6 +255,19 @@ watch(
         align-items: center;
         gap: 6px;
     }
+}
+
+.download-note {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background-color: lighten(@wu-color-amber, 45%);
+    color: darken(@wu-color-amber, 10%);
+    padding: 8px 12px;
+    border-radius: @wu-layout-radius;
+    border: 1px solid lighten(@wu-color-amber, 20%);
+    font-size: 14px;
+    line-height: 1.5;
 }
 
 // 多个下载项之间的分隔符
