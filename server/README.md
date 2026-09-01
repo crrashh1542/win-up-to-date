@@ -6,13 +6,16 @@
 
 `server/` 是一个独立的 npm 子包，用于运行本项目的服务端。
 
-首先安装依赖，并克隆本项目的[数据仓库](https://github.com/crrashh1542/win-up-to-date-data)到 `data` 目录：
+首先安装依赖，并让数据目录就位（二选一）：
 
 ```bash
 # 在 server/ 目录下安装依赖
 pnpm install
-# 克隆数据仓库
+
+# 方式一：把数据仓库放到 server/data（克隆或指向它的目录联接均可）
 git clone https://github.com/crrashh1542/win-up-to-date-data data
+
+# 方式二：数据仓库在任意位置时，用 WUTD_DATA_DIR 指向它（见下文数据目录配置）
 ```
 
 然后就可以启动服务端了：
@@ -35,6 +38,19 @@ WUTD_PORT=9000 pnpm start
 ```
 
 注意：前端开发服务器的代理目标默认指向 `9884`（见 [vite.config.ts](../vite.config.ts)），自定义端口后需同步修改代理配置。
+
+### 数据目录配置
+
+数据目录默认为 `server/data`，可通过 `WUTD_DATA_DIR` 环境变量指向任意位置的数据仓库：
+
+```bash
+WUTD_DATA_DIR=../wutd-data pnpm start
+```
+
+注意：
+
+- `WUTD_DATA_DIR` 应指向**数据仓库根目录**（含 `.git` 的 checkout），版本读取依赖其中的 Git 记录，部署上传的数据也解压到该目录；
+- 指向无效路径时服务仍可启动，但启动日志出现告警且接口 404。
 
 ### 部署
 

@@ -30,7 +30,11 @@ if (process.env.WUTD_PORT && port !== envPort) {
 const cacheSize = 200
 
 const __filename = fileURLToPath(import.meta.url)
-const dataRoot = path.resolve(path.dirname(__filename), 'data')
+// 数据目录默认 server/data
+// 通过 WUTD_DATA_DIR 可指向任意位置的 wutd-data
+// 260930 注：应指向仓库根而非裸数据目录，版本读取依赖其中的 .git，部署时整包数据也解压到该目录。
+const dataDirSource = process.env.WUTD_DATA_DIR?.trim()
+const dataRoot = path.resolve(dataDirSource || path.join(path.dirname(__filename), 'data'))
 // 拒绝路径穿越符（. 与 ..），并只允许安全字符
 const isSafeId = (v) => /^[A-Za-z0-9._-]+$/.test(v) && v !== '.' && v !== '..'
 
@@ -390,10 +394,20 @@ http.createServer(async (req, res) => {
     } catch {
         errServer(res)
     }
-}).listen(port, () => {
+}).listen(port, async () => {
     console.log('========================================')
     console.log(`WUTD API v${version}\n`)
     console.log('[INFO] 服务运行于 http://127.0.0.1:' + port + '/')
-    console.log(`[INFO] 数据目录：` + dataRoot)
+    console.log(
+        `[INFO] 数据目录：${dataRoot}` +
+            (dataDirSource ? '（来自 WUTD_DATA_DIR）' : '（默认 server/data）')
+    )
+    try {
+        await fs.access(path.join(dataRoot, 'index', 'latest-builds.json'))
+    } catch {
+        console.warn(
+            `[WARN] 数据目录中未找到 index/latest-builds.json，请检查数据仓库是否已就位，或 WUTD_DATA_DIR 是否指向 wutd-data 仓库根`
+        )
+    }
     console.log('========================================')
 })
